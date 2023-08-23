@@ -13,6 +13,13 @@
     using System.Threading.Tasks;
     using UnityEngine;
     using System.IO;
+    using InventorySystem;
+    using InventorySystem.Items;
+    using Exiled.CustomItems.API.Features;
+    using Exiled.API.Features.Spawn;
+    using UnityEngine.Rendering;
+    using Exiled.API.Features.Pickups;
+    using Exiled.CustomItems;
 
     public class Plugin : Plugin<config>
     {
@@ -74,8 +81,8 @@
         public static bool startingRound = false;
         public static bool initing = false;
 
-        public string[] good = { "You gained 20HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!" };
-        public string[] bad = { "You now have 1HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "You have dust in your eye!", "You got lost and found yourself in a random room!" };
+        public string[] good = { "You gained 10HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!" };
+        public string[] bad = { "You now have 1HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "You have dust in your eye!", "You got lost and found yourself in a random room!", "BOOM!" };
         public override void OnDisabled()
         {
             UnregisterEvents();
@@ -129,6 +136,7 @@
             Exiled.Events.Handlers.Player.PreAuthenticating += Authing;
             Exiled.Events.Handlers.Server.RestartingRound += restarting;
             Exiled.Events.Handlers.Player.ChangedItem += item_change;
+            CustomItem.RegisterItems();
         }
 
         private void item_change(ChangedItemEventArgs ev)
@@ -183,7 +191,7 @@
                {
                    if (playerCount > 1)
                    {
-                       Exiled.API.Features.Log.Info($"Player count is : \"{playerCount}\" (startcheck)");
+                       Log.Info($"Player count is : \"{playerCount}\" (startcheck)");
                        Timing.RunCoroutine(restart());
                        allowStart = true;
                        ConMet = true;
@@ -202,14 +210,14 @@
 
        private IEnumerator<float> EngageLobby(JoinedEventArgs ev)
        {
-           Exiled.API.Features.Log.Debug("STARTING LEAVE EVENT");
+           Log.Debug("STARTING LEAVE EVENT");
            Exiled.Events.Handlers.Player.Left += Player_Leave;
-           Exiled.API.Features.Log.Debug("ENABLED LEAVE EVENT");
+           Log.Debug("ENABLED LEAVE EVENT");
            first = true;
            inLobby = true;
            yield return Timing.WaitForSeconds(2);
-           Exiled.API.Features.Round.IsLocked = true;
-           Exiled.API.Features.Round.Start();
+           Round.IsLocked = true;
+           Round.Start();
            yield return Timing.WaitForSeconds(1);
            ev.Player.RoleManager.ServerSetRole(RoleTypeId.ClassD, RoleChangeReason.RemoteAdmin, RoleSpawnFlags.UseSpawnpoint);
            yield return Timing.WaitForSeconds((float)0.25);
@@ -220,17 +228,17 @@
 
        private IEnumerator<float> restart()
        {
-           Exiled.API.Features.Cassie.Message("Round Starting in 25 seconds", isSubtitles: true, isNoisy: false);
+           Cassie.Message("Round Starting in 25 seconds", isSubtitles: true, isNoisy: false);
            yield return Timing.WaitForSeconds(25);
            if (playerCount < 2) {
 
-               Exiled.API.Features.Cassie.Message($"ROUND START DISABLED (Too few players)", isSubtitles: true, isNoisy: false);
+               Cassie.Message($"ROUND START DISABLED (Too few players)", isSubtitles: true, isNoisy: false);
                initing = false;
            }
            else
            {
-               Exiled.API.Features.Cassie.Message("STARTING MATCH", isSubtitles: true, isNoisy: false);
-               foreach (Exiled.API.Features.Player p in Exiled.API.Features.Player.List)
+               Cassie.Message("STARTING MATCH", isSubtitles: true, isNoisy: false);
+               foreach (Player p in Player.List)
                {
                    p.EnableEffect(EffectType.Blinded, 3);
                }
@@ -239,7 +247,7 @@
                first = false;
                startingRound = true;
                Exiled.Events.Handlers.Player.Left -= Player_Leave;
-               Exiled.API.Features.Round.RestartSilently();
+               Round.RestartSilently();
            }
 
        }
@@ -247,9 +255,9 @@
        private IEnumerator<float> go()
        {
            yield return Timing.WaitForSeconds(2);
-           Exiled.API.Features.Cassie.Message("STARTING ROUND", isSubtitles: true, isNoisy: false);
+           Cassie.Message("STARTING ROUND", isSubtitles: true, isNoisy: false);
            yield return Timing.WaitForSeconds(7);
-           Exiled.API.Features.Round.Start();
+           Round.Start();
            File.WriteAllText(@"C:\Users\Kebin\AppData\Roaming\EXILED\Configs\Spire/stinky.txt", "ee");
            inLobby = false;
            realRoundEnd = true;
@@ -260,7 +268,7 @@
            if (lastId != ev.Player.UserId)
            {
                playerCount--;
-               Exiled.API.Features.Log.Info($"Player count is now: \"{playerCount}\"");
+               Log.Info($"Player count is now: \"{playerCount}\"");
            }
            lastId = ev.Player.UserId;
        }
@@ -276,11 +284,11 @@
            lastId = string.Empty;
            ConMet = false;
            playerCount++;
-           Exiled.API.Features.Log.Info($"Player count is now: \"{playerCount}\"");
+           Log.Info($"Player count is now: \"{playerCount}\"");
            //ev.Player.Broadcast(new Broadcast { Content = "Player joined", Duration = 1, Show = true, Type = global::Broadcast.BroadcastFlags.Normal });
            if (!hasRestarted)
            {
-               if (!inLobby && !first && !Exiled.API.Features.Round.IsStarted) //EngageLobby();
+               if (!inLobby && !first && !Round.IsStarted) //EngageLobby();
                {
                    Timing.RunCoroutine(EngageLobby(ev));
                }
@@ -313,28 +321,94 @@
 
         private void Player_FlippingCoin(FlippingCoinEventArgs ev)
         {
-
+            Pickup d;
+            CustomItem.TrySpawn((uint)534588, new Vector3(ev.Player.Position.x, ev.Player.Position.y + 1, ev.Player.Position.z), out d);
             //Timing.RunCoroutine(scalePlayer(ev));
 
             var rnd = new System.Random();
-            int num = rnd.Next(0, 1);
-            bool result = false;
-            if (num == 1) result = true;
-            if (result)
+            int num = rnd.Next(0, 100);
+            int result = 0;
+            if (num > 20 && num < 45) result = 1;
+            if (num > 45 && num < 100) result = 2;
+            if (result == 1)
             {
                 switch (rnd.Next(0, good.Count()))
                 {
                     case 0:
                         ev.Player.ShowHint(good[0], 3);
-                        ev.Player.Heal(20, true);
+                        ev.Player.Heal(10, true);
+                        if (ev.Player.Role == RoleTypeId.NtfCaptain)
+                        {
+                            ev.Player.MaxHealth = 150;
+                        }
+                        else
+                        {
+                            ev.Player.MaxHealth = 100;
+                        }
                         break;
                     case 1:
                         ev.Player.ShowHint(good[1], 3);
                         ev.Player.EnableEffect(EffectType.MovementBoost, 5);
+                        ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 65, 5);
+                        break;
+                    case 2:
+                        bool todrop = false;
+                        ev.Player.ShowHint(good[2], 3);
+                        if (ev.Player.IsInventoryFull)
+                        {
+                            todrop = true;
+
+                        }
+                        else
+                        {
+                            todrop = false;
+                        }
+
+                        var rnd2 = new System.Random();
+                        int card = rnd2.Next(1, 3);
+
+                        if (card == 1)
+                        {
+                            if (todrop)
+                            {
+                                Item.Create(ItemType.KeycardO5, ev.Player);
+                            }
+                            else
+                            {
+                                ev.Player.AddItem(ItemType.KeycardO5);
+                            }
+                        }
+                        else if (card == 2)
+                        {
+                            if (todrop)
+                            {
+                                Item.Create(ItemType.KeycardNTFCommander, ev.Player);
+                            }
+                            else
+                            {
+                                ev.Player.AddItem(ItemType.KeycardNTFCommander);
+                            }
+                        }
+                        else
+                        {
+                            if (todrop)
+                            {
+                                Item.Create(ItemType.KeycardResearchCoordinator, ev.Player);
+                            }
+                            else
+                            {
+                                ev.Player.AddItem(ItemType.KeycardResearchCoordinator);
+                            }
+                        }
+                        break;
+                    case 3:
+                        ev.Player.ShowHint(good[3], 3);
+                        ev.Player.EnableEffect(EffectType.Invisible, 5);
                         break;
                 }
+
             }
-            else
+            else if (result == 2)
             {
                 switch (rnd.Next(0, bad.Count()))
                 {
@@ -344,9 +418,70 @@
                         break;
                     case 1:
                         ev.Player.ShowHint(bad[1], 3);
+                        ev.Player.DropItems();
+                        break;
+                    case 2:
+                        ev.Player.ShowHint(bad[2], 3);
+                        ev.Player.EnableEffect(EffectType.Ensnared, 5);
+                        break;
+                    case 3:
+                        ev.Player.ShowHint(bad[3], 3);
+                        ev.Player.EnableEffect(EffectType.Blinded, 5);
+                        break;
+                    case 4:
+                        if (Warhead.IsDetonated)
+                            break;
+                        ev.Player.ShowHint(bad[4], 3);
+                        var r = new System.Random();
+                        var n = r.Next(0, 2);
+                        bool goodRoom = false;
+                        Room room = Room.List.ElementAt(4);
+                        while (goodRoom == false)
+                        {
+                            var roomNd = new System.Random();
+                            int roomNum = roomNd.Next(0, Room.List.Count());
+                            if (Map.IsLczDecontaminated)
+                            {
+                                if (Room.List.ElementAt(roomNum).Type != RoomType.HczTesla && Room.List.ElementAt(roomNum).Zone != ZoneType.LightContainment)
+                                {
+                                    goodRoom = true;
+                                    room = Room.List.ElementAt(roomNum);
+                                }
+                            }
+                            else
+                            {
+                                if (Room.List.ElementAt(roomNum).Type != RoomType.HczTesla)
+                                {
+                                    goodRoom = true;
+                                    room = Room.List.ElementAt(roomNum);
+                                }
+                            }
+
+                        }
+                        ev.Player.Teleport(room.Position);
+                        break;
+                    case 5:
+                        ev.Player.ShowHint(bad[5], 3);
+                        Pickup p;
+                        SpireNade.TrySpawn((uint)534588, ev.Player.Position, out p);
                         break;
                 }
             }
+            else
+            {
+                ev.Player.ShowHint("No consequences, this time...", 3);
+            }
+        }
+
+        public class SpireNade : CustomGrenade
+        {
+            public override bool ExplodeOnCollision { get; set; } = true;
+            public override float FuseTime { get; set; } = 0.1f;
+            public override uint Id { get; set; } = 534588;
+            public override string Name { get; set; } = "spireBomb";
+            public override string Description { get; set; } = "n/a";
+            public override float Weight { get; set; } = 40f;
+            public override SpawnProperties SpawnProperties { get; set; } = null;
         }
 
         private void UnregisterEvents()
@@ -370,7 +505,7 @@
          }
          public static void Item_KeycardInteracting(KeycardInteractingEventArgs ev)
          {
-             Exiled.API.Features.Log.Info($"Door opened, requires: {ev.Door.RequiredPermissions.RequiredPermissions}");
+             Log.Info($"Door opened, requires: {ev.Door.RequiredPermissions.RequiredPermissions}");
          }
 
          private void Player_Spawned(SpawnedEventArgs ev)
@@ -433,11 +568,11 @@
              //}
              //Exiled.API.Features.Round.RestartSilently();
 
-             Exiled.API.Features.Log.Info("Round has started!");
-             var players = Exiled.API.Features.Player.List;
-             List<Exiled.API.Features.Player> SCPS = new List<Exiled.API.Features.Player>();
+             Log.Info("Round has started!");
+             var players = Player.List;
+             List<Player> SCPS = new List<Player>();
              int humanPlayers = 0;
-             foreach (Exiled.API.Features.Player p in players)
+             foreach (Player p in players)
              {
                  switch (p.RoleManager.CurrentRole.RoleTypeId)
                  {
@@ -462,7 +597,7 @@
                          break;
                  }
              }
-             foreach (Exiled.API.Features.Player p in SCPS)
+             foreach (Player p in SCPS)
              {
                  switch (p.RoleManager.CurrentRole.RoleTypeId)
                  {
