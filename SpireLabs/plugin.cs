@@ -73,6 +73,9 @@
         public static bool realRoundEnd = false;
         public static bool startingRound = false;
         public static bool initing = false;
+
+        public string[] good = { "You gained 20HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!" };
+        public string[] bad = { "You now have 1HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "You have dust in your eye!", "You got lost and found yourself in a random room!" };
         public override void OnDisabled()
         {
             UnregisterEvents();
@@ -119,7 +122,6 @@
         private void RegisterEvents()
         {
             Exiled.Events.Handlers.Player.Hurting += theThing;
-            Exiled.Events.Handlers.Server.EndingRound += endThing;
             Exiled.Events.Handlers.Server.RoundStarted += OnRoundStart;
             Exiled.Events.Handlers.Player.Spawned += Player_Spawned;
             Exiled.Events.Handlers.Player.FlippingCoin += Player_FlippingCoin;
@@ -131,9 +133,9 @@
 
         private void item_change(ChangedItemEventArgs ev)
         {
-    
+            if (ev.NewItem == null) return;
             if (ev.NewItem.Type != ItemType.Coin)
-            return;
+                return;
             string hint = string.Empty;
             if (hintHeight != 0 && hintHeight < 0)
             {
@@ -151,7 +153,7 @@
                 }
             }
             ev.Player.ShowHint(hint, 5);
-        }      
+        }
 
         private void restarting()
         {
@@ -295,38 +297,29 @@
            }
        }
 
-       private IEnumerator<float> scalePlayer(FlippingCoinEventArgs ev)
-       {
-           for (int i = 0; i < 50; i++)
-           {
-               var rnd = new System.Random();
-               float num1 = (float)(rnd.NextDouble() * rnd.Next(1, 5));
-               float num2 = (float)(rnd.NextDouble() * rnd.Next(1, 5));
-               ev.Player.Scale = new Vector3(num1, 1f, num2);
-               yield return Timing.WaitForSeconds(0.1f);
-           }
-           ev.Player.Scale = new Vector3(1f, 1f, 1f);
-           Throwable g = ev.Player.ThrowGrenade(ProjectileType.FragGrenade);
-       }
+        //private IEnumerator<float> scalePlayer(FlippingCoinEventArgs ev)
+        //{
+        //    for (int i = 0; i < 50; i++)
+        //    {
+        //        var rnd = new System.Random();
+        //        float num1 = (float)(rnd.NextDouble() * rnd.Next(1, 5));
+        //        float num2 = (float)(rnd.NextDouble() * rnd.Next(1, 5));
+        //        ev.Player.Scale = new Vector3(num1, 1f, num2);
+        //        yield return Timing.WaitForSeconds(0.1f);
+        //    }
+        //    ev.Player.Scale = new Vector3(1f, 1f, 1f);
+        //    Throwable g = ev.Player.ThrowGrenade(ProjectileType.FragGrenade);
+        //}
 
         private void Player_FlippingCoin(FlippingCoinEventArgs ev)
         {
 
-            Timing.RunCoroutine(scalePlayer(ev));
+            //Timing.RunCoroutine(scalePlayer(ev));
 
             var rnd = new System.Random();
-            int num = rnd.Next(0, 100);
+            int num = rnd.Next(0, 1);
             bool result = false;
-            string outputHint = string.Empty;
-            string[] good = { "You gained 20HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!" };
-            string[] bad = { "You now have 1HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "You have dust in your eye!", "You got lost and found yourself in a random room!" };
-
-            if (num > 50)
-            {
-                result = true;
-            }
-
-
+            if (num == 1) result = true;
             if (result)
             {
                 switch (rnd.Next(0, good.Count()))
@@ -356,11 +349,10 @@
             }
         }
 
-         private void UnregisterEvents()
+        private void UnregisterEvents()
          {
              Exiled.Events.Handlers.Player.Hurting -= theThing;
              Exiled.Events.Handlers.Item.KeycardInteracting -= Item_KeycardInteracting;
-             Exiled.Events.Handlers.Server.EndingRound -= endThing;
              Exiled.Events.Handlers.Server.RoundStarted -= OnRoundStart;
              Exiled.Events.Handlers.Player.Spawned -= Player_Spawned;
              Exiled.Events.Handlers.Player.FlippingCoin -= Player_FlippingCoin;
@@ -379,13 +371,6 @@
          public static void Item_KeycardInteracting(KeycardInteractingEventArgs ev)
          {
              Exiled.API.Features.Log.Info($"Door opened, requires: {ev.Door.RequiredPermissions.RequiredPermissions}");
-         }
-
-         public static void endThing(EndingRoundEventArgs ev)
-         {
-             var lt = ev.LeadingTeam;
-             Exiled.API.Features.Log.Info(lt.ToString());
-             Timing.KillCoroutines();
          }
 
          private void Player_Spawned(SpawnedEventArgs ev)
