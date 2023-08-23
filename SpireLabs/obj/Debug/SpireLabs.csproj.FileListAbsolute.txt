@@ -196,3 +196,7 @@ C:\Users\Kebin\Desktop\REpos\SpireSCP\SpireLabs\bin\Debug\UnityEngine.XRModule.x
 C:\Users\Kebin\Desktop\REpos\SpireSCP\SpireLabs\bin\Debug\UnityEngine.ARModule.xml
 C:\Users\Kebin\Desktop\REpos\SpireSCP\SpireLabs\bin\Debug\UnityEngine.InputModule.xml
 C:\Users\Kebin\Desktop\REpos\SpireSCP\SpireLabs\obj\Debug\SpireLabs.csproj.CopyComplete
+C:\Users\aster\Desktop\SpireBots\SpireSCP\SpireLabs\obj\Debug\SpireLabs.csproj.AssemblyReference.cache
+C:\Users\aster\Desktop\SpireBots\SpireSCP\SpireLabs\obj\Debug\SpireLabs.csproj.CoreCompileInputs.cache
+C:\Users\aster\Desktop\SpireBots\SpireSCP\SpireLabs\obj\Debug\SpireLabs.dll
+C:\Users\aster\Desktop\SpireBots\SpireSCP\SpireLabs\obj\Debug\SpireLabs.pdb

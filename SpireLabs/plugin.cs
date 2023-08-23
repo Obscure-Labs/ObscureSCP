@@ -1,50 +1,18 @@
 ﻿namespace SpireLabs
 {
-    using CustomPlayerEffects;
-    using Exiled.CustomRoles;
     using Exiled.API.Enums;
     using Exiled.API.Features;
-    using Exiled.API.Features.Attributes;
-    using Exiled.API.Features.DamageHandlers;
     using Exiled.API.Features.Items;
-    using Exiled.API.Features.Pickups.Projectiles;
-    using Exiled.API.Features.Roles;
-    using Exiled.API.Features.Spawn;
-    using Exiled.CustomItems;
-    using Exiled.CustomItems.API.Features;
     using Exiled.Events.EventArgs.Item;
     using Exiled.Events.EventArgs.Player;
-    using Exiled.Events.EventArgs.Scp049;
-    using Exiled.Events.EventArgs.Scp106;
     using Exiled.Events.EventArgs.Server;
-    using Exiled.Events.Handlers;
-    using GameCore;
-    using Hints;
     using MEC;
-    using InventorySystem.Items;
-    using InventorySystem.Items.Firearms;
-    using InventorySystem.Items.Keycards;
-    using InventorySystem.Items.MicroHID;
-    using InventorySystem.Items.ThrowableProjectiles;
-    using InventorySystem.Items.Usables;
     using PlayerRoles;
-    using PlayerStatsSystem;
-    using PluginAPI.Core;
-    using PluginAPI.Core.Items;
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading;
     using System.Threading.Tasks;
     using UnityEngine;
     using System.IO;
-    using CommandSystem.Commands.RemoteAdmin;
-    using System.Text;
-    using Exiled.Events.EventArgs.Map;
-    using Exiled.Events.EventArgs.Warhead;
-    using RoundRestarting;
-    using Exiled.CustomRoles.API.Features;
-    using Discord;
 
     public class Plugin : Plugin<config>
     {
@@ -307,7 +275,7 @@
            ConMet = false;
            playerCount++;
            Exiled.API.Features.Log.Info($"Player count is now: \"{playerCount}\"");
-           ev.Player.Broadcast(new Broadcast { Content = "Player joined", Duration = 1, Show = true, Type = global::Broadcast.BroadcastFlags.Normal });
+           //ev.Player.Broadcast(new Broadcast { Content = "Player joined", Duration = 1, Show = true, Type = global::Broadcast.BroadcastFlags.Normal });
            if (!hasRestarted)
            {
                if (!inLobby && !first && !Exiled.API.Features.Round.IsStarted) //EngageLobby();
