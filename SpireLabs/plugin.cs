@@ -81,8 +81,8 @@
         public static bool startingRound = false;
         public static bool initing = false;
 
-        public string[] good = { "You gained 10HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!" };
-        public string[] bad = { "You now have 1HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "You have dust in your eye!", "You got lost and found yourself in a random room!", "BOOM!" };
+        public string[] good = { "You gained 20HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!", "You are healed!", "GRENADE FOUNTAIN!" };
+        public string[] bad = { "You now have 1HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "You have dust in your eye!", "You got lost and found yourself in a random room!", "You flipped the coin so hard your hands fell off!", "Nice handcuffs bro."};
         public override void OnDisabled()
         {
             UnregisterEvents();
@@ -319,6 +319,18 @@
         //    Throwable g = ev.Player.ThrowGrenade(ProjectileType.FragGrenade);
         //}
 
+        private IEnumerator<float> grenadeFountain(Player p)
+        {
+            int bombs = 0;
+            while (bombs != 10)
+            {
+                p.ThrowGrenade(ProjectileType.FragGrenade, false);
+                yield return Timing.WaitForSeconds(0.1f);
+                bombs++;
+            }
+
+        }
+
         private void Player_FlippingCoin(FlippingCoinEventArgs ev)
         {
             Pickup d;
@@ -336,7 +348,7 @@
                 {
                     case 0:
                         ev.Player.ShowHint(good[0], 3);
-                        ev.Player.Heal(10, true);
+                        ev.Player.Heal(20, true);
                         if (ev.Player.Role == RoleTypeId.NtfCaptain)
                         {
                             ev.Player.MaxHealth = 150;
@@ -371,22 +383,22 @@
                         {
                             if (todrop)
                             {
-                                Item.Create(ItemType.KeycardO5, ev.Player);
+                                Item.Create(ItemType.KeycardZoneManager, ev.Player);
                             }
                             else
                             {
-                                ev.Player.AddItem(ItemType.KeycardO5);
+                                ev.Player.AddItem(ItemType.KeycardZoneManager);
                             }
                         }
                         else if (card == 2)
                         {
                             if (todrop)
                             {
-                                Item.Create(ItemType.KeycardNTFCommander, ev.Player);
+                                Item.Create(ItemType.KeycardGuard, ev.Player);
                             }
                             else
                             {
-                                ev.Player.AddItem(ItemType.KeycardNTFCommander);
+                                ev.Player.AddItem(ItemType.KeycardGuard);
                             }
                         }
                         else
@@ -405,6 +417,14 @@
                         ev.Player.ShowHint(good[3], 3);
                         ev.Player.EnableEffect(EffectType.Invisible, 5);
                         break;
+                    case 4:
+                        ev.Player.Heal(150, false);
+                        ev.Player.ShowHint(good[4], 3);
+                        break;
+                    case 5:
+                        ev.Player.ShowHint(good[4], 3);
+                        Timing.RunCoroutine(grenadeFountain(ev.Player));
+                        break;
                 }
 
             }
@@ -422,7 +442,7 @@
                         break;
                     case 2:
                         ev.Player.ShowHint(bad[2], 3);
-                        ev.Player.EnableEffect(EffectType.Ensnared, 5);
+                        ev.Player.EnableEffect(EffectType.SinkHole, 5);
                         break;
                     case 3:
                         ev.Player.ShowHint(bad[3], 3);
@@ -458,12 +478,14 @@
                             }
 
                         }
-                        ev.Player.Teleport(room.Position);
+                        ev.Player.Teleport(new Vector3(room.Position.x, room.Position.y + 1.5f, room.Position.z));
+                        
                         break;
                     case 5:
                         ev.Player.ShowHint(bad[5], 3);
-                        Pickup p;
-                        SpireNade.TrySpawn((uint)534588, ev.Player.Position, out p);
+                        ev.Player.Kill(DamageType.SeveredHands);
+                        //Pickup p;
+                        //SpireNade.TrySpawn((uint)534588, ev.Player.Position, out p);
                         break;
                 }
             }
