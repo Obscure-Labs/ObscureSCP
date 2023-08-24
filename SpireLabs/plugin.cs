@@ -24,8 +24,8 @@
     public class Plugin : Plugin<config>
     {
         /// <summary>
-        /// Add coin flip
-        /// Make remote keycard
+        /// Add more coin flip shit
+        /// Go away
         /// </summary>
         public override string Name => "Spire Labs";
         public override string Author => "ImIsaacTbh";
@@ -344,6 +344,7 @@
             if (num > 45 && num < 100) result = 2;
             if (result == 1)
             {
+                Exiled.API.Features.Log.Info($"{ev.Player.Nickname} flipped a coin and got a good result!");
                 switch (rnd.Next(0, good.Count()))
                 {
                     case 0:
@@ -430,6 +431,7 @@
             }
             else if (result == 2)
             {
+                Exiled.API.Features.Log.Info($"{ev.Player.Nickname} flipped a coin and got a bad result!");
                 switch (rnd.Next(0, bad.Count()))
                 {
                     case 0:
@@ -494,6 +496,7 @@
             }
             else
             {
+                Exiled.API.Features.Log.Info($"{ev.Player.Nickname} flipped a coin and got nothing!");
                 ev.Player.ShowHint("No consequences, this time...", 3);
             }
         }
