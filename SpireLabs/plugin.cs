@@ -82,7 +82,7 @@
         public static bool initing = false;
 
         public string[] good = { "You gained 20HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!", "You are healed!", "GRENADE FOUNTAIN!" };
-        public string[] bad = { "You now have 1HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "You have dust in your eye!", "You got lost and found yourself in a random room!", "You flipped the coin so hard your hands fell off!", "Nice handcuffs bro."};
+        public string[] bad = { "You now have 1HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "You have dust in your eye!", "You got lost and found yourself in a random room!", "You flipped the coin so hard your hands fell off!"};
         public override void OnDisabled()
         {
             UnregisterEvents();
@@ -422,11 +422,7 @@
                         ev.Player.ShowHint(good[4], 3);
                         break;
                     case 5:
-<<<<<<< HEAD
                         ev.Player.ShowHint(good[5], 3);
-=======
-                        ev.Player.ShowHint(good[4], 3);
->>>>>>> master
                         Timing.RunCoroutine(grenadeFountain(ev.Player));
                         break;
                 }
@@ -460,6 +456,7 @@
                         var n = r.Next(0, 2);
                         bool goodRoom = false;
                         Room room = Room.List.ElementAt(4);
+                        Door door = Room.List.ElementAt(4).Doors.FirstOrDefault();
                         while (goodRoom == false)
                         {
                             var roomNd = new System.Random();
@@ -469,7 +466,7 @@
                                 if (Room.List.ElementAt(roomNum).Type != RoomType.HczTesla && Room.List.ElementAt(roomNum).Zone != ZoneType.LightContainment)
                                 {
                                     goodRoom = true;
-                                    room = Room.List.ElementAt(roomNum);
+                                    door = Room.List.ElementAt(roomNum).Doors.FirstOrDefault();
                                 }
                             }
                             else
@@ -477,23 +474,19 @@
                                 if (Room.List.ElementAt(roomNum).Type != RoomType.HczTesla)
                                 {
                                     goodRoom = true;
-                                    room = Room.List.ElementAt(roomNum);
+                                    door = Room.List.ElementAt(roomNum).Doors.FirstOrDefault();
                                 }
                             }
 
                         }
-                        ev.Player.Teleport(new Vector3(room.Position.x, room.Position.y + 1.5f, room.Position.z));
+                        ev.Player.Teleport(new Vector3(door.Position.x, door.Position.y + 1f, door.Position.z));
                         
                         break;
                     case 5:
                         ev.Player.ShowHint(bad[5], 3);
-<<<<<<< HEAD
                         ev.Player.EnableEffect(EffectType.SeveredHands, 999);
                         ev.Player.EnableEffect(EffectType.CardiacArrest, 60);
                         ev.Player.ChangeEffectIntensity(EffectType.CardiacArrest, 5);
-=======
-                        ev.Player.Kill(DamageType.SeveredHands);
->>>>>>> master
                         //Pickup p;
                         //SpireNade.TrySpawn((uint)534588, ev.Player.Position, out p);
                         break;
