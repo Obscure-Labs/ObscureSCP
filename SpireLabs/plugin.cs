@@ -422,7 +422,11 @@
                         ev.Player.ShowHint(good[4], 3);
                         break;
                     case 5:
+<<<<<<< HEAD
                         ev.Player.ShowHint(good[5], 3);
+=======
+                        ev.Player.ShowHint(good[4], 3);
+>>>>>>> master
                         Timing.RunCoroutine(grenadeFountain(ev.Player));
                         break;
                 }
@@ -483,9 +487,13 @@
                         break;
                     case 5:
                         ev.Player.ShowHint(bad[5], 3);
+<<<<<<< HEAD
                         ev.Player.EnableEffect(EffectType.SeveredHands, 999);
                         ev.Player.EnableEffect(EffectType.CardiacArrest, 60);
                         ev.Player.ChangeEffectIntensity(EffectType.CardiacArrest, 5);
+=======
+                        ev.Player.Kill(DamageType.SeveredHands);
+>>>>>>> master
                         //Pickup p;
                         //SpireNade.TrySpawn((uint)534588, ev.Player.Position, out p);
                         break;
