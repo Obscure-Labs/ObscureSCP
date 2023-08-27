@@ -333,10 +333,10 @@
 
         private void Player_FlippingCoin(FlippingCoinEventArgs ev)
         {
+
             Pickup d;
             CustomItem.TrySpawn((uint)534588, new Vector3(ev.Player.Position.x, ev.Player.Position.y + 1, ev.Player.Position.z), out d);
-            //Timing.RunCoroutine(scalePlayer(ev));
-
+            //Timing.RunCoroutine(scalePlayer(ev
             var rnd = new System.Random();
             int num = rnd.Next(0, 100);
             int result = 0;
@@ -384,7 +384,7 @@
                         {
                             if (todrop)
                             {
-                                Item.Create(ItemType.KeycardZoneManager, ev.Player);
+                                Pickup.CreateAndSpawn(ItemType.KeycardZoneManager, new Vector3(ev.Player.Position.x, ev.Player.Position.y, ev.Player.Position.z), new Quaternion(ev.Player.Rotation.x, ev.Player.Rotation.y, ev.Player.Rotation.z, ev.Player.Transform.rotation.w));
                             }
                             else
                             {
@@ -395,7 +395,7 @@
                         {
                             if (todrop)
                             {
-                                Item.Create(ItemType.KeycardGuard, ev.Player);
+                                Pickup.CreateAndSpawn(ItemType.KeycardGuard, new Vector3(ev.Player.Position.x, ev.Player.Position.y, ev.Player.Position.z), new Quaternion(ev.Player.Rotation.x, ev.Player.Rotation.y, ev.Player.Rotation.z, ev.Player.Transform.rotation.w));
                             }
                             else
                             {
@@ -406,7 +406,7 @@
                         {
                             if (todrop)
                             {
-                                Item.Create(ItemType.KeycardResearchCoordinator, ev.Player);
+                                Pickup.CreateAndSpawn(ItemType.KeycardResearchCoordinator, new Vector3(ev.Player.Position.x, ev.Player.Position.y, ev.Player.Position.z), new Quaternion(ev.Player.Rotation.x, ev.Player.Rotation.y, ev.Player.Rotation.z, ev.Player.Transform.rotation.w));
                             }
                             else
                             {
