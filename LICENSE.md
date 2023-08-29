@@ -1,3 +1,5 @@
+SpireSCP By Isaac Marrs & Kevin Watson
+
 Attribution-NonCommercial-ShareAlike 4.0 International
 
 =======================================================================
