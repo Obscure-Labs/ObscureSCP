@@ -1,5 +1,9 @@
 SpireSCP By Isaac Marrs & Kevin Watson
 
+This license applies to all previous, current and future versions of this "software".
+
+--------------------------------------------------------------------------------------
+
 Attribution-NonCommercial-ShareAlike 4.0 International
 
 =======================================================================
