@@ -18,6 +18,7 @@
     using Exiled.API.Features.Pickups.Projectiles;
     using InventorySystem.Items.ThrowableProjectiles;
     using Exiled.API.Features.Items;
+    using Interactables.Interobjects.DoorUtils;
 
     public class Plugin : Plugin<config>
     {
@@ -26,9 +27,9 @@
         /// Go away
         /// </summary>
         public override string Name => "Spire Labs";
-        public override string Author => "ImKevinTbh & ImIsaacTbh";
-        public override System.Version Version => new System.Version(1, 0, 0);
-        public override System.Version RequiredExiledVersion => new System.Version(2, 1, 0);
+        public override string Author => "ImIsaacTbh & ImKevin";
+        public override System.Version Version => new System.Version(1, 0, 1);
+        public override System.Version RequiredExiledVersion => new System.Version(8, 0, 1);
         public static float hidDPS;
 
         public static OverrideData OScp049;
@@ -80,17 +81,17 @@
         public static bool initing = false;
 
         public string[] good = { "You gained 20HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!", "You are healed!", "GRENADE FOUNTAIN!" };
-        public string[] bad = { "You now have 1HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "You have dust in your eye!", "You got lost and found yourself in a random room!", "You flipped the coin so hard your hands fell off!", "BOOM"};
+        public string[] bad = { "You now have 1HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "You have dust in your eye!", "You got lost and found yourself in a random room!", "You flipped the coin so hard your hands fell off!", "BOOM!", "Sent To Brazil!!!"};
         public override void OnDisabled()
         {
             UnregisterEvents();
-            Exiled.API.Features.Log.Info("Spire Labs has been disabled!");
+            Log.Info("Spire Labs has been disabled!");
             base.OnDisabled();
         }
         public override void OnEnabled()
         {
             RegisterEvents();
-            Exiled.API.Features.Log.Info("Spire Labs has been enabled!");
+            Log.Info("Spire Labs has been enabled!");
             base.OnEnabled();
             hidDPS = Config.hidDPS;
             OScp049 = Config.Scp049Override;
@@ -126,6 +127,7 @@
 
         private void RegisterEvents()
         {
+            //Exiled.Events.Handlers.Player.EnteringPocketDimension += pocketEnter;
             Exiled.Events.Handlers.Player.Hurting += theThing;
             Exiled.Events.Handlers.Server.RoundStarted += OnRoundStart;
             Exiled.Events.Handlers.Player.Spawned += Player_Spawned;
@@ -137,10 +139,51 @@
             CustomItem.RegisterItems();
         }
 
+        //made by isaac 
+        //trust the process
+        public static IEnumerator<float> enterPD(Player p, ZoneType zt)
+        {
+            Door door = Room.List.FirstOrDefault().Doors.FirstOrDefault();
+            yield return Timing.WaitForOneFrame;
+            Exiled.Events.Handlers.Player.EscapingPocketDimension += ExitVoid;
+            Exiled.Events.Handlers.Player.FailingEscapePocketDimension += FixThing;
+            void ExitVoid(EscapingPocketDimensionEventArgs ev)
+            {
+                bool goodRoom = false;
+                while (goodRoom == false)
+                {
+                    var roomNd = new System.Random();
+                    int roomNum = roomNd.Next(0, Room.List.Count());
+                    if (Room.List.ElementAt(roomNum).Type != RoomType.HczTesla && Room.List.ElementAt(roomNum).Zone == zt)
+                    {
+                        goodRoom = true;
+                        door = Room.List.ElementAt(roomNum).Doors.FirstOrDefault();
+                    }
+                }
+                ev.TeleportPosition = new Vector3(door.Position.x, door.Position.y + 1.5f, door.Position.z);
+                p.DisableEffect(EffectType.PocketCorroding);
+                Exiled.Events.Handlers.Player.EscapingPocketDimension -= ExitVoid;
+                Exiled.Events.Handlers.Player.FailingEscapePocketDimension -= FixThing;
+            }
+            void FixThing(FailingEscapePocketDimensionEventArgs e)
+            {
+                Exiled.Events.Handlers.Player.EscapingPocketDimension -= ExitVoid;
+                Exiled.Events.Handlers.Player.FailingEscapePocketDimension -= FixThing;
+            }
+            yield return Timing.WaitForOneFrame;
+        }
+
+        //trust the process
+        //private void pocketEnter(EnteringPocketDimensionEventArgs ev)
+        //{
+        //    RoomType rt = ev.Player.CurrentRoom.Type;
+        //    enterPD(ev.Player, rt);
+        //}
+
         private void item_change(ChangedItemEventArgs ev)
         {
-            if (ev.NewItem == null) return;
-            if (ev.NewItem.Type != ItemType.Coin)
+            if (ev.Item == null) return;
+            if (ev.Item.Type != ItemType.Coin)
                 return;
             string hint = string.Empty;
             if (hintHeight != 0 && hintHeight < 0)
@@ -333,8 +376,6 @@
 
         private void Player_FlippingCoin(FlippingCoinEventArgs ev)
         {
- 
-
             // Projectile D = Projectile.CreateAndSpawn(ProjectileType.FragGrenade, new Vector3(ev.Player.Position.x, ev.Player.Position.y, ev.Player.Position.z), new Quaternion(ev.Player.Rotation.x, ev.Player.Rotation.y, ev.Player.Rotation.z, ev.Player.Transform.rotation.w), true);
             //Pickup d;
             //CustomItem.TrySpawn((uint)534588, new Vector3(ev.Player.Position.x, ev.Player.Position.y + 1, ev.Player.Position.z), out d);
@@ -495,6 +536,13 @@
                         break;
                     case 6:
                         ev.Player.Explode(ProjectileType.FragGrenade);
+                        break;
+                    case 7:
+                        ev.Player.ShowHint(bad[7], 3);
+                        ZoneType zt = ev.Player.CurrentRoom.Zone;
+                        ev.Player.Teleport(Room.List.FirstOrDefault(x => x.Type == RoomType.Pocket));
+                        ev.Player.EnableEffect(EffectType.PocketCorroding, 60);
+                        Timing.RunCoroutine(enterPD(ev.Player, zt));
                         break;
                 }
             }
