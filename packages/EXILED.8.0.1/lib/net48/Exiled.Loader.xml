@@ -55,6 +55,11 @@
             Gets or sets the quotes wrapper type.
             </summary>
         </member>
+        <member name="P:Exiled.Loader.Config.MultiLineScalarStyle">
+            <summary>
+            Gets or sets the quotes wrapper type.
+            </summary>
+        </member>
         <member name="T:Exiled.Loader.ConfigManager">
             <summary>
             Used to handle plugin configs.

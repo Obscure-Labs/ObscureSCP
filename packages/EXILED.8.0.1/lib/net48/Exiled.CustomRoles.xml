@@ -52,9 +52,28 @@
             </summary>
             <param name="ability">The <see cref="T:Exiled.CustomRoles.API.Features.CustomAbility"/> to be unregistered.</param>
         </member>
+        <member name="M:Exiled.CustomRoles.API.Extensions.GetActiveAbilities(Exiled.API.Features.Player)">
+            <summary>
+            Gets all <see cref="T:Exiled.CustomRoles.API.Features.ActiveAbility"/>s a specific <see cref="T:Exiled.API.Features.Player"/> is able to use.
+            </summary>
+            <param name="player">The <see cref="T:Exiled.API.Features.Player"/> to get abilities for.</param>
+            <returns>A <see cref="T:System.Collections.Generic.IEnumerable`1"/> of their active abilities, or <see langword="null"/> if none.</returns>
+        </member>
+        <member name="M:Exiled.CustomRoles.API.Extensions.GetSelectedAbility(Exiled.API.Features.Player)">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Player"/>'s selected ability.
+            </summary>
+            <param name="player">The <see cref="T:Exiled.API.Features.Player"/> to check.</param>
+            <returns>The <see cref="T:Exiled.CustomRoles.API.Features.ActiveAbility"/> the <see cref="T:Exiled.API.Features.Player"/> has selected, or <see langword="null"/>.</returns>
+        </member>
         <member name="T:Exiled.CustomRoles.API.Features.ActiveAbility">
             <summary>
             The base class for active (on-use) abilities.
+            </summary>
+        </member>
+        <member name="P:Exiled.CustomRoles.API.Features.ActiveAbility.AllActiveAbilities">
+            <summary>
+            Gets a <see cref="T:System.Collections.Generic.Dictionary`2"/> containing all players with active abilities, and the abilities they have access to.
             </summary>
         </member>
         <member name="P:Exiled.CustomRoles.API.Features.ActiveAbility.Duration">
@@ -69,7 +88,7 @@
         </member>
         <member name="P:Exiled.CustomRoles.API.Features.ActiveAbility.CanUseOverride">
             <summary>
-            Gets or sets an action to override the behavior of <see cref="M:Exiled.CustomRoles.API.Features.ActiveAbility.CanUseAbility(Exiled.API.Features.Player,System.String@)"/>.
+            Gets or sets an action to override the behavior of <see cref="M:Exiled.CustomRoles.API.Features.ActiveAbility.CanUseAbility(Exiled.API.Features.Player,System.String@,System.Boolean)"/>.
             </summary>
         </member>
         <member name="P:Exiled.CustomRoles.API.Features.ActiveAbility.LastUsed">
@@ -80,6 +99,11 @@
         <member name="P:Exiled.CustomRoles.API.Features.ActiveAbility.ActivePlayers">
             <summary>
             Gets all players actively using this ability.
+            </summary>
+        </member>
+        <member name="P:Exiled.CustomRoles.API.Features.ActiveAbility.SelectedPlayers">
+            <summary>
+            Gets all players who have this ability selected.
             </summary>
         </member>
         <member name="M:Exiled.CustomRoles.API.Features.ActiveAbility.UseAbility(Exiled.API.Features.Player)">
@@ -94,6 +118,18 @@
             </summary>
             <param name="player">The <see cref="T:Exiled.API.Features.Player"/> the ability is ended for.</param>
         </member>
+        <member name="M:Exiled.CustomRoles.API.Features.ActiveAbility.SelectAbility(Exiled.API.Features.Player)">
+            <summary>
+            Selects the ability.
+            </summary>
+            <param name="player">The <see cref="T:Exiled.API.Features.Player"/> to select the ability.</param>
+        </member>
+        <member name="M:Exiled.CustomRoles.API.Features.ActiveAbility.UnSelectAbility(Exiled.API.Features.Player)">
+            <summary>
+            Un-Selects the ability.
+            </summary>
+            <param name="player">The <see cref="T:Exiled.API.Features.Player"/> to un-select the ability.</param>
+        </member>
         <member name="M:Exiled.CustomRoles.API.Features.ActiveAbility.Check(Exiled.API.Features.Player)">
             <summary>
             Checks if the specified player is using the ability.
@@ -101,13 +137,33 @@
             <param name="player">The <see cref="T:Exiled.API.Features.Player"/> to check.</param>
             <returns>True if the player is actively using the ability.</returns>
         </member>
-        <member name="M:Exiled.CustomRoles.API.Features.ActiveAbility.CanUseAbility(Exiled.API.Features.Player,System.String@)">
+        <member name="M:Exiled.CustomRoles.API.Features.ActiveAbility.Check(Exiled.API.Features.Player,Exiled.CustomRoles.API.Features.Enums.CheckType)">
+            <summary>
+            Checks if the specified <see cref="T:Exiled.API.Features.Player"/> meets certain check criteria.
+            </summary>
+            <param name="player">The <see cref="T:Exiled.API.Features.Player"/> to check.</param>
+            <param name="type">The <see cref="T:Exiled.CustomRoles.API.Features.Enums.CheckType"/> type of check to preform.</param>
+            <returns>The results of the check.
+            <see cref="F:Exiled.CustomRoles.API.Features.Enums.CheckType.Active"/>: Checks if the ability is currently active for the player.
+            <see cref="F:Exiled.CustomRoles.API.Features.Enums.CheckType.Selected"/>: Checks if the player has the ability selected.
+            <see cref="F:Exiled.CustomRoles.API.Features.Enums.CheckType.Available"/>: Checks if the player has the ability.
+            </returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">This should never happen unless Joker fucks up.</exception>
+        </member>
+        <member name="M:Exiled.CustomRoles.API.Features.ActiveAbility.CanUseAbility(Exiled.API.Features.Player,System.String@,System.Boolean)">
             <summary>
             Checks to see if the ability is usable by the player.
             </summary>
             <param name="player">The player to check.</param>
             <param name="response">The response to send to the player.</param>
+            <param name="selectedOnly">Whether to disallow usage if the ability is not selected.</param>
             <returns>True if the ability is usable.</returns>
+        </member>
+        <member name="M:Exiled.CustomRoles.API.Features.ActiveAbility.AbilityAdded(Exiled.API.Features.Player)">
+            <inheritdoc />
+        </member>
+        <member name="M:Exiled.CustomRoles.API.Features.ActiveAbility.AbilityRemoved(Exiled.API.Features.Player)">
+            <inheritdoc />
         </member>
         <member name="M:Exiled.CustomRoles.API.Features.ActiveAbility.AbilityUsed(Exiled.API.Features.Player)">
             <summary>
@@ -126,6 +182,18 @@
             Called when the ability is successfully used.
             </summary>
             <param name="player">The <see cref="T:Exiled.API.Features.Player"/> using the ability.</param>
+        </member>
+        <member name="M:Exiled.CustomRoles.API.Features.ActiveAbility.Selected(Exiled.API.Features.Player)">
+            <summary>
+            Called when the ability is selected.
+            </summary>
+            <param name="player">The <see cref="T:Exiled.API.Features.Player"/> selecting the ability.</param>
+        </member>
+        <member name="M:Exiled.CustomRoles.API.Features.ActiveAbility.Unselected(Exiled.API.Features.Player)">
+            <summary>
+            Called when the ability is un-selected.
+            </summary>
+            <param name="player">The <see cref="T:Exiled.API.Features.Player"/> un-selecting the ability.</param>
         </member>
         <member name="T:Exiled.CustomRoles.API.Features.CustomAbility">
             <summary>
@@ -411,15 +479,12 @@
             Gets or sets a <see cref="T:System.String"/> for the ability usage help sent to players in the player console.
             </summary>
         </member>
-        <member name="M:Exiled.CustomRoles.API.Features.CustomRole.Get(System.Int32)">
+        <member name="M:Exiled.CustomRoles.API.Features.CustomRole.Get(System.UInt32)">
             <summary>
             Gets a <see cref="T:Exiled.CustomRoles.API.Features.CustomRole"/> by ID.
             </summary>
             <param name="id">The ID of the role to get.</param>
             <returns>The role, or <see langword="null"/> if it doesn't exist.</returns>
-        </member>
-        <member name="M:Exiled.CustomRoles.API.Features.CustomRole.Get(System.UInt32)">
-            <inheritdoc cref="M:Exiled.CustomRoles.API.Features.CustomRole.Get(System.Int32)"/>
         </member>
         <member name="M:Exiled.CustomRoles.API.Features.CustomRole.Get(System.Type)">
             <summary>
@@ -434,9 +499,6 @@
             </summary>
             <param name="name">The name of the role to get.</param>
             <returns>The role, or <see langword="null"/> if it doesn't exist.</returns>
-        </member>
-        <member name="M:Exiled.CustomRoles.API.Features.CustomRole.TryGet(System.Int32,Exiled.CustomRoles.API.Features.CustomRole@)">
-            <inheritdoc cref="M:Exiled.CustomRoles.API.Features.CustomRole.TryGet(System.UInt32,Exiled.CustomRoles.API.Features.CustomRole@)"/>
         </member>
         <member name="M:Exiled.CustomRoles.API.Features.CustomRole.TryGet(System.UInt32,Exiled.CustomRoles.API.Features.CustomRole@)">
             <summary>
@@ -489,15 +551,6 @@
             <param name="overrideClass">The class to search properties for, if different from the plugin's config class.</param>
             <param name="inheritAttributes">Whether or not inherited attributes should be taken into account for registration.</param>
             <param name="assembly">Assembly which is calling this method.</param>
-            <returns>A <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.CustomRoles.API.Features.CustomRole"/> which contains all registered <see cref="T:Exiled.CustomRoles.API.Features.CustomRole"/>'s.</returns>
-        </member>
-        <member name="M:Exiled.CustomRoles.API.Features.CustomRole.RegisterRoles(System.Boolean,System.Object,System.Boolean)">
-            <summary>
-            Registers all the <see cref="T:Exiled.CustomRoles.API.Features.CustomRole"/>'s present in the current assembly.
-            </summary>
-            <param name="skipReflection">Whether or not reflection is skipped (more efficient if you are not using your custom item classes as config objects).</param>
-            <param name="overrideClass">The class to search properties for, if different from the plugin's config class.</param>
-            <param name="inheritAttributes">Whether or not inherited attributes should be taken into account for registration.</param>
             <returns>A <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.CustomRoles.API.Features.CustomRole"/> which contains all registered <see cref="T:Exiled.CustomRoles.API.Features.CustomRole"/>'s.</returns>
         </member>
         <member name="M:Exiled.CustomRoles.API.Features.CustomRole.RegisterRoles(System.Collections.Generic.IEnumerable{System.Type},System.Boolean,System.Boolean,System.Object)">
@@ -672,6 +725,56 @@
             </summary>
             <param name="player">The <see cref="T:Exiled.API.Features.Player"/> the role was removed from.</param>
         </member>
+        <member name="T:Exiled.CustomRoles.API.Features.Enums.CheckType">
+            <summary>
+            The possible types of checks to preform on active abilities.
+            </summary>
+        </member>
+        <member name="F:Exiled.CustomRoles.API.Features.Enums.CheckType.Available">
+            <summary>
+            Check if the ability is available to the player. (DOES NOT CHECK COOLDOWNS)
+            </summary>
+        </member>
+        <member name="F:Exiled.CustomRoles.API.Features.Enums.CheckType.Selected">
+            <summary>
+            Check if the ability is selected, but not active.
+            </summary>
+        </member>
+        <member name="F:Exiled.CustomRoles.API.Features.Enums.CheckType.Active">
+            <summary>
+            The ability is currently active.
+            </summary>
+        </member>
+        <member name="T:Exiled.CustomRoles.API.Features.Enums.AbilityKeypressTriggerType">
+            <summary>
+            The Action type that should be triggered from a keypress trigger.
+            </summary>
+        </member>
+        <member name="F:Exiled.CustomRoles.API.Features.Enums.AbilityKeypressTriggerType.None">
+            <summary>
+            No action.
+            </summary>
+        </member>
+        <member name="F:Exiled.CustomRoles.API.Features.Enums.AbilityKeypressTriggerType.Activate">
+            <summary>
+            Activate ability.
+            </summary>
+        </member>
+        <member name="F:Exiled.CustomRoles.API.Features.Enums.AbilityKeypressTriggerType.SwitchForward">
+            <summary>
+            Switch to next ability.
+            </summary>
+        </member>
+        <member name="F:Exiled.CustomRoles.API.Features.Enums.AbilityKeypressTriggerType.SwitchBackward">
+            <summary>
+            Switch to previous ability.
+            </summary>
+        </member>
+        <member name="F:Exiled.CustomRoles.API.Features.Enums.AbilityKeypressTriggerType.DisplayInfo">
+            <summary>
+            Display information about the ability to the user.
+            </summary>
+        </member>
         <member name="T:Exiled.CustomRoles.API.Features.Extensions.ParserExtension">
             <summary>
             Extensions for <see cref="T:Exiled.CustomRoles.API.Features.Parsers.ParsingEventBuffer"/>.
@@ -704,6 +807,21 @@
             <param name="buffer">The <see cref="T:Exiled.CustomRoles.API.Features.Parsers.ParsingEventBuffer"/> parser buffer.</param>
             <param name="suggestedType">The <see cref="T:System.Type"/> to resolve the mapping key.</param>
             <returns><see langword="true"/> if resolution is successful; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="T:Exiled.CustomRoles.API.Features.KeypressActivator">
+            <summary>
+            Control class for keypress ability actions.
+            </summary>
+        </member>
+        <member name="M:Exiled.CustomRoles.API.Features.KeypressActivator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.CustomRoles.API.Features.KeypressActivator"/> class.
+            </summary>
+        </member>
+        <member name="M:Exiled.CustomRoles.API.Features.KeypressActivator.Finalize">
+            <summary>
+            Finalizes an instance of the <see cref="T:Exiled.CustomRoles.API.Features.KeypressActivator"/> class.
+            </summary>
         </member>
         <member name="T:Exiled.CustomRoles.API.Features.Parsers.AbstractClassNodeTypeResolver">
             <summary>
@@ -803,6 +921,21 @@
         </member>
         <member name="M:Exiled.CustomRoles.Commands.Info.Execute(System.ArraySegment{System.String},CommandSystem.ICommandSender,System.String@)">
             <inheritdoc/>
+        </member>
+        <member name="T:Exiled.CustomRoles.Commands.List.Abilities">
+            <inheritdoc />
+        </member>
+        <member name="P:Exiled.CustomRoles.Commands.List.Abilities.Command">
+            <inheritdoc />
+        </member>
+        <member name="P:Exiled.CustomRoles.Commands.List.Abilities.Aliases">
+            <inheritdoc />
+        </member>
+        <member name="P:Exiled.CustomRoles.Commands.List.Abilities.Description">
+            <inheritdoc />
+        </member>
+        <member name="M:Exiled.CustomRoles.Commands.List.Abilities.Execute(System.ArraySegment{System.String},CommandSystem.ICommandSender,System.String@)">
+            <inheritdoc />
         </member>
         <member name="T:Exiled.CustomRoles.Commands.List.List">
             <summary>
@@ -915,6 +1048,16 @@
             Gets the hint that is shown when someone used a <see cref="T:Exiled.CustomRoles.API.Features.CustomAbility"/>.
             </summary>
         </member>
+        <member name="P:Exiled.CustomRoles.Config.UseKeypressActivation">
+            <summary>
+            Gets or sets a value indicating whether keypress ability activations can be used on the server.
+            </summary>
+        </member>
+        <member name="P:Exiled.CustomRoles.Config.ActivateOnlySelected">
+            <summary>
+            Gets or sets a value indicating whether abilities that are not the keypress primary can still be activated.
+            </summary>
+        </member>
         <member name="T:Exiled.CustomRoles.CustomRoles">
             <summary>
             Handles all custom role API functions.
@@ -953,7 +1096,7 @@
             <param name="plugin">The <see cref="T:Exiled.CustomRoles.CustomRoles"/> plugin instance.</param>
         </member>
         <member name="M:Exiled.CustomRoles.Events.PlayerHandlers.OnSpawningRagdoll(Exiled.Events.EventArgs.Player.SpawningRagdollEventArgs)">
-            <inheritdoc cref="E:Exiled.Events.Handlers.Player.SpawningRagdoll"/>
+            <inheritdoc cref="P:Exiled.Events.Handlers.Player.SpawningRagdoll"/>
         </member>
     </members>
 </doc>

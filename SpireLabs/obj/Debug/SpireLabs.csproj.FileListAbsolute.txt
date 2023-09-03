@@ -71,7 +71,6 @@ C:\Users\Kebin\Desktop\REpos\SpireSCP\SpireLabs\bin\Debug\UnityEngine.CoreModule
 C:\Users\Kebin\Desktop\REpos\SpireSCP\SpireLabs\bin\Debug\UnityEngine.dll
 C:\Users\Kebin\Desktop\REpos\SpireSCP\SpireLabs\bin\Debug\UnityEngine.PhysicsModule.dll
 C:\Users\Kebin\Desktop\REpos\SpireSCP\SpireLabs\bin\Debug\YamlDotNet.dll
-C:\Users\Kebin\Desktop\REpos\SpireSCP\SpireLabs\bin\Debug\System.Buffers.dll
 C:\Users\Kebin\Desktop\REpos\SpireSCP\SpireLabs\bin\Debug\Exiled.API.xml
 C:\Users\Kebin\Desktop\REpos\SpireSCP\SpireLabs\bin\Debug\Exiled.CreditTags.xml
 C:\Users\Kebin\Desktop\REpos\SpireSCP\SpireLabs\bin\Debug\Exiled.CustomItems.xml
@@ -115,4 +114,4 @@ C:\Users\aster\Desktop\SpireBots\SpireSCP\SpireLabs\bin\Debug\Exiled.Loader.xml
 C:\Users\aster\Desktop\SpireBots\SpireSCP\SpireLabs\bin\Debug\Exiled.Permissions.xml
 C:\Users\aster\Desktop\SpireBots\SpireSCP\SpireLabs\bin\Debug\Exiled.Updater.xml
 C:\Users\aster\Desktop\SpireBots\SpireSCP\SpireLabs\obj\Debug\SpireLabs.csproj.CopyComplete
-C:\Users\Kebin\Desktop\REpos\SpireSCP\SpireLabs\bin\Debug\Assembly-CSharp.dll
+C:\Users\Kebin\Desktop\REpos\SpireSCP\SpireLabs\bin\Debug\Assembly-CSharp-Publicized.dll

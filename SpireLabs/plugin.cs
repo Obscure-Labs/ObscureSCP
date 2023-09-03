@@ -20,6 +20,7 @@
     using UnityEngine.Rendering;
     using Exiled.API.Features.Pickups;
     using Exiled.CustomItems;
+    using Exiled.API.Features.Doors;
 
     public class Plugin : Plugin<config>
     {
@@ -28,7 +29,7 @@
         /// Go away
         /// </summary>
         public override string Name => "Spire Labs";
-        public override string Author => "ImIsaacTbh";
+        public override string Author => "ImKevinTbh & ImIsaacTbh";
         public override System.Version Version => new System.Version(1, 0, 0);
         public override System.Version RequiredExiledVersion => new System.Version(2, 1, 0);
         public static float hidDPS;

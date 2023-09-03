@@ -88,14 +88,19 @@
             Indicates that the player has been authenticated as a Northwood staffer.
             </summary>
         </member>
-        <member name="F:Exiled.API.Enums.AuthenticationType.Patreon">
-            <summary>
-            Indicates that the player has been authenticated as a Patreon.
-            </summary>
-        </member>
         <member name="F:Exiled.API.Enums.AuthenticationType.Unknown">
             <summary>
             Indicates that the player has been authenticated through an unknown provider.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.AuthenticationType.LocalHost">
+            <summary>
+            Indicates that the player has been authenticated as localhost.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.AuthenticationType.DedicatedServer">
+            <summary>
+            Indicates that the player has been authenticated as DedicatedServer.
             </summary>
         </member>
         <member name="T:Exiled.API.Enums.BloodType">
@@ -131,6 +136,7 @@
             </summary>
             <seealso cref="P:Exiled.API.Features.Camera.Type"/>
             <seealso cref="M:Exiled.API.Features.Camera.Get(Exiled.API.Enums.CameraType)"/>
+            <seealso cref="M:Exiled.API.Features.Camera.TryGet(Exiled.API.Enums.CameraType,Exiled.API.Features.Camera@)"/>
         </member>
         <member name="F:Exiled.API.Enums.CameraType.Unknown">
             <summary>
@@ -366,11 +372,21 @@
             Damage caused by <see cref="F:ItemType.Jailbird"/>.
             </summary>
         </member>
+        <member name="F:Exiled.API.Enums.DamageType.Frmg0">
+            <summary>
+            Damage caused by <see cref="F:ItemType.GunFRMG0"/>.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.DamageType.A7">
+            <summary>
+            Damage caused by <see cref="F:ItemType.GunA7"/>.
+            </summary>
+        </member>
         <member name="T:Exiled.API.Enums.DoorBeepType">
             <summary>
             Door beep types.
             </summary>
-            <seealso cref="M:Exiled.API.Features.Door.PlaySound(Exiled.API.Enums.DoorBeepType)"/>
+            <seealso cref="M:Exiled.API.Features.Doors.Door.PlaySound(Exiled.API.Enums.DoorBeepType)"/>
         </member>
         <member name="F:Exiled.API.Enums.DoorBeepType.PermissionDenied">
             <summary>
@@ -396,8 +412,8 @@
             <summary>
             All possible door locks.
             </summary>
-            <seealso cref="M:Exiled.API.Features.Door.LockAll(System.Single,Exiled.API.Enums.DoorLockType)"/>
-            <seealso cref="M:Exiled.API.Features.Door.ChangeLock(Exiled.API.Enums.DoorLockType)"/>
+            <seealso cref="M:Exiled.API.Features.Doors.Door.LockAll(System.Single,Exiled.API.Enums.DoorLockType)"/>
+            <seealso cref="M:Exiled.API.Features.Doors.Door.ChangeLock(Exiled.API.Enums.DoorLockType)"/>
         </member>
         <member name="F:Exiled.API.Enums.DoorLockType.None">
             <summary>
@@ -458,8 +474,8 @@
             <summary>
             Unique identifier for the different types of doors.
             </summary>
-            <seealso cref="P:Exiled.API.Features.Door.Type"/>
-            <seealso cref="M:Exiled.API.Features.Door.Get(Exiled.API.Enums.DoorType)"/>
+            <seealso cref="P:Exiled.API.Features.Doors.Door.Type"/>
+            <seealso cref="M:Exiled.API.Features.Doors.Door.Get(Exiled.API.Enums.DoorType)"/>
         </member>
         <member name="F:Exiled.API.Enums.DoorType.UnknownDoor">
             <summary>
@@ -1153,6 +1169,16 @@
             Represents the <see cref="F:ItemType.ParticleDisruptor"/>.
             </summary>
         </member>
+        <member name="F:Exiled.API.Enums.FirearmType.FRMG0">
+            <summary>
+            Represents the <see cref="F:ItemType.GunFRMG0"/>.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.FirearmType.A7">
+            <summary>
+            Represents the <see cref="F:ItemType.GunA7"/>.
+            </summary>
+        </member>
         <member name="T:Exiled.API.Enums.GeneratorState">
             <summary>
             Represents the state of a <see cref="T:Exiled.API.Features.Generator"/>.
@@ -1244,36 +1270,6 @@
         <member name="F:Exiled.API.Enums.GlassType.TestRoom">
             <summary>
             Represents all the Window in <see cref="F:Exiled.API.Enums.RoomType.HczTestRoom"/>.
-            </summary>
-        </member>
-        <member name="T:Exiled.API.Enums.HotkeyButton">
-            <summary>
-            Hotkey button types.
-            </summary>
-        </member>
-        <member name="F:Exiled.API.Enums.HotkeyButton.Keycard">
-            <summary>
-            The hotkey button for selecting the keycard.
-            </summary>
-        </member>
-        <member name="F:Exiled.API.Enums.HotkeyButton.PrimaryFirearm">
-            <summary>
-            The hotkey button for selecting the primary firearm.
-            </summary>
-        </member>
-        <member name="F:Exiled.API.Enums.HotkeyButton.SecondaryFirearm">
-            <summary>
-            The hotkey button for selecting the secondary firearm.
-            </summary>
-        </member>
-        <member name="F:Exiled.API.Enums.HotkeyButton.Medical">
-            <summary>
-            The hotkey button for selecting the medical item.
-            </summary>
-        </member>
-        <member name="F:Exiled.API.Enums.HotkeyButton.Grenade">
-            <summary>
-            The hotkey button for selecting the grenade.
             </summary>
         </member>
         <member name="T:Exiled.API.Enums.KeycardPermissions">
@@ -1595,11 +1591,6 @@
         <member name="F:Exiled.API.Enums.RoomType.LczStraight">
             <summary>
             Lower Containment |-Shaped Room.
-            </summary>
-        </member>
-        <member name="F:Exiled.API.Enums.RoomType.Lcz012">
-            <summary>
-            Lower Containment SCP-012 Room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.Lcz914">
@@ -1968,24 +1959,9 @@
             The inside of 330's room.
             </summary>
         </member>
-        <member name="F:Exiled.API.Enums.SpawnLocationType.Inside012">
-            <summary>
-            The inside of 012's hallway door.
-            </summary>
-        </member>
         <member name="F:Exiled.API.Enums.SpawnLocationType.Inside330Chamber">
             <summary>
             The inside of 330's room test chamber.
-            </summary>
-        </member>
-        <member name="F:Exiled.API.Enums.SpawnLocationType.Inside012Bottom">
-            <summary>
-            The inside of the locked door leaving to SCP-012's room.
-            </summary>
-        </member>
-        <member name="F:Exiled.API.Enums.SpawnLocationType.Inside012Locker">
-            <summary>
-            The inside of the locked 012 armory door.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.SpawnLocationType.Inside049Armory">
@@ -2242,8 +2218,8 @@
             <seealso cref="P:Exiled.API.Features.Room.Zone"/>
             <seealso cref="P:Exiled.API.Features.Camera.Zone"/>
             <seealso cref="P:Exiled.API.Features.Player.Zone"/>
-            <seealso cref="P:Exiled.API.Features.Door.Zone"/>
-            <seealso cref="M:Exiled.API.Features.Door.Random(Exiled.API.Enums.ZoneType,System.Boolean)"/>
+            <seealso cref="P:Exiled.API.Features.Doors.Door.Zone"/>
+            <seealso cref="M:Exiled.API.Features.Doors.Door.Random(Exiled.API.Enums.ZoneType,System.Boolean)"/>
             <seealso cref="M:Exiled.API.Features.Room.Random(Exiled.API.Enums.ZoneType)"/>
             <seealso cref="M:Exiled.API.Features.Map.TurnOffAllLights(System.Single,Exiled.API.Enums.ZoneType)"/>
             <seealso cref="M:Exiled.API.Features.Map.TurnOffAllLights(System.Single,System.Collections.Generic.IEnumerable{Exiled.API.Enums.ZoneType})"/>
@@ -2277,6 +2253,19 @@
             <summary>
             An unknown type of zone.
             </summary>
+        </member>
+        <member name="T:Exiled.API.Extensions.CommonExtensions">
+            <summary>
+            A set of extensions for common things.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Extensions.CommonExtensions.GetRandomValue``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Gets a random value from an <see cref="T:System.Collections.Generic.IEnumerable`1"/>.
+            </summary>
+            <param name="enumerable"><see cref="T:System.Collections.Generic.IEnumerable`1"/> to be used to get a random value.</param>
+            <typeparam name="T">Type of <see cref="T:System.Collections.Generic.IEnumerable`1"/> elements.</typeparam>
+            <returns>Returns a random value from <see cref="T:System.Collections.Generic.IEnumerable`1"/>.</returns>
         </member>
         <member name="T:Exiled.API.Extensions.DamageTypeExtensions">
             <summary>
@@ -2619,6 +2608,11 @@
             Gets a all DirtyBit <see cref="T:System.UInt64"/> from <see cref="T:Exiled.API.Extensions.StringExtensions"/>(format:classname.methodname).
             </summary>
         </member>
+        <member name="P:Exiled.API.Extensions.MirrorExtensions.RpcFullNames">
+            <summary>
+            Gets Rpc's FullName <see cref="T:System.String"/> corresponding to <see cref="T:Exiled.API.Extensions.StringExtensions"/>(format:classname.methodname).
+            </summary>
+        </member>
         <member name="P:Exiled.API.Extensions.MirrorExtensions.SetDirtyBitsMethodInfo">
             <summary>
             Gets a <see cref="M:Mirror.NetworkBehaviour.SetSyncVarDirtyBit(System.UInt64)"/>'s <see cref="T:System.Reflection.MethodInfo"/>.
@@ -2627,6 +2621,11 @@
         <member name="P:Exiled.API.Extensions.MirrorExtensions.SendSpawnMessageMethodInfo">
             <summary>
             Gets a NetworkServer.SendSpawnMessage's <see cref="T:System.Reflection.MethodInfo"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Extensions.MirrorExtensions.BufferRpcMethodInfo">
+            <summary>
+            Gets a NetworkConnectionToClient.BufferRpc's <see cref="T:System.Reflection.MethodInfo"/>.
             </summary>
         </member>
         <member name="M:Exiled.API.Extensions.MirrorExtensions.PlayBeepSound(Exiled.API.Features.Player)">
@@ -2677,14 +2676,6 @@
             <param name="target">Only this player can see room color.</param>
             <param name="multiplier">Light intensity multiplier to set.</param>
         </member>
-        <member name="M:Exiled.API.Extensions.MirrorExtensions.ChangeAppearance(Exiled.API.Features.Player,PlayerRoles.RoleTypeId)">
-            <summary>
-            Change <see cref="T:Exiled.API.Features.Player"/> character model for appearance.
-            It will continue until <see cref="T:Exiled.API.Features.Player"/>'s <see cref="T:PlayerRoles.RoleTypeId"/> changes.
-            </summary>
-            <param name="player">Player to change.</param>
-            <param name="type">Model type.</param>
-        </member>
         <member name="M:Exiled.API.Extensions.MirrorExtensions.ChangeAppearance(Exiled.API.Features.Player,PlayerRoles.RoleTypeId,System.Boolean,System.Byte)">
             <summary>
             Change <see cref="T:Exiled.API.Features.Player"/> character model for appearance.
@@ -2704,25 +2695,6 @@
             <param name="type">Model type.</param>
             <param name="playersToAffect">The players who should see the changed appearance.</param>
             <param name="skipJump">Whether or not to skip the little jump that works around an invisibility issue.</param>
-            <param name="unitId">The UnitNameId to use for the player's new role, if the player's new role uses unit names. (is NTF).</param>
-        </member>
-        <member name="M:Exiled.API.Extensions.MirrorExtensions.ChangeAppearance(Exiled.API.Features.Player,PlayerRoles.RoleTypeId,System.Byte)">
-            <summary>
-            Change <see cref="T:Exiled.API.Features.Player"/> character model for appearance.
-            It will continue until <see cref="T:Exiled.API.Features.Player"/>'s <see cref="T:PlayerRoles.RoleTypeId"/> changes.
-            </summary>
-            <param name="player">Player to change.</param>
-            <param name="type">Model type.</param>
-            <param name="unitId">The UnitNameId to use for the player's new role, if the player's new role uses unit names. (is NTF).</param>
-        </member>
-        <member name="M:Exiled.API.Extensions.MirrorExtensions.ChangeAppearance(Exiled.API.Features.Player,PlayerRoles.RoleTypeId,System.Collections.Generic.IEnumerable{Exiled.API.Features.Player},System.Byte)">
-            <summary>
-            Change <see cref="T:Exiled.API.Features.Player"/> character model for appearance.
-            It will continue until <see cref="T:Exiled.API.Features.Player"/>'s <see cref="T:PlayerRoles.RoleTypeId"/> changes.
-            </summary>
-            <param name="player">Player to change.</param>
-            <param name="type">Model type.</param>
-            <param name="playersToAffect">The players who should see the changed appearance.</param>
             <param name="unitId">The UnitNameId to use for the player's new role, if the player's new role uses unit names. (is NTF).</param>
         </member>
         <member name="M:Exiled.API.Extensions.MirrorExtensions.PlayCassieAnnouncement(Exiled.API.Features.Player,System.String,System.Boolean,System.Boolean,System.Boolean)">
@@ -3405,6 +3377,54 @@
             <param name="predicate">The condition to satify.</param>
             <returns>A <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Camera"/> which contains elements that satify the condition.</returns>
         </member>
+        <member name="M:Exiled.API.Features.Camera.TryGet(System.Collections.Generic.IEnumerable{PlayerRoles.PlayableScps.Scp079.Cameras.Scp079Camera},System.Collections.Generic.IEnumerable{Exiled.API.Features.Camera}@)">
+            <summary>
+            Get a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Camera"/> which contains all the <see cref="T:Exiled.API.Features.Camera"/> instance given a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:PlayerRoles.PlayableScps.Scp079.Cameras.Scp079Camera"/>.
+            </summary>
+            <param name="cameras">the <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:PlayerRoles.PlayableScps.Scp079.Cameras.Scp079Camera"/>.</param>
+            <param name="result">return a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Camera"/>, it's can be valid, or <see langword="null"/>, depending if <see cref="T:PlayerRoles.PlayableScps.Scp079.Cameras.Scp079Camera"/> it's null or not.</param>
+            <returns>a bool result if return sequence contain valid element.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Camera.TryGet(PlayerRoles.PlayableScps.Scp079.Cameras.Scp079Camera,Exiled.API.Features.Camera@)">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Camera"/> belonging to the <see cref="T:PlayerRoles.PlayableScps.Scp079.Cameras.Scp079Camera"/>, if any.
+            </summary>
+            <param name="camera">The base <see cref="T:PlayerRoles.PlayableScps.Scp079.Cameras.Scp079Camera"/>.</param>
+            <param name="result">The instance of <see cref="T:Exiled.API.Features.Camera"/> which <see cref="T:PlayerRoles.PlayableScps.Scp079.Cameras.Scp079Camera"/> base.</param>
+            <returns><see langword="true"/> if <see cref="T:Exiled.API.Features.Camera"/> is not <see langword="null"/>, or <see langword="false"/> if <see cref="T:Exiled.API.Features.Camera"/> is <see langword="null"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Camera.TryGet(System.UInt32,Exiled.API.Features.Camera@)">
+            <summary>
+            Gets a <see cref="T:Exiled.API.Features.Camera"/> given the specified <paramref name="cameraId"/>.
+            </summary>
+            <param name="cameraId">The id camera to be shearch.</param>
+            <param name="result">the result of <see cref="T:Exiled.API.Features.Camera"/>, if <paramref name="cameraId"/> is valid.</param>
+            <returns><see langword="true"/> if <see cref="T:Exiled.API.Features.Camera"/> is not <see langword="null"/>, or <see langword="false"/> if <see cref="T:Exiled.API.Features.Camera"/> is <see langword="null"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Camera.TryGet(System.String,Exiled.API.Features.Camera@)">
+            <summary>
+            Gets a <see cref="T:Exiled.API.Features.Camera"/> given the specified <paramref name="cameraName"/>.
+            </summary>
+            <param name="cameraName">The name of the camera.</param>
+            <param name="result">The <see cref="T:Exiled.API.Features.Camera"/>, if <paramref name="cameraName"/> is valid.</param>
+            <returns><see langword="true"/> if <see cref="T:Exiled.API.Features.Camera"/> is not <see langword="null"/>, or <see langword="false"/> if <see cref="T:Exiled.API.Features.Camera"/> is <see langword="null"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Camera.TryGet(Exiled.API.Enums.CameraType,Exiled.API.Features.Camera@)">
+            <summary>
+            Gets a <see cref="T:Exiled.API.Features.Camera"/> given the specified <paramref name="cameraType"/>.
+            </summary>
+            <param name="cameraType">The <see cref="T:Exiled.API.Enums.CameraType"/> to search for.</param>
+            <param name="result">The <see cref="T:Exiled.API.Features.Camera"/> with the given <see cref="T:Exiled.API.Enums.CameraType"/>.</param>
+            <returns><see langword="true"/> if <see cref="T:Exiled.API.Features.Camera"/> is not <see langword="null"/>, or <see langword="false"/> if <see cref="T:Exiled.API.Features.Camera"/> is <see langword="null"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Camera.TryGet(System.Func{Exiled.API.Features.Camera,System.Boolean},System.Collections.Generic.IEnumerable{Exiled.API.Features.Camera}@)">
+            <summary>
+            Gets a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Camera"/> filtered based on a predicate.
+            </summary>
+            <param name="predicate">The condition to satify.</param>
+            <param name="result">A <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Camera"/> which contains elements that satify the condition.</param>
+            <returns><see langword="true"/> if <see cref="T:Exiled.API.Features.Camera"/> is not <see langword="null"/>, or <see langword="false"/> if <see cref="T:Exiled.API.Features.Camera"/> is <see langword="null"/>.</returns>
+        </member>
         <member name="M:Exiled.API.Features.Camera.ToString">
             <summary>
             Returns the Camera in a human-readable format.
@@ -3476,14 +3496,6 @@
             <param name="delay">The seconds that have to pass before reproducing the message.</param>
             <param name="glitchChance">The chance of placing a glitch between each word.</param>
             <param name="jamChance">The chance of jamming each word.</param>
-        </member>
-        <member name="M:Exiled.API.Features.Cassie.CalculateDuration(System.String,System.Boolean)">
-            <summary>
-            Calculates the duration of a C.A.S.S.I.E message.
-            </summary>
-            <param name="message">The message, which duration will be calculated.</param>
-            <param name="rawNumber">Determines if a number won't be converted to its full pronunciation.</param>
-            <returns>Duration (in seconds) of specified message.</returns>
         </member>
         <member name="M:Exiled.API.Features.Cassie.CalculateDuration(System.String,System.Boolean,System.Single)">
             <summary>
@@ -4747,358 +4759,705 @@
         <member name="P:Exiled.API.Features.DamageHandlers.ScpDamageHandler.Type">
             <inheritdoc/>
         </member>
-        <member name="T:Exiled.API.Features.Door">
+        <member name="T:Exiled.API.Features.Doors.AirlockController">
             <summary>
-            A wrapper class for <see cref="T:Interactables.Interobjects.DoorUtils.DoorVariant"/>.
+            Represents airlock.
             </summary>
         </member>
-        <member name="F:Exiled.API.Features.Door.DoorVariantToDoor">
+        <member name="F:Exiled.API.Features.Doors.AirlockController.BaseToExiledControllers">
             <summary>
-            A <see cref="T:System.Collections.Generic.Dictionary`2"/> containing all known <see cref="T:Interactables.Interobjects.DoorUtils.DoorVariant"/>s and their corresponding <see cref="T:Exiled.API.Features.Door"/>.
+            A <see cref="T:System.Collections.Generic.Dictionary`2"/> containing all known <see cref="T:Interactables.Interobjects.AirlockController"/>'s and their corresponding <see cref="T:Exiled.API.Features.Doors.AirlockController"/>.
             </summary>
         </member>
-        <member name="M:Exiled.API.Features.Door.#ctor(Interactables.Interobjects.DoorUtils.DoorVariant,Exiled.API.Features.Room)">
+        <member name="M:Exiled.API.Features.Doors.AirlockController.#ctor(Interactables.Interobjects.AirlockController)">
             <summary>
-            Initializes a new instance of the <see cref="T:Exiled.API.Features.Door"/> class.
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Doors.AirlockController"/> class.
             </summary>
-            <param name="door">The base <see cref="T:Interactables.Interobjects.DoorUtils.DoorVariant"/> for this door.</param>
-            <param name="room">The <see cref="P:Exiled.API.Features.Door.Room"/> for this door.</param>
+            <param name="controller">Base-game controller.</param>
         </member>
-        <member name="P:Exiled.API.Features.Door.List">
+        <member name="P:Exiled.API.Features.Doors.AirlockController.List">
             <summary>
-            Gets a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Door"/> which contains all the <see cref="T:Exiled.API.Features.Door"/> instances.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Door.Base">
-            <summary>
-            Gets the base-game <see cref="T:Interactables.Interobjects.DoorUtils.DoorVariant"/> for this door.
+            Gets the list with all airlocks.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Door.GameObject">
+        <member name="P:Exiled.API.Features.Doors.AirlockController.Base">
             <summary>
-            Gets the <see cref="T:UnityEngine.GameObject"/> of the door.
+            Gets the basegame controller.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Door.Transform">
+        <member name="P:Exiled.API.Features.Doors.AirlockController.DoorA">
             <summary>
-            Gets the door's <see cref="T:UnityEngine.Transform"/>.
+            Gets the first subdoor.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Door.Type">
+        <member name="P:Exiled.API.Features.Doors.AirlockController.DoorB">
             <summary>
-            Gets the <see cref="T:Exiled.API.Enums.DoorType"/> of the door.
+            Gets the second subdoor.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Door.Room">
+        <member name="P:Exiled.API.Features.Doors.AirlockController.DoorsLocked">
             <summary>
-            Gets the <see cref="T:Exiled.API.Features.Room"/> that the door is located in.
+            Gets or sets a value indicating whether or not both subdoors are locked.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Door.IsFullyClosed">
+        <member name="P:Exiled.API.Features.Doors.AirlockController.AirlockDisabled">
             <summary>
-            Gets a value indicating whether or not the door is fully closed.
+            Gets or sets a value indicating whether or airlock is disabled.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Door.IsFullyOpen">
+        <member name="M:Exiled.API.Features.Doors.AirlockController.Get(Interactables.Interobjects.AirlockController)">
             <summary>
-            Gets a value indicating whether the door is fully open.
+            Gets the <see cref="T:Exiled.API.Features.Doors.AirlockController"/> by its base-game controller.
+            </summary>
+            <param name="controller">Base-game controller.</param>
+            <returns>Instance of <see cref="T:Exiled.API.Features.Doors.AirlockController"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.AirlockController.Get(Exiled.API.Features.Doors.Door)">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Doors.AirlockController"/> by one of it's subdoors.
+            </summary>
+            <param name="door">Subdoor.</param>
+            <returns>Instance of <see cref="T:Exiled.API.Features.Doors.AirlockController"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.AirlockController.Toggle">
+            <summary>
+            Toggles airlock.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Door.IsMoving">
+        <member name="M:Exiled.API.Features.Doors.AirlockController.ToString">
             <summary>
-            Gets a value indicating whether or not the door is currently moving.
+            Returns the Door in a human-readable format.
+            </summary>
+            <returns>A string containing Door-related data.</returns>
+        </member>
+        <member name="T:Exiled.API.Features.Doors.BasicDoor">
+            <summary>
+            Represents a basic interactable door.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Door.ExactState">
+        <member name="M:Exiled.API.Features.Doors.BasicDoor.#ctor(Interactables.Interobjects.BasicDoor,System.Collections.Generic.List{Exiled.API.Features.Room})">
             <summary>
-            Gets a value indicating the precise state of the door, from <c>0-1</c>. A value of <c>0</c> indicates the door is fully closed, while a value of <c>1</c> indicates the door is fully open. Values in-between represent the door's animation progress.
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Doors.BasicDoor"/> class.
+            </summary>
+            <param name="door">The base <see cref="T:Interactables.Interobjects.BasicDoor"/> for this door.</param>
+            <param name="room">The <see cref="T:Exiled.API.Features.Room"/>'s for this door.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.BasicDoor.Base">
+            <summary>
+            Gets the base <see cref="T:Interactables.Interobjects.BasicDoor"/>.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Door.IsOpen">
+        <member name="P:Exiled.API.Features.Doors.BasicDoor.Scp106Colliders">
             <summary>
-            Gets or sets a value indicating whether the door is open.
+            Gets the list with all SCP-106's colliders.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Door.IsGate">
+        <member name="P:Exiled.API.Features.Doors.BasicDoor.Cooldown">
             <summary>
-            Gets a value indicating whether or not this door is a gate.
+            Gets or sets the total cooldown before door can be triggered again.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Door.IsCheckpoint">
+        <member name="P:Exiled.API.Features.Doors.BasicDoor.RemainingCooldown">
             <summary>
-            Gets a value indicating whether or not this door is a checkpoint door.
+            Gets or sets the remaining cooldown before door can be triggered again.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Door.IsElevator">
+        <member name="T:Exiled.API.Features.Doors.BasicNonInteractableDoor">
             <summary>
-            Gets a value indicating whether or not this door is an elevator door.
+            Represents a basic non-interactable door.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Door.IsKeycardDoor">
+        <member name="M:Exiled.API.Features.Doors.BasicNonInteractableDoor.#ctor(Interactables.Interobjects.BasicNonInteractableDoor,System.Collections.Generic.List{Exiled.API.Features.Room})">
             <summary>
-            Gets a value indicating whether or not this door requires a keycard to open.
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Doors.BasicNonInteractableDoor"/> class.
+            </summary>
+            <param name="door">The base <see cref="T:Interactables.Interobjects.BasicNonInteractableDoor"/> for this door.</param>
+            <param name="room">The <see cref="T:Exiled.API.Features.Room"/>'s for this door.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.BasicNonInteractableDoor.Base">
+            <summary>
+            Gets the base <see cref="T:Interactables.Interobjects.BasicNonInteractableDoor"/>.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Door.Position">
+        <member name="P:Exiled.API.Features.Doors.BasicNonInteractableDoor.IgnoreLockdowns">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.BasicNonInteractableDoor.IgnoreRemoteAdmin">
+            <inheritdoc/>
+        </member>
+        <member name="T:Exiled.API.Features.Doors.BreakableDoor">
             <summary>
-            Gets or sets the door's position.
+            Represents <see cref="T:Interactables.Interobjects.BreakableDoor"/>.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Door.AllowsScp106">
+        <member name="M:Exiled.API.Features.Doors.BreakableDoor.#ctor(Interactables.Interobjects.BreakableDoor,System.Collections.Generic.List{Exiled.API.Features.Room})">
             <summary>
-            Gets a value indicating whether or not SCP-106 can walk through the door.
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Doors.BreakableDoor"/> class.
+            </summary>
+            <param name="door">The base <see cref="T:Interactables.Interobjects.BreakableDoor"/> for this door.</param>
+            <param name="room">The <see cref="T:Exiled.API.Features.Room"/>'s for this door.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.BreakableDoor.Base">
+            <summary>
+            Gets the base <see cref="T:Interactables.Interobjects.BreakableDoor"/>.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Door.IsLocked">
+        <member name="P:Exiled.API.Features.Doors.BreakableDoor.BrokenDoorPrefab">
             <summary>
-            Gets a value indicating whether or not the door is locked.
+            Gets the prefab of broken door.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Door.DoorLockType">
+        <member name="P:Exiled.API.Features.Doors.BreakableDoor.MaxHealth">
             <summary>
-            Gets or the door lock type.
+            Gets or sets max health of the door.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Door.IsBreakable">
+        <member name="P:Exiled.API.Features.Doors.BreakableDoor.IsDestroyed">
+            <summary>
+            Gets or sets a value indicating whether or not door is destroyed.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.BreakableDoor.IsBreakable">
             <summary>
             Gets a value indicating whether or not this door is breakable.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Door.IsBroken">
+        <member name="P:Exiled.API.Features.Doors.BreakableDoor.Health">
             <summary>
-            Gets a value indicating whether or not this door is broken.
+            Gets or sets remaining health of the door.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Door.IgnoresLockdowns">
+        <member name="P:Exiled.API.Features.Doors.BreakableDoor.IgnoredDamage">
             <summary>
-            Gets a value indicating whether or not this door is ignoring lockdown.
+            Gets or sets damage types which will be ignored.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Door.IgnoresRemoteAdmin">
-            <summary>
-            Gets a value indicating whether or not this door is ignoring remoteAdmin commands.
-            </summary>
+        <member name="P:Exiled.API.Features.Doors.BreakableDoor.IgnoreLockdowns">
+            <inheritdoc/>
         </member>
-        <member name="P:Exiled.API.Features.Door.InstanceId">
-            <summary>
-            Gets the door's Instance ID.
-            </summary>
+        <member name="P:Exiled.API.Features.Doors.BreakableDoor.IgnoreRemoteAdmin">
+            <inheritdoc/>
         </member>
-        <member name="P:Exiled.API.Features.Door.Nametag">
+        <member name="M:Exiled.API.Features.Doors.BreakableDoor.Damage(System.Single,Interactables.Interobjects.DoorUtils.DoorDamageType)">
             <summary>
-            Gets a nametag of a door.
+            Damages the door.
             </summary>
+            <param name="amount">Amount to be dealt.</param>
+            <param name="damageType">Damage type. Some types can be ignored according to <see cref="P:Exiled.API.Features.Doors.BreakableDoor.IgnoredDamage"/>.</param>
+            <returns><see langword="true"/> if door was damaged. Otherwise, false.</returns>
         </member>
-        <member name="P:Exiled.API.Features.Door.Name">
-            <summary>
-            Gets the name of this door.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Door.RequiredPermissions">
-            <summary>
-            Gets or sets the required permissions to open the door.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Door.MaxHealth">
-            <summary>
-            Gets or sets the max health of the door. No effect if the door cannot be broken.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Door.Health">
-            <summary>
-            Gets or sets the door's remaining health. No effect if the door cannot be broken.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Door.IgnoredDamageTypes">
-            <summary>
-            Gets or sets the damage types this door ignores, if it is breakable.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Door.Rotation">
-            <summary>
-            Gets or sets the door's rotation.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Door.Scale">
-            <summary>
-            Gets or sets the size scale of the door.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Door.Zone">
-            <summary>
-            Gets the door's <see cref="T:Exiled.API.Enums.ZoneType"/>.
-            </summary>
-        </member>
-        <member name="M:Exiled.API.Features.Door.Get(Interactables.Interobjects.DoorUtils.DoorVariant)">
-            <summary>
-            Gets the door object associated with a specific <see cref="T:Interactables.Interobjects.DoorUtils.DoorVariant"/>, or creates a new one if there isn't one.
-            </summary>
-            <param name="doorVariant">The base-game <see cref="T:Interactables.Interobjects.DoorUtils.DoorVariant"/>.</param>
-            <returns>A <see cref="T:Exiled.API.Features.Door"/> wrapper object.</returns>
-        </member>
-        <member name="M:Exiled.API.Features.Door.Get(System.String)">
-            <summary>
-            Gets a <see cref="T:Exiled.API.Features.Door"/> given the specified name.
-            </summary>
-            <param name="name">The name to search for.</param>
-            <returns>The <see cref="T:Exiled.API.Features.Door"/> with the given name or <see langword="null"/> if not found.</returns>
-        </member>
-        <member name="M:Exiled.API.Features.Door.Get(UnityEngine.GameObject)">
-            <summary>
-            Gets the door object associated with a specific <see cref="T:UnityEngine.GameObject"/>, or creates a new one if there isn't one.
-            </summary>
-            <param name="gameObject">The base-game <see cref="T:UnityEngine.GameObject"/>.</param>
-            <returns>The <see cref="T:Exiled.API.Features.Door"/> with the given name or <see langword="null"/> if not found.</returns>
-        </member>
-        <member name="M:Exiled.API.Features.Door.Get(System.Func{Exiled.API.Features.Door,System.Boolean})">
-            <summary>
-            Gets a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Door"/> filtered based on a predicate.
-            </summary>
-            <param name="predicate">The condition to satify.</param>
-            <returns>A <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Door"/> which contains elements that satify the condition.</returns>
-        </member>
-        <member name="M:Exiled.API.Features.Door.Get(Exiled.API.Enums.DoorType)">
-            <summary>
-            Gets a <see cref="T:Exiled.API.Features.Door"/> given the specified <see cref="T:Exiled.API.Enums.DoorType"/>.
-            </summary>
-            <param name="doorType">The <see cref="T:Exiled.API.Enums.DoorType"/> to search for.</param>
-            <returns>The <see cref="T:Exiled.API.Features.Door"/> with the given <see cref="T:Exiled.API.Enums.DoorType"/> or <see langword="null"/> if not found.</returns>
-        </member>
-        <member name="M:Exiled.API.Features.Door.GetClosest(UnityEngine.Vector3,System.Single@)">
-            <summary>
-            Returns the closest <see cref="T:Exiled.API.Features.Door"/> to the given <paramref name="position"/>.
-            </summary>
-            <param name="position">The <see cref="T:UnityEngine.Vector3">position</see> to find the closest door to.</param>
-            <param name="distance">The distance between the door and the point.</param>
-            <returns>The door closest to the provided position.</returns>
-        </member>
-        <member name="M:Exiled.API.Features.Door.Random(Exiled.API.Enums.ZoneType,System.Boolean)">
-            <summary>
-            Gets a random <see cref="T:Exiled.API.Features.Door"/>.
-            </summary>
-            <param name="type">Filters by <see cref="T:Exiled.API.Enums.ZoneType"/>.</param>
-            <param name="onlyUnbroken">A value indicating whether it filters broken doors.</param>
-            <returns><see cref="T:Exiled.API.Features.Door"/> object.</returns>
-        </member>
-        <member name="M:Exiled.API.Features.Door.LockAll(System.Single,Exiled.API.Enums.ZoneType,Exiled.API.Enums.DoorLockType)">
-            <summary>
-            Locks all <see cref="T:Exiled.API.Features.Door">doors</see> given the specified <see cref="T:Exiled.API.Enums.ZoneType"/>.
-            </summary>
-            <param name="duration">The duration of the lockdown.</param>
-            <param name="zoneType">The <see cref="T:Exiled.API.Enums.ZoneType"/> to affect.</param>
-            <param name="lockType">The specified <see cref="T:Exiled.API.Enums.DoorLockType"/>.</param>
-        </member>
-        <member name="M:Exiled.API.Features.Door.LockAll(System.Single,System.Collections.Generic.IEnumerable{Exiled.API.Enums.ZoneType},Exiled.API.Enums.DoorLockType)">
-            <summary>
-            Locks all <see cref="T:Exiled.API.Features.Door">doors</see> given the specified <see cref="T:Exiled.API.Enums.ZoneType"/>.
-            </summary>
-            <param name="duration">The duration of the lockdown.</param>
-            <param name="zoneTypes">The <see cref="T:Exiled.API.Enums.ZoneType"/>s to affect.</param>
-            <param name="lockType">The specified <see cref="T:Exiled.API.Enums.DoorLockType"/>.</param>
-        </member>
-        <member name="M:Exiled.API.Features.Door.LockAll(System.Single,Exiled.API.Enums.DoorLockType)">
-            <summary>
-            Locks all <see cref="T:Exiled.API.Features.Door">doors</see> in the facility.
-            </summary>
-            <param name="duration">The duration of the lockdown.</param>
-            <param name="lockType">The specified <see cref="T:Exiled.API.Enums.DoorLockType"/>.</param>
-        </member>
-        <member name="M:Exiled.API.Features.Door.UnlockAll">
-            <summary>
-            Unlocks all <see cref="T:Exiled.API.Features.Door">doors</see> in the facility.
-            </summary>
-        </member>
-        <member name="M:Exiled.API.Features.Door.UnlockAll(Exiled.API.Enums.ZoneType)">
-            <summary>
-            Unlocks all <see cref="T:Exiled.API.Features.Door">doors</see> in the facility.
-            </summary>
-            <param name="zoneType">The <see cref="T:Exiled.API.Enums.ZoneType"/> to affect.</param>
-        </member>
-        <member name="M:Exiled.API.Features.Door.UnlockAll(System.Collections.Generic.IEnumerable{Exiled.API.Enums.ZoneType})">
-            <summary>
-            Unlocks all <see cref="T:Exiled.API.Features.Door">doors</see> in the facility.
-            </summary>
-            <param name="zoneTypes">The <see cref="T:Exiled.API.Enums.ZoneType"/>s to affect.</param>
-        </member>
-        <member name="M:Exiled.API.Features.Door.UnlockAll(System.Func{Exiled.API.Features.Door,System.Boolean})">
-            <summary>
-            Unlocks all <see cref="T:Exiled.API.Features.Door">doors</see> in the facility.
-            </summary>
-            <param name="predicate">The condition to satify.</param>
-        </member>
-        <member name="M:Exiled.API.Features.Door.BreakDoor(Interactables.Interobjects.DoorUtils.DoorDamageType)">
+        <member name="M:Exiled.API.Features.Doors.BreakableDoor.Break(Interactables.Interobjects.DoorUtils.DoorDamageType)">
             <summary>
             Breaks the specified door. No effect if the door cannot be broken, or if it is already broken.
             </summary>
             <param name="type">The <see cref="T:Interactables.Interobjects.DoorUtils.DoorDamageType"/> to apply to the door.</param>
             <returns><see langword="true"/> if the door was broken, <see langword="false"/> if it was unable to be broken, or was already broken before.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Door.DamageDoor(System.Single,Interactables.Interobjects.DoorUtils.DoorDamageType)">
+        <member name="M:Exiled.API.Features.Doors.BreakableDoor.ToString">
             <summary>
-            Damages the door. No effect if the door cannot be broken.
+            Returns the Door in a human-readable format.
             </summary>
-            <param name="amount">The amount of damage to deal.</param>
-            <param name="type">The damage type to use.</param>
-            <returns><see langword="true"/> if the door was damaged.</returns>
+            <returns>A string containing Door-related data.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Door.TryPryOpen">
+        <member name="T:Exiled.API.Features.Doors.CheckpointDoor">
             <summary>
-            Tries to pry the door open. No effect if the door cannot be pried.
+            Represents a checkpoint door.
             </summary>
-            <returns><see langword="true"/> if the door was able to be pried open.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Door.TryPryOpen(Exiled.API.Features.Player)">
+        <member name="M:Exiled.API.Features.Doors.CheckpointDoor.#ctor(Interactables.Interobjects.CheckpointDoor,System.Collections.Generic.List{Exiled.API.Features.Room})">
             <summary>
-            Tries to pry the door open. No effect if the door cannot be pried.
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Doors.CheckpointDoor"/> class.
             </summary>
-            <returns><see langword="true"/> if the door was able to be pried open.</returns>
-            <param name="player">The amount of damage to deal.</param>
+            <param name="door">The base <see cref="T:Interactables.Interobjects.CheckpointDoor"/> for this door.</param>
+            <param name="room">The <see cref="T:Exiled.API.Features.Room"/> for this door.</param>
         </member>
-        <member name="M:Exiled.API.Features.Door.PlaySound(Exiled.API.Enums.DoorBeepType)">
+        <member name="P:Exiled.API.Features.Doors.CheckpointDoor.Base">
+            <summary>
+            Gets the base <see cref="T:Interactables.Interobjects.CheckpointDoor"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.CheckpointDoor.Subdoors">
+            <summary>
+            Gets the list of all sub doors belonging to this <see cref="T:Exiled.API.Features.Doors.CheckpointDoor"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.CheckpointDoor.CurrentStage">
+            <summary>
+            Gets or sets the current checkpoint stage.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.CheckpointDoor.MainTimer">
+            <summary>
+            Gets or sets a time in seconds for main timer.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.CheckpointDoor.WaitTime">
+            <summary>
+            Gets or sets time before doors close.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.CheckpointDoor.WarningTime">
+            <summary>
+            Gets or sets time in seconds when warning will be shown.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.CheckpointDoor.IsDestroyed">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.CheckpointDoor.IsBreakable">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.CheckpointDoor.Health">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.CheckpointDoor.MaxHealth">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.CheckpointDoor.IgnoredDamage">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.CheckpointDoor.SubDoorsValue">
+            <summary>
+            Gets a <see cref="T:System.Collections.Generic.List`1"/> containing all known subdoors <see cref="T:Exiled.API.Features.Doors.Door"/>s.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.CheckpointDoor.ToggleAllDoors(System.Boolean)">
+            <summary>
+            Toggles the state of the doors from <see cref="P:Exiled.API.Features.Doors.CheckpointDoor.Subdoors"/>.
+            </summary>
+            <param name="newState">New state for the subdoors.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.CheckpointDoor.Damage(System.Single,Interactables.Interobjects.DoorUtils.DoorDamageType)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.CheckpointDoor.Break(Interactables.Interobjects.DoorUtils.DoorDamageType)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.CheckpointDoor.ToString">
+            <summary>
+            Returns the Door in a human-readable format.
+            </summary>
+            <returns>A string containing Door-related data.</returns>
+        </member>
+        <member name="T:Exiled.API.Features.Doors.Door">
+            <summary>
+            A wrapper class for <see cref="T:Interactables.Interobjects.DoorUtils.DoorVariant"/>.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Features.Doors.Door.DoorVariantToDoor">
+            <summary>
+            A <see cref="T:System.Collections.Generic.Dictionary`2"/> containing all known <see cref="T:Interactables.Interobjects.DoorUtils.DoorVariant"/>'s and their corresponding <see cref="T:Exiled.API.Features.Doors.Door"/>.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.Door.#ctor(Interactables.Interobjects.DoorUtils.DoorVariant,System.Collections.Generic.List{Exiled.API.Features.Room})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Doors.Door"/> class.
+            </summary>
+            <param name="door">The base <see cref="T:Interactables.Interobjects.DoorUtils.DoorVariant"/> for this door.</param>
+            <param name="rooms">The <see cref="T:System.Collections.Generic.List`1"/> of <see cref="T:Exiled.API.Features.Room"/>'s for this door.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.List">
+            <summary>
+            Gets a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Doors.Door"/> which contains all the <see cref="T:Exiled.API.Features.Doors.Door"/> instances.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.Base">
+            <summary>
+            Gets the base-game <see cref="T:Interactables.Interobjects.DoorUtils.DoorVariant"/> corresponding with this door.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.GameObject">
+            <summary>
+            Gets the door's <see cref="T:UnityEngine.GameObject"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.Transform">
+            <summary>
+            Gets the door's <see cref="T:UnityEngine.Transform"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.Type">
+            <summary>
+            Gets the door's <see cref="T:Exiled.API.Enums.DoorType"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.Room">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Room"/> that the door is located in.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.Rooms">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Room"/>'s that the door is located in.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.IsFullyClosed">
+            <summary>
+            Gets a value indicating whether or not the door is fully closed.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.IsFullyOpen">
+            <summary>
+            Gets a value indicating whether the door is fully open.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.IsMoving">
+            <summary>
+            Gets a value indicating whether or not the door is currently moving.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.ExactState">
+            <summary>
+            Gets a value indicating the precise state of the door, from <c>0-1</c>. A value of <c>0</c> indicates the door is fully closed, while a value of <c>1</c> indicates the door is fully open. Values in-between represent the door's animation progress.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.IsOpen">
+            <summary>
+            Gets or sets a value indicating whether the door is open.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.IsGate">
+            <summary>
+            Gets a value indicating whether or not this door is a gate.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.IsCheckpoint">
+            <summary>
+            Gets a value indicating whether or not this door is a checkpoint door.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.IsElevator">
+            <summary>
+            Gets a value indicating whether or not this door is an elevator door.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.IsDamageable">
+            <summary>
+            Gets a value indicating whether or not this door can be damaged.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.IsNonInteractable">
+            <summary>
+            Gets a value indicating whether or not this door is non-interactable.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.IsPartOfCheckpoint">
+            <summary>
+            Gets a value indicating whether or not this door is subdoor belonging to a checkpoint.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.IsKeycardDoor">
+            <summary>
+            Gets a value indicating whether or not this door requires a keycard to open.
+            </summary>
+            <remarks>
+            This value is <see langword="false"/> if <see cref="P:Exiled.API.Features.Doors.Door.KeycardPermissions"/> is equal to <see cref="F:Exiled.API.Enums.KeycardPermissions.None"/>.
+            </remarks>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.KeycardPermissions">
+            <summary>
+            Gets or sets the keycard permissions required to open the door.
+            </summary>
+            <remarks>
+            Setting this value to <see cref="F:Exiled.API.Enums.KeycardPermissions.None"/> will allow this door to be opened without a keycard.
+            </remarks>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.Position">
+            <summary>
+            Gets or sets the door's position.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.AllowsScp106">
+            <summary>
+            Gets or sets a value indicating whether or not SCP-106 can walk through the door.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.IsLocked">
+            <summary>
+            Gets a value indicating whether or not the door is locked.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.DoorLockType">
+            <summary>
+            Gets or sets the door lock type.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.InstanceId">
+            <summary>
+            Gets the door's Instance ID.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.Nametag">
+            <summary>
+            Gets a nametag of a door.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.Name">
+            <summary>
+            Gets the name of this door.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.RequiredPermissions">
+            <summary>
+            Gets or sets the required permissions to open the door.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.Rotation">
+            <summary>
+            Gets or sets the door's rotation.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.Scale">
+            <summary>
+            Gets or sets the size scale of the door.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.Zone">
+            <summary>
+            Gets the door's <see cref="T:Exiled.API.Enums.ZoneType"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.RoomsValue">
+            <summary>
+            Gets a <see cref="T:System.Collections.Generic.List`1"/> containing all <see cref="T:Exiled.API.Features.Room"/>'s that are connected with <see cref="T:Exiled.API.Features.Doors.Door"/>.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.Door.Get(Interactables.Interobjects.DoorUtils.DoorVariant)">
+            <summary>
+            Gets the door object associated with a specific <see cref="T:Interactables.Interobjects.DoorUtils.DoorVariant"/>, or creates a new one if there isn't one.
+            </summary>
+            <param name="doorVariant">The base-game <see cref="T:Interactables.Interobjects.DoorUtils.DoorVariant"/>.</param>
+            <returns>A <see cref="T:Exiled.API.Features.Doors.Door"/> wrapper object.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.Door.Get(System.String)">
+            <summary>
+            Gets a <see cref="T:Exiled.API.Features.Doors.Door"/> given the specified name.
+            </summary>
+            <param name="name">The name to search for.</param>
+            <returns>The <see cref="T:Exiled.API.Features.Doors.Door"/> with the given name or <see langword="null"/> if not found.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.Door.Get(UnityEngine.GameObject)">
+            <summary>
+            Gets the door object associated with a specific <see cref="T:UnityEngine.GameObject"/>, or creates a new one if there isn't one.
+            </summary>
+            <param name="gameObject">The base-game <see cref="T:UnityEngine.GameObject"/>.</param>
+            <returns>The <see cref="T:Exiled.API.Features.Doors.Door"/> with the given name or <see langword="null"/> if not found.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.Door.Get(System.Func{Exiled.API.Features.Doors.Door,System.Boolean})">
+            <summary>
+            Gets a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Doors.Door"/> filtered based on a predicate.
+            </summary>
+            <param name="predicate">The condition to satify.</param>
+            <returns>A <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Doors.Door"/> which contains elements that satify the condition.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.Door.Get(Exiled.API.Enums.DoorType)">
+            <summary>
+            Gets a <see cref="T:Exiled.API.Features.Doors.Door"/> given the specified <see cref="T:Exiled.API.Enums.DoorType"/>.
+            </summary>
+            <param name="doorType">The <see cref="T:Exiled.API.Enums.DoorType"/> to search for.</param>
+            <returns>The <see cref="T:Exiled.API.Features.Doors.Door"/> with the given <see cref="T:Exiled.API.Enums.DoorType"/> or <see langword="null"/> if not found.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.Door.GetClosest(UnityEngine.Vector3,System.Single@)">
+            <summary>
+            Returns the closest <see cref="T:Exiled.API.Features.Doors.Door"/> to the given <paramref name="position"/>.
+            </summary>
+            <param name="position">The <see cref="T:UnityEngine.Vector3">position</see> to find the closest door to.</param>
+            <param name="distance">The distance between the door and the point.</param>
+            <returns>The door closest to the provided position.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.Door.Random(Exiled.API.Enums.ZoneType,System.Boolean)">
+            <summary>
+            Gets a random <see cref="T:Exiled.API.Features.Doors.Door"/>.
+            </summary>
+            <param name="type">Filters by <see cref="T:Exiled.API.Enums.ZoneType"/>.</param>
+            <param name="onlyUnbroken">A value indicating whether it filters broken doors.</param>
+            <returns><see cref="T:Exiled.API.Features.Doors.Door"/> object.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.Door.LockAll(System.Single,Exiled.API.Enums.ZoneType,Exiled.API.Enums.DoorLockType)">
+            <summary>
+            Locks all <see cref="T:Exiled.API.Features.Doors.Door">doors</see> given the specified <see cref="T:Exiled.API.Enums.ZoneType"/>.
+            </summary>
+            <param name="duration">The duration of the lockdown.</param>
+            <param name="zoneType">The <see cref="T:Exiled.API.Enums.ZoneType"/> to affect.</param>
+            <param name="lockType">The specified <see cref="T:Exiled.API.Enums.DoorLockType"/>.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.Door.LockAll(System.Single,System.Collections.Generic.IEnumerable{Exiled.API.Enums.ZoneType},Exiled.API.Enums.DoorLockType)">
+            <summary>
+            Locks all <see cref="T:Exiled.API.Features.Doors.Door">doors</see> given the specified <see cref="T:Exiled.API.Enums.ZoneType"/>.
+            </summary>
+            <param name="duration">The duration of the lockdown.</param>
+            <param name="zoneTypes">The <see cref="T:Exiled.API.Enums.ZoneType"/>s to affect.</param>
+            <param name="lockType">The specified <see cref="T:Exiled.API.Enums.DoorLockType"/>.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.Door.LockAll(System.Single,Exiled.API.Enums.DoorLockType)">
+            <summary>
+            Locks all <see cref="T:Exiled.API.Features.Doors.Door">doors</see> in the facility.
+            </summary>
+            <param name="duration">The duration of the lockdown.</param>
+            <param name="lockType">The specified <see cref="T:Exiled.API.Enums.DoorLockType"/>.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.Door.UnlockAll">
+            <summary>
+            Unlocks all <see cref="T:Exiled.API.Features.Doors.Door">doors</see> in the facility.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.Door.UnlockAll(Exiled.API.Enums.ZoneType)">
+            <summary>
+            Unlocks all <see cref="T:Exiled.API.Features.Doors.Door">doors</see> in the facility.
+            </summary>
+            <param name="zoneType">The <see cref="T:Exiled.API.Enums.ZoneType"/> to affect.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.Door.UnlockAll(System.Collections.Generic.IEnumerable{Exiled.API.Enums.ZoneType})">
+            <summary>
+            Unlocks all <see cref="T:Exiled.API.Features.Doors.Door">doors</see> in the facility.
+            </summary>
+            <param name="zoneTypes">The <see cref="T:Exiled.API.Enums.ZoneType"/>s to affect.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.Door.UnlockAll(System.Func{Exiled.API.Features.Doors.Door,System.Boolean})">
+            <summary>
+            Unlocks all <see cref="T:Exiled.API.Features.Doors.Door">doors</see> in the facility.
+            </summary>
+            <param name="predicate">The condition to satify.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.Door.PlaySound(Exiled.API.Enums.DoorBeepType)">
             <summary>
             Makes the door play a beep sound.
             </summary>
             <param name="beep">The beep sound to play.</param>
         </member>
-        <member name="M:Exiled.API.Features.Door.ChangeLock(Exiled.API.Enums.DoorLockType)">
+        <member name="M:Exiled.API.Features.Doors.Door.ChangeLock(Exiled.API.Enums.DoorLockType)">
             <summary>
             Change the door lock with the given lock type.
             </summary>
             <param name="lockType">The <see cref="T:Exiled.API.Enums.DoorLockType"/> to use.</param>
         </member>
-        <member name="M:Exiled.API.Features.Door.Lock(System.Single,Exiled.API.Enums.DoorLockType)">
+        <member name="M:Exiled.API.Features.Doors.Door.Lock(System.Single,Exiled.API.Enums.DoorLockType)">
             <summary>
             Locks all active locks on the door, and then reverts back any changes after a specified length of time.
             </summary>
             <param name="time">The amount of time that must pass before unlocking the door.</param>
             <param name="lockType">The <see cref="T:Exiled.API.Enums.DoorLockType"/> of the lockdown.</param>
         </member>
-        <member name="M:Exiled.API.Features.Door.Unlock">
+        <member name="M:Exiled.API.Features.Doors.Door.Unlock">
             <summary>
             Unlocks and clears all active locks on the door.
             </summary>
         </member>
-        <member name="M:Exiled.API.Features.Door.Unlock(System.Single,Exiled.API.Enums.DoorLockType)">
+        <member name="M:Exiled.API.Features.Doors.Door.Unlock(System.Single,Exiled.API.Enums.DoorLockType)">
             <summary>
             Unlocks and clears all active locks on the door after a specified length of time.
             </summary>
             <param name="time">The amount of time that must pass before unlocking the door.</param>
             <param name="flagsToUnlock">The <see cref="T:Exiled.API.Enums.DoorLockType"/> of the lockdown.</param>
         </member>
-        <member name="M:Exiled.API.Features.Door.ToString">
+        <member name="M:Exiled.API.Features.Doors.Door.IsAllowToInteract(Exiled.API.Features.Player)">
+            <summary>
+            Checks if specified <see cref="T:Exiled.API.Features.Player"/> can interact with the door.
+            </summary>
+            <param name="player">Player to check.</param>
+            <returns><see langword="true"/> if the specified player can interact with the door. Otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.Door.ToString">
             <summary>
             Returns the Door in a human-readable format.
             </summary>
             <returns>A string containing Door-related data.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Door.Get(Interactables.Interobjects.DoorUtils.DoorVariant,Exiled.API.Features.Room)">
+        <member name="M:Exiled.API.Features.Doors.Door.Create(Interactables.Interobjects.DoorUtils.DoorVariant,System.Collections.Generic.List{Exiled.API.Features.Room})">
             <summary>
-            Gets the door object associated with a specific <see cref="T:Interactables.Interobjects.DoorUtils.DoorVariant"/>, or creates a new one if there isn't one.
+            Creates the door object associated with a specific <see cref="T:Interactables.Interobjects.DoorUtils.DoorVariant"/>.
             </summary>
             <param name="doorVariant">The base-game <see cref="T:Interactables.Interobjects.DoorUtils.DoorVariant"/>.</param>
-            <param name="room">The <see cref="P:Exiled.API.Features.Door.Room"/> this door is in.</param>
-            <remarks>The 'room' parameter is only used if a new door wrapper needs to be created.</remarks>
-            <returns>A <see cref="T:Exiled.API.Features.Door"/> wrapper object.</returns>
+            <param name="rooms">Target door <see cref="P:Exiled.API.Features.Doors.Door.Rooms"/>.</param>
+            <returns>A <see cref="T:Exiled.API.Features.Doors.Door"/> wrapper object.</returns>
+        </member>
+        <member name="T:Exiled.API.Features.Doors.ElevatorDoor">
+            <summary>
+            Represents an elevator door.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.ElevatorDoor.#ctor(Interactables.Interobjects.ElevatorDoor,System.Collections.Generic.List{Exiled.API.Features.Room})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Doors.ElevatorDoor"/> class.
+            </summary>
+            <param name="door">The base <see cref="T:Interactables.Interobjects.ElevatorDoor"/> for this door.</param>
+            <param name="room">The <see cref="T:Exiled.API.Features.Room"/> for this door.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.ElevatorDoor.Base">
+            <summary>
+            Gets the base <see cref="T:Interactables.Interobjects.ElevatorDoor"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.ElevatorDoor.Group">
+            <summary>
+            Gets the <see cref="T:Interactables.Interobjects.ElevatorManager.ElevatorGroup"/> that this door's <see cref="P:Exiled.API.Features.Doors.ElevatorDoor.Lift"/> belongs to.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.ElevatorDoor.ElevatorType">
+            <summary>
+            Gets the type according to <see cref="P:Exiled.API.Features.Doors.ElevatorDoor.Group"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.ElevatorDoor.Panel">
+            <summary>
+            Gets the target panel for this lift.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.ElevatorDoor.Lift">
+            <summary>
+            Gets the <see cref="P:Exiled.API.Features.Doors.ElevatorDoor.Lift"/> associated with this elevator door.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.ElevatorDoor.ToString">
+            <summary>
+            Returns the Door in a human-readable format.
+            </summary>
+            <returns>A string containing Door-related data.</returns>
+        </member>
+        <member name="T:Exiled.API.Features.Doors.Gate">
+            <summary>
+            Represents a "pryable" door or gate.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.Gate.#ctor(Interactables.Interobjects.PryableDoor,System.Collections.Generic.List{Exiled.API.Features.Room})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Doors.Gate"/> class.
+            </summary>
+            <param name="door">The base <see cref="T:Interactables.Interobjects.PryableDoor"/> for this door.</param>
+            <param name="room">The <see cref="T:Exiled.API.Features.Room"/>'s for this door.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Gate.Base">
+            <summary>
+            Gets the base <see cref="T:Interactables.Interobjects.PryableDoor"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Gate.PryPositions">
+            <summary>
+            Gets the list of all available pry positions.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Gate.RemainingPryCooldown">
+            <summary>
+            Gets or sets remaining cooldown for prying.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Gate.BlockingPryingMask">
+            <summary>
+            Gets or sets <see cref="T:Exiled.API.Enums.DoorLockType"/> which will block prying if door has them.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.Gate.TryPry(Exiled.API.Features.Player)">
+            <summary>
+            Tries to pry the door open. No effect if the door cannot be pried.
+            </summary>
+            <returns><see langword="true"/> if the door was able to be pried open.</returns>
+            <param name="player"><see cref="T:Exiled.API.Features.Player"/> to perform pry gate.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Doors.Gate.ToString">
+            <summary>
+            Returns the Door in a human-readable format.
+            </summary>
+            <returns>A string containing Door-related data.</returns>
         </member>
         <member name="T:Exiled.API.Features.Effect">
             <summary>
@@ -5370,6 +5729,13 @@
             Gets all the patched methods and their relative patch group.
             </summary>
         </member>
+        <member name="M:Exiled.API.Features.GlobalPatchProcessor.PatchAll(HarmonyLib.Harmony,System.Int32@)">
+            <summary>
+            Patch all your Harmony and return you the number of failed patch.
+            </summary>
+            <param name="harmony">The Harmony instance to Patch.</param>
+            <param name="failedPatch">The number of failed patch.</param>
+        </member>
         <member name="M:Exiled.API.Features.GlobalPatchProcessor.PatchAll(System.String,System.String)">
             <summary>
             Searches the current assembly for Harmony annotations and uses them to create patches.
@@ -5387,6 +5753,239 @@
             <param name="id">The Harmony instance id.</param>
             <param name="groupId">The target group to include.</param>
             <exception cref="T:System.ArgumentNullException">Thrown when the <see cref="P:Exiled.API.Features.Attributes.PatchGroupAttribute.GroupId"/> is <see langword="null"/> or empty.</exception>
+        </member>
+        <member name="T:Exiled.API.Features.Hazards.AmnesticCloudHazard">
+            <summary>
+            A wrapper for SCP-939's amnestic cloud.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Hazards.AmnesticCloudHazard.#ctor(PlayerRoles.PlayableScps.Scp939.Scp939AmnesticCloudInstance)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Hazards.AmnesticCloudHazard"/> class.
+            </summary>
+            <param name="hazard">The <see cref="T:PlayerRoles.PlayableScps.Scp939.Scp939AmnesticCloudInstance"/> instance.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.AmnesticCloudHazard.Base">
+            <inheritdoc cref="P:Exiled.API.Features.Hazards.Hazard.Base"/>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.AmnesticCloudHazard.Ability">
+            <summary>
+            Gets the <see cref="T:PlayerRoles.PlayableScps.Scp939.Scp939AmnesticCloudAbility"/> for this instance.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.AmnesticCloudHazard.Owner">
+            <summary>
+            Gets the player who controls SCP-939.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.AmnesticCloudHazard.State">
+            <summary>
+            Gets or sets current state of cloud.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.AmnesticCloudHazard.EffectDuration">
+            <summary>
+            Gets or sets duration for effects.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.AmnesticCloudHazard.MinHoldTime">
+            <summary>
+            Gets or sets minimum time to press key to spawn cloud.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.AmnesticCloudHazard.MaxHoldTime">
+            <summary>
+            Gets or sets maximum time to press key to spawn cloud.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.AmnesticCloudHazard.TotalDuration">
+            <summary>
+            Gets or sets total duration before hazard will get destroyed.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.AmnesticCloudHazard.TargetState">
+            <summary>
+            Gets or sets a value indicating whether or not hazard is active or not.
+            </summary>
+        </member>
+        <member name="T:Exiled.API.Features.Hazards.Hazard">
+            <summary>
+            A wrapper for <see cref="T:Hazards.EnvironmentalHazard"/>.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Features.Hazards.Hazard.EnvironmentalHazardToHazard">
+            <summary>
+            <see cref="T:System.Collections.Generic.Dictionary`2"/> with <see cref="T:Hazards.EnvironmentalHazard"/> to it's <see cref="T:Exiled.API.Features.Hazards.Hazard"/>.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Hazards.Hazard.#ctor(Hazards.EnvironmentalHazard)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Hazards.Hazard"/> class.
+            </summary>
+            <param name="hazard">The <see cref="T:Hazards.EnvironmentalHazard"/> instance.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.Hazard.List">
+            <summary>
+            Gets the list of all hazards.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.Hazard.Base">
+            <summary>
+            Gets the <see cref="T:Hazards.EnvironmentalHazard"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.Hazard.AffectedPlayers">
+            <summary>
+            Gets or sets the list with all affected by this hazard players.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.Hazard.MaxDistance">
+            <summary>
+            Gets or sets max hazard distance.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.Hazard.MaxHeightDistance">
+            <summary>
+            Gets or sets max hazard height.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.Hazard.IsActive">
+            <summary>
+            Gets a value indicating whether or not hazard is active.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.Hazard.PositionOffset">
+            <summary>
+            Gets or sets offset for position.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.Hazard.Room">
+            <summary>
+            Gets the room where this hazard is located.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.Hazard.Position">
+            <summary>
+            Gets or sets the position.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Hazards.Hazard.Get(Hazards.EnvironmentalHazard)">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Hazards.Hazard"/> by <see cref="T:Hazards.EnvironmentalHazard"/>.
+            </summary>
+            <param name="environmentalHazard">The <see cref="T:Hazards.EnvironmentalHazard"/> instance.</param>
+            <returns><see cref="T:Exiled.API.Features.Hazards.Hazard"/> for <see cref="T:Hazards.EnvironmentalHazard"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Hazards.Hazard.Get(Exiled.API.Features.Room)">
+            <summary>
+            Gets the hazard by the room where it's located.
+            </summary>
+            <param name="room">Room.</param>
+            <returns><see cref="T:Exiled.API.Features.Hazards.Hazard"/> in given <see cref="T:Exiled.API.Features.Room"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Hazards.Hazard.Get(UnityEngine.GameObject)">
+            <summary>
+            Gets the hazard by it's <see cref="T:UnityEngine.GameObject"/>.
+            </summary>
+            <param name="obj">Game object.</param>
+            <returns><see cref="T:Exiled.API.Features.Hazards.Hazard"/> in given <see cref="T:Exiled.API.Features.Room"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Hazards.Hazard.Get(System.Func{Exiled.API.Features.Hazards.Hazard,System.Boolean})">
+            <summary>
+            Gets the <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Hazards.Hazard"/> based on predicate.
+            </summary>
+            <param name="predicate">Condition to satisfy.</param>
+            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Hazards.Hazard"/> based on predicate.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Hazards.Hazard.IsInArea(Exiled.API.Features.Player)">
+            <summary>
+            Checks if player is in hazard zone.
+            </summary>
+            <param name="player">Player to check.</param>
+            <returns><see langword="true"/> if player is in hazard zone. Otherwise, false.</returns>
+        </member>
+        <member name="T:Exiled.API.Features.Hazards.SinkholeHazard">
+            <summary>
+            Represents a sinkhole hazard.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Hazards.SinkholeHazard.#ctor(Hazards.SinkholeEnvironmentalHazard)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Hazards.SinkholeHazard"/> class.
+            </summary>
+            <param name="hazard">The <see cref="T:Hazards.SinkholeEnvironmentalHazard"/> instance.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.SinkholeHazard.Base">
+            <summary>
+            Gets the <see cref="T:Hazards.SinkholeEnvironmentalHazard"/>.
+            </summary>
+        </member>
+        <member name="T:Exiled.API.Features.Hazards.TantrumHazard">
+            <summary>
+            A wrapper for <see cref="T:Hazards.TantrumEnvironmentalHazard"/>.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Hazards.TantrumHazard.#ctor(Hazards.TantrumEnvironmentalHazard)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Hazards.TantrumHazard"/> class.
+            </summary>
+            <param name="hazard">The <see cref="T:Hazards.TantrumEnvironmentalHazard"/> instance.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.TantrumHazard.Base">
+            <summary>
+            Gets the <see cref="T:Hazards.TantrumEnvironmentalHazard"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.TantrumHazard.PlaySizzle">
+            <summary>
+            Gets or sets a value indicating whether or not sizzle should be played.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.TantrumHazard.SynchronisedPosition">
+            <summary>
+            Gets or sets the synced position.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.TantrumHazard.CorrectPosition">
+            <summary>
+            Gets or sets the correct position of tantrum hazard.
+            </summary>
+        </member>
+        <member name="T:Exiled.API.Features.Hazards.TemporaryHazard">
+            <summary>
+            Represents temporary hazard.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Hazards.TemporaryHazard.#ctor(Hazards.TemporaryHazard)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Hazards.TemporaryHazard"/> class.
+            </summary>
+            <param name="hazard">The <see cref="T:Hazards.TemporaryHazard"/> instance.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.TemporaryHazard.Base">
+            <summary>
+            Gets the <see cref="T:Hazards.TemporaryHazard"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.TemporaryHazard.IsDestroyed">
+            <summary>
+            Gets or sets a value indicating whether or not hazard is destroyed.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.TemporaryHazard.TotalDuration">
+            <summary>
+            Gets the total duration before hazard gets destroyed.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.TemporaryHazard.Duration">
+            <summary>
+            Gets or sets elapsed time which has spend after creating.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Hazards.TemporaryHazard.Destroy">
+            <summary>
+            Destroys this hazard.
+            </summary>
         </member>
         <member name="T:Exiled.API.Features.Hint">
             <summary>
@@ -5581,13 +6180,11 @@
             <summary>
             Gets or sets how strong the helmet on the armor is.
             </summary>
-            <exception cref="T:System.ArgumentOutOfRangeException">When trying to set the value below 0 or above 100.</exception>
         </member>
         <member name="P:Exiled.API.Features.Items.Armor.VestEfficacy">
             <summary>
             Gets or sets how strong the vest on the armor is.
             </summary>
-            <exception cref="T:System.ArgumentOutOfRangeException">When trying to set the value below 0 or above 100.</exception>
         </member>
         <member name="P:Exiled.API.Features.Items.Armor.StaminaUseMultiplier">
             <summary>
@@ -6569,6 +7166,60 @@
             <param name="oldOwner">old <see cref="T:Exiled.API.Features.Items.Item"/> owner.</param>
             <param name="newOwner">new <see cref="T:Exiled.API.Features.Items.Item"/> owner.</param>
         </member>
+        <member name="T:Exiled.API.Features.Items.Scp018">
+            <summary>
+            A wrapper class for <see cref="T:InventorySystem.Items.ThrowableProjectiles.Scp018Projectile"/> item.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Scp018.#ctor(InventorySystem.Items.ThrowableProjectiles.ThrowableItem)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Items.Scp018"/> class.
+            </summary>
+            <param name="itemBase">The base <see cref="T:InventorySystem.Items.ThrowableProjectiles.ThrowableItem"/> class.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Scp018.#ctor(ItemType,Exiled.API.Features.Player)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Items.Scp018"/> class.
+            </summary>
+            <param name="type">The <see cref="T:ItemType"/> of the grenade.</param>
+            <param name="player">The owner of the grenade. Leave <see langword="null"/> for no owner.</param>
+            <remarks>The player parameter will always need to be defined if this grenade is custom using Exiled.CustomItems.</remarks>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Scp018.Projectile">
+            <summary>
+            Gets a <see cref="T:Exiled.API.Features.Pickups.Projectiles.ExplosionGrenadeProjectile"/> to change grenade properties.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Scp018.FriendlyFireTime">
+            <summary>
+            Gets or sets the time for SCP-018 not to ignore the friendly fire.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Scp018.FuseTime">
+            <summary>
+            Gets or sets how long the fuse will last.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Scp018.SpawnActive(UnityEngine.Vector3,Exiled.API.Features.Player)">
+            <summary>
+            Spawns an active grenade on the map at the specified location.
+            </summary>
+            <param name="position">The location to spawn the grenade.</param>
+            <param name="owner">Optional: The <see cref="T:Exiled.API.Features.Player"/> owner of the grenade.</param>
+            <returns>Spawned <see cref="T:Exiled.API.Features.Pickups.Projectiles.Scp018Projectile">grenade</see>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Scp018.ToString">
+            <summary>
+            Returns the ExplosiveGrenade in a human readable format.
+            </summary>
+            <returns>A string containing ExplosiveGrenade-related data.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Scp018.Clone">
+            <summary>
+            Clones current <see cref="T:Exiled.API.Features.Items.ExplosiveGrenade"/> object.
+            </summary>
+            <returns> New <see cref="T:Exiled.API.Features.Items.ExplosiveGrenade"/> object. </returns>
+        </member>
         <member name="T:Exiled.API.Features.Items.Scp1576">
             <summary>
             A wrapper class for <see cref="T:InventorySystem.Items.Usables.Scp1576.Scp1576Item"/>.
@@ -7338,14 +7989,6 @@
             Gets the <see cref="T:AmbientSoundPlayer"/>.
             </summary>
         </member>
-        <member name="M:Exiled.API.Features.Map.FindParentRoom(UnityEngine.GameObject)">
-            <summary>
-            Tries to find the room that a <see cref="T:UnityEngine.GameObject"/> is inside, first using the <see cref="T:UnityEngine.Transform"/>'s parents, then using a Raycast if no room was found.
-            </summary>
-            <param name="objectInRoom">The <see cref="T:UnityEngine.GameObject"/> inside the room.</param>
-            <returns>The <see cref="T:Exiled.API.Features.Room"/> that the <see cref="T:UnityEngine.GameObject"/> is located inside. Can be <see langword="null"/>.</returns>
-            <seealso cref="M:Exiled.API.Features.Room.Get(UnityEngine.Vector3)"/>
-        </member>
         <member name="M:Exiled.API.Features.Map.Broadcast(Exiled.API.Features.Broadcast,System.Boolean)">
             <summary>
             Broadcasts a message to all <see cref="T:Exiled.API.Features.Player">players</see>.
@@ -7424,7 +8067,7 @@
             <param name="position">The position where you want to spawn the Tantrum.</param>
             <param name="isActive">Whether or not the tantrum will apply the <see cref="F:Exiled.API.Enums.EffectType.Stained"/> effect.</param>
             <remarks>If <paramref name="isActive"/> is <see langword="true"/>, the tantrum is moved slightly up from its original position. Otherwise, the collision will not be detected and the slowness will not work.</remarks>
-            <returns>The tantrum's <see cref="T:UnityEngine.GameObject"/>.</returns>
+            <returns>The <see cref="T:Exiled.API.Features.Hazards.TantrumHazard"/> instance.</returns>
         </member>
         <member name="M:Exiled.API.Features.Map.CleanAllItems">
             <summary>
@@ -7462,6 +8105,21 @@
             <param name="position">The position from which starting to search cameras.</param>
             <param name="toleration">The maximum toleration to define the radius from which get the cameras.</param>
             <returns>A <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Camera"/> which contains all the found cameras.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Map.Explode(UnityEngine.Vector3,Exiled.API.Enums.ProjectileType,Exiled.API.Features.Player)">
+            <summary>
+            Explode.
+            </summary>
+            <param name="position">The position where explosion will be created.</param>
+            <param name="projectileType">The projectile that will create the explosion.</param>
+            <param name="attacker">The player who create the explosion.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Map.ExplodeEffect(UnityEngine.Vector3,Exiled.API.Enums.ProjectileType)">
+            <summary>
+            Spawn projectile effect.
+            </summary>
+            <param name="position">The position where effect will be created.</param>
+            <param name="projectileType">The projectile that will create the effect.</param>
         </member>
         <member name="M:Exiled.API.Features.Map.ClearCache">
             <summary>
@@ -7735,11 +8393,119 @@
             Gets the <see cref="T:InventorySystem.Items.Armor.BodyArmorPickup"/> that this class is encapsulating.
             </summary>
         </member>
+        <member name="P:Exiled.API.Features.Pickups.BodyArmorPickup.Equippable">
+            <summary>
+            Gets a value indicating whether this item is equippable.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.BodyArmorPickup.Holsterable">
+            <summary>
+            Gets a value indicating whether this item is holsterable.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.BodyArmorPickup.IsWorn">
+            <summary>
+            Gets a value indicating whether or not this is a worn item.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.BodyArmorPickup.RemoveExcessOnDrop">
+            <summary>
+            Gets or sets a value indicating whether or not excess ammo should be removed when the armor is dropped.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.BodyArmorPickup.HelmetEfficacy">
+            <summary>
+            Gets or sets how strong the helmet on the armor is.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.BodyArmorPickup.VestEfficacy">
+            <summary>
+            Gets or sets how strong the vest on the armor is.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.BodyArmorPickup.StaminaUseMultiplier">
+            <summary>
+            Gets or sets how much faster stamina will drain when wearing this armor.
+            </summary>
+            <exception cref="T:System.ArgumentOutOfRangeException">When attempting to set the value below 1 or above 2.</exception>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.BodyArmorPickup.MovementSpeedMultiplier">
+            <summary>
+            Gets or sets how much the users movement speed should be affected when wearing this armor. (higher values = slower movement).
+            </summary>
+            <exception cref="T:System.ArgumentOutOfRangeException">When attempting to set the value below 0 or above 1.</exception>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.BodyArmorPickup.AmmoLimits">
+            <summary>
+            Gets or sets the ammo limit of the wearer when using this armor.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.BodyArmorPickup.CategoryLimits">
+            <summary>
+            Gets or sets the item caterory limit of the wearer when using this armor.
+            </summary>
+        </member>
         <member name="M:Exiled.API.Features.Pickups.BodyArmorPickup.ToString">
             <summary>
             Returns the BodyArmorPickup in a human readable format.
             </summary>
             <returns>A string containing BodyArmorPickup related data.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.BodyArmorPickup.GetItemInfo(Exiled.API.Features.Items.Item)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.BodyArmorPickup.GetPickupInfo(Exiled.API.Features.Items.Item)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Exiled.API.Features.Pickups.ExplosiveGrenadePickup">
+            <summary>
+            A wrapper class for dropped Explosive Pickup.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.ExplosiveGrenadePickup.#ctor(InventorySystem.Items.ThrowableProjectiles.TimedGrenadePickup)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Pickups.ExplosiveGrenadePickup"/> class.
+            </summary>
+            <param name="pickupBase">.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.ExplosiveGrenadePickup.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Pickups.ExplosiveGrenadePickup"/> class.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.ExplosiveGrenadePickup.MaxRadius">
+            <summary>
+            Gets or sets the maximum radius of the grenade.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.ExplosiveGrenadePickup.ScpDamageMultiplier">
+            <summary>
+            Gets or sets the multiplier for damage against <see cref="F:Exiled.API.Enums.Side.Scp"/> players.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.ExplosiveGrenadePickup.BurnDuration">
+            <summary>
+            Gets or sets how long the <see cref="F:Exiled.API.Enums.EffectType.Burned"/> effect will last.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.ExplosiveGrenadePickup.DeafenDuration">
+            <summary>
+            Gets or sets how long the <see cref="F:Exiled.API.Enums.EffectType.Deafened"/> effect will last.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.ExplosiveGrenadePickup.ConcussDuration">
+            <summary>
+            Gets or sets how long the <see cref="F:Exiled.API.Enums.EffectType.Concussed"/> effect will last.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.ExplosiveGrenadePickup.GetItemInfo(Exiled.API.Features.Items.Item)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.ExplosiveGrenadePickup.GetPickupInfo(Exiled.API.Features.Items.Item)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.ExplosiveGrenadePickup.GetPickupInfo(Exiled.API.Features.Pickups.Projectiles.Projectile)">
+            <inheritdoc/>
         </member>
         <member name="T:Exiled.API.Features.Pickups.FirearmPickup">
             <summary>
@@ -7794,6 +8560,46 @@
             </summary>
             <returns>A string containing FirearmPickup related data.</returns>
         </member>
+        <member name="T:Exiled.API.Features.Pickups.FlashGrenadePickup">
+            <summary>
+            A wrapper class for dropped Flash Pickup.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.FlashGrenadePickup.#ctor(InventorySystem.Items.ThrowableProjectiles.TimedGrenadePickup)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Pickups.FlashGrenadePickup"/> class.
+            </summary>
+            <param name="pickupBase">.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.FlashGrenadePickup.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Pickups.FlashGrenadePickup"/> class.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.FlashGrenadePickup.MinimalDurationEffect">
+            <summary>
+            Gets or sets the minimum duration of player can take the effect.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.FlashGrenadePickup.AdditionalBlindedEffect">
+            <summary>
+            Gets or sets the additional duration of the <see cref="F:Exiled.API.Enums.EffectType.Blinded"/> effect.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.FlashGrenadePickup.SurfaceDistanceIntensifier">
+            <summary>
+            Gets or sets the how mush the flash grenade going to be intensified when explode at <see cref="F:Exiled.API.Enums.RoomType.Surface"/>.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.FlashGrenadePickup.GetItemInfo(Exiled.API.Features.Items.Item)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.FlashGrenadePickup.GetPickupInfo(Exiled.API.Features.Items.Item)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.FlashGrenadePickup.GetPickupInfo(Exiled.API.Features.Pickups.Projectiles.Projectile)">
+            <inheritdoc/>
+        </member>
         <member name="T:Exiled.API.Features.Pickups.GrenadePickup">
             <summary>
             A wrapper class for a grenade pickup.
@@ -7811,6 +8617,11 @@
             </summary>
             <param name="type">The <see cref="T:ItemType"/> of the pickup.</param>
         </member>
+        <member name="P:Exiled.API.Features.Pickups.GrenadePickup.FuseTime">
+            <summary>
+            Gets or sets how long the fuse will last.
+            </summary>
+        </member>
         <member name="P:Exiled.API.Features.Pickups.GrenadePickup.ProjectileType">
             <summary>
             Gets the <see cref="T:Exiled.API.Enums.ProjectileType"/> of the item.
@@ -7825,6 +8636,19 @@
             <summary>
             Trigger the grenade to make it Explode.
             </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.GrenadePickup.Explode(Footprinting.Footprint)">
+            <summary>
+            Trigger the grenade to make it Explode.
+            </summary>
+            <param name="attacker">The <see cref="T:Footprinting.Footprint"/> of the explosion.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.GrenadePickup.GetPickupInfo(Exiled.API.Features.Pickups.Projectiles.Projectile)">
+            <summary>
+            Returns the Projectile with the according property from the Pickup.
+            </summary>
+            <param name="projectile"> Pickup-related data to give to the Projectile.</param>
+            <returns>A Projectile containing the Pickup-related data.</returns>
         </member>
         <member name="T:Exiled.API.Features.Pickups.JailbirdPickup">
             <summary>
@@ -7845,6 +8669,26 @@
         <member name="P:Exiled.API.Features.Pickups.JailbirdPickup.Base">
             <summary>
             Gets the <see cref="T:InventorySystem.Items.Jailbird.JailbirdPickup"/> that this class is encapsulating.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.JailbirdPickup.MeleeDamage">
+            <summary>
+            Gets or sets the amount of damage dealt with a Jailbird melee hit.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.JailbirdPickup.ChargeDamage">
+            <summary>
+            Gets or sets the amount of damage dealt with a Jailbird charge hit.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.JailbirdPickup.FlashDuration">
+            <summary>
+            Gets or sets the amount of time in seconds that the <see cref="T:CustomPlayerEffects.Flashed"/> effect will be applied on being hit.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.JailbirdPickup.Radius">
+            <summary>
+            Gets or sets the radius of the Jailbird's hit register.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Pickups.JailbirdPickup.TotalDamageDealt">
@@ -7868,6 +8712,12 @@
             </summary>
             <returns>A string containing jailbird related data.</returns>
         </member>
+        <member name="M:Exiled.API.Features.Pickups.JailbirdPickup.GetItemInfo(Exiled.API.Features.Items.Item)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.JailbirdPickup.GetPickupInfo(Exiled.API.Features.Items.Item)">
+            <inheritdoc/>
+        </member>
         <member name="T:Exiled.API.Features.Pickups.KeycardPickup">
             <summary>
             A wrapper class for a Keycard pickup.
@@ -7885,10 +8735,21 @@
             </summary>
             <param name="type">The <see cref="T:ItemType"/> of the pickup.</param>
         </member>
+        <member name="P:Exiled.API.Features.Pickups.KeycardPickup.Permissions">
+            <summary>
+            Gets or sets the <see cref="T:Exiled.API.Enums.KeycardPermissions"/> of the keycard.
+            </summary>
+        </member>
         <member name="P:Exiled.API.Features.Pickups.KeycardPickup.Base">
             <summary>
             Gets the <see cref="T:InventorySystem.Items.Keycards.KeycardPickup"/> that this class is encapsulating.
             </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.KeycardPickup.GetItemInfo(Exiled.API.Features.Items.Item)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.KeycardPickup.GetPickupInfo(Exiled.API.Features.Items.Item)">
+            <inheritdoc/>
         </member>
         <member name="T:Exiled.API.Features.Pickups.MicroHIDPickup">
             <summary>
@@ -7932,6 +8793,14 @@
             A dictionary of all <see cref="T:InventorySystem.Items.ItemBase"/>'s that have been converted into <see cref="T:Exiled.API.Features.Items.Item"/>.
             </summary>
         </member>
+        <member name="M:Exiled.API.Features.Pickups.Pickup.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Pickups.Pickup"/> class.
+            </summary>
+            <remarks>
+            Created only for <see cref="T:Exiled.API.Features.Pickups.Projectiles.Projectile"/> properly work.
+            </remarks>
+        </member>
         <member name="M:Exiled.API.Features.Pickups.Pickup.#ctor(InventorySystem.Items.Pickups.ItemPickupBase)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.API.Features.Pickups.Pickup"/> class.
@@ -7969,6 +8838,11 @@
             Gets the current <see cref="P:Exiled.API.Features.Pickups.Pickup.Room"/> the Pickup is in.
             </summary>
         </member>
+        <member name="P:Exiled.API.Features.Pickups.Pickup.PhysicsModule">
+            <summary>
+            Gets or sets the pickup's PhysicsModule.
+            </summary>
+        </member>
         <member name="P:Exiled.API.Features.Pickups.Pickup.Serial">
             <summary>
             Gets or sets the unique serial number for the item.
@@ -7995,7 +8869,7 @@
         </member>
         <member name="P:Exiled.API.Features.Pickups.Pickup.Base">
             <summary>
-            Gets the <see cref="T:InventorySystem.Items.ItemBase"/> of the item.
+            Gets or sets the <see cref="T:InventorySystem.Items.ItemBase"/> of the item.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Pickups.Pickup.Type">
@@ -8046,6 +8920,11 @@
             Gets a value indicating whether this pickup is spawned.
             </summary>
         </member>
+        <member name="P:Exiled.API.Features.Pickups.Pickup.IsLoaded">
+            <summary>
+            Gets a value indicating whether or not this is a worn item.
+            </summary>
+        </member>
         <member name="M:Exiled.API.Features.Pickups.Pickup.Get(InventorySystem.Items.Pickups.ItemPickupBase)">
             <summary>
             Gets an existing <see cref="T:Exiled.API.Features.Pickups.Pickup"/> or creates a new instance of one.
@@ -8084,7 +8963,7 @@
             <br />- All valid firearms (not including the Micro HID) should be casted to the <see cref="T:Exiled.API.Features.Pickups.FirearmPickup"/> class.
             <br />- All valid keycards should be casted to the <see cref="T:Exiled.API.Features.Pickups.KeycardPickup"/> class.
             <br />- All valid armor should be casted to the <see cref="T:Exiled.API.Features.Pickups.BodyArmorPickup"/> class.
-            <br />- All grenades and throwables (SCP-018 and SCP-2176) should be casted to the <see cref="T:Exiled.API.Features.Pickups.GrenadePickup"/> class.
+            <br />- All grenades and throwables (not including SCP-018 and SCP-2176) should be casted to the <see cref="T:Exiled.API.Features.Pickups.GrenadePickup"/> class.
             </para>
             <para>
             <br />The following have their own respective classes:
@@ -8092,6 +8971,8 @@
             <br />- The Micro HID can be casted to <see cref="T:Exiled.API.Features.Pickups.MicroHIDPickup"/>.
             <br />- SCP-244 A and B variants can be casted to <see cref="T:Exiled.API.Features.Pickups.Scp244Pickup"/>.
             <br />- SCP-330 can be casted to <see cref="T:Exiled.API.Features.Pickups.Scp330Pickup"/>.
+            <br />- SCP-018 can be casted to <see cref="T:Exiled.API.Features.Pickups.Projectiles.Scp018Projectile"/>.
+            <br />- SCP-2176 can be casted to <see cref="T:Exiled.API.Features.Pickups.Projectiles.Scp2176Projectile"/>.
             </para>
             <para>
             Items that are not listed above do not have a subclass, and can only use the base <see cref="T:Exiled.API.Features.Pickups.Pickup"/> class.
@@ -8123,12 +9004,6 @@
             <returns>The <see cref="T:Exiled.API.Features.Pickups.Pickup"/> Spawn.</returns>
             <seealso cref="M:Exiled.API.Features.Pickups.Projectiles.Projectile.Spawn(Exiled.API.Features.Pickups.Projectiles.Projectile,UnityEngine.Vector3,UnityEngine.Quaternion,System.Boolean,Exiled.API.Features.Player)"/>
         </member>
-        <member name="M:Exiled.API.Features.Pickups.Pickup.Clone">
-            <summary>
-            Clones current <see cref="T:Exiled.API.Features.Pickups.Pickup"/> object.
-            </summary>
-            <returns> New <see cref="T:Exiled.API.Features.Pickups.Pickup"/> object.</returns>
-        </member>
         <member name="M:Exiled.API.Features.Pickups.Pickup.PickupTimeForPlayer(Exiled.API.Features.Player)">
             <summary>
             Returns the amount of time it will take for the provided <paramref name="player"/> to pick up this item, based on <see cref="P:Exiled.API.Features.Pickups.Pickup.Weight"/> and active status effects.
@@ -8157,11 +9032,31 @@
             </summary>
             <seealso cref="M:Exiled.API.Features.Pickups.Pickup.UnSpawn"/>
         </member>
+        <member name="M:Exiled.API.Features.Pickups.Pickup.Clone">
+            <summary>
+            Clones the current pickup with a different serial.
+            </summary>
+            <returns> Cloned pickup object. </returns>
+        </member>
         <member name="M:Exiled.API.Features.Pickups.Pickup.ToString">
             <summary>
             Returns the Pickup in a human readable format.
             </summary>
             <returns>A string containing Pickup-related data.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Pickup.GetItemInfo(Exiled.API.Features.Items.Item)">
+            <summary>
+            Returns the Pickup with the according property from the Item.
+            </summary>
+            <param name="item"> Item-related data to give to the Pickup.</param>
+            <returns>A Pickup containing the Item-related data.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Pickup.GetPickupInfo(Exiled.API.Features.Items.Item)">
+            <summary>
+            Returns the Item with the according property from the Pickup.
+            </summary>
+            <param name="item"> Pickup-related data to give to the Item.</param>
+            <returns>A Item containing the Pickup-related data.</returns>
         </member>
         <member name="T:Exiled.API.Features.Pickups.Projectiles.EffectGrenadeProjectile">
             <summary>
@@ -8388,6 +9283,21 @@
         <member name="P:Exiled.API.Features.Pickups.Projectiles.Scp018Projectile.Base">
             <summary>
             Gets the <see cref="T:InventorySystem.Items.ThrowableProjectiles.ExplosionGrenade"/> that this class is encapsulating.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Projectiles.Scp018Projectile.PhysicsModule">
+            <summary>
+            Gets or sets the pickup's PhysicsModule.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Projectiles.Scp018Projectile.MaxVelocity">
+            <summary>
+            Gets or sets the pickup's max velocity.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Projectiles.Scp018Projectile.VelocityPerBounce">
+            <summary>
+            Gets or sets the pickup's velocity per bounce.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Pickups.Projectiles.Scp018Projectile.IgnoreFriendlyFire">
@@ -8686,6 +9596,39 @@
             Returns the Scp330Pickup in a human readable format.
             </summary>
             <returns>A string containing Scp330Pickup related data.</returns>
+        </member>
+        <member name="T:Exiled.API.Features.Pickups.UsablePickup">
+            <summary>
+            A wrapper class for dropped Usable Pickup.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.UsablePickup.#ctor(InventorySystem.Items.Pickups.ItemPickupBase)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Pickups.UsablePickup"/> class.
+            </summary>
+            <param name="pickupBase">.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.UsablePickup.#ctor(ItemType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Pickups.UsablePickup"/> class.
+            </summary>
+            <param name="type">.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.UsablePickup.UseTime">
+            <summary>
+            Gets or sets how long it takes to use the item.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.UsablePickup.MaxCancellableTime">
+            <summary>
+            Gets or sets how long after using starts a player has to cancel using the item.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.UsablePickup.GetItemInfo(Exiled.API.Features.Items.Item)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.UsablePickup.GetPickupInfo(Exiled.API.Features.Items.Item)">
+            <inheritdoc/>
         </member>
         <member name="T:Exiled.API.Features.Player">
             <summary>
@@ -9717,7 +10660,7 @@
             <summary>
             Forces the player to reload their current weapon.
             </summary>
-            <exception cref="T:System.InvalidOperationException">If the item is not a firearm.</exception>
+            <returns><see langword="true"/> if firearm was successfully reloaded. Otherwise, <see langword="false"/>.</returns>
         </member>
         <member name="M:Exiled.API.Features.Player.TryGetItem(System.UInt16,Exiled.API.Features.Items.Item@)">
             <summary>
@@ -9769,6 +10712,7 @@
             Drops the held item. Will not do anything if the player is not holding an item.
             </summary>
             <seealso cref="P:Exiled.API.Features.Player.CurrentItem"/>
+            <returns>Dropped item's <see cref="T:Exiled.API.Features.Pickups.Pickup"/>.</returns>
         </member>
         <member name="M:Exiled.API.Features.Player.HasItem(Exiled.API.Features.Items.Item)">
             <summary>
@@ -9928,13 +10872,14 @@
             Forces the player to use an item.
             </summary>
             <param name="usableItem">The ItemType to be used.</param>
+            <returns><see langword="true"/> if item was used successfully. Otherwise, <see langword="false"/>.</returns>
         </member>
         <member name="M:Exiled.API.Features.Player.UseItem(Exiled.API.Features.Items.Item)">
             <summary>
             Forces the player to use an item.
             </summary>
             <param name="item">The item to be used.</param>
-            <exception cref="T:System.ArgumentException">The provided item is not a usable item.</exception>
+            <returns><see langword="true"/> if item was used successfully. Otherwise, <see langword="false"/>.</returns>
         </member>
         <member name="M:Exiled.API.Features.Player.Kill(PlayerStatsSystem.DamageHandlerBase)">
             <summary>
@@ -10440,7 +11385,7 @@
             </summary>
             <param name="isActive">Whether or not the tantrum will apply the <see cref="F:Exiled.API.Enums.EffectType.Stained"/> effect.</param>
             <remarks>If <paramref name="isActive"/> is <see langword="true"/>, the tantrum is moved slightly up from its original position. Otherwise, the collision will not be detected and the slowness will not work.</remarks>
-            <returns>The tantrum's <see cref="P:Exiled.API.Features.Player.GameObject"/>.</returns>
+            <returns>The <see cref="T:Exiled.API.Features.Hazards.TantrumHazard"/> instance..</returns>
         </member>
         <member name="M:Exiled.API.Features.Player.AddAhp(System.Single,System.Single,System.Single,System.Single,System.Single,System.Boolean)">
             <summary>
@@ -10548,19 +11493,30 @@
             <param name="itemType">The itemtypes to choose for getting cooldown.</param>
             <returns>Return the time in seconds of the cooldowns.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Player.GetCooldownItem(System.Single,ItemType)">
-            <summary>
-            Set the time cooldown on this ItemType.
-            </summary>
-            <param name="time">The times for the cooldown.</param>
-            <param name="itemType">The itemtypes to choose for being cooldown.</param>
-        </member>
         <member name="M:Exiled.API.Features.Player.SetCooldownItem(System.Single,ItemType)">
             <summary>
             Set the time cooldown on this ItemType.
             </summary>
             <param name="time">The times for the cooldown.</param>
             <param name="itemType">The itemtypes to choose for being cooldown.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Player.Explode">
+            <summary>
+            Explode the player.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Player.Explode(Exiled.API.Enums.ProjectileType,Exiled.API.Features.Player)">
+            <summary>
+            Explode the player.
+            </summary>
+            <param name="projectileType">The projectile that will create the explosion.</param>
+            <param name="attacker">The Player that will causing the explosion.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Player.ExplodeEffect(Exiled.API.Enums.ProjectileType)">
+            <summary>
+            Spawn projectile effect on the player.
+            </summary>
+            <param name="projectileType">The projectile that will create the effect.</param>
         </member>
         <member name="M:Exiled.API.Features.Player.ToString">
             <summary>
@@ -10900,7 +11856,7 @@
         </member>
         <member name="P:Exiled.API.Features.Ragdoll.DamageHandler">
             <summary>
-            Gets the ragdoll's <see cref="T:PlayerStatsSystem.DamageHandlerBase"/>.
+            Gets or sets the ragdoll's <see cref="T:PlayerStatsSystem.DamageHandlerBase"/>.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Ragdoll.SpecialRigidbodies">
@@ -10928,9 +11884,19 @@
             Gets the ragdoll's name.
             </summary>
         </member>
+        <member name="P:Exiled.API.Features.Ragdoll.Nickname">
+            <summary>
+            Gets or sets the ragdoll's nickname.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Ragdoll.ExistenceTime">
+            <summary>
+            Gets the ragdoll's existence time.
+            </summary>
+        </member>
         <member name="P:Exiled.API.Features.Ragdoll.Owner">
             <summary>
-            Gets the owner <see cref="T:Exiled.API.Features.Player"/>. Can be <see langword="null"/> if the ragdoll does not have an owner.
+            Gets or sets the owner <see cref="T:Exiled.API.Features.Player"/>. Can be <see langword="null"/> if the ragdoll does not have an owner.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Ragdoll.CreationTime">
@@ -10940,12 +11906,13 @@
         </member>
         <member name="P:Exiled.API.Features.Ragdoll.Role">
             <summary>
-            Gets the <see cref="T:PlayerRoles.RoleTypeId"/> of the ragdoll.
+            Gets or sets the <see cref="T:PlayerRoles.RoleTypeId"/> of the ragdoll.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Ragdoll.IsExpired">
             <summary>
-            Gets a value indicating whether or not the ragdoll has expired and SCP-049 is unable to revive it.
+            Gets a value indicating whether or not the ragdoll has expired and SCP-049 is unable to revive it if was not being targets.
+            <seealso cref="M:Exiled.API.Features.Roles.Scp049Role.CanResurrect(Exiled.API.Features.Ragdoll)"/>
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Ragdoll.IsConsumed">
@@ -10995,32 +11962,33 @@
             <param name="player">The player to get the last ragdoll.</param>
             <returns>The Last Ragdoll.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Ragdoll.Create(RagdollData)">
+        <member name="M:Exiled.API.Features.Ragdoll.TryCreate(RagdollData,Exiled.API.Features.Ragdoll@)">
             <summary>
             Creates a new ragdoll.
             </summary>
             <param name="networkInfo">The data associated with the ragdoll.</param>
-            <returns>The ragdoll.</returns>
-            <exception cref="T:System.ArgumentException">Provided RoleType is not a valid ragdoll role (Spectator, Scp079, etc).</exception>
-            <exception cref="T:System.InvalidOperationException">Unable to create a ragdoll.</exception>
+            <param name="ragdoll">Created ragdoll. Will be <see langword="null"/> if method retunred <see langword="false"/>.</param>
+            <returns><see langword="true"/> if ragdoll was successfully created. Otherwise, false.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Ragdoll.Create(PlayerRoles.RoleTypeId,System.String,PlayerStatsSystem.DamageHandlerBase,Exiled.API.Features.Player)">
+        <member name="M:Exiled.API.Features.Ragdoll.TryCreate(PlayerRoles.RoleTypeId,System.String,PlayerStatsSystem.DamageHandlerBase,Exiled.API.Features.Ragdoll@,Exiled.API.Features.Player)">
             <summary>
             Creates a new ragdoll.
             </summary>
             <param name="roleType">The <see cref="T:PlayerRoles.RoleTypeId"/> of the ragdoll.</param>
             <param name="name">The name of the ragdoll.</param>
             <param name="damageHandler">The damage handler responsible for the ragdoll's death.</param>
+            <param name="ragdoll">Created ragdoll. Will be <see langword="null"/> if method retunred <see langword="false"/>.</param>
             <param name="owner">The optional owner of the ragdoll.</param>
             <returns>The ragdoll.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Ragdoll.Create(PlayerRoles.RoleTypeId,System.String,System.String,Exiled.API.Features.Player)">
+        <member name="M:Exiled.API.Features.Ragdoll.TryCreate(PlayerRoles.RoleTypeId,System.String,System.String,Exiled.API.Features.Ragdoll@,Exiled.API.Features.Player)">
             <summary>
             Creates a new ragdoll.
             </summary>
             <param name="roleType">The <see cref="T:PlayerRoles.RoleTypeId"/> of the ragdoll.</param>
             <param name="name">The name of the ragdoll.</param>
             <param name="deathReason">The reason the ragdoll died.</param>
+            <param name="ragdoll">Created ragdoll. Will be <see langword="null"/> if method retunred <see langword="false"/>.</param>
             <param name="owner">The optional owner of the ragdoll.</param>
             <returns>The ragdoll.</returns>
         </member>
@@ -11109,7 +12077,7 @@
         </member>
         <member name="P:Exiled.API.Features.Recontainer.ContainmentGates">
             <summary>
-            Gets a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Door"/> which contains all the <see cref="T:Exiled.API.Features.Door"/> instances used for the containment zone.
+            Gets a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Doors.Door"/> which contains all the <see cref="T:Exiled.API.Features.Doors.Door"/> instances used for the containment zone.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Recontainer.IsCassieBusy">
@@ -11117,7 +12085,7 @@
             Gets a value indicating whether the C.A.S.S.I.E is currently busy.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Recontainer.IsContaimentZoneOpen">
+        <member name="P:Exiled.API.Features.Recontainer.IsContainmentZoneOpen">
             <summary>
             Gets or sets a value indicating whether the containment zone is open.
             </summary>
@@ -11199,7 +12167,7 @@
         </member>
         <member name="P:Exiled.API.Features.Recontainer.LockedDoors">
             <summary>
-            Gets a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Door"/> which contains all the <see cref="T:Exiled.API.Features.Door"/> instances locked during the overcharge procedure.
+            Gets a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Doors.Door"/> which contains all the <see cref="T:Exiled.API.Features.Doors.Door"/> instances locked during the overcharge procedure.
             </summary>
         </member>
         <member name="M:Exiled.API.Features.Recontainer.TryKillScp079">
@@ -11381,7 +12349,7 @@
         </member>
         <member name="T:Exiled.API.Features.Roles.FilmMakerRole">
             <summary>
-            Represents the BaseGame FilmMakerRole.
+            Represents the base-game FilmMaker role.
             </summary>
         </member>
         <member name="M:Exiled.API.Features.Roles.FilmMakerRole.#ctor(PlayerRoles.Filmmaker.FilmmakerRole)">
@@ -11856,9 +12824,8 @@
         </member>
         <member name="P:Exiled.API.Features.Roles.Scp0492Role.AttackDamage">
             <summary>
-            Gets or sets the SCP-049-2 attack damage.
+            Gets the SCP-049-2 attack damage.
             </summary>
-            <remarks>Setter will work later //TODO.</remarks>
         </member>
         <member name="P:Exiled.API.Features.Roles.Scp0492Role.SimulatedStare">
             <summary>
@@ -12102,6 +13069,11 @@
             </summary>
             <param name="baseRole">the base <see cref="T:PlayerRoles.PlayableScps.Scp079.Scp079Role"/>.</param>
         </member>
+        <member name="P:Exiled.API.Features.Roles.Scp079Role.TurnedPlayers">
+            <summary>
+            Gets a list of players who will be turned away from SCP-079's scan.
+            </summary>
+        </member>
         <member name="P:Exiled.API.Features.Roles.Scp079Role.Type">
             <inheritdoc/>
         </member>
@@ -12171,6 +13143,16 @@
         <member name="P:Exiled.API.Features.Roles.Scp079Role.CurrentCameraSync">
             <summary>
             Gets SCP-079's <see cref="T:PlayerRoles.PlayableScps.Scp079.Cameras.Scp079CurrentCameraSync"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp079Role.ScannerTracker">
+            <summary>
+            Gets SCP-079's <see cref="T:PlayerRoles.PlayableScps.Scp079.Scp079ScannerTracker"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp079Role.ScannerZoneSelector">
+            <summary>
+            Gets SCP-079's <see cref="T:PlayerRoles.PlayableScps.Scp079.Scp079ScannerZoneSelector"/>.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Roles.Scp079Role.Camera">
@@ -12325,14 +13307,14 @@
             <param name="reason">The reason to grant experience.</param>
             <param name="subject">The RoleType of the player that's causing it to happen.</param>
         </member>
-        <member name="M:Exiled.API.Features.Roles.Scp079Role.LockDoor(Exiled.API.Features.Door)">
+        <member name="M:Exiled.API.Features.Roles.Scp079Role.LockDoor(Exiled.API.Features.Doors.Door)">
             <summary>
             Locks the provided <paramref name="door"/>.
             </summary>
             <param name="door">The door to lock.</param>
             <returns><see langword="true"/> if the door has been lock; otherwise, <see langword="false"/>.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Roles.Scp079Role.UnlockDoor(Exiled.API.Features.Door)">
+        <member name="M:Exiled.API.Features.Roles.Scp079Role.UnlockDoor(Exiled.API.Features.Doors.Door)">
             <summary>
             Unlocks the provided <paramref name="door"/>.
             </summary>
@@ -12368,7 +13350,7 @@
             <param name="camera">The camera to get the cost to switch to.</param>
             <returns>The cost to switch from the current camera to the new camera.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Roles.Scp079Role.GetCost(Exiled.API.Features.Door,Interactables.Interobjects.DoorUtils.DoorAction)">
+        <member name="M:Exiled.API.Features.Roles.Scp079Role.GetCost(Exiled.API.Features.Doors.Door,Interactables.Interobjects.DoorUtils.DoorAction)">
             <summary>
             Gets the cost to modify a door.
             </summary>
@@ -12539,6 +13521,7 @@
             Adds the specified <paramref name="player"/> as an SCP-096 target.
             </summary>
             <param name="player">The player to add as a target.</param>
+            <returns><see langword="true"/> if target was successfully added. Otherwise, <see langword="false"/>.</returns>
         </member>
         <member name="M:Exiled.API.Features.Roles.Scp096Role.AddTarget(Exiled.API.Features.Player,System.Boolean)">
             <summary>
@@ -12546,12 +13529,14 @@
             </summary>
             <param name="player">The player to add as a target.</param>
             <param name="isLooking">Is because player look SCP-096.</param>
+            <returns><see langword="true"/> if target was successfully added. Otherwise, <see langword="false"/>.</returns>
         </member>
         <member name="M:Exiled.API.Features.Roles.Scp096Role.RemoveTarget(Exiled.API.Features.Player)">
             <summary>
             Removes the specified <paramref name="player"/> from SCP-096's targets.
             </summary>
             <param name="player">The player to remove as a target.</param>
+            <returns><see langword="true"/> if target was successfully removed. Otherwise, <see langword="false"/>.</returns>
         </member>
         <member name="M:Exiled.API.Features.Roles.Scp096Role.Enrage(System.Single)">
             <summary>
@@ -12628,6 +13613,11 @@
         <member name="P:Exiled.API.Features.Roles.Scp106Role.HumeShieldModule">
             <summary>
             Gets the <see cref="T:PlayerRoles.PlayableScps.HumeShield.HumeShieldModuleBase"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp106Role.VigorAbility">
+            <summary>
+            Gets the <see cref="T:PlayerRoles.PlayableScps.Scp106.Scp106VigorAbilityBase"/>.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Roles.Scp106Role.VigorComponent">
@@ -12881,13 +13871,13 @@
             Gets the <see cref="T:PlayerRoles.PlayableScps.Scp173.Scp173Role"/> instance.
             </summary>
         </member>
-        <member name="M:Exiled.API.Features.Roles.Scp173Role.Tantrum(System.Boolean,System.Single)">
+        <member name="M:Exiled.API.Features.Roles.Scp173Role.PlaceTantrum(System.Boolean,System.Single)">
             <summary>
             Places a Tantrum (SCP-173's ability) under the player.
             </summary>
             <param name="failIfObserved">Whether or not to place the tantrum if SCP-173 is currently being viewed.</param>
             <param name="cooldown">The cooldown until SCP-173 can place a tantrum again. Set to <c>0</c> to not affect the cooldown.</param>
-            <returns>The tantrum's <see cref="T:UnityEngine.GameObject"/>, or <see langword="null"/> if it cannot be placed.</returns>
+            <returns>The <see cref="T:Exiled.API.Features.Hazards.TantrumHazard"/> instance, or <see langword="null"/> if it cannot be placed.</returns>
         </member>
         <member name="M:Exiled.API.Features.Roles.Scp173Role.SendAudio(PlayerRoles.PlayableScps.Scp173.Scp173AudioPlayer.Scp173SoundId)">
             <summary>
@@ -13177,6 +14167,11 @@
             <remarks>This property is the internal <see cref="T:MapGeneration.RoomName"/> of the room. For the actual string of the Room's name, see <see cref="P:Exiled.API.Features.Room.Name"/>.</remarks>
             <seealso cref="P:Exiled.API.Features.Room.Name"/>
         </member>
+        <member name="P:Exiled.API.Features.Room.RoomShape">
+            <summary>
+            Gets the room's <see cref="T:MapGeneration.RoomShape"/>.
+            </summary>
+        </member>
         <member name="P:Exiled.API.Features.Room.Type">
             <summary>
             Gets the <see cref="T:Exiled.API.Enums.RoomType"/>.
@@ -13197,15 +14192,33 @@
             Gets a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Player"/> in the <see cref="T:Exiled.API.Features.Room"/>.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Room.Doors">
+        <member name="P:Exiled.API.Features.Room.Windows">
             <summary>
-            Gets a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Door"/> in the <see cref="T:Exiled.API.Features.Room"/>.
+            Gets a <see cref="T:System.Collections.Generic.IReadOnlyCollection`1"/> of <see cref="T:Exiled.API.Features.Window"/> in the <see cref="T:Exiled.API.Features.Room"/>.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Room.Speaker">
+        <member name="P:Exiled.API.Features.Room.Doors">
             <summary>
-            Gets a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:PlayerRoles.PlayableScps.Scp079.Scp079Speaker"/> in the <see cref="T:Exiled.API.Features.Room"/>.
+            Gets a <see cref="T:System.Collections.Generic.IReadOnlyCollection`1"/> of <see cref="T:Exiled.API.Features.Doors.Door"/> in the <see cref="T:Exiled.API.Features.Room"/>.
             </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Room.Speakers">
+            <summary>
+            Gets a <see cref="T:System.Collections.Generic.IReadOnlyCollection`1"/> of <see cref="T:PlayerRoles.PlayableScps.Scp079.Scp079Speaker"/> in the <see cref="T:Exiled.API.Features.Room"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Room.Cameras">
+            <summary>
+            Gets a <see cref="T:System.Collections.Generic.IReadOnlyCollection`1"/> of <see cref="T:Exiled.API.Features.Camera"/> in the <see cref="T:Exiled.API.Features.Room"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Room.RoomLightControllers">
+            <summary>
+            Gets a <see cref="T:System.Collections.Generic.IReadOnlyCollection`1"/> of <see cref="P:Exiled.API.Features.Room.RoomLightController"/> in the <see cref="T:Exiled.API.Features.Room"/>.
+            </summary>
+            <remarks>
+            Using that will make sense only for rooms with more than one light controller, in other cases better to use <see cref="P:Exiled.API.Features.Room.RoomLightController"/>.
+            </remarks>
         </member>
         <member name="P:Exiled.API.Features.Room.Pickups">
             <summary>
@@ -13215,11 +14228,6 @@
         <member name="P:Exiled.API.Features.Room.Color">
             <summary>
             Gets or sets the color of the room's lights by changing the warhead color.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Room.Cameras">
-            <summary>
-            Gets a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Camera"/> in the <see cref="T:Exiled.API.Features.Room"/>.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Room.AreLightsOff">
@@ -13235,6 +14243,31 @@
         <member name="P:Exiled.API.Features.Room.RoomLightController">
             <summary>
             Gets the room's FlickerableLightController.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Room.WindowsValue">
+            <summary>
+            Gets a <see cref="T:System.Collections.Generic.List`1"/> containing all known <see cref="T:Exiled.API.Features.Window"/>s in that <see cref="T:Exiled.API.Features.Room"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Room.DoorsValue">
+            <summary>
+            Gets a <see cref="T:System.Collections.Generic.List`1"/> containing all known <see cref="T:Exiled.API.Features.Doors.Door"/>s in that <see cref="T:Exiled.API.Features.Room"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Room.SpeakersValue">
+            <summary>
+            Gets a <see cref="T:System.Collections.Generic.List`1"/> containing all known <see cref="T:PlayerRoles.PlayableScps.Scp079.Scp079Speaker"/>s in that <see cref="T:Exiled.API.Features.Room"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Room.CamerasValue">
+            <summary>
+            Gets a <see cref="T:System.Collections.Generic.List`1"/> containing all known <see cref="T:Exiled.API.Features.Camera"/>s in that <see cref="T:Exiled.API.Features.Room"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Room.RoomLightControllersValue">
+            <summary>
+            Gets a <see cref="T:System.Collections.Generic.List`1"/> containing all known <see cref="P:Exiled.API.Features.Room.RoomLightController"/>s in that <see cref="T:Exiled.API.Features.Room"/>.
             </summary>
         </member>
         <member name="M:Exiled.API.Features.Room.Get(Exiled.API.Enums.RoomType)">
@@ -13308,6 +14341,13 @@
             <param name="position">World position.</param>
             <returns>Local position, based on the room.</returns>
         </member>
+        <member name="M:Exiled.API.Features.Room.WorldPosition(UnityEngine.Vector3)">
+            <summary>
+            Returns the World position, based on a local space position.
+            </summary>
+            <param name="offset">Local position.</param>
+            <returns>World position, based on the room.</returns>
+        </member>
         <member name="M:Exiled.API.Features.Room.TurnOffLights(System.Single)">
             <summary>
             Flickers the room's lights off for a duration.
@@ -13320,8 +14360,8 @@
             </summary>
             <param name="duration">Duration in seconds, or <c>-1</c> for permanent lockdown.</param>
             <param name="lockType">DoorLockType of the lockdown.</param>
-            <seealso cref="M:Exiled.API.Features.Door.LockAll(System.Single,Exiled.API.Enums.ZoneType,Exiled.API.Enums.DoorLockType)"/>
-            <seealso cref="M:Exiled.API.Features.Door.LockAll(System.Single,System.Collections.Generic.IEnumerable{Exiled.API.Enums.ZoneType},Exiled.API.Enums.DoorLockType)"/>
+            <seealso cref="M:Exiled.API.Features.Doors.Door.LockAll(System.Single,Exiled.API.Enums.ZoneType,Exiled.API.Enums.DoorLockType)"/>
+            <seealso cref="M:Exiled.API.Features.Doors.Door.LockAll(System.Single,System.Collections.Generic.IEnumerable{Exiled.API.Enums.ZoneType},Exiled.API.Enums.DoorLockType)"/>
         </member>
         <member name="M:Exiled.API.Features.Room.Blackout(System.Single,Exiled.API.Enums.DoorLockType)">
             <summary>
@@ -13336,10 +14376,10 @@
             <summary>
             Unlocks all the doors in the room.
             </summary>
-            <seealso cref="M:Exiled.API.Features.Door.UnlockAll"/>
-            <seealso cref="M:Exiled.API.Features.Door.UnlockAll(Exiled.API.Enums.ZoneType)"/>
-            <seealso cref="M:Exiled.API.Features.Door.UnlockAll(System.Collections.Generic.IEnumerable{Exiled.API.Enums.ZoneType})"/>
-            <seealso cref="M:Exiled.API.Features.Door.UnlockAll(System.Func{Exiled.API.Features.Door,System.Boolean})"/>
+            <seealso cref="M:Exiled.API.Features.Doors.Door.UnlockAll"/>
+            <seealso cref="M:Exiled.API.Features.Doors.Door.UnlockAll(Exiled.API.Enums.ZoneType)"/>
+            <seealso cref="M:Exiled.API.Features.Doors.Door.UnlockAll(System.Collections.Generic.IEnumerable{Exiled.API.Enums.ZoneType})"/>
+            <seealso cref="M:Exiled.API.Features.Doors.Door.UnlockAll(System.Func{Exiled.API.Features.Doors.Door,System.Boolean})"/>
         </member>
         <member name="M:Exiled.API.Features.Room.ResetColor">
             <summary>
@@ -13358,7 +14398,6 @@
             We can add parameters to be set privately here.
             </summary>
             <param name="roomGameObject">The Game Object to attach the Room component to.</param>
-            <returns>The Room component that was instantiated onto the Game Object.</returns>
         </member>
         <member name="T:Exiled.API.Features.Round">
             <summary>
@@ -13559,7 +14598,7 @@
              Gets the output booth <see cref="T:UnityEngine.Transform"/>.
             </summary>
         </member>
-        <member name="M:Exiled.API.Features.Scp914.PlaySound(System.Byte)">
+        <member name="M:Exiled.API.Features.Scp914.PlaySound(Scp914.Scp914InteractCode)">
             <summary>
             Plays the SCP-914's sound.
             </summary>
@@ -13568,10 +14607,12 @@
             The values to identify them are <c>0</c>, which stands for the soundId played when SCP-914 is being activated,
             and <c>1</c>, which stands for the soundId played when SCP-914's knob state is being changed.</remarks>
         </member>
-        <member name="M:Exiled.API.Features.Scp914.Start">
+        <member name="M:Exiled.API.Features.Scp914.Start(Exiled.API.Features.Player,Scp914.Scp914InteractCode)">
             <summary>
             Starts SCP-914.
             </summary>
+            <param name="player">Player who interacts with Scp914.</param>
+            <param name="code">Activated code.</param>
         </member>
         <member name="T:Exiled.API.Features.Server">
             <summary>
@@ -13681,11 +14722,6 @@
             Gets the late join time, in seconds. If a player joins less than this many seconds into a game, they will be given a random class.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Server.SpawnProtectTime">
-            <summary>
-            Gets or sets the spawn protection time, in seconds.
-            </summary>
-        </member>
         <member name="P:Exiled.API.Features.Server.IsHeavilyModded">
             <summary>
             Gets or sets a value indicating whether the server is marked as Heavily Modded.
@@ -13697,6 +14733,11 @@
         <member name="P:Exiled.API.Features.Server.IsWhitelisted">
             <summary>
             Gets or sets a value indicating whether or not this server has the whitelist enabled.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Server.IsVerified">
+            <summary>
+            Gets a value indicating whether or not this server is verified.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Server.IsIdleModeEnabled">
@@ -13907,11 +14948,12 @@
             A <see cref="T:System.Collections.Generic.Dictionary`2"/> containing all known <see cref="T:TeslaGate"/>s and their corresponding <see cref="T:Exiled.API.Features.TeslaGate"/>.
             </summary>
         </member>
-        <member name="M:Exiled.API.Features.TeslaGate.#ctor(TeslaGate)">
+        <member name="M:Exiled.API.Features.TeslaGate.#ctor(TeslaGate,Exiled.API.Features.Room)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.API.Features.TeslaGate"/> class.
             </summary>
             <param name="baseTeslaGate">The <see cref="T:TeslaGate"/> instance.</param>
+            <param name="room">The <see cref="T:Exiled.API.Features.Room"/> for this tesla.</param>
         </member>
         <member name="P:Exiled.API.Features.TeslaGate.List">
             <summary>
@@ -14011,7 +15053,7 @@
         </member>
         <member name="P:Exiled.API.Features.TeslaGate.TantrumsToDestroy">
             <summary>
-            Gets a <see cref="T:System.Collections.Generic.List`1"/> of <see cref="T:UnityEngine.GameObject"/> which contains all the tantrums to destroy.
+            Gets a <see cref="T:System.Collections.Generic.List`1"/> of <see cref="T:Exiled.API.Features.Hazards.TantrumHazard"/> which contains all the tantrums to destroy.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.TeslaGate.PlayersInHurtRange">
@@ -14423,11 +15465,6 @@
             A set of tools to easily work with the alpha warhead.
             </summary>
         </member>
-        <member name="F:Exiled.API.Features.Warhead.InternalBlastDoors">
-            <summary>
-            A <see cref="T:System.Collections.Generic.List`1"/> containing all <see cref="T:BlastDoor"/>.
-            </summary>
-        </member>
         <member name="P:Exiled.API.Features.Warhead.Controller">
             <summary>
             Gets the cached <see cref="T:AlphaWarheadController"/> component.
@@ -14557,15 +15594,16 @@
             A <see cref="T:System.Collections.Generic.Dictionary`2"/> containing all known <see cref="T:BreakableWindow"/>s and their corresponding <see cref="T:Exiled.API.Features.Window"/>.
             </summary>
         </member>
-        <member name="M:Exiled.API.Features.Window.#ctor(BreakableWindow)">
+        <member name="M:Exiled.API.Features.Window.#ctor(BreakableWindow,Exiled.API.Features.Room)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.API.Features.Window"/> class.
             </summary>
             <param name="window">The base <see cref="T:BreakableWindow"/> for this door.</param>
+            <param name="room">The <see cref="P:Exiled.API.Features.Window.Room"/> for this window.</param>
         </member>
         <member name="P:Exiled.API.Features.Window.List">
             <summary>
-            Gets a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Door"/> which contains all the <see cref="T:Exiled.API.Features.Door"/> instances.
+            Gets a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Doors.Door"/> which contains all the <see cref="T:Exiled.API.Features.Doors.Door"/> instances.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Window.Base">
@@ -14643,7 +15681,7 @@
             Gets the window object associated with a specific <see cref="T:Exiled.API.Features.Window"/>, or creates a new one if there isn't one.
             </summary>
             <param name="breakableWindow">The base-game <see cref="T:Exiled.API.Features.Window"/>.</param>
-            <returns>A <see cref="T:Exiled.API.Features.Door"/> wrapper object.</returns>
+            <returns>A <see cref="T:Exiled.API.Features.Doors.Door"/> wrapper object.</returns>
         </member>
         <member name="M:Exiled.API.Features.Window.Get(System.Func{Exiled.API.Features.Window,System.Boolean})">
             <summary>
@@ -14705,6 +15743,66 @@
         <member name="P:Exiled.API.Interfaces.IConfig.Debug">
             <summary>
             Gets or sets a value indicating whether debug messages should be displayed in the console or not.
+            </summary>
+        </member>
+        <member name="T:Exiled.API.Interfaces.IDamageableDoor">
+            <summary>
+            Interface for doors which can be damaged.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Interfaces.IDamageableDoor.Health">
+            <summary>
+            Gets or sets remaining health of the door.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Interfaces.IDamageableDoor.MaxHealth">
+            <summary>
+            Gets or sets max health of the door.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Interfaces.IDamageableDoor.IsDestroyed">
+            <summary>
+            Gets or sets a value indicating whether or not door is destroyed.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Interfaces.IDamageableDoor.IsBreakable">
+            <summary>
+            Gets a value indicating whether or not this door is breakable.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Interfaces.IDamageableDoor.IgnoredDamage">
+            <summary>
+            Gets or sets damage types which will be ignored.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Interfaces.IDamageableDoor.Damage(System.Single,Interactables.Interobjects.DoorUtils.DoorDamageType)">
+            <summary>
+            Damages the door.
+            </summary>
+            <param name="amount">Amount to be dealt.</param>
+            <param name="damageType">Damage type. Some types can be ignored.</param>
+            <returns><see langword="true"/> if door was damaged. Otherwise, false.</returns>
+        </member>
+        <member name="M:Exiled.API.Interfaces.IDamageableDoor.Break(Interactables.Interobjects.DoorUtils.DoorDamageType)">
+            <summary>
+            Breaks the specified door. No effect if the door cannot be broken, or if it is already broken.
+            </summary>
+            <param name="type">The <see cref="T:Interactables.Interobjects.DoorUtils.DoorDamageType"/> to apply to the door.</param>
+            <returns><see langword="true"/> if the door was broken, <see langword="false"/> if it was unable to be broken, or was already broken before.</returns>
+        </member>
+        <member name="T:Exiled.API.Interfaces.INonInteractableDoor">
+            <summary>
+            Represents an interface for all non-interactable doors.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Interfaces.INonInteractableDoor.IgnoreLockdowns">
+            <summary>
+            Gets or sets a value indicating whether or not door should ignore lockdowns.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Interfaces.INonInteractableDoor.IgnoreRemoteAdmin">
+            <summary>
+            Gets or sets a value indicating whether or not door should ignore RA requests.
             </summary>
         </member>
         <member name="T:Exiled.API.Interfaces.IPlugin`1">

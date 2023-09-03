@@ -357,14 +357,6 @@
             <param name="t">The <see cref="T:System.Type"/> type.</param>
             <returns>The <see cref="T:Exiled.CustomItems.API.Features.CustomItem"/> matching the search, <see langwod="null"/> if not registered.</returns>
         </member>
-        <member name="M:Exiled.CustomItems.API.Features.CustomItem.TryGet(System.Int32,Exiled.CustomItems.API.Features.CustomItem@)">
-            <summary>
-            Tries to get a <see cref="T:Exiled.CustomItems.API.Features.CustomItem"/> with a specific ID.
-            </summary>
-            <param name="id">The <see cref="T:Exiled.CustomItems.API.Features.CustomItem"/> ID to look for.</param>
-            <param name="customItem">The found <see cref="T:Exiled.CustomItems.API.Features.CustomItem"/>, <see langword="null"/> if not registered.</param>
-            <returns>Returns a value indicating whether the <see cref="T:Exiled.CustomItems.API.Features.CustomItem"/> was found or not.</returns>
-        </member>
         <member name="M:Exiled.CustomItems.API.Features.CustomItem.TryGet(System.UInt32,Exiled.CustomItems.API.Features.CustomItem@)">
             <summary>
             Tries to get a <see cref="T:Exiled.CustomItems.API.Features.CustomItem"/> with a specific ID.
@@ -421,15 +413,6 @@
             <param name="customItem">The <see cref="T:Exiled.CustomItems.API.Features.CustomItem"/> this pickup is.</param>
             <returns>True if the pickup is a custom item.</returns>
         </member>
-        <member name="M:Exiled.CustomItems.API.Features.CustomItem.TrySpawn(System.Int32,UnityEngine.Vector3,Exiled.API.Features.Pickups.Pickup@)">
-            <summary>
-            Tries to spawn a specific <see cref="T:Exiled.CustomItems.API.Features.CustomItem"/> at a specific <see cref="T:UnityEngine.Vector3"/> position.
-            </summary>
-            <param name="id">The ID of the <see cref="T:Exiled.CustomItems.API.Features.CustomItem"/> to spawn.</param>
-            <param name="position">The <see cref="T:UnityEngine.Vector3"/> location to spawn the item.</param>
-            <param name="pickup">The <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/> instance of the <see cref="T:Exiled.CustomItems.API.Features.CustomItem"/>.</param>
-            <returns>Returns a value indicating whether the <see cref="T:Exiled.CustomItems.API.Features.CustomItem"/> was spawned or not.</returns>
-        </member>
         <member name="M:Exiled.CustomItems.API.Features.CustomItem.TrySpawn(System.UInt32,UnityEngine.Vector3,Exiled.API.Features.Pickups.Pickup@)">
             <summary>
             Tries to spawn a specific <see cref="T:Exiled.CustomItems.API.Features.CustomItem"/> at a specific <see cref="T:UnityEngine.Vector3"/> position.
@@ -454,15 +437,6 @@
             </summary>
             <param name="player">The <see cref="T:Exiled.API.Features.Player"/> to give the item to.</param>
             <param name="name">The name of the <see cref="T:Exiled.CustomItems.API.Features.CustomItem"/> to give.</param>
-            <param name="displayMessage">Indicates a value whether <see cref="M:Exiled.CustomItems.API.Features.CustomItem.ShowPickedUpMessage(Exiled.API.Features.Player)"/> will be called when the player receives the <see cref="T:Exiled.CustomItems.API.Features.CustomItem"/> or not.</param>
-            <returns>Returns a value indicating if the player was given the <see cref="T:Exiled.CustomItems.API.Features.CustomItem"/> or not.</returns>
-        </member>
-        <member name="M:Exiled.CustomItems.API.Features.CustomItem.TryGive(Exiled.API.Features.Player,System.Int32,System.Boolean)">
-            <summary>
-            Gives to a specific <see cref="T:Exiled.API.Features.Player"/> a specic <see cref="T:Exiled.CustomItems.API.Features.CustomItem"/>.
-            </summary>
-            <param name="player">The <see cref="T:Exiled.API.Features.Player"/> to give the item to.</param>
-            <param name="id">The IDs of the <see cref="T:Exiled.CustomItems.API.Features.CustomItem"/> to give.</param>
             <param name="displayMessage">Indicates a value whether <see cref="M:Exiled.CustomItems.API.Features.CustomItem.ShowPickedUpMessage(Exiled.API.Features.Player)"/> will be called when the player receives the <see cref="T:Exiled.CustomItems.API.Features.CustomItem"/> or not.</param>
             <returns>Returns a value indicating if the player was given the <see cref="T:Exiled.CustomItems.API.Features.CustomItem"/> or not.</returns>
         </member>
@@ -726,13 +700,6 @@
             </summary>
             <param name="player">The <see cref="T:Exiled.API.Features.Player"/> acquiring the item.</param>
             <param name="item">The <see cref="T:Exiled.API.Features.Items.Item"/> being acquired.</param>
-            <param name="displayMessage">Whether or not the Pickup hint should be displayed.</param>
-        </member>
-        <member name="M:Exiled.CustomItems.API.Features.CustomItem.OnAcquired(Exiled.API.Features.Player,System.Boolean)">
-            <summary>
-            Called anytime the item enters a player's inventory by any means.
-            </summary>
-            <param name="player">The <see cref="T:Exiled.API.Features.Player"/> acquiring the item.</param>
             <param name="displayMessage">Whether or not the Pickup hint should be displayed.</param>
         </member>
         <member name="M:Exiled.CustomItems.API.Features.CustomItem.OnWaitingForPlayers">
