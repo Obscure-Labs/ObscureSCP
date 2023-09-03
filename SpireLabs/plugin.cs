@@ -2,10 +2,8 @@
 {
     using Exiled.API.Enums;
     using Exiled.API.Features;
-    using Exiled.API.Features.Items;
     using Exiled.Events.EventArgs.Item;
     using Exiled.Events.EventArgs.Player;
-    using Exiled.Events.EventArgs.Server;
     using MEC;
     using PlayerRoles;
     using System.Collections.Generic;
@@ -13,14 +11,13 @@
     using System.Threading.Tasks;
     using UnityEngine;
     using System.IO;
-    using InventorySystem;
-    using InventorySystem.Items;
     using Exiled.CustomItems.API.Features;
     using Exiled.API.Features.Spawn;
-    using UnityEngine.Rendering;
     using Exiled.API.Features.Pickups;
-    using Exiled.CustomItems;
     using Exiled.API.Features.Doors;
+    using Exiled.API.Features.Pickups.Projectiles;
+    using InventorySystem.Items.ThrowableProjectiles;
+    using Exiled.API.Features.Items;
 
     public class Plugin : Plugin<config>
     {
@@ -83,7 +80,7 @@
         public static bool initing = false;
 
         public string[] good = { "You gained 20HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!", "You are healed!", "GRENADE FOUNTAIN!" };
-        public string[] bad = { "You now have 1HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "You have dust in your eye!", "You got lost and found yourself in a random room!", "You flipped the coin so hard your hands fell off!"};
+        public string[] bad = { "You now have 1HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "You have dust in your eye!", "You got lost and found yourself in a random room!", "You flipped the coin so hard your hands fell off!", "BOOM"};
         public override void OnDisabled()
         {
             UnregisterEvents();
@@ -332,11 +329,15 @@
 
         }
 
+
+
         private void Player_FlippingCoin(FlippingCoinEventArgs ev)
         {
+ 
 
-            Pickup d;
-            CustomItem.TrySpawn((uint)534588, new Vector3(ev.Player.Position.x, ev.Player.Position.y + 1, ev.Player.Position.z), out d);
+            // Projectile D = Projectile.CreateAndSpawn(ProjectileType.FragGrenade, new Vector3(ev.Player.Position.x, ev.Player.Position.y, ev.Player.Position.z), new Quaternion(ev.Player.Rotation.x, ev.Player.Rotation.y, ev.Player.Rotation.z, ev.Player.Transform.rotation.w), true);
+            //Pickup d;
+            //CustomItem.TrySpawn((uint)534588, new Vector3(ev.Player.Position.x, ev.Player.Position.y + 1, ev.Player.Position.z), out d);
             //Timing.RunCoroutine(scalePlayer(ev
             var rnd = new System.Random();
             int num = rnd.Next(0, 100);
@@ -380,7 +381,6 @@
 
                         var rnd2 = new System.Random();
                         int card = rnd2.Next(1, 3);
-
                         if (card == 1)
                         {
                             if (todrop)
@@ -492,6 +492,9 @@
                         ev.Player.ChangeEffectIntensity(EffectType.CardiacArrest, 5);
                         //Pickup p;
                         //SpireNade.TrySpawn((uint)534588, ev.Player.Position, out p);
+                        break;
+                    case 6:
+                        ev.Player.Explode(ProjectileType.FragGrenade);
                         break;
                 }
             }
