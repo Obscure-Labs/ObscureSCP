@@ -81,7 +81,7 @@
         public static bool initing = false;
 
         public string[] good = { "You gained 20HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!", "You are healed!", "GRENADE FOUNTAIN!" };
-        public string[] bad = { "You now have 1HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "You have dust in your eye!", "You got lost and found yourself in a random room!", "You flipped the coin so hard your hands fell off!", "BOOM!", "Sent To Brazil!!!"};
+        public string[] bad = { "You now have 50HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "Pocket Sand!", "You got lost and found yourself in a random room!", "You flipped the coin so hard your hands fell off!", "BOOM!", "Sent To Brazil!!!"};
         public override void OnDisabled()
         {
             UnregisterEvents();
@@ -208,6 +208,7 @@
         {
             if (realRoundEnd)
             {
+                Exiled.API.Features.Log.Info("Restarting the round (real restart)");
                 hasRestarted = false;
                 first = false;
                 inLobby = false;
@@ -251,9 +252,9 @@
 
        private IEnumerator<float> EngageLobby(JoinedEventArgs ev)
        {
-           Log.Debug("STARTING LEAVE EVENT");
+           Log.Info("STARTING LEAVE EVENT");
            Exiled.Events.Handlers.Player.Left += Player_Leave;
-           Log.Debug("ENABLED LEAVE EVENT");
+           Log.Info("ENABLED LEAVE EVENT");
            first = true;
            inLobby = true;
            yield return Timing.WaitForSeconds(2);
@@ -437,11 +438,11 @@
                         {
                             if (todrop)
                             {
-                                Pickup.CreateAndSpawn(ItemType.KeycardGuard, new Vector3(ev.Player.Position.x, ev.Player.Position.y, ev.Player.Position.z), new Quaternion(ev.Player.Rotation.x, ev.Player.Rotation.y, ev.Player.Rotation.z, ev.Player.Transform.rotation.w));
+                                Pickup.CreateAndSpawn(ItemType.KeycardMTFOperative, new Vector3(ev.Player.Position.x, ev.Player.Position.y, ev.Player.Position.z), new Quaternion(ev.Player.Rotation.x, ev.Player.Rotation.y, ev.Player.Rotation.z, ev.Player.Transform.rotation.w));
                             }
                             else
                             {
-                                ev.Player.AddItem(ItemType.KeycardGuard);
+                                ev.Player.AddItem(ItemType.KeycardMTFOperative);
                             }
                         }
                         else
@@ -478,7 +479,7 @@
                 {
                     case 0:
                         ev.Player.ShowHint(bad[0], 3);
-                        ev.Player.Health = 1;
+                        ev.Player.Health = 50;
                         break;
                     case 1:
                         ev.Player.ShowHint(bad[1], 3);
@@ -490,7 +491,7 @@
                         break;
                     case 3:
                         ev.Player.ShowHint(bad[3], 3);
-                        ev.Player.EnableEffect(EffectType.Blinded, 5);
+                        ev.Player.EnableEffect(EffectType.Flashed, 5);
                         break;
                     case 4:
                         if (Warhead.IsDetonated)
@@ -535,7 +536,7 @@
                         //SpireNade.TrySpawn((uint)534588, ev.Player.Position, out p);
                         break;
                     case 6:
-                        ev.Player.Explode(ProjectileType.FragGrenade);
+                        ev.Player.Vaporize();
                         break;
                     case 7:
                         ev.Player.ShowHint(bad[7], 3);
