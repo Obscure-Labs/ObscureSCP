@@ -120,7 +120,7 @@
 
             lobbyVector = Config.spawnRoomVector3;
 
-            file = File.ReadAllLines(@"C:\Users\Kebin\AppData\Roaming\EXILED\Configs\Spire/lines.txt");
+            file = File.ReadAllLines(@"C:\Users\Kevin\AppData\Roaming\EXILED\Configs\Spire/lines.txt");
             Timing.RunCoroutine(ShowHint());
             inLobby = false;
         }
@@ -265,7 +265,7 @@
            yield return Timing.WaitForSeconds((float)0.25);
            ev.Player.Teleport(lobbyVector);
            handle = Timing.RunCoroutine(startCheck());
-           File.WriteAllText(@"C:\Users\Kebin\AppData\Roaming\EXILED\Configs\Spire/stinky.txt", "pp");
+           File.WriteAllText(@"C:\Users\Kevin\AppData\Roaming\EXILED\Configs\Spire/stinky.txt", "pp");
        }
 
        private IEnumerator<float> restart()

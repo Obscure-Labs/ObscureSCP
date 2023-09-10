@@ -2,3 +2,5 @@ SpireLabs/bin/
 .vs/SpireLabs/FileContentIndex/9cf49edc-991c-411e-b4ac-cbf1d0367119.vsidx
 
 .vs/
+
+*.cache
