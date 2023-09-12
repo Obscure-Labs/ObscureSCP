@@ -4,3 +4,5 @@ SpireLabs/bin/
 .vs/
 
 *.cache
+
+SpireLabs/obj/

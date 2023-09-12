@@ -19,6 +19,8 @@
     using InventorySystem.Items.ThrowableProjectiles;
     using Exiled.API.Features.Items;
     using Interactables.Interobjects.DoorUtils;
+    using System;
+    using LiteNetLib;
 
     public class Plugin : Plugin<config>
     {
@@ -80,6 +82,8 @@
         public static bool startingRound = false;
         public static bool initing = false;
 
+        public string spireConfigLoc;
+
         public string[] good = { "You gained 20HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!", "You are healed!", "GRENADE FOUNTAIN!" };
         public string[] bad = { "You now have 50HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "Pocket Sand!", "You got lost and found yourself in a random room!", "You flipped the coin so hard your hands fell off!", "BOOM!", "Sent To Brazil!!!"};
         public override void OnDisabled()
@@ -91,7 +95,19 @@
         public override void OnEnabled()
         {
             RegisterEvents();
-            Log.Info("Spire Labs has been enabled!");
+            Log.SendRaw("[KevinIsBent] [SpireLabs]\n\r\n .d8888b.           d8b                 .d8888b.   .d8888b.  8888888b.  \r\nd88P  Y88b          Y8P                d88P  Y88b d88P  Y88b 888   Y88b \r\nY88b.                                  Y88b.      888    888 888    888 \r\n \"Y888b.   88888b.  888 888d888 .d88b.  \"Y888b.   888        888   d88P \r\n    \"Y88b. 888 \"88b 888 888P\"  d8P  Y8b    \"Y88b. 888        8888888P\"  \r\n      \"888 888  888 888 888    88888888      \"888 888    888 888        \r\nY88b  d88P 888 d88P 888 888    Y8b.    Y88b  d88P Y88b  d88P 888        \r\n \"Y8888P\"  88888P\"  888 888     \"Y8888  \"Y8888P\"   \"Y8888P\"  888        \r\n           888                                                          \r\n           888                                                          \r\n           888                                                          \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n", color: ConsoleColor.DarkMagenta);
+            if (Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Spire/"))
+            {
+                spireConfigLoc = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Spire/";
+            }
+            else
+            {
+                Log.Info("Making Spire Config Folder");
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Spire/");
+                spireConfigLoc = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Spire/";
+                File.WriteAllText(spireConfigLoc + "lines.txt", "CHANGE ME IN :  [EXILEDCONIG]\\Spire/lines.txt");
+            }
+            Log.Info($"Found Spire Config Folder : \"{spireConfigLoc}\"");
             base.OnEnabled();
             hidDPS = Config.hidDPS;
             OScp049 = Config.Scp049Override;
@@ -120,7 +136,7 @@
 
             lobbyVector = Config.spawnRoomVector3;
 
-            file = File.ReadAllLines(@"C:\Users\Kevin\AppData\Roaming\EXILED\Configs\Spire/lines.txt");
+            //file = File.ReadAllLines(@"C:\Users\Kevin\AppData\Roaming\EXILED\Configs\Spire/lines.txt");
             Timing.RunCoroutine(ShowHint());
             inLobby = false;
         }
@@ -265,10 +281,12 @@
            yield return Timing.WaitForSeconds((float)0.25);
            ev.Player.Teleport(lobbyVector);
            handle = Timing.RunCoroutine(startCheck());
-           File.WriteAllText(@"C:\Users\Kevin\AppData\Roaming\EXILED\Configs\Spire/stinky.txt", "pp");
-       }
+            //File.WriteAllText(@"C:\Users\Kevin\AppData\Roaming\EXILED\Configs\Spire/stinky.txt", "pp");
+            File.WriteAllText((spireConfigLoc + "stinky.txt"), "pp");
 
-       private IEnumerator<float> restart()
+        }
+
+        private IEnumerator<float> restart()
        {
            Cassie.Message("Round Starting in 25 seconds", isSubtitles: true, isNoisy: false);
            yield return Timing.WaitForSeconds(25);
@@ -300,8 +318,10 @@
            Cassie.Message("STARTING ROUND", isSubtitles: true, isNoisy: false);
            yield return Timing.WaitForSeconds(7);
            Round.Start();
-           File.WriteAllText(@"C:\Users\Kebin\AppData\Roaming\EXILED\Configs\Spire/stinky.txt", "ee");
-           inLobby = false;
+            // File.WriteAllText(@"C:\Users\Kebin\AppData\Roaming\EXILED\Configs\Spire/stinky.txt", "ee");
+            File.WriteAllText((spireConfigLoc + "stinky.txt"), "ee");
+
+            inLobby = false;
            realRoundEnd = true;
        }
 
@@ -608,8 +628,9 @@
              yield return Timing.WaitForSeconds(30);
              while (!Exiled.API.Features.Round.IsEnded)
              {
-                 file = File.ReadAllLines(@"C:\Users\Kebin\AppData\Roaming\EXILED\Configs\Spire/lines.txt");
-                 string hintMessage = string.Empty;
+                //file = File.ReadAllLines(@"C:\Users\Kebin\AppData\Roaming\EXILED\Configs\Spire/lines.txt");
+                file = File.ReadAllLines((spireConfigLoc + "lines.txt"));
+                string hintMessage = string.Empty;
                  if (hintHeight != 0 && hintHeight < 0)
                  {
                      for (int i = hintHeight; i < 0; i++)
