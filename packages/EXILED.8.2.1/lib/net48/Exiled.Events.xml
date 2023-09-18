@@ -2425,6 +2425,78 @@
                 Gets the killer player.
             </summary>
         </member>
+        <member name="T:Exiled.Events.EventArgs.Player.DroppedAmmoEventArgs">
+            <summary>
+                Contains all information before a player drops an item.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Player.DroppedAmmoEventArgs.#ctor(Exiled.API.Features.Player,Exiled.API.Enums.AmmoType,System.UInt16,System.Collections.Generic.List{InventorySystem.Items.Firearms.Ammo.AmmoPickup})">
+            <summary>
+                Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.DroppedAmmoEventArgs" /> class.
+            </summary>
+            <param name="player">
+                <inheritdoc cref="P:Exiled.Events.EventArgs.Player.DroppedAmmoEventArgs.Player" />
+            </param>
+            <param name="ammoType">
+                <inheritdoc cref="P:Exiled.Events.EventArgs.Player.DroppedAmmoEventArgs.AmmoType" />
+            </param>
+            <param name="amount">
+                <inheritdoc cref="P:Exiled.Events.EventArgs.Player.DroppedAmmoEventArgs.Amount" />
+            </param>
+            <param name="ammoPickups">
+                <inheritdoc cref="P:Exiled.Events.EventArgs.Player.DroppedAmmoEventArgs.AmmoPickups" />
+            </param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.DroppedAmmoEventArgs.AmmoType">
+            <summary>
+                Gets the type of dropped ammo.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.DroppedAmmoEventArgs.Amount">
+            <summary>
+                Gets the amount of dropped ammo.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.DroppedAmmoEventArgs.AmmoPickups">
+            <summary>
+                Gets the dropped ammo pickups.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.DroppedAmmoEventArgs.Player">
+            <summary>
+                Gets the player who dropped the ammo.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.EventArgs.Player.DroppedItemEventArgs">
+            <summary>
+                Contains all information after a player drops an item.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Player.DroppedItemEventArgs.#ctor(Exiled.API.Features.Player,Exiled.API.Features.Pickups.Pickup,System.Boolean)">
+            <summary>
+                Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.DroppedItemEventArgs" /> class.
+            </summary>
+            <param name="player">
+                <inheritdoc cref="P:Exiled.Events.EventArgs.Player.DroppedItemEventArgs.Player" />
+            </param>
+            <param name="pickup">
+                <inheritdoc cref="P:Exiled.Events.EventArgs.Player.DroppedItemEventArgs.Pickup" />
+            </param>
+            <param name="wasThrown">
+                <inheritdoc cref="P:Exiled.Events.EventArgs.Player.DroppedItemEventArgs.WasThrown" />
+            </param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.DroppedItemEventArgs.WasThrown">
+            <summary>
+                Gets or sets a value indicating whether or not the pickup was thrown.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.DroppedItemEventArgs.Pickup">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.DroppedItemEventArgs.Player">
+            <inheritdoc/>
+        </member>
         <member name="T:Exiled.Events.EventArgs.Player.DroppingAmmoEventArgs">
             <summary>
                 Contains all information before a player drops an item.
@@ -2603,6 +2675,40 @@
         <member name="P:Exiled.Events.EventArgs.Player.DyingEventArgs.Attacker">
             <summary>
                 Gets the killing player.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.EventArgs.Player.EarningAchievementEventArgs">
+            <summary>
+                Contains all information before a player earns an achievement.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Player.EarningAchievementEventArgs.#ctor(Exiled.API.Features.Player,Achievements.AchievementName,System.Boolean)">
+            <summary>
+                Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.EarningAchievementEventArgs"/> class.
+            </summary>
+            <param name="player">
+                <inheritdoc cref="P:Exiled.Events.EventArgs.Player.EarningAchievementEventArgs.Player" />
+            </param>
+            <param name="achievementName">
+                <inheritdoc cref="P:Exiled.Events.EventArgs.Player.EarningAchievementEventArgs.AchievementName" />
+            </param>
+            <param name="isAllowed">
+                <inheritdoc cref="P:Exiled.Events.EventArgs.Player.EarningAchievementEventArgs.IsAllowed" />
+            </param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.EarningAchievementEventArgs.AchievementName">
+            <summary>
+                Gets the achievement that will be earned.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.EarningAchievementEventArgs.IsAllowed">
+            <summary>
+                Gets or sets a value indicating whether the achievement will be awarded to the player.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.EarningAchievementEventArgs.Player">
+            <summary>
+                Gets the player who earned the achievement.
             </summary>
         </member>
         <member name="T:Exiled.Events.EventArgs.Player.EnteringEnvironmentalHazardEventArgs">
@@ -4058,6 +4164,73 @@
                 Gets the spawn flags for their class change.
             </summary>
         </member>
+        <member name="T:Exiled.Events.EventArgs.Player.SpawnedRagdollEventArgs">
+            <summary>
+                Contains all information after spawning a player ragdoll.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Player.SpawnedRagdollEventArgs.#ctor(Exiled.API.Features.Player,Exiled.API.Features.Ragdoll,RagdollData,PlayerStatsSystem.DamageHandlerBase)">
+            <summary>
+                Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.SpawnedRagdollEventArgs" /> class.
+            </summary>
+            <param name="player">
+                <inheritdoc cref="P:Exiled.Events.EventArgs.Player.SpawnedRagdollEventArgs.Player" />
+            </param>
+            <param name="ragdoll">
+                <inheritdoc cref="P:Exiled.Events.EventArgs.Player.SpawnedRagdollEventArgs.Ragdoll" />
+            </param>
+            <param name="info">
+                <inheritdoc cref="P:Exiled.Events.EventArgs.Player.SpawnedRagdollEventArgs.Info" />
+            </param>
+            <param name="damageHandlerBase">
+                <inheritdoc cref="P:Exiled.Events.EventArgs.Player.SpawnedRagdollEventArgs.DamageHandlerBase" />
+            </param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SpawnedRagdollEventArgs.Position">
+            <summary>
+                Gets the ragdoll's position.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SpawnedRagdollEventArgs.Rotation">
+            <summary>
+                Gets the ragdoll's rotation.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SpawnedRagdollEventArgs.Role">
+            <summary>
+                Gets the ragdoll's <see cref="T:PlayerRoles.RoleTypeId" />.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SpawnedRagdollEventArgs.CreationTime">
+            <summary>
+                Gets the ragdoll's creation time.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SpawnedRagdollEventArgs.Nickname">
+            <summary>
+                Gets the ragdoll's nickname.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SpawnedRagdollEventArgs.Info">
+            <summary>
+                Gets the ragdoll's <see cref="T:RagdollData" />.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SpawnedRagdollEventArgs.DamageHandlerBase">
+            <summary>
+                Gets the ragdoll's <see cref="T:PlayerStatsSystem.DamageHandlerBase" />.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SpawnedRagdollEventArgs.Ragdoll">
+            <summary>
+                Gets the spawned <see cref="T:Exiled.API.Features.Ragdoll"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SpawnedRagdollEventArgs.Player">
+            <summary>
+                Gets the <see cref="P:Exiled.Events.EventArgs.Player.SpawnedRagdollEventArgs.Player">Owner</see> of the ragdoll.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.EventArgs.Player.SpawningEventArgs">
             <summary>
                 Contains all information before spawning a player.
@@ -4133,6 +4306,11 @@
         <member name="P:Exiled.Events.EventArgs.Player.SpawningRagdollEventArgs.Rotation">
             <summary>
                 Gets or sets the ragdoll's rotation.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SpawningRagdollEventArgs.Scale">
+            <summary>
+                Gets or sets the ragdoll's scale.
             </summary>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.SpawningRagdollEventArgs.Role">
@@ -5762,7 +5940,7 @@
             <param name="target">
                 <inheritdoc cref="P:Exiled.Events.EventArgs.Scp096.AddingTargetEventArgs.Target" />
             </param>
-            <param name="isForLook">
+            <param name="isLooking">
                 <inheritdoc cref="P:Exiled.Events.EventArgs.Scp096.AddingTargetEventArgs.IsLooking" />
             </param>
             <param name="isAllowed">
@@ -6685,7 +6863,7 @@
                 Contains all information before SCP-939 uses its lunge ability.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Scp939.LungingEventArgs.#ctor(ReferenceHub)">
+        <member name="M:Exiled.Events.EventArgs.Scp939.LungingEventArgs.#ctor(Exiled.API.Features.Player)">
             <summary>
                 Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Scp939.LungingEventArgs" /> class.
             </summary>
@@ -6706,7 +6884,7 @@
                 Contains all information before SCP-939 uses its amnestic cloud ability.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Scp939.PlacingAmnesticCloudEventArgs.#ctor(ReferenceHub,System.Boolean,System.Boolean,System.Single,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Scp939.PlacingAmnesticCloudEventArgs.#ctor(Exiled.API.Features.Player,System.Boolean,System.Boolean,System.Single,System.Boolean)">
             <summary>
                 Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Scp939.PlacingAmnesticCloudEventArgs" /> class.
             </summary>
@@ -6759,7 +6937,7 @@
                 Contains all information before SCP-939 plays a sound effect.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Scp939.PlayingSoundEventArgs.#ctor(ReferenceHub,PlayerRoles.PlayableScps.Scp939.Mimicry.EnvMimicrySequence,System.Boolean,System.Single,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Scp939.PlayingSoundEventArgs.#ctor(Exiled.API.Features.Player,PlayerRoles.PlayableScps.Scp939.Mimicry.EnvMimicrySequence,System.Boolean,System.Single,System.Boolean)">
             <summary>
                 Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Scp939.PlayingSoundEventArgs" /> class.
             </summary>
@@ -7788,6 +7966,14 @@
             Invoked after a <see cref="T:Exiled.API.Features.Player"/> has been banned from the server.
             </summary>
         </member>
+        <member name="P:Exiled.Events.Handlers.Player.EarningAchievement">
+            <summary>
+            Invoked before a <see cref="T:Exiled.API.Features.Player"/> earns an achievement.
+            </summary>
+            <remarks>
+            Will not fire for certain client-side achievements.
+            </remarks>
+        </member>
         <member name="P:Exiled.Events.Handlers.Player.UsingItem">
             <summary>
             Invoked before using an <see cref="T:Exiled.API.Features.Items.Item"/>.
@@ -7825,6 +8011,11 @@
         <member name="P:Exiled.Events.Handlers.Player.SpawningRagdoll">
             <summary>
             Invoked before spawning a <see cref="T:Exiled.API.Features.Player"/> <see cref="T:Exiled.API.Features.Ragdoll"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.Handlers.Player.SpawnedRagdoll">
+            <summary>
+            Invoked after spawning a <see cref="T:Exiled.API.Features.Player"/> <see cref="T:Exiled.API.Features.Ragdoll"/>.
             </summary>
         </member>
         <member name="P:Exiled.Events.Handlers.Player.ActivatingWarheadPanel">
@@ -7896,6 +8087,11 @@
         <member name="P:Exiled.Events.Handlers.Player.DroppingItem">
             <summary>
             Invoked before dropping an <see cref="T:Exiled.API.Features.Items.Item"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.Handlers.Player.DroppedItem">
+            <summary>
+            Invoked after dropping an <see cref="T:Exiled.API.Features.Items.Item"/>.
             </summary>
         </member>
         <member name="P:Exiled.Events.Handlers.Player.DroppingNothing">
@@ -8073,6 +8269,11 @@
             Invoked before dropping ammo.
             </summary>
         </member>
+        <member name="P:Exiled.Events.Handlers.Player.DroppedAmmo">
+            <summary>
+            Invoked after dropping ammo.
+            </summary>
+        </member>
         <member name="P:Exiled.Events.Handlers.Player.InteractingShootingTarget">
             <summary>
             Invoked before a <see cref="T:Exiled.API.Features.Player"/> interacts with a shooting target.
@@ -8233,6 +8434,12 @@
             </summary>
             <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Player.BannedEventArgs"/> instance.</param>
         </member>
+        <member name="M:Exiled.Events.Handlers.Player.OnEarningAchievement(Exiled.Events.EventArgs.Player.EarningAchievementEventArgs)">
+            <summary>
+            Called before a <see cref="T:Exiled.API.Features.Player"/>  earns an achievement.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Player.EarningAchievementEventArgs"/> instance.</param>
+        </member>
         <member name="M:Exiled.Events.Handlers.Player.OnUsingItem(Exiled.Events.EventArgs.Player.UsingItemEventArgs)">
             <summary>
             Called before using a usable item.
@@ -8274,6 +8481,12 @@
             Called before spawning a <see cref="T:Exiled.API.Features.Player"/> ragdoll.
             </summary>
             <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Player.SpawningRagdollEventArgs"/> instance.</param>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Player.OnSpawnedRagdoll(Exiled.Events.EventArgs.Player.SpawnedRagdollEventArgs)">
+            <summary>
+            Called after spawning a <see cref="T:Exiled.API.Features.Player"/> ragdoll.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Player.SpawnedRagdollEventArgs"/> instance.</param>
         </member>
         <member name="M:Exiled.Events.Handlers.Player.OnActivatingWarheadPanel(Exiled.Events.EventArgs.Player.ActivatingWarheadPanelEventArgs)">
             <summary>
@@ -8329,6 +8542,12 @@
             Called before dropping an item.
             </summary>
             <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Player.DroppingItemEventArgs"/> instance.</param>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Player.OnDroppedItem(Exiled.Events.EventArgs.Player.DroppedItemEventArgs)">
+            <summary>
+            Called after dropping an item.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Player.DroppedItemEventArgs"/> instance.</param>
         </member>
         <member name="M:Exiled.Events.Handlers.Player.OnDroppingNothing(Exiled.Events.EventArgs.Player.DroppingNothingEventArgs)">
             <summary>
@@ -8673,6 +8892,12 @@
             Called before dropping ammo.
             </summary>
             <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Player.DroppingAmmoEventArgs"/> instance. </param>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Player.OnDroppedAmmo(Exiled.Events.EventArgs.Player.DroppedAmmoEventArgs)">
+            <summary>
+            Called after dropping ammo.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Player.DroppedAmmoEventArgs"/> instance. </param>
         </member>
         <member name="M:Exiled.Events.Handlers.Player.OnIssuingMute(Exiled.Events.EventArgs.Player.IssuingMuteEventArgs)">
             <summary>
@@ -9597,7 +9822,7 @@
             <summary>
                 Patches
                 <see cref="M:InventorySystem.Items.Jailbird.JailbirdItem.ServerProcessCmd(Mirror.NetworkReader)" />.
-                Adds the <see cref="P:Exiled.Events.Handlers.Item.Swinging" /> event.
+                Adds the <see cref="P:Exiled.Events.Handlers.Item.Swinging" /> event and <see cref="P:Exiled.Events.Handlers.Item.ChargingJailbird" />.
             </summary>
         </member>
         <member name="M:Exiled.Events.Patches.Events.Item.JailbirdPatch.HandleJailbird(InventorySystem.Items.Jailbird.JailbirdItem,InventorySystem.Items.Jailbird.JailbirdMessageType)">
@@ -9824,13 +10049,25 @@
         <member name="T:Exiled.Events.Patches.Events.Player.DroppingAmmo">
             <summary>
                 Patches <see cref="M:InventorySystem.Inventory.UserCode_CmdDropAmmo__Byte__UInt16(System.Byte,System.UInt16)" />.
-                Adds the <see cref="P:Exiled.Events.Handlers.Player.DroppingAmmo" /> event.
+                <br>Adds the <see cref="P:Exiled.Events.Handlers.Player.DroppingAmmo" /> and <see cref="P:Exiled.Events.Handlers.Player.DroppedAmmo" /> events.</br>
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Events.Player.DroppingItem">
+            <summary>
+                Patches <see cref="M:InventorySystem.Inventory.UserCode_CmdDropItem__UInt16__Boolean(System.UInt16,System.Boolean)" />.
+                <br>Adds the <see cref="P:Exiled.Events.Handlers.Player.DroppingItem" />, <see cref="P:Exiled.Events.Handlers.Player.DroppingNothing" /> and <see cref="P:Exiled.Events.Handlers.Player.DroppedItem"/> events.</br>
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Events.Player.DyingAndDied">
             <summary>
                 Patches <see cref="M:PlayerStatsSystem.PlayerStats.KillPlayer(PlayerStatsSystem.DamageHandlerBase)" />.
                 Adds the <see cref="P:Exiled.Events.Handlers.Player.Dying" /> and <see cref="P:Exiled.Events.Handlers.Player.Died" /> event.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Events.Player.EarningAchievement">
+            <summary>
+                Patch the <see cref="M:Achievements.AchievementHandlerBase.ServerAchieve(Mirror.NetworkConnection,Achievements.AchievementName)"/>.
+                Adds the <see cref="P:Exiled.Events.Handlers.Player.EarningAchievement"/> event.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Events.Player.EnteringKillerCollision">
@@ -9959,12 +10196,6 @@
             <summary>
                 Patch the <see cref="M:VoiceChat.VoiceChatMutes.IssueLocalMute(System.String,System.Boolean)" />.
                 Adds the <see cref="P:Exiled.Events.Handlers.Player.IssuingMute" /> event.
-            </summary>
-        </member>
-        <member name="T:Exiled.Events.Patches.Events.Player.ItemDrop">
-            <summary>
-                Patches <see cref="M:InventorySystem.Inventory.UserCode_CmdDropItem__UInt16__Boolean(System.UInt16,System.Boolean)" />.
-                Adds the <see cref="P:Exiled.Events.Handlers.Player.DroppingItem" /> and <see cref="P:Exiled.Events.Handlers.Player.DroppingNothing" /> events.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Events.Player.Joined">
@@ -10105,7 +10336,7 @@
         <member name="T:Exiled.Events.Patches.Events.Player.SpawningRagdoll">
             <summary>
                 Patches <see cref="M:PlayerRoles.Ragdolls.RagdollManager.ServerSpawnRagdoll(ReferenceHub,PlayerStatsSystem.DamageHandlerBase)" />.
-                Adds the <see cref="P:Exiled.Events.Handlers.Player.SpawningRagdoll" /> event.
+                <br>Adds the <see cref="P:Exiled.Events.Handlers.Player.SpawningRagdoll" /> and <see cref="P:Exiled.Events.Handlers.Player.SpawnedRagdoll"/> events.</br>
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Events.Player.StayingOnEnvironmentalHazard">
@@ -10651,11 +10882,6 @@
         <member name="T:Exiled.Events.Patches.Generic.DoorListRemove">
             <summary>
             Patches <see cref="M:Interactables.Interobjects.DoorUtils.DoorVariant.OnDestroy"/>.
-            </summary>
-        </member>
-        <member name="T:Exiled.Events.Patches.Generic.CheckpointDoorsFix">
-            <summary>
-            Patches <see cref="M:Interactables.Interobjects.CheckpointDoor.Start"/>.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Generic.GeneratorList">

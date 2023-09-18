@@ -21,6 +21,10 @@
     using Interactables.Interobjects.DoorUtils;
     using System;
     using LiteNetLib;
+    using PlayerRoles.PlayableScps.Scp079.Cameras;
+    using Exiled.API.Interfaces;
+    using PlayerRoles.FirstPersonControl;
+    using Exiled.Events.Patches.Generic;
 
     public class Plugin : Plugin<config>
     {
@@ -95,6 +99,7 @@
         public override void OnEnabled()
         {
             RegisterEvents();
+
             Log.SendRaw("[KevinIsBent] [SpireLabs]\n\r\n .d8888b.           d8b                 .d8888b.   .d8888b.  8888888b.  \r\nd88P  Y88b          Y8P                d88P  Y88b d88P  Y88b 888   Y88b \r\nY88b.                                  Y88b.      888    888 888    888 \r\n \"Y888b.   88888b.  888 888d888 .d88b.  \"Y888b.   888        888   d88P \r\n    \"Y88b. 888 \"88b 888 888P\"  d8P  Y8b    \"Y88b. 888        8888888P\"  \r\n      \"888 888  888 888 888    88888888      \"888 888    888 888        \r\nY88b  d88P 888 d88P 888 888    Y8b.    Y88b  d88P Y88b  d88P 888        \r\n \"Y8888P\"  88888P\"  888 888     \"Y8888  \"Y8888P\"   \"Y8888P\"  888        \r\n           888                                                          \r\n           888                                                          \r\n           888                                                          \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n", color: ConsoleColor.DarkMagenta);
             if (Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Spire/"))
             {
@@ -139,6 +144,7 @@
             //file = File.ReadAllLines(@"C:\Users\Kevin\AppData\Roaming\EXILED\Configs\Spire/lines.txt");
             Timing.RunCoroutine(ShowHint());
             inLobby = false;
+
         }
 
         private void RegisterEvents()
@@ -266,8 +272,9 @@
            }
        }
 
-       private IEnumerator<float> EngageLobby(JoinedEventArgs ev)
+        private IEnumerator<float> EngageLobby(JoinedEventArgs ev)
        {
+
            Log.Info("STARTING LEAVE EVENT");
            Exiled.Events.Handlers.Player.Left += Player_Leave;
            Log.Info("ENABLED LEAVE EVENT");
@@ -280,7 +287,7 @@
            ev.Player.RoleManager.ServerSetRole(RoleTypeId.ClassD, RoleChangeReason.RemoteAdmin, RoleSpawnFlags.UseSpawnpoint);
            yield return Timing.WaitForSeconds((float)0.25);
            ev.Player.Teleport(lobbyVector);
-           handle = Timing.RunCoroutine(startCheck());
+            handle = Timing.RunCoroutine(startCheck());
             //File.WriteAllText(@"C:\Users\Kevin\AppData\Roaming\EXILED\Configs\Spire/stinky.txt", "pp");
             File.WriteAllText((spireConfigLoc + "stinky.txt"), "pp");
 
@@ -288,7 +295,8 @@
 
         private IEnumerator<float> restart()
        {
-           Cassie.Message("Round Starting in 25 seconds", isSubtitles: true, isNoisy: false);
+
+            Cassie.Message("Round Starting in 25 seconds", isSubtitles: true, isNoisy: false);
            yield return Timing.WaitForSeconds(25);
            if (playerCount < 2) {
 
@@ -342,8 +350,13 @@
        }
 
        private void Player_Joined(JoinedEventArgs ev)
-       {
-           lastId = string.Empty;
+        {
+            ev.Player.TryRemoveFriendlyFire(RoleTypeId.ChaosConscript);
+            ev.Player.TryRemoveFriendlyFire(RoleTypeId.ChaosMarauder);
+            ev.Player.TryRemoveFriendlyFire(RoleTypeId.ChaosRepressor);
+            ev.Player.TryRemoveFriendlyFire(RoleTypeId.ChaosRifleman);
+            ev.Player.TryAddFriendlyFire(RoleTypeId.ClassD, 1.0f);
+            lastId = string.Empty;
            ConMet = false;
            playerCount++;
            Log.Info($"Player count is now: \"{playerCount}\"");
@@ -392,11 +405,9 @@
             }
 
         }
-
-
-
         private void Player_FlippingCoin(FlippingCoinEventArgs ev)
         {
+
             // Projectile D = Projectile.CreateAndSpawn(ProjectileType.FragGrenade, new Vector3(ev.Player.Position.x, ev.Player.Position.y, ev.Player.Position.z), new Quaternion(ev.Player.Rotation.x, ev.Player.Rotation.y, ev.Player.Rotation.z, ev.Player.Transform.rotation.w), true);
             //Pickup d;
             //CustomItem.TrySpawn((uint)534588, new Vector3(ev.Player.Position.x, ev.Player.Position.y + 1, ev.Player.Position.z), out d);
@@ -657,26 +668,27 @@
                  yield return Timing.WaitForSeconds(hintTime);
              }
          }
-         void OnRoundStart()
+        void OnRoundStart()
          {
-             //Exiled.API.Features.Server.Broadcast.SendMessage("Lobby initialised. Awaiting round start.");
-             //while(Exiled.API.Features.Player.List.Count() < 2)
-             //{
-             //    Thread.Sleep(2000);
-             //}
-             //while(Exiled.API.Features.Player.List.Count() > 1)
-             //{
 
-             //}
-             //Exiled.API.Features.Round.RestartSilently();
+            //Exiled.API.Features.Server.Broadcast.SendMessage("Lobby initialised. Awaiting round start.");
+            //while(Exiled.API.Features.Player.List.Count() < 2)
+            //{
+            //    Thread.Sleep(2000);
+            //}
+            //while(Exiled.API.Features.Player.List.Count() > 1)
+            //{
 
-             Log.Info("Round has started!");
+            //}
+            //Exiled.API.Features.Round.RestartSilently();
+
+            Log.Info("Round has started!");
              var players = Player.List;
              List<Player> SCPS = new List<Player>();
              int humanPlayers = 0;
              foreach (Player p in players)
              {
-                 switch (p.RoleManager.CurrentRole.RoleTypeId)
+                switch (p.RoleManager.CurrentRole.RoleTypeId)
                  {
                      case RoleTypeId.ClassD:
                          humanPlayers++;

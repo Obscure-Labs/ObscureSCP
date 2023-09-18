@@ -2267,6 +2267,15 @@
             <typeparam name="T">Type of <see cref="T:System.Collections.Generic.IEnumerable`1"/> elements.</typeparam>
             <returns>Returns a random value from <see cref="T:System.Collections.Generic.IEnumerable`1"/>.</returns>
         </member>
+        <member name="M:Exiled.API.Extensions.CommonExtensions.GetRandomValue``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})">
+            <summary>
+            Gets a random value from an <see cref="T:System.Collections.Generic.IEnumerable`1"/> that matches the provided condition.
+            </summary>
+            <param name="enumerable"><see cref="T:System.Collections.Generic.IEnumerable`1"/> to be used to get a random value.</param>
+            <typeparam name="T">Type of <see cref="T:System.Collections.Generic.IEnumerable`1"/> elements.</typeparam>
+            <param name="condition">The condition to require.</param>
+            <returns>Returns a random value from <see cref="T:System.Collections.Generic.IEnumerable`1"/>.</returns>
+        </member>
         <member name="T:Exiled.API.Extensions.DamageTypeExtensions">
             <summary>
             A set of extensions for <see cref="T:Exiled.API.Enums.DamageType"/>.
@@ -4123,6 +4132,492 @@
             Fired when the current <see cref="T:Exiled.API.Features.Core.EObject"/> instance has been explicitly destroyed.
             </summary>
         </member>
+        <member name="T:Exiled.API.Features.Core.Generic.EnumClass`2">
+            <summary>
+            A class which allows <see cref="T:System.Enum"/> implicit conversions.
+            <para>Can be used along with <see cref="T:System.Enum"/>, means it doesn't require another <see cref="T:Exiled.API.Features.Core.Generic.EnumClass`2"/> instance to be comparable or usable.</para>
+            </summary>
+            <typeparam name="TSource">The type of the source object to handle the instance of.</typeparam>
+            <typeparam name="TObject">The type of the child object to handle the instance of.</typeparam>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.EnumClass`2.#ctor(`0)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Core.Generic.EnumClass`2"/> class.
+            </summary>
+            <param name="value">The value of the enum item.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Core.Generic.EnumClass`2.Values">
+            <summary>
+            Gets all <typeparamref name="TObject"/> object instances.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.Generic.EnumClass`2.Value">
+            <summary>
+            Gets the value of the enum item.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.Generic.EnumClass`2.Name">
+            <summary>
+            Gets the name determined from reflection.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.EnumClass`2.op_Implicit(Exiled.API.Features.Core.Generic.EnumClass{`0,`1})~`0">
+            <summary>
+            Implicitly converts the <see cref="T:Exiled.API.Features.Core.Generic.EnumClass`2"/> to <typeparamref name="TSource"/>.
+            </summary>
+            <param name="value">The value to convert.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.EnumClass`2.op_Implicit(`0)~Exiled.API.Features.Core.Generic.EnumClass{`0,`1}">
+            <summary>
+            Implicitly converts the <typeparamref name="TSource"/> to <see cref="T:Exiled.API.Features.Core.Generic.EnumClass`2"/>.
+            </summary>
+            <param name="value">The value to convert.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.EnumClass`2.op_Implicit(Exiled.API.Features.Core.Generic.EnumClass{`0,`1})~`1">
+            <summary>
+            Implicitly converts the <see cref="T:Exiled.API.Features.Core.Generic.EnumClass`2"/> to <typeparamref name="TObject"/>.
+            </summary>
+            <param name="value">The value to convert.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.EnumClass`2.Cast(`0)">
+            <summary>
+            Casts the specified <paramref name="value"/> to the corresponding type.
+            </summary>
+            <param name="value">The enum value to be cast.</param>
+            <returns>The cast object.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.EnumClass`2.Cast(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Casts the specified <paramref name="values"/> to the corresponding type.
+            </summary>
+            <param name="values">The enum values to be cast.</param>
+            <returns>The cast object.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.EnumClass`2.GetValues(System.Type)">
+            <summary>
+            Retrieves an array of the values of the constants in a specified <see cref="T:Exiled.API.Features.Core.Generic.EnumClass`2"/>.
+            </summary>
+            <param name="type">The <see cref="T:Exiled.API.Features.Core.Generic.EnumClass`2"/> type.</param>
+            <returns>An array of the values of the constants in a specified <see cref="T:Exiled.API.Features.Core.Generic.EnumClass`2"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.EnumClass`2.SafeCast(`0,`1@)">
+            <summary>
+            Safely casts the specified <paramref name="value"/> to the corresponding type.
+            </summary>
+            <param name="value">The enum value to be cast.</param>
+            <param name="result">The cast <paramref name="value"/>.</param>
+            <returns><see langword="true"/> if the <paramref name="value"/> was cast; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.EnumClass`2.SafeCast(System.Collections.Generic.IEnumerable{`0},System.Collections.Generic.IEnumerable{`1}@)">
+            <summary>
+            Safely casts the specified <paramref name="values"/> to the corresponding type.
+            </summary>
+            <param name="values">The enum value to be cast.</param>
+            <param name="results">The cast <paramref name="values"/>.</param>
+            <returns><see langword="true"/> if the <paramref name="values"/> was cast; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.EnumClass`2.Parse(System.String)">
+            <summary>
+            Parses a <see cref="T:System.String"/> object.
+            </summary>
+            <param name="obj">The object to be parsed.</param>
+            <returns>The corresponding <typeparamref name="TObject"/> object instance, or <see langword="null"/> if not found.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.EnumClass`2.ToString">
+            <summary>
+            Converts the <see cref="T:Exiled.API.Features.Core.Generic.EnumClass`2"/> instance to a human-readable <see cref="T:System.String"/> representation.
+            </summary>
+            <returns>A human-readable <see cref="T:System.String"/> representation of the <see cref="T:Exiled.API.Features.Core.Generic.EnumClass`2"/> instance.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.EnumClass`2.Equals(System.Object)">
+            <summary>
+            Determines whether the specified object is equal to the current object.
+            </summary>
+            <param name="obj">The object to compare.</param>
+            <returns><see langword="true"/> if the object was equal; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.EnumClass`2.Equals(`1)">
+            <summary>
+            Determines whether the specified object is equal to the current object.
+            </summary>
+            <param name="other">The object to compare.</param>
+            <returns><see langword="true"/> if the object was equal; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.EnumClass`2.GetHashCode">
+            <summary>
+            Returns a the 32-bit signed hash code of the current object instance.
+            </summary>
+            <returns>The 32-bit signed hash code of the current object instance.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.EnumClass`2.CompareTo(`1)">
+            <summary>
+            Compares the current instance with another object of the same type and returns
+            an integer that indicates whether the current instance precedes, follows, or
+            occurs in the same position in the sort order as the other object.
+            </summary>
+            <param name="other">An object to compare with this instance.</param>
+            <returns>
+            A value that indicates the relative order of the objects being compared.
+            The return value has these meanings: Value Meaning Less than zero This instance precedes other in the sort order.
+            Zero This instance occurs in the same position in the sort order as other.
+            Greater than zero This instance follows other in the sort order.
+            </returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.EnumClass`2.CompareTo(System.Object)">
+            <summary>
+            Compares the current instance with another object of the same type and returns
+            an integer that indicates whether the current instance precedes, follows, or
+            occurs in the same position in the sort order as the other object.
+            </summary>
+            <param name="obj">An object to compare with this instance.</param>
+            <returns>
+            A value that indicates the relative order of the objects being compared.
+            The return value has these meanings: Value Meaning Less than zero This instance precedes other in the sort order.
+            Zero This instance occurs in the same position in the sort order as other.
+            Greater than zero This instance follows other in the sort order.
+            </returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.EnumClass`2.Compare(`1,`1)">
+            <summary>
+            Compares the specified object instance with another object of the same type and returns
+            an integer that indicates whether the current instance precedes, follows, or
+            occurs in the same position in the sort order as the other object.
+            </summary>
+            <param name="x">An object to compare.</param>
+            <param name="y">Another object to compare.</param>
+            <returns>
+            A value that indicates the relative order of the objects being compared.
+            The return value has these meanings: Value Meaning Less than zero This instance precedes other in the sort order.
+            Zero This instance occurs in the same position in the sort order as other.
+            Greater than zero This instance follows other in the sort order.
+            </returns>
+        </member>
+        <member name="T:Exiled.API.Features.Core.Generic.Singleton`1">
+            <summary>
+            A class to handle object instances.
+            </summary>
+            <typeparam name="T">The type of the object to handle the instance of.</typeparam>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.Singleton`1.#ctor(`0)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Core.Generic.Singleton`1"/> class.
+            </summary>
+            <param name="value">The branch to instantiate.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.Singleton`1.Finalize">
+            <summary>
+            Finalizes an instance of the <see cref="T:Exiled.API.Features.Core.Generic.Singleton`1"/> class.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.Generic.Singleton`1.Instance">
+            <summary>
+            Gets the relative value.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.Generic.Singleton`1.Value">
+            <summary>
+            Gets the singleton value.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.Singleton`1.op_Implicit(Exiled.API.Features.Core.Generic.Singleton{`0})~`0">
+            <summary>
+            Converts the given <see cref="T:Exiled.API.Features.Core.Generic.Singleton`1"/> instance into <typeparamref name="T"/>.
+            </summary>
+            <param name="instance">The <see cref="T:Exiled.API.Features.Core.Generic.Singleton`1"/> instance to convert.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.Singleton`1.TryGet``1(``0@)">
+            <summary>
+            Tries to get the relative value.
+            </summary>
+            <typeparam name="TObject">The type of the object.</typeparam>
+            <param name="instance">The object instance.</param>
+            <returns><see langword="true"/> if the object instance is not null and can be casted as the specified type; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.Singleton`1.Create(`0)">
+            <inheritdoc cref="M:Exiled.API.Features.Core.Generic.Singleton`1.#ctor(`0)"/>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.Singleton`1.Destroy(`0)">
+            <summary>
+            Destroys the given <typeparamref name="T"/> instance.
+            </summary>
+            <param name="object">The object to destroy.</param>
+            <returns><see langword="true"/> if the instance was destroyed; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="T:Exiled.API.Features.Core.Generic.StaticActor`1">
+            <summary>
+            This is a generic Singleton implementation for components.
+            <br>Create a derived class where the type <typeparamref name="T"/> is the script you want to "Singletonize"</br>
+            </summary>
+            <typeparam name="T">The type of the class.</typeparam>
+            <remarks>
+            Do not redefine <see cref="M:Exiled.API.Features.Core.Generic.StaticActor`1.PostInitialize"/> <see cref="M:Exiled.API.Features.Core.Generic.StaticActor`1.OnBeginPlay"/> or <see cref="M:Exiled.API.Features.Core.Generic.StaticActor`1.OnEndPlay"/> in derived classes.
+            <br>Instead, use <see langword="protected virtual"/> methods:</br>
+            <br><see cref="M:Exiled.API.Features.Core.Generic.StaticActor`1.PostInitialize_Static"/></br>
+            <br><see cref="M:Exiled.API.Features.Core.Generic.StaticActor`1.BeginPlay_Static"/></br>
+            <br><see cref="M:Exiled.API.Features.Core.Generic.StaticActor`1.EndPlay_Static"/></br>
+            <para>
+            To perform the initialization and cleanup: those methods are guaranteed to only be called once in the entire lifetime of the component.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:Exiled.API.Features.Core.Generic.StaticActor`1.IsInitialized">
+            <summary>
+            Gets a value indicating whether the <see cref="M:Exiled.API.Features.Core.Generic.StaticActor`1.PostInitialize"/> method has already been called by Unity.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.Generic.StaticActor`1.IsStarted">
+            <summary>
+            Gets a value indicating whether the <see cref="M:Exiled.API.Features.Core.Generic.StaticActor`1.OnBeginPlay"/> method has already been called by Unity.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.Generic.StaticActor`1.IsDestroyed">
+            <summary>
+            Gets a value indicating whether the <see cref="M:Exiled.API.Features.Core.Generic.StaticActor`1.OnEndPlay"/> method has already been called by Unity.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.Generic.StaticActor`1.Instance">
+            <summary>
+            Gets the global access point to the unique instance of this class.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.StaticActor`1.FindExistingInstance">
+            <summary>
+            Looks or an existing instance of the <see cref="T:Exiled.API.Features.Core.Generic.StaticActor`1"/>.
+            </summary>
+            <returns>The existing <typeparamref name="T"/> instance, or <see langword="null"/> if not found.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.StaticActor`1.CreateNewInstance">
+            <summary>
+            Creates a new instance of the <see cref="T:Exiled.API.Features.Core.Generic.StaticActor`1"/>.
+            </summary>
+            <returns>The created <typeparamref name="T"/> instance, or <see langword="null"/> if not found.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.StaticActor`1.PostInitialize">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.StaticActor`1.OnBeginPlay">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.StaticActor`1.OnEndPlay">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.StaticActor`1.Flush">
+            <summary>
+            Flushes the current actor.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.StaticActor`1.PostInitialize_Static">
+            <summary>
+            Fired on <see cref="M:Exiled.API.Features.Core.Generic.StaticActor`1.PostInitialize"/>.
+            </summary>
+            <remarks>
+            This method will only be called once even if multiple instances of the <see cref="T:Exiled.API.Features.Core.Generic.StaticActor`1"/> component exist in the scene.
+            <br>You can override this method in derived classes to customize the initialization of the component.</br>
+            </remarks>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.StaticActor`1.BeginPlay_Static">
+            <summary>
+            Fired on <see cref="M:Exiled.API.Features.Core.Generic.StaticActor`1.OnBeginPlay"/>.
+            </summary>
+            <remarks>
+            This method will only be called once even if multiple instances of the <see cref="T:Exiled.API.Features.Core.Generic.StaticActor`1"/> component exist in the scene.
+            <br>You can override this method in derived classes to customize the initialization of the component.</br>
+            </remarks>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.StaticActor`1.EndPlay_Static">
+            <summary>
+            Fired on <see cref="M:Exiled.API.Features.Core.Generic.StaticActor`1.OnEndPlay"/>.
+            </summary>
+            <remarks>
+            This method will only be called once even if multiple instances of the <see cref="T:Exiled.API.Features.Core.Generic.StaticActor`1"/> component exist in the scene.
+            <br>You can override this method in derived classes to customize the initialization of the component.</br>
+            </remarks>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.StaticActor`1.NotifyInstanceRepeated">
+            <summary>
+            If a duplicated instance of a <see cref="T:Exiled.API.Features.Core.Generic.StaticActor`1"/> component is loaded into the scene this method will be called instead of <see cref="M:Exiled.API.Features.Core.Generic.StaticActor`1.PostInitialize_Static"/>.
+            <br>That way you can customize what to do with repeated instances.</br>
+            </summary>
+            <remarks>
+            The default approach is delete the duplicated component.
+            </remarks>
+        </member>
+        <member name="T:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2">
+            <summary>
+            A class which allows <see langword="unmanaged"/> data implicit conversions.
+            <para>Can be used along with <see langword="unmanaged"/>, means it doesn't require another <see cref="T:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2"/> instance to be comparable or usable.</para>
+            </summary>
+            <typeparam name="TSource">The type of the <see langword="unmanaged"/> source object to handle the instance of.</typeparam>
+            <typeparam name="TObject">The type of the child object to handle the instance of.</typeparam>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2.#ctor(`0)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2"/> class.
+            </summary>
+            <param name="value">The value of the unmanaged item.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2.Values">
+            <summary>
+            Gets all <typeparamref name="TObject"/> object instances.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2.Value">
+            <summary>
+            Gets the value of the enum item.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2.Name">
+            <summary>
+            Gets the name determined from reflection.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2.op_Implicit(Exiled.API.Features.Core.Generic.UnmanagedEnumClass{`0,`1})~`0">
+            <summary>
+            Implicitly converts the <see cref="T:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2"/> to <typeparamref name="TSource"/>.
+            </summary>
+            <param name="value">The value to convert.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2.op_Implicit(`0)~Exiled.API.Features.Core.Generic.UnmanagedEnumClass{`0,`1}">
+            <summary>
+            Implicitly converts the <typeparamref name="TSource"/> to <see cref="T:Exiled.API.Features.Core.Generic.EnumClass`2"/>.
+            </summary>
+            <param name="value">The value to convert.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2.op_Implicit(Exiled.API.Features.Core.Generic.UnmanagedEnumClass{`0,`1})~`1">
+            <summary>
+            Implicitly converts the <see cref="T:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2"/> to <typeparamref name="TObject"/>.
+            </summary>
+            <param name="value">The value to convert.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2.Cast(`0)">
+            <summary>
+            Casts the specified <paramref name="value"/> to the corresponding type.
+            </summary>
+            <param name="value">The enum value to be cast.</param>
+            <returns>The cast object.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2.Cast(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Casts the specified <paramref name="values"/> to the corresponding type.
+            </summary>
+            <param name="values">The enum values to be cast.</param>
+            <returns>The cast object.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2.Cast``1(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Casts the specified <paramref name="values"/> to the corresponding type.
+            </summary>
+            <typeparam name="T">The type to cast the enum to.</typeparam>
+            <param name="values">The enum values to be cast.</param>
+            <returns>The cast <typeparamref name="T"/> object.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2.Cast``1(`0)">
+            <summary>
+            Casts the specified <paramref name="value"/> to the corresponding type.
+            </summary>
+            <typeparam name="T">The type to cast the enum to.</typeparam>
+            <param name="value">The enum value to be cast.</param>
+            <returns>The cast <typeparamref name="T"/> object.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2.SafeCast(`0,`1@)">
+            <summary>
+            Safely casts the specified <paramref name="value"/> to the corresponding type.
+            </summary>
+            <param name="value">The enum value to be cast.</param>
+            <param name="result">The cast <paramref name="value"/>.</param>
+            <returns><see langword="true"/> if the <paramref name="value"/> was cast; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2.SafeCast(System.Collections.Generic.IEnumerable{`0},System.Collections.Generic.IEnumerable{`1}@)">
+            <summary>
+            Safely casts the specified <paramref name="values"/> to the corresponding type.
+            </summary>
+            <param name="values">The enum value to be cast.</param>
+            <param name="results">The cast <paramref name="values"/>.</param>
+            <returns><see langword="true"/> if the <paramref name="values"/> was cast; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2.GetValues(System.Type)">
+            <summary>
+            Retrieves an array of the values of the constants in a specified <see cref="T:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2"/>.
+            </summary>
+            <param name="type">The <see cref="T:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2"/> type.</param>
+            <returns>An array of the values of the constants in a specified <see cref="T:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2.Parse(System.String)">
+            <summary>
+            Parses a <see cref="T:System.String"/> object.
+            </summary>
+            <param name="obj">The object to be parsed.</param>
+            <returns>The corresponding <typeparamref name="TObject"/> object instance, or <see langword="null"/> if not found.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2.ToString">
+            <summary>
+            Converts the <see cref="T:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2"/> instance to a human-readable <see cref="T:System.String"/> representation.
+            </summary>
+            <returns>A human-readable <see cref="T:System.String"/> representation of the <see cref="T:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2"/> instance.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2.Equals(System.Object)">
+            <summary>
+            Determines whether the specified object is equal to the current object.
+            </summary>
+            <param name="obj">The object to compare.</param>
+            <returns><see langword="true"/> if the object was equal; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2.Equals(`1)">
+            <summary>
+            Determines whether the specified object is equal to the current object.
+            </summary>
+            <param name="other">The object to compare.</param>
+            <returns><see langword="true"/> if the object was equal; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2.GetHashCode">
+            <summary>
+            Returns a the 32-bit signed hash code of the current object instance.
+            </summary>
+            <returns>The 32-bit signed hash code of the current object instance.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2.CompareTo(`1)">
+            <summary>
+            Compares the current instance with another object of the same type and returns
+            an integer that indicates whether the current instance precedes, follows, or
+            occurs in the same position in the sort order as the other object.
+            </summary>
+            <param name="other">An object to compare with this instance.</param>
+            <returns>
+            A value that indicates the relative order of the objects being compared.
+            The return value has these meanings: Value Meaning Less than zero This instance precedes other in the sort order.
+            Zero This instance occurs in the same position in the sort order as other.
+            Greater than zero This instance follows other in the sort order.
+            </returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2.CompareTo(System.Object)">
+            <summary>
+            Compares the current instance with another object of the same type and returns
+            an integer that indicates whether the current instance precedes, follows, or
+            occurs in the same position in the sort order as the other object.
+            </summary>
+            <param name="obj">An object to compare with this instance.</param>
+            <returns>
+            A value that indicates the relative order of the objects being compared.
+            The return value has these meanings: Value Meaning Less than zero This instance precedes other in the sort order.
+            Zero This instance occurs in the same position in the sort order as other.
+            Greater than zero This instance follows other in the sort order.
+            </returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.UnmanagedEnumClass`2.Compare(`1,`1)">
+            <summary>
+            Compares the specified object instance with another object of the same type and returns
+            an integer that indicates whether the current instance precedes, follows, or
+            occurs in the same position in the sort order as the other object.
+            </summary>
+            <param name="x">An object to compare.</param>
+            <param name="y">Another object to compare.</param>
+            <returns>
+            A value that indicates the relative order of the objects being compared.
+            The return value has these meanings: Value Meaning Less than zero This instance precedes other in the sort order.
+            Zero This instance occurs in the same position in the sort order as other.
+            Greater than zero This instance follows other in the sort order.
+            </returns>
+        </member>
         <member name="T:Exiled.API.Features.Core.Interfaces.IEntity">
             <summary>
             Defines the contract for basic ECS implementation.
@@ -4220,6 +4715,126 @@
             <param name="type">The <see cref="T:Exiled.API.Features.Core.EActor"/> to look for.</param>
             <param name="depthInheritance">A value indicating whether or not subclasses should be considered.</param>
             <returns><see langword="true"/> if the component was found; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="T:Exiled.API.Features.Core.StaticActor">
+            <summary>
+            This is a generic Singleton implementation for components.
+            <br>Create a derived class of the script you want to "Singletonize"</br>
+            </summary>
+            <remarks>
+            Do not redefine <see cref="M:Exiled.API.Features.Core.StaticActor.PostInitialize"/> <see cref="M:Exiled.API.Features.Core.StaticActor.OnBeginPlay"/> or <see cref="M:Exiled.API.Features.Core.StaticActor.OnEndPlay"/> in derived classes.
+            <br>Instead, use <see langword="protected virtual"/> methods:</br>
+            <br><see cref="M:Exiled.API.Features.Core.StaticActor.PostInitialize_Static"/></br>
+            <br><see cref="M:Exiled.API.Features.Core.StaticActor.BeginPlay_Static"/></br>
+            <br><see cref="M:Exiled.API.Features.Core.StaticActor.EndPlay_Static"/></br>
+            <para>
+            To perform the initialization and cleanup: those methods are guaranteed to only be called once in the entire lifetime of the component.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:Exiled.API.Features.Core.StaticActor.IsInitialized">
+            <summary>
+            Gets a value indicating whether the <see cref="M:Exiled.API.Features.Core.StaticActor.PostInitialize"/> method has already been called by Unity.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.StaticActor.IsStarted">
+            <summary>
+            Gets a value indicating whether the <see cref="M:Exiled.API.Features.Core.StaticActor.OnBeginPlay"/> method has already been called by Unity.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.StaticActor.IsDestroyed">
+            <summary>
+            Gets a value indicating whether the <see cref="M:Exiled.API.Features.Core.StaticActor.OnEndPlay"/> method has already been called by Unity.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.StaticActor.Instance">
+            <summary>
+            Gets the global access point to the unique instance of this class.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StaticActor.FindExistingInstance">
+            <summary>
+            Looks or an existing instance of the <see cref="T:Exiled.API.Features.Core.StaticActor"/>.
+            </summary>
+            <returns>The existing <see cref="T:Exiled.API.Features.Core.StaticActor"/> instance, or <see langword="null"/> if not found.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StaticActor.CreateNewInstance">
+            <summary>
+            Creates a new instance of the <see cref="T:Exiled.API.Features.Core.StaticActor"/>.
+            </summary>
+            <returns>The created <see cref="T:Exiled.API.Features.Core.StaticActor"/> instance, or <see langword="null"/> if not found.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StaticActor.Get``1">
+            <summary>
+            Gets a <see cref="T:Exiled.API.Features.Core.StaticActor"/> given the specified type <typeparamref name="T"/>.
+            </summary>
+            <typeparam name="T">The type of the <see cref="T:Exiled.API.Features.Core.StaticActor"/> to look for.</typeparam>
+            <returns>The corresponding <see cref="T:Exiled.API.Features.Core.StaticActor"/>, or <see langword="null"/> if not found.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StaticActor.Get``1(System.Type)">
+            <summary>
+            Gets a <see cref="T:Exiled.API.Features.Core.StaticActor"/> given the specified type.
+            </summary>
+            <param name="type">The the type of the <see cref="T:Exiled.API.Features.Core.StaticActor"/> to look for.</param>
+            <typeparam name="T">The type to cast the <see cref="T:Exiled.API.Features.Core.StaticActor"/> to.</typeparam>
+            <returns>The corresponding <see cref="T:Exiled.API.Features.Core.StaticActor"/> of type <typeparamref name="T"/>, or <see langword="null"/> if not found.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StaticActor.Get(System.Type)">
+            <summary>
+            Gets a <see cref="T:Exiled.API.Features.Core.StaticActor"/> given the specified type.
+            </summary>
+            <param name="type">The the type of the <see cref="T:Exiled.API.Features.Core.StaticActor"/> to look for.</param>
+            <returns>The corresponding <see cref="T:Exiled.API.Features.Core.StaticActor"/>, or <see langword="null"/> if not found.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StaticActor.PostInitialize">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StaticActor.OnBeginPlay">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StaticActor.OnEndPlay">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StaticActor.Flush">
+            <summary>
+            Flushes the current actor.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StaticActor.PostInitialize_Static">
+            <summary>
+            Fired on <see cref="M:Exiled.API.Features.Core.StaticActor.PostInitialize"/>.
+            </summary>
+            <remarks>
+            This method will only be called once even if multiple instances of the <see cref="T:Exiled.API.Features.Core.StaticActor"/> component exist in the scene.
+            <br>You can override this method in derived classes to customize the initialization of the component.</br>
+            </remarks>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StaticActor.BeginPlay_Static">
+            <summary>
+            Fired on <see cref="M:Exiled.API.Features.Core.StaticActor.OnBeginPlay"/>.
+            </summary>
+            <remarks>
+            This method will only be called once even if multiple instances of the <see cref="T:Exiled.API.Features.Core.StaticActor"/> component exist in the scene.
+            <br>You can override this method in derived classes to customize the initialization of the component.</br>
+            </remarks>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StaticActor.EndPlay_Static">
+            <summary>
+            Fired on <see cref="M:Exiled.API.Features.Core.StaticActor.OnEndPlay"/>.
+            </summary>
+            <remarks>
+            This method will only be called once even if multiple instances of the <see cref="T:Exiled.API.Features.Core.StaticActor"/> component exist in the scene.
+            <br>You can override this method in derived classes to customize the initialization of the component.</br>
+            </remarks>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StaticActor.NotifyInstanceRepeated">
+            <summary>
+            If a duplicated instance of a <see cref="T:Exiled.API.Features.Core.StaticActor"/> component is loaded into the scene this method will be called instead of <see cref="M:Exiled.API.Features.Core.StaticActor.PostInitialize_Static"/>.
+            <br>That way you can customize what to do with repeated instances.</br>
+            </summary>
+            <remarks>
+            The default approach is delete the duplicated component.
+            </remarks>
         </member>
         <member name="T:Exiled.API.Features.Core.TickComponent">
             <summary>
@@ -5434,6 +6049,21 @@
         <member name="P:Exiled.API.Features.Doors.Gate.PryPositions">
             <summary>
             Gets the list of all available pry positions.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Gate.IsFullyClosed">
+            <summary>
+            Gets a value indicating whether or not the door is fully closed.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Gate.IsFullyOpen">
+            <summary>
+            Gets a value indicating whether the door is fully open.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Gate.IsMoving">
+            <summary>
+            Gets a value indicating whether or not the door is currently moving.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Doors.Gate.RemainingPryCooldown">
@@ -8932,47 +9562,86 @@
             <param name="pickupBase">The <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/> to convert into a <see cref="T:Exiled.API.Features.Pickups.Pickup"/>.</param>
             <returns>The <see cref="T:Exiled.API.Features.Pickups.Pickup"/> wrapper for the given <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/>.</returns>
         </member>
+        <member name="M:Exiled.API.Features.Pickups.Pickup.Get(System.UInt16)">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Pickups.Pickup"/> given a <see cref="P:Exiled.API.Features.Pickups.Pickup.Serial"/>.
+            </summary>
+            <param name="serial">The serial to look for.</param>
+            <returns>The <see cref="T:Exiled.API.Features.Pickups.Pickup"/> given the specified serial.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Pickup.Get(UnityEngine.GameObject)">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Pickups.Pickup"/> given a <see cref="T:UnityEngine.GameObject"/>.
+            </summary>
+            <param name="gameObject">The <see cref="T:UnityEngine.GameObject"/> to check.</param>
+            <returns>The <see cref="T:Exiled.API.Features.Pickups.Pickup"/> given the specified <see cref="T:UnityEngine.GameObject"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Pickup.Get(System.Collections.Generic.IEnumerable{InventorySystem.Items.Pickups.ItemPickupBase})">
+            <summary>
+            Gets an <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Pickups.Pickup"/> containing all existing <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/> instances given an <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/>.
+            </summary>
+            <param name="pickups">An <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/> to convert into an <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Pickups.Pickup"/>.</param>
+            <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Pickups.Pickup"/> containing all existing <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/> instances.</returns>
+        </member>
         <member name="M:Exiled.API.Features.Pickups.Pickup.Get(ItemType)">
             <summary>
-            Gets all <see cref="T:Exiled.API.Features.Pickups.Pickup"/> with the given <see cref="T:ItemType"/>.
+            Gets an <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Pickups.Pickup"/> containing all existing <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/> instances given an <see cref="T:ItemType"/>.
             </summary>
+            <param name="type">The <see cref="T:ItemType"/> to look for.</param>
+            <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Pickups.Pickup"/> containing all existing <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/> instances.</returns>
+            <seealso cref="M:Exiled.API.Features.Map.GetRandomPickup(ItemType)"/>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Pickup.Get(System.Collections.Generic.IEnumerable{UnityEngine.GameObject})">
+            <summary>
+            Gets an <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Pickups.Pickup"/> containing all existing <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/> instances given an <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:UnityEngine.GameObject"/>.
+            </summary>
+            <param name="gameObjects">The <see cref="T:UnityEngine.GameObject"/>'s to check.</param>
+            <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Pickups.Pickup"/> containing all existing <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/> instances.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Pickup.Get``1(System.Collections.Generic.IEnumerable{InventorySystem.Items.Pickups.ItemPickupBase})">
+            <summary>
+            Gets an <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Pickups.Pickup"/> containing all existing <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/> instances given a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/>.
+            </summary>
+            <typeparam name="T">The type <typeparamref name="T"/> to cast the pickups to.</typeparam>
+            <param name="pickups">An <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/> to convert into an <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Pickups.Pickup"/>.</param>
+            <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Pickups.Pickup"/> containing all existing <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/> instances.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Pickup.Get``1(ItemType)">
+            <summary>
+            Gets an <see cref="T:System.Collections.Generic.IEnumerable`1"/> containing all existing <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/> instances given an <see cref="T:ItemType"/>.
+            </summary>
+            <typeparam name="T">The type <typeparamref name="T"/> to cast the pickups to.</typeparam>
             <param name="type">The <see cref="T:ItemType"/> to look for.</param>
             <returns>A <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Pickups.Pickup"/>.</returns>
             <seealso cref="M:Exiled.API.Features.Map.GetRandomPickup(ItemType)"/>
         </member>
-        <member name="M:Exiled.API.Features.Pickups.Pickup.Get(System.UInt16)">
+        <member name="M:Exiled.API.Features.Pickups.Pickup.Get``1(System.Collections.Generic.IEnumerable{UnityEngine.GameObject})">
             <summary>
-            Gets the <see cref="T:Exiled.API.Features.Pickups.Pickup"/> with the given <see cref="P:Exiled.API.Features.Pickups.Pickup.Serial"/>.
+            Gets an <see cref="T:System.Collections.Generic.IEnumerable`1"/> containing all existing <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/> instances given a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:UnityEngine.GameObject"/>.
             </summary>
-            <param name="serial"> The serial of the Pickup you search.</param>
-            <returns>return the Pickup with Serial choose.</returns>
-        </member>
-        <member name="M:Exiled.API.Features.Pickups.Pickup.Get(UnityEngine.GameObject)">
-            <summary>
-            Gets the <see cref="T:Exiled.API.Features.Pickups.Pickup"/> with the given <see cref="T:UnityEngine.GameObject"/>.
-            </summary>
-            <param name="gameObject"> The gameobject of the Pickup you search.</param>
-            <returns>return the Pickup with gameObject choose.</returns>
+            <typeparam name="T">The type <typeparamref name="T"/> to cast the pickups to.</typeparam>
+            <param name="gameObjects">The <see cref="T:UnityEngine.GameObject"/>'s to check.</param>
+            <returns>The <see cref="T:Exiled.API.Features.Pickups.Pickup"/> given the specified <see cref="T:UnityEngine.GameObject"/>.</returns>
         </member>
         <member name="M:Exiled.API.Features.Pickups.Pickup.Create(ItemType)">
             <summary>
             Creates and returns a new <see cref="T:Exiled.API.Features.Pickups.Pickup"/> with the proper inherited subclass.
             <para>
-            Based on the <paramref name="type"/>, the returned <see cref="T:Exiled.API.Features.Pickups.Pickup"/> can be casted into a subclass to gain more control over the object.
-            <br />- All valid ammo should be casted to the <see cref="T:Exiled.API.Features.Pickups.AmmoPickup"/> class.
-            <br />- All valid firearms (not including the Micro HID) should be casted to the <see cref="T:Exiled.API.Features.Pickups.FirearmPickup"/> class.
-            <br />- All valid keycards should be casted to the <see cref="T:Exiled.API.Features.Pickups.KeycardPickup"/> class.
-            <br />- All valid armor should be casted to the <see cref="T:Exiled.API.Features.Pickups.BodyArmorPickup"/> class.
-            <br />- All grenades and throwables (not including SCP-018 and SCP-2176) should be casted to the <see cref="T:Exiled.API.Features.Pickups.GrenadePickup"/> class.
+            Based on the <paramref name="type"/>, the returned <see cref="T:Exiled.API.Features.Pickups.Pickup"/> can be cast into a subclass to gain more control over the object.
+            <br />- All valid ammo should be cast to the <see cref="T:Exiled.API.Features.Pickups.AmmoPickup"/> class.
+            <br />- All valid firearms (not including the Micro HID) should be cast to the <see cref="T:Exiled.API.Features.Pickups.FirearmPickup"/> class.
+            <br />- All valid keycards should be cast to the <see cref="T:Exiled.API.Features.Pickups.KeycardPickup"/> class.
+            <br />- All valid armor should be cast to the <see cref="T:Exiled.API.Features.Pickups.BodyArmorPickup"/> class.
+            <br />- All grenades and throwables (not including SCP-018 and SCP-2176) should be cast to the <see cref="T:Exiled.API.Features.Pickups.GrenadePickup"/> class.
             </para>
             <para>
             <br />The following have their own respective classes:
-            <br />- Radios can be casted to <see cref="T:Exiled.API.Features.Pickups.RadioPickup"/>.
-            <br />- The Micro HID can be casted to <see cref="T:Exiled.API.Features.Pickups.MicroHIDPickup"/>.
-            <br />- SCP-244 A and B variants can be casted to <see cref="T:Exiled.API.Features.Pickups.Scp244Pickup"/>.
-            <br />- SCP-330 can be casted to <see cref="T:Exiled.API.Features.Pickups.Scp330Pickup"/>.
-            <br />- SCP-018 can be casted to <see cref="T:Exiled.API.Features.Pickups.Projectiles.Scp018Projectile"/>.
-            <br />- SCP-2176 can be casted to <see cref="T:Exiled.API.Features.Pickups.Projectiles.Scp2176Projectile"/>.
+            <br />- Radios can be cast to <see cref="T:Exiled.API.Features.Pickups.RadioPickup"/>.
+            <br />- The Micro HID can be cast to <see cref="T:Exiled.API.Features.Pickups.MicroHIDPickup"/>.
+            <br />- SCP-244 A and B variants can be cast to <see cref="T:Exiled.API.Features.Pickups.Scp244Pickup"/>.
+            <br />- SCP-330 can be cast to <see cref="T:Exiled.API.Features.Pickups.Scp330Pickup"/>.
+            <br />- SCP-018 can be cast to <see cref="T:Exiled.API.Features.Pickups.Projectiles.Scp018Projectile"/>.
+            <br />- SCP-2176 can be cast to <see cref="T:Exiled.API.Features.Pickups.Projectiles.Scp2176Projectile"/>.
             </para>
             <para>
             Items that are not listed above do not have a subclass, and can only use the base <see cref="T:Exiled.API.Features.Pickups.Pickup"/> class.
@@ -14229,6 +14898,7 @@
             <summary>
             Gets or sets the color of the room's lights by changing the warhead color.
             </summary>
+            <remarks>Will return <see cref="P:UnityEngine.Color.clear"/> when <see cref="P:Exiled.API.Features.Room.RoomLightController"/> is <see langword="null"/>.</remarks>
         </member>
         <member name="P:Exiled.API.Features.Room.AreLightsOff">
             <summary>
