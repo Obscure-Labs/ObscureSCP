@@ -437,7 +437,7 @@
                     case 1:
                         ev.Player.ShowHint(good[1], 3);
                         ev.Player.EnableEffect(EffectType.MovementBoost, 5);
-                        ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 65, 5);
+                        ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 105, 5);
                         break;
                     case 2:
                         bool todrop = false;
