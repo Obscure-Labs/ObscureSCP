@@ -436,11 +436,13 @@
 
         }
 
+
         private IEnumerator<float> scl(Player p)
         {
-            
+            p.Scale = Vector3.one * -1;   
             yield return Timing.WaitForSeconds(30);
             p.Scale = Vector3.one;
+
         }
 
         private void Player_FlippingCoin(FlippingCoinEventArgs ev)
@@ -617,8 +619,9 @@
                         break;
                     case 8:
                         ev.Player.ShowHint(bad[8], 3);
+
                         ev.Player.Scale = Vector3.one * -1;
-                        scl(ev.Player);
+                        Timing.RunCoroutine(scl(ev.Player));
                         break;
                 }
             }
