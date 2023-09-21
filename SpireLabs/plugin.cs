@@ -15,16 +15,14 @@
     using Exiled.API.Features.Spawn;
     using Exiled.API.Features.Pickups;
     using Exiled.API.Features.Doors;
-    using Exiled.API.Features.Pickups.Projectiles;
-    using InventorySystem.Items.ThrowableProjectiles;
-    using Exiled.API.Features.Items;
-    using Interactables.Interobjects.DoorUtils;
     using System;
-    using LiteNetLib;
-    using PlayerRoles.PlayableScps.Scp079.Cameras;
-    using Exiled.API.Interfaces;
     using PlayerRoles.FirstPersonControl;
-    using Exiled.Events.Patches.Generic;
+    using HarmonyLib;
+    using System.Reflection.Emit;
+    using NorthwoodLib.Pools;
+    using Mirror;
+    using Exiled.API.Features.Roles;
+    using static UnityEngine.GraphicsBuffer;
 
     public class Plugin : Plugin<config>
     {
@@ -88,17 +86,49 @@
 
         public string spireConfigLoc;
 
+        private Harmony _harmony;
+
         public string[] good = { "You gained 20HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!", "You are healed!", "GRENADE FOUNTAIN!" };
-        public string[] bad = { "You now have 50HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "Pocket Sand!", "You got lost and found yourself in a random room!", "You flipped the coin so hard your hands fell off!", "BOOM!", "Sent To Brazil!!!"};
+        public string[] bad = { "You now have 50HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "Pocket Sand!", "You got lost and found yourself in a random room!", "You flipped the coin so hard your hands fell off!", "BOOM!", "Sent To Brazil!!!", "Welcome to australia!"};
         public override void OnDisabled()
         {
             UnregisterEvents();
             Log.Info("Spire Labs has been disabled!");
             base.OnDisabled();
         }
+
+        [HarmonyPatch(typeof(FpcMouseLook), nameof(FpcMouseLook.UpdateRotation))]
+        public class RotationPatch
+        {
+            private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
+            {
+                List<CodeInstruction> newInstructions = ListPool<CodeInstruction>.Shared.Rent(instructions);
+
+                Label skip = generator.DefineLabel();
+
+                newInstructions[newInstructions.Count - 1].labels.Add(skip);
+
+                newInstructions.InsertRange(0, new List<CodeInstruction>()
+            {
+                new(OpCodes.Ldarg_0),
+                new(OpCodes.Ldfld, AccessTools.Field(typeof(FpcMouseLook), nameof(FpcMouseLook._hub))),
+                new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(Player), "Get", new[] { typeof(ReferenceHub) })),
+                new CodeInstruction(OpCodes.Callvirt, AccessTools.PropertyGetter(typeof(Player), nameof(Player.IsNPC))),
+                new CodeInstruction(OpCodes.Brtrue_S, skip),
+            });
+
+                foreach (CodeInstruction instruction in newInstructions)
+                    yield return instruction;
+
+                ListPool<CodeInstruction>.Shared.Return(newInstructions);
+            }
+        }
+
         public override void OnEnabled()
         {
             RegisterEvents();
+            _harmony = new("DevDummies-Rotation-Patch");
+            _harmony.PatchAll();
 
             Log.SendRaw("[KevinIsBent] [SpireLabs]\n\r\n .d8888b.           d8b                 .d8888b.   .d8888b.  8888888b.  \r\nd88P  Y88b          Y8P                d88P  Y88b d88P  Y88b 888   Y88b \r\nY88b.                                  Y88b.      888    888 888    888 \r\n \"Y888b.   88888b.  888 888d888 .d88b.  \"Y888b.   888        888   d88P \r\n    \"Y88b. 888 \"88b 888 888P\"  d8P  Y8b    \"Y88b. 888        8888888P\"  \r\n      \"888 888  888 888 888    88888888      \"888 888    888 888        \r\nY88b  d88P 888 d88P 888 888    Y8b.    Y88b  d88P Y88b  d88P 888        \r\n \"Y8888P\"  88888P\"  888 888     \"Y8888  \"Y8888P\"   \"Y8888P\"  888        \r\n           888                                                          \r\n           888                                                          \r\n           888                                                          \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n", color: ConsoleColor.DarkMagenta);
             if (Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Spire/"))
@@ -405,8 +435,19 @@
             }
 
         }
+
+
+        private IEnumerator<float> scl(Player p)
+        {
+            p.Scale = Vector3.one * -1;   
+            yield return Timing.WaitForSeconds(30);
+            p.Scale = Vector3.one;
+
+        }
+
         private void Player_FlippingCoin(FlippingCoinEventArgs ev)
         {
+            
 
             // Projectile D = Projectile.CreateAndSpawn(ProjectileType.FragGrenade, new Vector3(ev.Player.Position.x, ev.Player.Position.y, ev.Player.Position.z), new Quaternion(ev.Player.Rotation.x, ev.Player.Rotation.y, ev.Player.Rotation.z, ev.Player.Transform.rotation.w), true);
             //Pickup d;
@@ -575,6 +616,12 @@
                         ev.Player.Teleport(Room.List.FirstOrDefault(x => x.Type == RoomType.Pocket));
                         ev.Player.EnableEffect(EffectType.PocketCorroding, 60);
                         Timing.RunCoroutine(enterPD(ev.Player, zt));
+                        break;
+                    case 8:
+                        ev.Player.ShowHint(bad[8], 3);
+
+                        ev.Player.Scale = Vector3.one * -1;
+                        Timing.RunCoroutine(scl(ev.Player));
                         break;
                 }
             }
