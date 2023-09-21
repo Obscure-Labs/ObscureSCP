@@ -100,7 +100,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="coin.cs" />
     <Compile Include="config.cs" />
+    <Compile Include="doctor.cs" />
     <Compile Include="NukeCard.cs" />
     <Compile Include="plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

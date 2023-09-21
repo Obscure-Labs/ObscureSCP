@@ -1,4 +1,4 @@
-﻿namespace SpireLabs
+﻿ namespace SpireLabs
 {
     using Exiled.API.Enums;
     using Exiled.API.Features;
@@ -88,8 +88,6 @@
 
         private Harmony _harmony;
 
-        public string[] good = { "You gained 20HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!", "You are healed!", "GRENADE FOUNTAIN!" };
-        public string[] bad = { "You now have 50HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "Pocket Sand!", "You got lost and found yourself in a random room!", "You flipped the coin so hard your hands fell off!", "BOOM!", "Sent To Brazil!!!", "Welcome to australia!"};
         public override void OnDisabled()
         {
             UnregisterEvents();
@@ -126,6 +124,8 @@
 
         public override void OnEnabled()
         {
+            
+
             RegisterEvents();
             _harmony = new("DevDummies-Rotation-Patch");
             _harmony.PatchAll();
@@ -181,56 +181,17 @@
         {
             //Exiled.Events.Handlers.Player.EnteringPocketDimension += pocketEnter;
             Exiled.Events.Handlers.Player.Hurting += theThing;
+            Exiled.Events.Handlers.Scp049.ActivatingSense += doctor.doctorBoost;
+            Exiled.Events.Handlers.Scp049.SendingCall += doctor.call;
             Exiled.Events.Handlers.Server.RoundStarted += OnRoundStart;
             Exiled.Events.Handlers.Player.Spawned += Player_Spawned;
-            Exiled.Events.Handlers.Player.FlippingCoin += Player_FlippingCoin;
+            Exiled.Events.Handlers.Player.FlippingCoin += coin.Player_FlippingCoin;
             Exiled.Events.Handlers.Player.Joined += Player_Joined;
             Exiled.Events.Handlers.Player.PreAuthenticating += Authing;
             Exiled.Events.Handlers.Server.RestartingRound += restarting;
             Exiled.Events.Handlers.Player.ChangedItem += item_change;
             CustomItem.RegisterItems();
         }
-
-        //made by isaac 
-        //trust the process
-        public static IEnumerator<float> enterPD(Player p, ZoneType zt)
-        {
-            Door door = Room.List.FirstOrDefault().Doors.FirstOrDefault();
-            yield return Timing.WaitForOneFrame;
-            Exiled.Events.Handlers.Player.EscapingPocketDimension += ExitVoid;
-            Exiled.Events.Handlers.Player.FailingEscapePocketDimension += FixThing;
-            void ExitVoid(EscapingPocketDimensionEventArgs ev)
-            {
-                bool goodRoom = false;
-                while (goodRoom == false)
-                {
-                    var roomNd = new System.Random();
-                    int roomNum = roomNd.Next(0, Room.List.Count());
-                    if (Room.List.ElementAt(roomNum).Type != RoomType.HczTesla && Room.List.ElementAt(roomNum).Zone == zt)
-                    {
-                        goodRoom = true;
-                        door = Room.List.ElementAt(roomNum).Doors.FirstOrDefault();
-                    }
-                }
-                ev.TeleportPosition = new Vector3(door.Position.x, door.Position.y + 1.5f, door.Position.z);
-                p.DisableEffect(EffectType.PocketCorroding);
-                Exiled.Events.Handlers.Player.EscapingPocketDimension -= ExitVoid;
-                Exiled.Events.Handlers.Player.FailingEscapePocketDimension -= FixThing;
-            }
-            void FixThing(FailingEscapePocketDimensionEventArgs e)
-            {
-                Exiled.Events.Handlers.Player.EscapingPocketDimension -= ExitVoid;
-                Exiled.Events.Handlers.Player.FailingEscapePocketDimension -= FixThing;
-            }
-            yield return Timing.WaitForOneFrame;
-        }
-
-        //trust the process
-        //private void pocketEnter(EnteringPocketDimensionEventArgs ev)
-        //{
-        //    RoomType rt = ev.Player.CurrentRoom.Type;
-        //    enterPD(ev.Player, rt);
-        //}
 
         private void item_change(ChangedItemEventArgs ev)
         {
@@ -410,227 +371,6 @@
            }
        }
 
-        //private IEnumerator<float> scalePlayer(FlippingCoinEventArgs ev)
-        //{
-        //    for (int i = 0; i < 50; i++)
-        //    {
-        //        var rnd = new System.Random();
-        //        float num1 = (float)(rnd.NextDouble() * rnd.Next(1, 5));
-        //        float num2 = (float)(rnd.NextDouble() * rnd.Next(1, 5));
-        //        ev.Player.Scale = new Vector3(num1, 1f, num2);
-        //        yield return Timing.WaitForSeconds(0.1f);
-        //    }
-        //    ev.Player.Scale = new Vector3(1f, 1f, 1f);
-        //    Throwable g = ev.Player.ThrowGrenade(ProjectileType.FragGrenade);
-        //}
-
-        private IEnumerator<float> grenadeFountain(Player p)
-        {
-            int bombs = 0;
-            while (bombs != 10)
-            {
-                p.ThrowGrenade(ProjectileType.FragGrenade, false);
-                yield return Timing.WaitForSeconds(0.1f);
-                bombs++;
-            }
-
-        }
-
-
-        private IEnumerator<float> scl(Player p)
-        {
-            p.Scale = Vector3.one * -1;   
-            yield return Timing.WaitForSeconds(30);
-            p.Scale = Vector3.one;
-
-        }
-
-        private void Player_FlippingCoin(FlippingCoinEventArgs ev)
-        {
-            
-
-            // Projectile D = Projectile.CreateAndSpawn(ProjectileType.FragGrenade, new Vector3(ev.Player.Position.x, ev.Player.Position.y, ev.Player.Position.z), new Quaternion(ev.Player.Rotation.x, ev.Player.Rotation.y, ev.Player.Rotation.z, ev.Player.Transform.rotation.w), true);
-            //Pickup d;
-            //CustomItem.TrySpawn((uint)534588, new Vector3(ev.Player.Position.x, ev.Player.Position.y + 1, ev.Player.Position.z), out d);
-            //Timing.RunCoroutine(scalePlayer(ev
-            var rnd = new System.Random();
-            int num = rnd.Next(0, 100);
-            int result = 0;
-            if (num > 20 && num < 45) result = 1;
-            if (num > 45 && num < 100) result = 2;
-            if (result == 1)
-            {
-                Exiled.API.Features.Log.Info($"{ev.Player.Nickname} flipped a coin and got a good result!");
-                switch (rnd.Next(0, good.Count()))
-                {
-                    case 0:
-                        ev.Player.ShowHint(good[0], 3);
-                        ev.Player.Heal(20, true);
-                        if (ev.Player.Role == RoleTypeId.NtfCaptain)
-                        {
-                            ev.Player.MaxHealth = 150;
-                        }
-                        else
-                        {
-                            ev.Player.MaxHealth = 100;
-                        }
-                        break;
-                    case 1:
-                        ev.Player.ShowHint(good[1], 3);
-                        ev.Player.EnableEffect(EffectType.MovementBoost, 5);
-                        ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 105, 5);
-                        break;
-                    case 2:
-                        bool todrop = false;
-                        ev.Player.ShowHint(good[2], 3);
-                        if (ev.Player.IsInventoryFull)
-                        {
-                            todrop = true;
-
-                        }
-                        else
-                        {
-                            todrop = false;
-                        }
-
-                        var rnd2 = new System.Random();
-                        int card = rnd2.Next(1, 3);
-                        if (card == 1)
-                        {
-                            if (todrop)
-                            {
-                                Pickup.CreateAndSpawn(ItemType.KeycardZoneManager, new Vector3(ev.Player.Position.x, ev.Player.Position.y, ev.Player.Position.z), new Quaternion(ev.Player.Rotation.x, ev.Player.Rotation.y, ev.Player.Rotation.z, ev.Player.Transform.rotation.w));
-                            }
-                            else
-                            {
-                                ev.Player.AddItem(ItemType.KeycardZoneManager);
-                            }
-                        }
-                        else if (card == 2)
-                        {
-                            if (todrop)
-                            {
-                                Pickup.CreateAndSpawn(ItemType.KeycardMTFOperative, new Vector3(ev.Player.Position.x, ev.Player.Position.y, ev.Player.Position.z), new Quaternion(ev.Player.Rotation.x, ev.Player.Rotation.y, ev.Player.Rotation.z, ev.Player.Transform.rotation.w));
-                            }
-                            else
-                            {
-                                ev.Player.AddItem(ItemType.KeycardMTFOperative);
-                            }
-                        }
-                        else
-                        {
-                            if (todrop)
-                            {
-                                Pickup.CreateAndSpawn(ItemType.KeycardResearchCoordinator, new Vector3(ev.Player.Position.x, ev.Player.Position.y, ev.Player.Position.z), new Quaternion(ev.Player.Rotation.x, ev.Player.Rotation.y, ev.Player.Rotation.z, ev.Player.Transform.rotation.w));
-                            }
-                            else
-                            {
-                                ev.Player.AddItem(ItemType.KeycardResearchCoordinator);
-                            }
-                        }
-                        break;
-                    case 3:
-                        ev.Player.ShowHint(good[3], 3);
-                        ev.Player.EnableEffect(EffectType.Invisible, 5);
-                        break;
-                    case 4:
-                        ev.Player.Heal(150, false);
-                        ev.Player.ShowHint(good[4], 3);
-                        break;
-                    case 5:
-                        ev.Player.ShowHint(good[5], 3);
-                        Timing.RunCoroutine(grenadeFountain(ev.Player));
-                        break;
-                }
-
-            }
-            else if (result == 2)
-            {
-                Exiled.API.Features.Log.Info($"{ev.Player.Nickname} flipped a coin and got a bad result!");
-                switch (rnd.Next(0, bad.Count()))
-                {
-                    case 0:
-                        ev.Player.ShowHint(bad[0], 3);
-                        ev.Player.Health = 50;
-                        break;
-                    case 1:
-                        ev.Player.ShowHint(bad[1], 3);
-                        ev.Player.DropItems();
-                        break;
-                    case 2:
-                        ev.Player.ShowHint(bad[2], 3);
-                        ev.Player.EnableEffect(EffectType.SinkHole, 5);
-                        break;
-                    case 3:
-                        ev.Player.ShowHint(bad[3], 3);
-                        ev.Player.EnableEffect(EffectType.Flashed, 5);
-                        break;
-                    case 4:
-                        if (Warhead.IsDetonated)
-                            break;
-                        ev.Player.ShowHint(bad[4], 3);
-                        var r = new System.Random();
-                        var n = r.Next(0, 2);
-                        bool goodRoom = false;
-                        Room room = Room.List.ElementAt(4);
-                        Door door = Room.List.ElementAt(4).Doors.FirstOrDefault();
-                        while (goodRoom == false)
-                        {
-                            var roomNd = new System.Random();
-                            int roomNum = roomNd.Next(0, Room.List.Count());
-                            if (Map.IsLczDecontaminated)
-                            {
-                                if (Room.List.ElementAt(roomNum).Type != RoomType.HczTesla && Room.List.ElementAt(roomNum).Zone != ZoneType.LightContainment)
-                                {
-                                    goodRoom = true;
-                                    door = Room.List.ElementAt(roomNum).Doors.FirstOrDefault();
-                                }
-                            }
-                            else
-                            {
-                                if (Room.List.ElementAt(roomNum).Type != RoomType.HczTesla)
-                                {
-                                    goodRoom = true;
-                                    door = Room.List.ElementAt(roomNum).Doors.FirstOrDefault();
-                                }
-                            }
-
-                        }
-                        ev.Player.Teleport(new Vector3(door.Position.x, door.Position.y + 1f, door.Position.z));
-                        
-                        break;
-                    case 5:
-                        ev.Player.ShowHint(bad[5], 3);
-                        ev.Player.EnableEffect(EffectType.SeveredHands, 999);
-                        ev.Player.EnableEffect(EffectType.CardiacArrest, 60);
-                        ev.Player.ChangeEffectIntensity(EffectType.CardiacArrest, 5);
-                        //Pickup p;
-                        //SpireNade.TrySpawn((uint)534588, ev.Player.Position, out p);
-                        break;
-                    case 6:
-                        ev.Player.Vaporize();
-                        break;
-                    case 7:
-                        ev.Player.ShowHint(bad[7], 3);
-                        ZoneType zt = ev.Player.CurrentRoom.Zone;
-                        ev.Player.Teleport(Room.List.FirstOrDefault(x => x.Type == RoomType.Pocket));
-                        ev.Player.EnableEffect(EffectType.PocketCorroding, 60);
-                        Timing.RunCoroutine(enterPD(ev.Player, zt));
-                        break;
-                    case 8:
-                        ev.Player.ShowHint(bad[8], 3);
-
-                        ev.Player.Scale = Vector3.one * -1;
-                        Timing.RunCoroutine(scl(ev.Player));
-                        break;
-                }
-            }
-            else
-            {
-                Exiled.API.Features.Log.Info($"{ev.Player.Nickname} flipped a coin and got nothing!");
-                ev.Player.ShowHint("No consequences, this time...", 3);
-            }
-        }
 
         public class SpireNade : CustomGrenade
         {
@@ -649,7 +389,7 @@
              Exiled.Events.Handlers.Item.KeycardInteracting -= Item_KeycardInteracting;
              Exiled.Events.Handlers.Server.RoundStarted -= OnRoundStart;
              Exiled.Events.Handlers.Player.Spawned -= Player_Spawned;
-             Exiled.Events.Handlers.Player.FlippingCoin -= Player_FlippingCoin;
+             Exiled.Events.Handlers.Player.FlippingCoin -= coin.Player_FlippingCoin;
              Exiled.Events.Handlers.Player.Joined -= Player_Joined;
              Exiled.Events.Handlers.Player.PreAuthenticating -= Authing;
              Exiled.Events.Handlers.Server.RestartingRound -= restarting;
