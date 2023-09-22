@@ -27,6 +27,8 @@
     using Exiled.API.Features.Items;
     using Hazards;
     using Exiled.API.Features.Hazards;
+    using Utf8Json.Resolvers.Internal;
+    using Exiled.API.Features.Toys;
 
     internal static class coin
     {
@@ -76,6 +78,21 @@
             p.Scale = Vector3.one * -1;
             yield return Timing.WaitForSeconds(30);
             p.Scale = Vector3.one;
+
+        }
+
+        private static void pp(Player pl)
+        {
+            
+
+            Primitive p = Primitive.Create(pl.Transform.position + (pl.Transform.forward*1.25f) +(pl.Transform.up * 0.75f), Vector3.zero, Vector3.one, false);
+
+            p.Color = new Color(0, 255, 0);
+            p.Scale = Vector3.one * 0.25f;
+            p.MovementSmoothing = 125;
+            p.Base.gameObject.tag = "Cube";
+            p.Spawn();
+            p.Base.gameObject.transform.SetParent(pl.CameraTransform);
 
         }
 
@@ -165,8 +182,7 @@
 
         internal static void Player_FlippingCoin(FlippingCoinEventArgs ev)
         {
-            //Log.Info($"Player name = {ev.Player.GameObject.tag}");
-
+            //pp(ev.Player);
             var rnd = new System.Random();
             int num = rnd.Next(0, 100);
             int result = 0;
