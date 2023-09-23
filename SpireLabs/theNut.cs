@@ -1,4 +1,5 @@
 ﻿using Exiled.Events.EventArgs.Player;
+using Exiled.Events.EventArgs.Scp173;
 using PlayerRoles;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,16 @@ namespace SpireLabs
                     ev.Amount = 0;
                 }
             }
+        }
+
+        internal static void scp173TP(BlinkingEventArgs ev)
+        {
+
+        }
+
+        internal static void scp173ZOOM(UsingBreakneckSpeedsEventArgs ev)
+        {
+            //ev.Scp173.
         }
     }
 }

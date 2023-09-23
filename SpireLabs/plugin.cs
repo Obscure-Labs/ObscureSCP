@@ -197,6 +197,8 @@
             //Exiled.Events.Handlers.Player.EnteringPocketDimension += pocketEnter;
             Exiled.Events.Handlers.Player.Hurting += theThing;
             Exiled.Events.Handlers.Player.Hurting += theNut.scp173DMG;
+            Exiled.Events.Handlers.Scp173.Blinking += theNut.scp173TP;
+            Exiled.Events.Handlers.Scp173.UsingBreakneckSpeeds += theNut.scp173ZOOM;
             Exiled.Events.Handlers.Scp106.Attacking += larry.pdExits;
             Exiled.Events.Handlers.Scp049.ActivatingSense += doctor.doctorBoost;
             Exiled.Events.Handlers.Scp049.SendingCall += doctor.call;
