@@ -29,7 +29,8 @@
     using Exiled.API.Features.Hazards;
     using Utf8Json.Resolvers.Internal;
     using Exiled.API.Features.Toys;
-
+    using InventorySystem.Items.Usables.Scp330;
+    
     internal static class coin
     {
         public static string[] good = { "You gained 20HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!", "You are healed!", "GRENADE FOUNTAIN!", "Ammo pile!!", "FREE CANDY!", "You can't die for the next 3s!", "You bring health to those around you!", "Nice hat.." };
@@ -38,8 +39,9 @@
         private static IEnumerator<float> grenadeFountain(Player p)
         {
             int bombs = 0;
-            while (bombs != 10)
+            while (bombs != 5)
             {
+                p.ThrowGrenade(ProjectileType.FragGrenade, false);
                 p.ThrowGrenade(ProjectileType.FragGrenade, false);
                 yield return Timing.WaitForSeconds(0.1f);
                 bombs++;
@@ -48,27 +50,74 @@
 
         private static IEnumerator<float> ammoFountain(Player p)
         {
+            var itemTotal = 0;
+            var rnd = new System.Random();
+            int num = rnd.Next(0, 100);
+            if (num >= 95)
+            {
+                itemTotal = 80;
+            }
+            else
+            {
+                itemTotal = 10;
+            }
+
             Log.Info("Running ammo fountain on " + p);
             int items = 0;
-            while (items != 20)
+            while (items != itemTotal)
             {
-                Pickup.CreateAndSpawn(ItemType.Ammo9x19, p.Position, p.Rotation);
-                Pickup.CreateAndSpawn(ItemType.Ammo762x39, p.Position, p.Rotation);
-                Pickup.CreateAndSpawn(ItemType.Ammo12gauge, p.Position, p.Rotation);
-                Pickup.CreateAndSpawn(ItemType.Ammo556x45, p.Position, p.Rotation);
-                Pickup.CreateAndSpawn(ItemType.Ammo44cal, p.Position, p.Rotation);
+              Pickup.CreateAndSpawn(ItemType.Ammo9x19, p.Position, p.Rotation);
+              Pickup.CreateAndSpawn(ItemType.Ammo762x39, p.Position, p.Rotation);
+              Pickup.CreateAndSpawn(ItemType.Ammo12gauge, p.Position, p.Rotation);
+              Pickup.CreateAndSpawn(ItemType.Ammo556x45, p.Position, p.Rotation);
+              Pickup.CreateAndSpawn(ItemType.Ammo44cal, p.Position, p.Rotation);
+
+
                 yield return Timing.WaitForOneFrame;
                 items++;
             }
         }
         private static IEnumerator<float> candyFountain(Player p)
         {
+            var rnd = new System.Random();
             Log.Info("Running candy fountain on " + p);
             int items = 0;
-            while (items != 20)
+            while (items != 10)
             {
-                Pickup.CreateAndSpawn(ItemType.SCP330, p.Position, p.Rotation);
+                Exiled.API.Features.Pickups.Scp330Pickup Scp330 = (Exiled.API.Features.Pickups.Scp330Pickup)Pickup.Create(ItemType.SCP330);
+                int num = rnd.Next(0, 6);
+                if (num == 0)
+                {
+                    Scp330.Candies.Add(CandyKindID.Red);
+                }
+                else if (num == 1)
+                {
+                    Scp330.Candies.Add(CandyKindID.Blue);
+                }
+                else if (num == 2)
+                {
+                    Scp330.Candies.Add(CandyKindID.Yellow);
+                }
+                else if (num == 3)
+                {
+                    Scp330.Candies.Add(CandyKindID.Green);
+                }
+                else if (num == 4)
+                {
+                    Scp330.Candies.Add(CandyKindID.Purple);
+                }
+                else if (num == 5)
+                {
+                    Scp330.Candies.Add(CandyKindID.Rainbow);
+                }
+                else if (num == 6)
+                {
+                    Scp330.Candies.Add(CandyKindID.Pink);
+                }
+                Pickup.Spawn(Scp330, new Vector3(p.Position.x, p.Position.y, p.Position.z), p.Rotation);
+
                 yield return Timing.WaitForOneFrame;
+
                 items++;
             }
         }
