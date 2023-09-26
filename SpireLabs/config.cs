@@ -48,5 +48,7 @@ namespace SpireLabs
         public int timeBetweenHints { get; set; } = 120;
         [Description("Lobby Data")]
         public UnityEngine.Vector3 spawnRoomVector3 { get; set; } = new UnityEngine.Vector3((float)-9.94, 1005, (float)82.37);
+        [Description("Use Lobby Function?")]
+        public bool lobbyEnabled { get; set; } = false;
     }
 }

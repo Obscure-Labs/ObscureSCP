@@ -37,6 +37,8 @@
         public override System.Version RequiredExiledVersion => new System.Version(8, 0, 1);
         public static float hidDPS;
 
+        public static CoroutineHandle LobbyTimer;
+
         public static OverrideData OScp049;
         public static OverrideData OScp0492;
         public static OverrideData OScp079;
@@ -84,6 +86,8 @@
         public static bool realRoundEnd = false;
         public static bool startingRound = false;
         public static bool initing = false;
+
+        public static bool isLobbyEnabledConfig = false;
 
         public string spireConfigLoc;
 
@@ -138,9 +142,6 @@
         public override void OnEnabled()
         {
             Timing.RunCoroutine(checkPlayer());
-
-
-
             RegisterEvents();
             _harmony = new("DevDummies-Rotation-Patch");
             _harmony.PatchAll();
@@ -185,6 +186,8 @@
             hintTime = Config.timeBetweenHints;
 
             lobbyVector = Config.spawnRoomVector3;
+            isLobbyEnabledConfig = Config.lobbyEnabled;
+
 
             //file = File.ReadAllLines(@"C:\Users\Kevin\AppData\Roaming\EXILED\Configs\Spire/lines.txt");
             Timing.RunCoroutine(ShowHint());
@@ -370,24 +373,27 @@
            ConMet = false;
            playerCount++;
            Log.Info($"Player count is now: \"{playerCount}\"");
-           //ev.Player.Broadcast(new Broadcast { Content = "Player joined", Duration = 1, Show = true, Type = global::Broadcast.BroadcastFlags.Normal });
-           if (!hasRestarted)
-           {
-               if (!inLobby && !first && !Round.IsStarted) //EngageLobby();
-               {
-                   Timing.RunCoroutine(EngageLobby(ev));
-               }
-               else if (first)
-               {
-                   Timing.RunCoroutine(InsertPlayer(ev));
-                   return;
-               }
-           }
-           else if (!first)
-           {
-               Timing.RunCoroutine(go());
-               first = true;
-           }
+            //ev.Player.Broadcast(new Broadcast { Content = "Player joined", Duration = 1, Show = true, Type = global::Broadcast.BroadcastFlags.Normal });
+            if (isLobbyEnabledConfig)
+            {
+                if (!hasRestarted)
+                {
+                    if (!inLobby && !first && !Round.IsStarted) //EngageLobby();
+                    {
+                        Timing.RunCoroutine(EngageLobby(ev));
+                    }
+                    else if (first)
+                    {
+                        Timing.RunCoroutine(InsertPlayer(ev));
+                        return;
+                    }
+                }
+                else if (!first)
+                {
+                    Timing.RunCoroutine(go());
+                    first = true;
+                }
+            }
        }
 
 
