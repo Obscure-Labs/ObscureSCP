@@ -74,7 +74,8 @@
                                         {
                                             if (!ppp.IsHuman)
                                             {
-                                                ppp.HumeShield += 7.5f;
+                                                ppp.ShowHint("You are recieving HS points from a nearby doctor!", 3);
+                                                ppp.HumeShield += 4.5f;
                                             }
                                         }
                                     }
@@ -82,7 +83,8 @@
                                     {
                                         if (!ppp.IsHuman)
                                         {
-                                            ppp.HumeShield += 7.5f;
+                                            ppp.ShowHint("You are recieving HS points from a nearby doctor!", 3);
+                                            ppp.HumeShield += 4.5f;
                                         }
                                     }
                                 }
@@ -90,7 +92,8 @@
                                 {
                                     if (!ppp.IsHuman)
                                     {
-                                        ppp.HumeShield += 7.5f;
+                                        ppp.ShowHint("You are recieving HS points from a nearby doctor!", 3);
+                                        ppp.HumeShield += 4.5f;
                                     }
                                 }
                             }
@@ -98,7 +101,8 @@
                             {
                                 if (!ppp.IsHuman)
                                 {
-                                    ppp.HumeShield += 7.5f;
+                                    ppp.ShowHint("You are recieving HS points from a nearby doctor!", 3);
+                                    ppp.HumeShield += 4.5f;
                                 }
                             }
                         }
@@ -158,6 +162,7 @@
                                         {
                                             if (!ppp.IsHuman)
                                             {
+                                                ppp.ShowHint("You are recieving a speed boost from a nearby doctor!", 3);
                                                 ppp.EnableEffect(EffectType.MovementBoost, 1.5f);
                                                 ppp.ChangeEffectIntensity(EffectType.MovementBoost, 30, 1.5f);
                                             }
@@ -169,6 +174,7 @@
                                         {
                                             ppp.EnableEffect(EffectType.MovementBoost, 1.5f);
                                             ppp.ChangeEffectIntensity(EffectType.MovementBoost, 30, 1.5f);
+                                            ppp.ShowHint("You are recieving a speed boost from a nearby doctor!", 3);
                                         }
                                     }
                                 }
@@ -178,6 +184,7 @@
                                     {
                                         ppp.EnableEffect(EffectType.MovementBoost, 1.5f);
                                         ppp.ChangeEffectIntensity(EffectType.MovementBoost, 30, 1.5f);
+                                        ppp.ShowHint("You are recieving a speed boost from a nearby doctor!", 3);
                                     }
                                 }
                             }
@@ -187,6 +194,7 @@
                                 {
                                     ppp.EnableEffect(EffectType.MovementBoost, 1.5f);
                                     ppp.ChangeEffectIntensity(EffectType.MovementBoost, 30, 1.5f);
+                                    ppp.ShowHint("You are recieving a speed boost from a nearby doctor!", 3);
                                 }
                             }
                         }
@@ -203,11 +211,13 @@
             ev.Player.EnableEffect(EffectType.MovementBoost, 10);
             ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 10, 10);
             Timing.RunCoroutine(scpBoost(ev.Player));
+            ev.Player.ShowHint("You provide speed to all SCP entities nearby!", 7);
         }
 
         internal static void call(SendingCallEventArgs ev)
         {
-            Timing.RunCoroutine(scpShield(ev.Player));   
+            Timing.RunCoroutine(scpShield(ev.Player));
+            ev.Player.ShowHint("You are giving HS to all SCP entities nearby \n(this can overflow past natural max)", 7);
         }
     }
 }

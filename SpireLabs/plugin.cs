@@ -24,6 +24,7 @@
     using Exiled.API.Features.Roles;
     using static UnityEngine.GraphicsBuffer;
     using Exiled.API.Features.Toys;
+    using Exiled.API.Extensions;
 
     public class Plugin : Plugin<config>
     {
@@ -207,17 +208,20 @@
             Exiled.Events.Handlers.Scp049.SendingCall += doctor.call;
             Exiled.Events.Handlers.Server.RoundStarted += OnRoundStart;
             Exiled.Events.Handlers.Player.Spawned += Player_Spawned;
+            Exiled.Events.Handlers.Player.Spawned += IDThief.Player_Spawned;
             Exiled.Events.Handlers.Player.FlippingCoin += coin.Player_FlippingCoin;
             Exiled.Events.Handlers.Player.Joined += Player_Joined;
             Exiled.Events.Handlers.Player.PreAuthenticating += Authing;
             Exiled.Events.Handlers.Server.RestartingRound += restarting;
             Exiled.Events.Handlers.Player.ChangedItem += item_change;
+            Exiled.Events.Handlers.Player.ChangedItem += IDThief.item_change;
             CustomItem.RegisterItems();
         }
 
         private void item_change(ChangedItemEventArgs ev)
         {
             if (ev.Item == null) return;
+
             if (ev.Item.Type != ItemType.Coin)
                 return;
             string hint = string.Empty;
@@ -417,10 +421,10 @@
              Exiled.Events.Handlers.Player.FlippingCoin -= coin.Player_FlippingCoin;
              Exiled.Events.Handlers.Player.Joined -= Player_Joined;
              Exiled.Events.Handlers.Player.PreAuthenticating -= Authing;
-             Exiled.Events.Handlers.Server.RestartingRound -= restarting;
-         }
+            Exiled.Events.Handlers.Server.RestartingRound -= restarting;
+        }
 
-         static void theThing(HurtingEventArgs ev)
+        static void theThing(HurtingEventArgs ev)
          {
              if (ev.DamageHandler.Type == DamageType.MicroHid)
              {

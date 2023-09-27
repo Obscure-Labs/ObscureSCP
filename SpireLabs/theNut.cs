@@ -20,6 +20,7 @@ namespace SpireLabs
                 if(num < 20 && num > 13)
                 {
                     ev.Amount = 0;
+                    ev.Player.ShowHint("You just ignored some damage!");
                 }
             }
         }
