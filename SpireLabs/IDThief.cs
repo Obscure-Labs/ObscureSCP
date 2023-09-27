@@ -1,4 +1,4 @@
-﻿using Exiled.API.Enums;
+using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.Events.EventArgs.Item;
 using Exiled.Events.EventArgs.Player;
@@ -41,12 +41,13 @@ namespace SpireLabs
     {
         internal static void Player_Spawned(SpawnedEventArgs ev)
         {
+
         Log.Info("Checking player for custom roles");
             int? scustomRoleID = -1;
             if (UCRAPI.HasCustomRole(ev.Player))
             {
-
-        Log.Info(UCRAPI.HasCustomRole(ev.Player));
+                
+                Log.Info(UCRAPI.HasCustomRole(ev.Player));
                 scustomRoleID = UCRAPI.Get(ev.Player);
                 Log.Info($"{ev} has custom role {scustomRoleID}");
                 if (scustomRoleID == -1)
