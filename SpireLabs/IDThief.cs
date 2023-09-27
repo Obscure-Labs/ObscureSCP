@@ -48,7 +48,7 @@ namespace SpireLabs
             {
                 
                 Log.Info(UCRAPI.HasCustomRole(ev.Player));
-                scustomRoleID = UCRAPI.Get(ev.Player);
+                scustomRoleID = UCRAPI.Get(ev.Player).Id;
                 Log.Info($"{ev} has custom role {scustomRoleID}");
                 if (scustomRoleID == -1)
                 {
@@ -86,7 +86,7 @@ namespace SpireLabs
 
             if (UncomplicatedCustomRoles.API.Features.Manager.HasCustomRole(ev.Player))
             {
-                customRoleID = UncomplicatedCustomRoles.API.Features.Manager.Get(ev.Player);
+                customRoleID = UCRAPI.Get(ev.Player).Id;
             }
             else
             {
@@ -162,7 +162,6 @@ namespace SpireLabs
                 {
                     if (IsGun)
                     {
-
                         ev.Player.ChangeAppearance(ToRole, true);
                         ev.Player.ShowHint($"You are no longer Disguised!");
                         Disguised = false;

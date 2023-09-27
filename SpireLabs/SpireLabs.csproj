@@ -86,8 +86,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="UncomplicatedCustomRoles">
-      <HintPath>..\refs\UncomplicatedCustomRoles.dll</HintPath>
+    <Reference Include="UncomplicatedCustomRoles, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\UncomplicatedCustomRoles-main\UncomplicatedCustomRoles\bin\x64\Debug\UncomplicatedCustomRoles.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\refs\UnityEngine.dll</HintPath>
