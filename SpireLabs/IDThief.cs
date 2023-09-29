@@ -39,14 +39,20 @@ namespace SpireLabs
 {
     internal static class IDThief
     {
+        private static IEnumerator<float> wait()
+        {
+            yield return Timing.WaitForSeconds(1);
+        }
         internal static void Player_Spawned(SpawnedEventArgs ev)
         {
+            CoroutineHandle pp = Timing.RunCoroutine(wait());
+            Timing.WaitUntilDone(pp);
 
-        Log.Info("Checking player for custom roles");
+            Log.Info("Checking player for custom roles");
             int? scustomRoleID = -1;
             if (UCRAPI.HasCustomRole(ev.Player))
             {
-                
+
                 Log.Info(UCRAPI.HasCustomRole(ev.Player));
                 scustomRoleID = UCRAPI.Get(ev.Player).Id;
                 Log.Info($"{ev} has custom role {scustomRoleID}");
