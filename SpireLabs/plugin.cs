@@ -215,6 +215,7 @@
             Exiled.Events.Handlers.Server.RestartingRound += restarting;
             Exiled.Events.Handlers.Player.ChangedItem += item_change;
             Exiled.Events.Handlers.Player.ChangedItem += IDThief.item_change;
+            Exiled.Events.Handlers.Warhead.Detonated += map_nuked;
             CustomItem.RegisterItems();
         }
 
@@ -445,45 +446,71 @@
                      ev.Player.MaxHealth = OCaptain.healthOverride;
                      ev.Player.Heal(OCaptain.healthOverride, false);
                  }
-             }
+            }
 
-         }
+        }
 
-         private IEnumerator<float> ShowHint()
-         {
-             var rnd = new System.Random();
-             yield return Timing.WaitForSeconds(30);
-             while (!Exiled.API.Features.Round.IsEnded)
-             {
+        private IEnumerator<float> ShowHint()
+        {
+            var rnd = new System.Random();
+            yield return Timing.WaitForSeconds(30);
+            while (!Exiled.API.Features.Round.IsEnded)
+            {
                 //file = File.ReadAllLines(@"C:\Users\Kebin\AppData\Roaming\EXILED\Configs\Spire/lines.txt");
                 file = File.ReadAllLines((spireConfigLoc + "lines.txt"));
                 string hintMessage = string.Empty;
-                 if (hintHeight != 0 && hintHeight < 0)
-                 {
-                     for (int i = hintHeight; i < 0; i++)
-                     {
-                         hintMessage += "\n";
-                     }
-                 }
-                 hintMessage += file[rnd.Next(0, file.Count() - 1)];
-                 if (hintHeight != 0 && hintHeight > 0)
-                 {
-                     for (int i = 0; i < hintHeight; i++)
-                     {
-                         hintMessage += "\n";
-                     }
-                 }
-                 foreach (Exiled.API.Features.Player p in Exiled.API.Features.Player.List)
-                 {
-                     if (!p.IsDead)
-                     {
-                         p.ShowHint($"{hintMessage}", 5);
-                     }
+                if (hintHeight != 0 && hintHeight < 0)
+                {
+                    for (int i = hintHeight; i < 0; i++)
+                    {
+                        hintMessage += "\n";
+                    }
+                }
+                hintMessage += file[rnd.Next(0, file.Count() - 1)];
+                if (hintHeight != 0 && hintHeight > 0)
+                {
+                    for (int i = 0; i < hintHeight; i++)
+                    {
+                        hintMessage += "\n";
+                    }
+                }
+                foreach (Exiled.API.Features.Player p in Exiled.API.Features.Player.List)
+                {
+                    if (!p.IsDead)
+                    {
+                        p.ShowHint($"{hintMessage}", 5);
+                    }
 
-                 }
-                 yield return Timing.WaitForSeconds(hintTime);
-             }
-         }
+                }
+                yield return Timing.WaitForSeconds(hintTime);
+            }
+        }
+
+
+
+
+
+
+
+
+
+        private void map_nuked()
+        {
+            foreach (Door d in Door.List)
+            {
+                if (d.Zone == ZoneType.Surface)
+                {
+                    d.IsOpen = true;
+                    d.Lock(9999, DoorLockType.Warhead);
+                }
+            }
+
+        }
+
+
+
+
+
         void OnRoundStart()
          {
 
