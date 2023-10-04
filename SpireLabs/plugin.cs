@@ -30,7 +30,7 @@
     using UCRAPI = UncomplicatedCustomRoles.API.Features.Manager;
     using UncomplicatedCustomRoles.Commands.UCRSpawn;
     using UncomplicatedCustomRoles.Structures;
-
+    using CustomItems;
     public class Plugin : Plugin<config>
     {
         /// <summary>
@@ -148,6 +148,8 @@
 
         public override void OnEnabled()
         {
+
+
             Timing.RunCoroutine(checkPlayer());
             RegisterEvents();
             _harmony = new("DevDummies-Rotation-Patch");
