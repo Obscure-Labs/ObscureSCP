@@ -20,8 +20,9 @@ namespace SpireLabs
         public bool IsEnabled { get; set; }
         [Description("Plugin console output.")]
         public bool Debug { get; set; }
-        [Description("Sets the 'Micro H.I.D' DPS.")]
+        [Description("Sets Various Items' DPS.")]
         public int hidDPS { get; set; } = 100;
+        public int cokeDPS { get; set; } = 100;
         [Description("Health Override")]
         public OverrideData Scp049Override { get; set; } = new OverrideData { enabled = false, healthOverride = 0 };
         public OverrideData Scp0492Override { get; set; } = new OverrideData { enabled = false, healthOverride = 0 };
