@@ -25,6 +25,11 @@
     using static UnityEngine.GraphicsBuffer;
     using Exiled.API.Features.Toys;
     using Exiled.API.Extensions;
+    using Utf8Json.Resolvers.Internal;
+    using Exiled.CustomRoles.API;
+    using UCRAPI = UncomplicatedCustomRoles.API.Features.Manager;
+    using UncomplicatedCustomRoles.Commands.UCRSpawn;
+    using UncomplicatedCustomRoles.Structures;
 
     public class Plugin : Plugin<config>
     {
@@ -37,6 +42,7 @@
         public override System.Version Version => new System.Version(1, 0, 1);
         public override System.Version RequiredExiledVersion => new System.Version(8, 0, 1);
         public static float hidDPS;
+        public static float cokeDPS;
 
         public static CoroutineHandle LobbyTimer;
 
@@ -162,6 +168,7 @@
             Log.Info($"Found Spire Config Folder : \"{spireConfigLoc}\"");
             base.OnEnabled();
             hidDPS = Config.hidDPS;
+            cokeDPS = Config.cokeDPS;
             OScp049 = Config.Scp049Override;
             OScp0492 = Config.Scp049Override;
             OScp079 = Config.Scp079Override;
@@ -201,7 +208,7 @@
             //Exiled.Events.Handlers.Player.EnteringPocketDimension += pocketEnter;
             Exiled.Events.Handlers.Player.Hurting += theThing;
             Exiled.Events.Handlers.Player.Hurting += theNut.scp173DMG;
-            Exiled.Events.Handlers.Scp173.Blinking += theNut.scp173TP;
+            //Exiled.Events.Handlers.Scp173.Blinking += theNut.scp173TP;
             Exiled.Events.Handlers.Scp173.UsingBreakneckSpeeds += theNut.scp173ZOOM;
             Exiled.Events.Handlers.Scp106.Attacking += larry.pdExits;
             Exiled.Events.Handlers.Scp049.ActivatingSense += doctor.doctorBoost;
@@ -216,8 +223,17 @@
             Exiled.Events.Handlers.Player.ChangedItem += item_change;
             Exiled.Events.Handlers.Player.ChangedItem += IDThief.item_change;
             Exiled.Events.Handlers.Warhead.Detonated += map_nuked;
+            Exiled.Events.Handlers.Scp106.Attacking += larry.onLarryAttack;
+            Exiled.Events.Handlers.Player.Dying += onPlayerDying;
+            Exiled.Events.Handlers.Player.UsingItemCompleted += usingItem;
             CustomItem.RegisterItems();
         }
+
+        private void onPlayerDying(DyingEventArgs ev)
+        {
+            ev.Player.Scale = new Vector3(1, 1, 1);
+        }
+
 
         private void item_change(ChangedItemEventArgs ev)
         {
@@ -431,23 +447,80 @@
              {
                  ev.Amount *= (hidDPS / 100);
              }
-         }
+             if(ev.DamageHandler.Type == DamageType.Scp207)
+            {
+                Log.Info($"Conk hit {ev.Player.DisplayNickname}");
+                ev.Amount *= (cokeDPS / 100);
+            }
+         } 
          public static void Item_KeycardInteracting(KeycardInteractingEventArgs ev)
          {
              Log.Info($"Door opened, requires: {ev.Door.RequiredPermissions.RequiredPermissions}");
-         }
+        }
 
-         private void Player_Spawned(SpawnedEventArgs ev)
-         {
-             if (OCaptain.enabled)
-             {
-                 if (ev.Player.RoleManager.CurrentRole.RoleTypeId == RoleTypeId.NtfCaptain)
-                 {
-                     ev.Player.MaxHealth = OCaptain.healthOverride;
-                     ev.Player.Heal(OCaptain.healthOverride, false);
-                 }
+        class roleData
+        {
+            public Player player;
+            public int? UCRID;
+        }
+
+        static List<roleData> rd = new List<roleData>();
+
+        private IEnumerator<float> CheckRoles(Player p)
+        {
+            int? UCRID = null;
+            yield return Timing.WaitForSeconds(0.5f);
+            if (UCRAPI.HasCustomRole(p))
+            {
+                UCRID = UCRAPI.Get(p).Id;
+                var plData = rd.SingleOrDefault(x => x.player.NetId == p.NetId) ?? null;
+                if (plData == null)
+                {
+                    rd.Add(new roleData { player = p, UCRID = UCRID });
+                }
+            }
+        }
+
+        private void Player_Spawned(SpawnedEventArgs ev)
+        {
+            if(ev.Player.Role == RoleTypeId.Scp0492)
+            {
+                var plData = rd.SingleOrDefault(x => x.player.NetId == ev.Player.NetId) ?? null; 
+                if(plData != null)
+                {
+                    if(plData.UCRID == 2)
+                    {
+                        ev.Player.Scale = Vector3.one * 0.7f;
+                    }
+                }
             }
 
+            Timing.RunCoroutine(CheckRoles(ev.Player));
+
+            if (OCaptain.enabled)
+            {
+                if (ev.Player.RoleManager.CurrentRole.RoleTypeId == RoleTypeId.NtfCaptain)
+                {
+                    ev.Player.MaxHealth = OCaptain.healthOverride;
+                    ev.Player.Heal(OCaptain.healthOverride, false);
+                }
+            }
+
+        }
+
+        private void usingItem(UsingItemCompletedEventArgs ev)
+        {
+            if (ev.Item.Type == ItemType.SCP330)
+            {
+                if (UCRAPI.HasCustomRole(ev.Player))
+                {
+                    if (UCRAPI.Get(ev.Player).Id == 2)
+                    {
+                        ev.Player.EnableEffect(EffectType.MovementBoost);
+                        ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 30, 10);
+                    }
+                }
+            }
         }
 
         private IEnumerator<float> ShowHint()
@@ -509,11 +582,14 @@
 
 
 
-
+        private IEnumerator<float> lockAnounce()
+        {
+            yield return Timing.WaitForSeconds(600);
+            Cassie.Message(@"jam_043_3 Surface armory has been opened for all jam_020_3 pitch_0.8 warhead pitch_1 authorized personnel . . . enter with pitch_0.7 jam_010_1 caution", false, false, true);
+        }
 
         void OnRoundStart()
          {
-
             //Exiled.API.Features.Server.Broadcast.SendMessage("Lobby initialised. Awaiting round start.");
             //while(Exiled.API.Features.Player.List.Count() < 2)
             //{
@@ -526,6 +602,21 @@
             //Exiled.API.Features.Round.RestartSilently();
 
             Log.Info("Round has started!");
+            Timing.RunCoroutine(lockAnounce());
+            foreach (Door d in Door.List)
+            {
+                if (d.Zone == ZoneType.Surface)
+                    d.Lock(600, DoorLockType.Regular079);
+                switch(d.Type)
+                {
+                    case DoorType.NukeSurface: d.Unlock(); break;
+                    case DoorType.EscapePrimary: d.Unlock(); break;
+                    case DoorType.EscapeSecondary: d.Unlock(); break;
+                    case DoorType.ElevatorGateA: d.Unlock(); break;
+                    case DoorType.ElevatorGateB: d.Unlock(); break;
+                }
+                    
+            }
              var players = Player.List;
              List<Player> SCPS = new List<Player>();
              int humanPlayers = 0;

@@ -46,35 +46,7 @@ namespace SpireLabs
         internal static void Player_Spawned(SpawnedEventArgs ev)
         {
             CoroutineHandle pp = Timing.RunCoroutine(wait());
-            Timing.WaitUntilDone(pp);
-
-            Log.Info("Checking player for custom roles");
-            int? scustomRoleID = -1;
-            if (UCRAPI.HasCustomRole(ev.Player))
-            {
-
-                Log.Info(UCRAPI.HasCustomRole(ev.Player));
-                scustomRoleID = UCRAPI.Get(ev.Player).Id;
-                Log.Info($"{ev} has custom role {scustomRoleID}");
-                if (scustomRoleID == -1)
-                {
-                    Log.Info("Its broken what the fuck");
-
-                }
-                else if (scustomRoleID == 2)
-                {
-                    Log.Info("Applied Changes");
-                    ev.Player.Scale.Set(1f, 0.1f, 1f);
-                    ev.Player.EnableEffect(EffectType.MovementBoost, 9999);
-                    ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 25);
-                }
-
-                else
-                {
-                    Log.Info("Customrole is false");
-                }
-                Log.Info(scustomRoleID);
-            }
+          
         }
 
 
@@ -169,20 +141,17 @@ namespace SpireLabs
                     if (IsGun)
                     {
                         ev.Player.ChangeAppearance(ToRole, true);
-                        ev.Player.ShowHint($"You are no longer Disguised!");
+                        ev.Player.ShowHint($"<Color=Red>You are no longer Disguised!</color>");
                         Disguised = false;
-                        Log.Info("Disguised, Gun");
                     }
                     else if (IsCard)
                     {
-                        Log.Info("Disguised, Card");
                         ev.Player.ChangeAppearance(ToRole, true);
                         ev.Player.ShowHint($"You are now disguised as: <Color={TeamColor}>{ToRole.GetFullName()}</color>! \n<color=red>If you take out a weapon your cover will be blown!</color>");
                         Disguised = true;
                     }
                     else if (!IsGun | !IsCard)
                     {
-                        Log.Info("Disguised, not card, not gun");
                         Disguised = true;
                     }
                 }
@@ -190,12 +159,10 @@ namespace SpireLabs
                 {
                     if (!IsCard)
                     {
-                        Log.Info("Not disguised, not card");
                         Disguised = false;
                     }
                     else if (IsCard)
                     {
-                        Log.Info("Not disguised, card");
                         ev.Player.ChangeAppearance(ToRole, true);
                         ev.Player.ShowHint($"You are now disguised as: <Color={TeamColor}>{ToRole.GetFullName()}</color>! \n<color=red>If you take out a weapon your cover will be blown!</color>");
                         Disguised = true;
