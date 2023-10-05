@@ -31,6 +31,14 @@
     using UncomplicatedCustomRoles.Commands.UCRSpawn;
     using UncomplicatedCustomRoles.Structures;
     using CustomItems;
+    using CommandSystem.Commands.RemoteAdmin.Broadcasts;
+    using PlayerRoles.PlayableScps.Scp079;
+    using Exiled.Events.EventArgs.Map;
+    using PluginAPI.Events;
+    using Exiled.Events.EventArgs.Server;
+    using Respawning;
+    using PluginAPI.Roles;
+
     public class Plugin : Plugin<config>
     {
         /// <summary>
@@ -149,7 +157,7 @@
         public override void OnEnabled()
         {
 
-
+            
             Timing.RunCoroutine(checkPlayer());
             RegisterEvents();
             _harmony = new("DevDummies-Rotation-Patch");
@@ -235,6 +243,7 @@
         {
             ev.Player.Scale = new Vector3(1, 1, 1);
         }
+
 
 
         private void item_change(ChangedItemEventArgs ev)
@@ -387,11 +396,7 @@
 
        private void Player_Joined(JoinedEventArgs ev)
         {
-            ev.Player.TryRemoveFriendlyFire(RoleTypeId.ChaosConscript);
-            ev.Player.TryRemoveFriendlyFire(RoleTypeId.ChaosMarauder);
-            ev.Player.TryRemoveFriendlyFire(RoleTypeId.ChaosRepressor);
-            ev.Player.TryRemoveFriendlyFire(RoleTypeId.ChaosRifleman);
-            ev.Player.TryAddFriendlyFire(RoleTypeId.ClassD, 1.0f);
+            
             lastId = string.Empty;
            ConMet = false;
            playerCount++;
@@ -582,7 +587,26 @@
 
         }
 
+        private IEnumerator<float> randomFlicker()
+        {
+            while (true)
+            {
+                var roomFlicker = Room.Random(ZoneType.Unspecified);
+                roomFlicker.TurnOffLights(0.55f);
+                yield return Timing.WaitForSeconds(1);
+                roomFlicker = Room.Random(ZoneType.Unspecified);
+                roomFlicker.TurnOffLights(0.55f);
+                roomFlicker = Room.Random(ZoneType.Unspecified);
+                roomFlicker.TurnOffLights(0.55f);
+                Log.Debug($"Flickering lights in: {roomFlicker.RoomName}");
+                var rnd = new System.Random();
+                int num = rnd.Next(10, 60);
+                Log.Debug($"Waiting for {num} seconds till next flicker");
+                yield return Timing.WaitForSeconds(num);
+            }
 
+
+        }
 
         private IEnumerator<float> lockAnounce()
         {
@@ -602,7 +626,7 @@
 
             //}
             //Exiled.API.Features.Round.RestartSilently();
-
+            Timing.RunCoroutine(randomFlicker());
             Log.Info("Round has started!");
             Timing.RunCoroutine(lockAnounce());
             foreach (Door d in Door.List)

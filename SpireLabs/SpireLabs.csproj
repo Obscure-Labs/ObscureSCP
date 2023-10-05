@@ -45,6 +45,9 @@
     <Reference Include="CommandSystem.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EXILED.8.2.1\lib\net48\CommandSystem.Core.dll</HintPath>
     </Reference>
+    <Reference Include="CustomItems">
+      <HintPath>..\refs\CustomItems.dll</HintPath>
+    </Reference>
     <Reference Include="Exiled.API, Version=8.2.1.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>..\packages\EXILED.8.2.1\lib\net48\Exiled.API.dll</HintPath>
     </Reference>
