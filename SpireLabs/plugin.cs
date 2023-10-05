@@ -640,6 +640,7 @@
                     case DoorType.EscapeSecondary: d.Unlock(); break;
                     case DoorType.ElevatorGateA: d.Unlock(); break;
                     case DoorType.ElevatorGateB: d.Unlock(); break;
+                    case DoorType.SurfaceGate: d.Unlock(); break;
                 }
                     
             }
