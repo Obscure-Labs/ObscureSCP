@@ -26,6 +26,23 @@ namespace SpireLabs
 
         internal static IEnumerator<float> CheckRoles(Player p)
         {
+            string scps = string.Empty;
+            int counter = 0;
+            foreach (Player pp in Player.List)
+            {
+                if (pp.Role.Team == Team.SCPs)
+                {
+                    if (counter != 0)
+                    {
+                        scps += $"<color=white>, <color=red>{pp.Role.Name}";
+                    }
+                    else
+                    {
+                        scps += $"<color=red>{pp.Role.Name}";
+                    }
+                    counter++;
+                }
+            }
             int? UCRID = null;
             yield return Timing.WaitForSeconds(0.5f);
             if (UCRAPI.HasCustomRole(p))
@@ -35,6 +52,12 @@ namespace SpireLabs
                 if (plData == null)
                 {
                     rd.Add(new roleData { player = p, UCRID = UCRID });
+                }
+                
+                if (UCRID == 4)
+                {
+                    yield return Timing.WaitForSeconds(6);
+                    p.ShowHint($"<b>The currently active SCP subjects are: {scps}", 7);
                 }
 
                 if (UCRID == 3)

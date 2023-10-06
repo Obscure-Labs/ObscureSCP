@@ -478,10 +478,11 @@
                 var plData = customRoles.rd.SingleOrDefault(x => x.player.NetId == ev.Player.NetId) ?? null; 
                 if(plData != null)
                 {
-                    if(plData.UCRID == 2)
+                    switch(plData.UCRID)
                     {
-                        ev.Player.Scale = Vector3.one * 0.7f;
+                        case 2: ev.Player.Scale = Vector3.one * 0.7f; break;
                     }
+
                 }
             }
 
