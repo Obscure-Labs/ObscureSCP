@@ -107,6 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="customRoles.cs" />
+    <Compile Include="guiHandler.cs" />
     <Compile Include="IDthief.cs" />
     <Compile Include="larry.cs" />
     <Compile Include="coin.cs" />

@@ -38,6 +38,7 @@
     using Exiled.Events.EventArgs.Server;
     using Respawning;
     using PluginAPI.Roles;
+    using Hints;
 
     public class Plugin : Plugin<config>
     {
@@ -213,7 +214,6 @@
             //file = File.ReadAllLines(@"C:\Users\Kevin\AppData\Roaming\EXILED\Configs\Spire/lines.txt");
             Timing.RunCoroutine(ShowHint());
             inLobby = false;
-
         }
 
         private void RegisterEvents()
@@ -248,8 +248,6 @@
             ev.Player.Scale = new Vector3(1, 1, 1);
         }
 
-
-
         private void item_change(ChangedItemEventArgs ev)
         {
             if (ev.Item == null) return;
@@ -272,12 +270,15 @@
                     hint += "\n";
                 }
             }
-            ev.Player.ShowHint(hint, 5);
+            Timing.RunCoroutine(guiHandler.sendHint(ev.Player, hint, 5));
+            
         }
 
         private void restarting()
         {
-            Timing.KillCoroutines(lockHandle); Timing.KillCoroutines(flickerHandle);
+            Timing.KillCoroutines(lockHandle);
+            Timing.KillCoroutines(flickerHandle);
+
             if (realRoundEnd)
             {
                 Exiled.API.Features.Log.Info("Restarting the round (real restart)");
@@ -401,7 +402,7 @@
 
        private void Player_Joined(JoinedEventArgs ev)
         {
-            
+            Timing.RunCoroutine(guiHandler.displayGUI(ev.Player));
             lastId = string.Empty;
            ConMet = false;
            playerCount++;
@@ -461,7 +462,7 @@
              }
              if(ev.DamageHandler.Type == DamageType.Scp207)
             {
-                Log.Info($"Conk hit {ev.Player.DisplayNickname}");
+                //Log.Info($"Conk hit {ev.Player.DisplayNickname}");
                 ev.Amount *= (cokeDPS / 100);
             }
          } 
@@ -472,7 +473,6 @@
 
         private void Player_Spawned(SpawnedEventArgs ev)
         {
-
             if(ev.Player.Role == RoleTypeId.Scp0492)
             {
                 var plData = customRoles.rd.SingleOrDefault(x => x.player.NetId == ev.Player.NetId) ?? null; 
@@ -514,7 +514,7 @@
             }
         }
 
-        private IEnumerator<float> ShowHint()
+        internal IEnumerator<float> ShowHint()
         {
             var rnd = new System.Random();
             yield return Timing.WaitForSeconds(30);
@@ -542,7 +542,7 @@
                 {
                     if (!p.IsDead)
                     {
-                        p.ShowHint($"{hintMessage}", 5);
+                        Timing.RunCoroutine(guiHandler.sendHint(p, hintMessage, 5));
                     }
 
                 }
