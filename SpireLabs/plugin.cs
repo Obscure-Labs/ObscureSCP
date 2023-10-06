@@ -108,6 +108,9 @@
 
         private Harmony _harmony;
 
+        public static CoroutineHandle flickerHandle;
+        public static CoroutineHandle lockHandle;
+
         public override void OnDisabled()
         {
             UnregisterEvents();
@@ -236,6 +239,7 @@
             Exiled.Events.Handlers.Scp106.Attacking += larry.onLarryAttack;
             Exiled.Events.Handlers.Player.Dying += onPlayerDying;
             Exiled.Events.Handlers.Player.UsingItemCompleted += usingItem;
+            Exiled.Events.Handlers.Server.RespawningTeam += customRoles.spawnWave;
             CustomItem.RegisterItems();
         }
 
@@ -273,6 +277,7 @@
 
         private void restarting()
         {
+            Timing.KillCoroutines(lockHandle); Timing.KillCoroutines(flickerHandle);
             if (realRoundEnd)
             {
                 Exiled.API.Features.Log.Info("Restarting the round (real restart)");
@@ -465,34 +470,12 @@
              Log.Info($"Door opened, requires: {ev.Door.RequiredPermissions.RequiredPermissions}");
         }
 
-        class roleData
-        {
-            public Player player;
-            public int? UCRID;
-        }
-
-        static List<roleData> rd = new List<roleData>();
-
-        private IEnumerator<float> CheckRoles(Player p)
-        {
-            int? UCRID = null;
-            yield return Timing.WaitForSeconds(0.5f);
-            if (UCRAPI.HasCustomRole(p))
-            {
-                UCRID = UCRAPI.Get(p).Id;
-                var plData = rd.SingleOrDefault(x => x.player.NetId == p.NetId) ?? null;
-                if (plData == null)
-                {
-                    rd.Add(new roleData { player = p, UCRID = UCRID });
-                }
-            }
-        }
-
         private void Player_Spawned(SpawnedEventArgs ev)
         {
+
             if(ev.Player.Role == RoleTypeId.Scp0492)
             {
-                var plData = rd.SingleOrDefault(x => x.player.NetId == ev.Player.NetId) ?? null; 
+                var plData = customRoles.rd.SingleOrDefault(x => x.player.NetId == ev.Player.NetId) ?? null; 
                 if(plData != null)
                 {
                     if(plData.UCRID == 2)
@@ -502,7 +485,7 @@
                 }
             }
 
-            Timing.RunCoroutine(CheckRoles(ev.Player));
+            Timing.RunCoroutine(customRoles.CheckRoles(ev.Player));
 
             if (OCaptain.enabled)
             {
@@ -591,16 +574,16 @@
         {
             while (true)
             {
-                var roomFlicker = Room.Random(ZoneType.Unspecified);
-                roomFlicker.TurnOffLights(0.55f);
+                var roomFlicker = Room.Random(ZoneType.LightContainment);
+                roomFlicker.TurnOffLights(0.15f);
                 yield return Timing.WaitForSeconds(1);
-                roomFlicker = Room.Random(ZoneType.Unspecified);
-                roomFlicker.TurnOffLights(0.55f);
-                roomFlicker = Room.Random(ZoneType.Unspecified);
-                roomFlicker.TurnOffLights(0.55f);
+                roomFlicker = Room.Random(ZoneType.HeavyContainment);
+                roomFlicker.TurnOffLights(0.15f);
+                roomFlicker = Room.Random(ZoneType.Entrance);
+                roomFlicker.TurnOffLights(0.15f);
                 Log.Debug($"Flickering lights in: {roomFlicker.RoomName}");
                 var rnd = new System.Random();
-                int num = rnd.Next(10, 60);
+                int num = rnd.Next(5, 30);
                 Log.Debug($"Waiting for {num} seconds till next flicker");
                 yield return Timing.WaitForSeconds(num);
             }
@@ -626,9 +609,9 @@
 
             //}
             //Exiled.API.Features.Round.RestartSilently();
-            Timing.RunCoroutine(randomFlicker());
+            flickerHandle = Timing.RunCoroutine(randomFlicker());
             Log.Info("Round has started!");
-            Timing.RunCoroutine(lockAnounce());
+            lockHandle = Timing.RunCoroutine(lockAnounce());
             foreach (Door d in Door.List)
             {
                 if (d.Zone == ZoneType.Surface)

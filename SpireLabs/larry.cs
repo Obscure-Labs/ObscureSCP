@@ -21,8 +21,6 @@ namespace SpireLabs
         internal static void onLarryAttack(AttackingEventArgs ev)
         {
             ev.Player.ShowHint($"You sent {ev.Target.Nickname} to the pocket dimension!");
-            ev.Target.Teleport(Room.List.FirstOrDefault(x => x.Type == RoomType.Pocket));
-            ev.Target.EnableEffect(EffectType.PocketCorroding, 60);
             ev.Target.ShowHint($"You were sent to the pocket dimension by: {ev.Player.Nickname} as SCP-106!");
         }
     }
