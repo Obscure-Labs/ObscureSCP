@@ -74,7 +74,7 @@
                                         {
                                             if (!ppp.IsHuman)
                                             {
-                                                ppp.ShowHint("You are recieving HS points from a nearby doctor!", 3);
+                                                Timing.RunCoroutine(guiHandler.sendHint(ppp, "You are recieving HS points from a nearby doctor!", 3));
                                                 ppp.HumeShield += 4.5f;
                                             }
                                         }
@@ -83,7 +83,7 @@
                                     {
                                         if (!ppp.IsHuman)
                                         {
-                                            ppp.ShowHint("You are recieving HS points from a nearby doctor!", 3);
+                                            Timing.RunCoroutine(guiHandler.sendHint(ppp, "You are recieving HS points from a nearby doctor!", 3));
                                             ppp.HumeShield += 4.5f;
                                         }
                                     }
@@ -92,7 +92,7 @@
                                 {
                                     if (!ppp.IsHuman)
                                     {
-                                        ppp.ShowHint("You are recieving HS points from a nearby doctor!", 3);
+                                        Timing.RunCoroutine(guiHandler.sendHint(ppp, "You are recieving HS points from a nearby doctor!", 3));
                                         ppp.HumeShield += 4.5f;
                                     }
                                 }
@@ -101,7 +101,7 @@
                             {
                                 if (!ppp.IsHuman)
                                 {
-                                    ppp.ShowHint("You are recieving HS points from a nearby doctor!", 3);
+                                    Timing.RunCoroutine(guiHandler.sendHint(ppp, "You are recieving HS points from a nearby doctor!", 3));
                                     ppp.HumeShield += 4.5f;
                                 }
                             }
@@ -162,7 +162,7 @@
                                         {
                                             if (!ppp.IsHuman)
                                             {
-                                                ppp.ShowHint("You are recieving a speed boost from a nearby doctor!", 3);
+                                                Timing.RunCoroutine(guiHandler.sendHint(ppp, "You are recieving a speed boost from a nearby doctor!", 3));
                                                 ppp.EnableEffect(EffectType.MovementBoost, 1.5f);
                                                 ppp.ChangeEffectIntensity(EffectType.MovementBoost, 30, 1.5f);
                                             }
@@ -174,7 +174,7 @@
                                         {
                                             ppp.EnableEffect(EffectType.MovementBoost, 1.5f);
                                             ppp.ChangeEffectIntensity(EffectType.MovementBoost, 30, 1.5f);
-                                            ppp.ShowHint("You are recieving a speed boost from a nearby doctor!", 3);
+                                            Timing.RunCoroutine(guiHandler.sendHint(ppp, "You are recieving a speed boost from a nearby doctor!", 3));
                                         }
                                     }
                                 }
@@ -184,7 +184,7 @@
                                     {
                                         ppp.EnableEffect(EffectType.MovementBoost, 1.5f);
                                         ppp.ChangeEffectIntensity(EffectType.MovementBoost, 30, 1.5f);
-                                        ppp.ShowHint("You are recieving a speed boost from a nearby doctor!", 3);
+                                        Timing.RunCoroutine(guiHandler.sendHint(ppp, "You are recieving a speed boost from a nearby doctor!", 3));
                                     }
                                 }
                             }
@@ -194,7 +194,7 @@
                                 {
                                     ppp.EnableEffect(EffectType.MovementBoost, 1.5f);
                                     ppp.ChangeEffectIntensity(EffectType.MovementBoost, 30, 1.5f);
-                                    ppp.ShowHint("You are recieving a speed boost from a nearby doctor!", 3);
+                                    Timing.RunCoroutine(guiHandler.sendHint(ppp, "You are recieving a speed boost from a nearby doctor!", 3));
                                 }
                             }
                         }
@@ -210,7 +210,8 @@
             if (ev.Target == null) return;
             ev.Player.EnableEffect(EffectType.MovementBoost, 10);
             ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 10, 10);
-            ev.Player.ShowHint("You provide speed to all SCP entities nearby!", 7);
+            //ev.Player.ShowHint("You provide speed to all SCP entities nearby!", 7);
+            Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "You provide speed to all SCP entities nearby!", 7));
             Timing.RunCoroutine(scpBoost(ev.Player));
         }
 
@@ -218,7 +219,8 @@
         {
             if (ev.IsAllowed)
             {
-                ev.Player.ShowHint("You are giving HS to all SCP entities nearby \n(this can overflow past natural max)", 7);
+                //ev.Player.ShowHint("You are giving HS to all SCP entities nearby \n(this can overflow past natural max)", 7);
+                Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "You are giving HS to all SCP entities nearby \n(this can overflow past natural max)", 7));
                 Timing.RunCoroutine(scpShield(ev.Player));
             }
             else

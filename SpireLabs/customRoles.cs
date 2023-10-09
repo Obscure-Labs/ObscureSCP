@@ -57,7 +57,7 @@ namespace SpireLabs
                 if (UCRID == 4)
                 {
                     yield return Timing.WaitForSeconds(6);
-                    p.ShowHint($"<b>The currently active SCP subjects are: {scps}", 7);
+                    Timing.RunCoroutine(guiHandler.sendHint(p, $"<b>The currently active SCP subjects are: {scps}", 7));
                 }
 
                 if (UCRID == 3)

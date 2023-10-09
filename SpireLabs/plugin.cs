@@ -38,6 +38,7 @@
     using Exiled.Events.EventArgs.Server;
     using Respawning;
     using PluginAPI.Roles;
+    using Hints;
 
     public class Plugin : Plugin<config>
     {
@@ -213,7 +214,6 @@
             //file = File.ReadAllLines(@"C:\Users\Kevin\AppData\Roaming\EXILED\Configs\Spire/lines.txt");
             Timing.RunCoroutine(ShowHint());
             inLobby = false;
-
         }
 
         private void RegisterEvents()
@@ -248,8 +248,6 @@
             ev.Player.Scale = new Vector3(1, 1, 1);
         }
 
-
-
         private void item_change(ChangedItemEventArgs ev)
         {
             if (ev.Item == null) return;
@@ -257,27 +255,28 @@
             if (ev.Item.Type != ItemType.Coin)
                 return;
             string hint = string.Empty;
-            if (hintHeight != 0 && hintHeight < 0)
-            {
-                for (int i = hintHeight; i < 0; i++)
-                {
-                    hint += "\n";
-                }
-            }
+            //if (hintHeight != 0 && hintHeight < 0)
+            //{
+            //    for (int i = hintHeight; i < 0; i++)
+            //    {
+            //        hint += "\n";
+            //    }
+            //}
             hint += "Flipping this coin will cause a random event, use with caution!";
-            if (hintHeight != 0 && hintHeight > 0)
-            {
-                for (int i = 0; i < hintHeight; i++)
-                {
-                    hint += "\n";
-                }
-            }
-            ev.Player.ShowHint(hint, 5);
+            //if (hintHeight != 0 && hintHeight > 0)
+            //{
+            //    for (int i = 0; i < hintHeight; i++)
+            //    {
+            //        hint += "\n";
+            //    }
+            //}
+            Timing.RunCoroutine(guiHandler.sendHint(ev.Player, hint, 5));
+            
         }
 
         private void restarting()
         {
-            Timing.KillCoroutines(lockHandle); Timing.KillCoroutines(flickerHandle);
+            guiHandler.killLoop = true;
             if (realRoundEnd)
             {
                 Exiled.API.Features.Log.Info("Restarting the round (real restart)");
@@ -401,7 +400,8 @@
 
        private void Player_Joined(JoinedEventArgs ev)
         {
-            
+            guiHandler.killLoop = false;
+            Timing.RunCoroutine(guiHandler.displayGUI(ev.Player));
             lastId = string.Empty;
            ConMet = false;
            playerCount++;
@@ -461,7 +461,7 @@
              }
              if(ev.DamageHandler.Type == DamageType.Scp207)
             {
-                Log.Info($"Conk hit {ev.Player.DisplayNickname}");
+                //Log.Info($"Conk hit {ev.Player.DisplayNickname}");
                 ev.Amount *= (cokeDPS / 100);
             }
          } 
@@ -472,7 +472,6 @@
 
         private void Player_Spawned(SpawnedEventArgs ev)
         {
-
             if(ev.Player.Role == RoleTypeId.Scp0492)
             {
                 var plData = customRoles.rd.SingleOrDefault(x => x.player.NetId == ev.Player.NetId) ?? null; 
@@ -514,7 +513,7 @@
             }
         }
 
-        private IEnumerator<float> ShowHint()
+        internal IEnumerator<float> ShowHint()
         {
             var rnd = new System.Random();
             yield return Timing.WaitForSeconds(30);
@@ -523,26 +522,26 @@
                 //file = File.ReadAllLines(@"C:\Users\Kebin\AppData\Roaming\EXILED\Configs\Spire/lines.txt");
                 file = File.ReadAllLines((spireConfigLoc + "lines.txt"));
                 string hintMessage = string.Empty;
-                if (hintHeight != 0 && hintHeight < 0)
-                {
-                    for (int i = hintHeight; i < 0; i++)
-                    {
-                        hintMessage += "\n";
-                    }
-                }
+                //if (hintHeight != 0 && hintHeight < 0)
+                //{
+                //    for (int i = hintHeight; i < 0; i++)
+                //    {
+                //        hintMessage += "\n";
+                //    }
+                //}
                 hintMessage += file[rnd.Next(0, file.Count() - 1)];
-                if (hintHeight != 0 && hintHeight > 0)
-                {
-                    for (int i = 0; i < hintHeight; i++)
-                    {
-                        hintMessage += "\n";
-                    }
-                }
+                //if (hintHeight != 0 && hintHeight > 0)
+                //{
+                //    for (int i = 0; i < hintHeight; i++)
+                //    {
+                //        hintMessage += "\n";
+                //    }
+                //}
                 foreach (Exiled.API.Features.Player p in Exiled.API.Features.Player.List)
                 {
                     if (!p.IsDead)
                     {
-                        p.ShowHint($"{hintMessage}", 5);
+                        Timing.RunCoroutine(guiHandler.sendHint(p, hintMessage, 5));
                     }
 
                 }
@@ -575,6 +574,7 @@
         {
             while (true)
             {
+                if (guiHandler.killLoop) break;
                 var roomFlicker = Room.Random(ZoneType.LightContainment);
                 roomFlicker.TurnOffLights(0.15f);
                 yield return Timing.WaitForSeconds(1);
@@ -595,7 +595,11 @@
         private IEnumerator<float> lockAnounce()
         {
             yield return Timing.WaitForSeconds(600);
-            Cassie.Message(@"jam_043_3 Surface armory has been opened for all jam_020_3 pitch_0.8 warhead pitch_1 authorized personnel . . . enter with pitch_0.7 jam_010_1 caution", false, false, true);
+            if (guiHandler.killLoop) { }
+            else
+            {
+                Cassie.Message(@"jam_043_3 Surface armory has been opened for all jam_020_3 pitch_0.8 warhead pitch_1 authorized personnel . . . enter with pitch_0.7 jam_010_1 caution", false, false, true);
+            }
         }
 
         void OnRoundStart()
