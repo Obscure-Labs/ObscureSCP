@@ -142,14 +142,14 @@ namespace SpireLabs
                     {
                         ev.Player.ChangeAppearance(ToRole, true);
                         //ev.Player.ShowHint($"<Color=Red>You are no longer Disguised!</color>");
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, $"<Color=Red>You are no longer Disguised!</color>\n\n\n\n\n\n\n\n\n\n", 3));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, $"<Color=Red>You are no longer Disguised!</color>", 3));
                         Disguised = false;
                     }
                     else if (IsCard)
                     {
                         ev.Player.ChangeAppearance(ToRole, true);
                         //ev.Player.ShowHint($"You are now disguised as: <Color={TeamColor}>{ToRole.GetFullName()}</color>! \n<color=red>If you take out a weapon your cover will be blown!</color>");
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, $"You are now disguised as: <Color={TeamColor}>{ToRole.GetFullName()}</color>! \n<color=red>If you take out a weapon your cover will be blown!</color>\n\n\n\n\n\n\n\n\n", 3));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, $"You are now disguised as: <Color={TeamColor}>{ToRole.GetFullName()}</color>! \n<color=red>If you take out a weapon your cover will be blown!</color>", 3));
                         Disguised = true;
                     }
                     else if (!IsGun | !IsCard)
@@ -167,7 +167,7 @@ namespace SpireLabs
                     {
                         ev.Player.ChangeAppearance(ToRole, true);
                         //ev.Player.ShowHint($"You are now disguised as: <Color={TeamColor}>{ToRole.GetFullName()}</color>! \n<color=red>If you take out a weapon your cover will be blown!</color>");
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, $"You are now disguised as: <Color={TeamColor}>{ToRole.GetFullName()}</color>! \n<color=red>If you take out a weapon your cover will be blown!</color>\n\n\n\n\n\n\n\n\n", 3));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, $"You are now disguised as: <Color={TeamColor}>{ToRole.GetFullName()}</color>! \n<color=red>If you take out a weapon your cover will be blown!</color>", 3));
                         Disguised = true;
                     }
                 }

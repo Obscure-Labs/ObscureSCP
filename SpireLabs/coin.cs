@@ -34,7 +34,7 @@
     internal static class coin
     {
         public static string[] good = { "You gained 20HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!", "You are healed!", "GRENADE FOUNTAIN!", "Ammo pile!!", "FREE CANDY!", "You can't die for the next 3s!", "You bring health to those around you!", "Nice hat.." };
-        public static string[] bad = { "You now have 50HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "Pocket Sand!", "You got lost and found yourself in a random room!", "You flipped the coin so hard your hands fell off!", "BOOM!", "Sent To Brazil!!!", "You have been placed under the upside down curse, but only others can see it!", "You caused a blackout in your zone!", "Door stuck! DOOR STUCK!", "Your coin melted :(" };
+        public static string[] bad = { "You now have 50HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "Pocket Sand!", "You got lost and found yourself in a random room!", "You flipped the coin so hard your hands fell off!", "BOOM!", "Sent To Qatar!!!", "Others percieve you as upside down!", "You caused a blackout in your zone!", "Door stuck! DOOR STUCK!", "Your coin melted :(" };
 
         private static IEnumerator<float> grenadeFountain(Player p)
         {
@@ -244,7 +244,7 @@
                 {
                     case 0:
                         //ev.Player.ShowHint(good[0], 3);
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "\n\n\n\n\n\n\n\n\n\n" + good[0], 5));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, good[0], 5));
                         ev.Player.Heal(20, true);
                         if (ev.Player.Role == RoleTypeId.NtfCaptain)
                         {
@@ -256,13 +256,13 @@
                         }
                         break;
                     case 1:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "\n\n\n\n\n\n\n\n\n\n" + good[1], 5));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, good[1], 5));
                         ev.Player.EnableEffect(EffectType.MovementBoost, 5);
                         ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 105, 5);
                         break;
                     case 2:
                         bool todrop = false;
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "\n\n\n\n\n\n\n\n\n\n" +  good[2], 5));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, good[2], 5));
                         if (ev.Player.IsInventoryFull)
                         {
                             todrop = true;
@@ -310,36 +310,36 @@
                         }
                         break;
                     case 3:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "\n\n\n\n\n\n\n\n\n\n" + good[3], 5));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, good[3], 5));
                         ev.Player.EnableEffect(EffectType.Invisible, 5);
                         break;
                     case 4:
                         ev.Player.Heal(150, false);
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "\n\n\n\n\n\n\n\n\n\n" + good[4], 5));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, good[4], 5));
                         break;
                     case 5:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "\n\n\n\n\n\n\n\n\n\n" + good[5], 5));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, good[5], 5));
                         Timing.RunCoroutine(grenadeFountain(ev.Player));
                         break;
                     case 6:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "\n\n\n\n\n\n\n\n\n\n" + good[6], 5));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, good[6], 5));
                         Timing.RunCoroutine(ammoFountain(ev.Player));
                         break;
                     case 7:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "\n\n\n\n\n\n\n\n\n\n" + good[7], 5));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, good[7], 5));
                         Timing.RunCoroutine(candyFountain(ev.Player));
                         break;
                     case 8:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "\n\n\n\n\n\n\n\n\n\n" + good[8], 5));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, good[8], 5));
                         ev.Player.EnableEffect(EffectType.DamageReduction, 3);
                         ev.Player.ChangeEffectIntensity(EffectType.DamageReduction, 255, 3);
                         break;
                     case 9:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "\n\n\n\n\n\n\n\n\n\n" + good[9], 5));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, good[9], 5));
                         Timing.RunCoroutine(raycastHeal(ev.Player));
                         break;
                     case 10:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "\n\n\n\n\n\n\n\n\n\n" + good[10], 5));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, good[10], 5));
                         bool tp = false;
                         if (ev.Player.IsInventoryFull) tp = true;
                         else tp = false;
@@ -361,25 +361,25 @@
                 switch (rnd.Next(0, bad.Count()))
                 {
                     case 0:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "\n\n\n\n\n\n\n\n\n\n" + bad[0], 5));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, bad[0], 5));
                         ev.Player.Health = 50;
                         break;
                     case 1:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "\n\n\n\n\n\n\n\n\n\n" + bad[1], 5));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, bad[1], 5));
                         ev.Player.DropItems();
                         break;
                     case 2:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "\n\n\n\n\n\n\n\n\n\n" + bad[2], 5));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, bad[2], 5));
                         ev.Player.EnableEffect(EffectType.SinkHole, 5);
                         break;
                     case 3:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "\n\n\n\n\n\n\n\n\n\n" + bad[3], 5));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, bad[3], 5));
                         ev.Player.EnableEffect(EffectType.Flashed, 5);
                         break;
                     case 4:
                         if (Warhead.IsDetonated)
                             break;
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "\n\n\n\n\n\n\n\n\n\n" + bad[4], 5));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, bad[4], 5));
                         var r = new System.Random();
                         var n = r.Next(0, 2);
                         bool goodRoom = false;
@@ -411,7 +411,7 @@
 
                         break;
                     case 5:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "\n\n\n\n\n\n\n\n\n\n" + bad[5], 5));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, bad[5], 5));
                         ev.Player.EnableEffect(EffectType.SeveredHands, 999);
                         ev.Player.EnableEffect(EffectType.CardiacArrest, 60);
                         ev.Player.ChangeEffectIntensity(EffectType.CardiacArrest, 5);
@@ -420,30 +420,30 @@
                         ev.Player.Vaporize();
                         break;
                     case 7:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "\n\n\n\n\n\n\n\n\n\n" + bad[7], 5));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, bad[7], 5));
                         ZoneType zt = ev.Player.CurrentRoom.Zone;
                         ev.Player.Teleport(Room.List.FirstOrDefault(x => x.Type == RoomType.Pocket));
                         ev.Player.EnableEffect(EffectType.PocketCorroding, 60);
                         Timing.RunCoroutine(enterPD(ev.Player, zt));
                         break;
                     case 8:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "\n\n\n\n\n\n\n\n\n\n" + bad[8], 5));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, bad[8], 5));
 
                         ev.Player.Scale = Vector3.one * -1;
                         Timing.RunCoroutine(scl(ev.Player));
                         break;
                     case 9:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "\n\n\n\n\n\n\n\n\n\n" + bad[9], 5));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, bad[9], 5));
                         var zone = ev.Player.CurrentRoom.Zone;
                         Map.TurnOffAllLights(7.5f, zone);
                         break;
                     case 10:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "\n\n\n\n\n\n\n\n\n\n" + bad[10], 5));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, bad[10], 5));
                         Room rm = ev.Player.CurrentRoom;
                         rm.LockDown(10);
                         break;
                     case 11:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "\n\n\n\n\n\n\n\n\n\n" + bad[11], 5));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, bad[11], 5));
                         ev.Player.RemoveHeldItem(true);
                         break;
                 }
@@ -451,8 +451,8 @@
             else
             {
                 Exiled.API.Features.Log.Info($"{ev.Player.Nickname} flipped a coin and got nothing!");
-                ev.Player.ShowHint("No consequences, this time...", 3);
-                Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "\n\n\n\n\n\n\n\n\n\n" + "No consequences, this time...", 3));
+                //ev.Player.ShowHint("No consequences, this time...", 3);
+                Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "No consequences, this time...", 5));
             }
         }
 
