@@ -139,9 +139,8 @@
 
         public override void OnEnabled()
         {
-            LoadItems();
             CustomItem.RegisterItems(overrideClass: ItemConfigs);
-            
+            LoadItems();
             Timing.RunCoroutine(checkPlayer());
             RegisterEvents();
             _harmony = new("DevDummies-Rotation-Patch");
@@ -284,9 +283,9 @@
         }
         private void LoadItems()
         {
-            if (!Directory.Exists(spireConfigLoc + "CustomItems/"))
-                Directory.CreateDirectory(spireConfigLoc + "CustomItems/");
-            string filePath = spireConfigLoc + "CustomItems/global.yml";
+            if (!Directory.Exists(spireConfigLoc + "/CustomItems/"))
+                Directory.CreateDirectory(spireConfigLoc + "/CustomItems/");
+            string filePath = spireConfigLoc + "/CustomItems/global.yml";
             if(!File.Exists(filePath))
             {
                 ItemConfigs = new ItemConfigs.Items();

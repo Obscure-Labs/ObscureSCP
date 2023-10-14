@@ -14,18 +14,28 @@ namespace SpireLabs
     {
         internal static bool killLoop = false;
         private static string joinLeave = string.Empty;
-        internal static IEnumerator<float> sendJoinLeave(Player p)
+        internal static IEnumerator<float> sendJoinLeave(Player p, char jl)
         {
-            Timing.WaitForSeconds(3f);
+            string usr = p.DisplayNickname;
+            yield return Timing.WaitForSeconds(3f);
             while(joinLeave != string.Empty)
             {
                 yield return Timing.WaitForSeconds(0.5f);
             }
             if (joinLeave == string.Empty)
             {
-                joinLeave = $"Welcome, {p.DisplayNickname}!";
-                yield return Timing.WaitForSeconds(3);
-                joinLeave = string.Empty;
+                if (jl == 'j')
+                {
+                    joinLeave = $"Welcome, {p.DisplayNickname}!";
+                    yield return Timing.WaitForSeconds(3);
+                    joinLeave = string.Empty;
+                }
+                if(jl == 'l')
+                {
+                    joinLeave = $"Goodbye, {usr}!";
+                    yield return Timing.WaitForSeconds(3);
+                    joinLeave = string.Empty;
+                }
             }
         }
         internal static IEnumerator<float> sendHint(Player p, string h, int t)

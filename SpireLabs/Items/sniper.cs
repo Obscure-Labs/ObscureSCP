@@ -3,6 +3,7 @@ using System.ComponentModel;
 using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.API.Features.Attributes;
+using Exiled.API.Features.DamageHandlers;
 using Exiled.API.Features.Items;
 using Exiled.API.Features.Pickups;
 using Exiled.API.Features.Spawn;
@@ -11,6 +12,7 @@ using Exiled.Events.EventArgs.Player;
 using InventorySystem.Items.Firearms.Attachments;
 using InventorySystem.Items.Firearms.BasicMessages;
 using MEC;
+using PlayerRoles;
 using UnityEngine;
 using Player = Exiled.Events.Handlers.Player;
 
@@ -20,7 +22,7 @@ namespace SpireLabs.Items
     public class sniper : CustomWeapon
     {
         public override string Name { get; set; } = "MTF-E14-HSR";
-        public override string Description { get; set; } = "if hit.. ded!";
+        public override string Description { get; set; } = "A long ranger rifle chambered in 44BMG (44cal) Bullets.";
         public override SpawnProperties? SpawnProperties { get; set; } = new()
         {
             Limit = 3,
@@ -73,8 +75,14 @@ namespace SpireLabs.Items
 
         private void hurt(HurtingEventArgs ev)
         {
-            if (!Check(ev.Attacker.CurrentItem)) return;
-            if (ev.Player.Role.Team is PlayerRoles.Team.SCPs) ev.Amount *= 2;
+            if (!Check(ev.Attacker.CurrentItem))
+                Log.Info($"Item {ev.Attacker.CurrentItem.ToString()} was deemed to be NOT a custom item");
+            Log.Info($"Item {ev.Attacker.CurrentItem.ToString()} was deemed to be a custom item");
+            if (ev.Player.Role == RoleTypeId.Scp173|| ev.Player.Role == RoleTypeId.Scp049 || ev.Player.Role == RoleTypeId.Scp0492 || ev.Player.Role == RoleTypeId.Scp096 || ev.Player.Role == RoleTypeId.Scp106)
+            {
+                ev.Player.Hurt(ev.Attacker, 200f, DamageType.Revolver, null);
+                Log.Warn("should have taken 400 damage");
+            }
         }
     }
 }
