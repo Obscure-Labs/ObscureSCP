@@ -42,11 +42,14 @@
     <Reference Include="Assembly-CSharp-firstpass">
       <HintPath>..\refs\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
+    <Reference Include="AudioPlayer">
+      <HintPath>..\..\..\..\Downloads\AudioPlayer.dll</HintPath>
+    </Reference>
     <Reference Include="CommandSystem.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EXILED.8.2.1\lib\net48\CommandSystem.Core.dll</HintPath>
     </Reference>
-    <Reference Include="CustomItems">
-      <HintPath>..\refs\CustomItems.dll</HintPath>
+    <Reference Include="CustomItems, Version=1.8.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CustomItems.1.8.2\lib\net472\CustomItems.dll</HintPath>
     </Reference>
     <Reference Include="Exiled.API, Version=8.2.1.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>..\packages\EXILED.8.2.1\lib\net48\Exiled.API.dll</HintPath>
@@ -109,16 +112,20 @@
     <Compile Include="customRoles.cs" />
     <Compile Include="guiHandler.cs" />
     <Compile Include="IDthief.cs" />
+    <Compile Include="Configs\ItemConfig.cs" />
+    <Compile Include="Items\sniper.cs" />
     <Compile Include="larry.cs" />
     <Compile Include="coin.cs" />
-    <Compile Include="config.cs" />
+    <Compile Include="Configs\config.cs" />
     <Compile Include="doctor.cs" />
-    <Compile Include="NukeCard.cs" />
+    <Compile Include="Items\essentialOils.cs" />
     <Compile Include="plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="theNut.cs" />
+    <Compile Include="zombieHandler.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,4 +1,4 @@
-﻿ namespace SpireLabs
+﻿namespace SpireLabs
 {
     using Exiled.API.Enums;
     using Exiled.API.Features;
@@ -13,32 +13,11 @@
     using System.IO;
     using Exiled.CustomItems.API.Features;
     using Exiled.API.Features.Spawn;
-    using Exiled.API.Features.Pickups;
     using Exiled.API.Features.Doors;
     using System;
-    using PlayerRoles.FirstPersonControl;
     using HarmonyLib;
-    using System.Reflection.Emit;
-    using NorthwoodLib.Pools;
-    using Mirror;
-    using Exiled.API.Features.Roles;
-    using static UnityEngine.GraphicsBuffer;
-    using Exiled.API.Features.Toys;
-    using Exiled.API.Extensions;
-    using Utf8Json.Resolvers.Internal;
-    using Exiled.CustomRoles.API;
     using UCRAPI = UncomplicatedCustomRoles.API.Features.Manager;
-    using UncomplicatedCustomRoles.Commands.UCRSpawn;
-    using UncomplicatedCustomRoles.Structures;
-    using CustomItems;
-    using CommandSystem.Commands.RemoteAdmin.Broadcasts;
-    using PlayerRoles.PlayableScps.Scp079;
-    using Exiled.Events.EventArgs.Map;
-    using PluginAPI.Events;
-    using Exiled.Events.EventArgs.Server;
-    using Respawning;
-    using PluginAPI.Roles;
-    using Hints;
+    using Exiled.Loader;
 
     public class Plugin : Plugin<config>
     {
@@ -160,7 +139,8 @@
 
         public override void OnEnabled()
         {
-
+            LoadItems();
+            CustomItem.RegisterItems(overrideClass: ItemConfigs);
             
             Timing.RunCoroutine(checkPlayer());
             RegisterEvents();
@@ -239,12 +219,18 @@
             Exiled.Events.Handlers.Scp106.Attacking += larry.onLarryAttack;
             Exiled.Events.Handlers.Player.Dying += onPlayerDying;
             Exiled.Events.Handlers.Player.UsingItemCompleted += usingItem;
-            Exiled.Events.Handlers.Server.RespawningTeam += customRoles.spawnWave;
+            //Exiled.Events.Handlers.Server.RespawningTeam += customRoles.spawnWave;
             CustomItem.RegisterItems();
         }
 
         private void onPlayerDying(DyingEventArgs ev)
         {
+            List<int> pp = new List<int>();
+            pp.Add(ev.Player.Id);
+            if(ev.DamageHandler.Type == DamageType.Falldown)
+            {
+                AudioPlayer.API.AudioController.PlayFromFilePlayer(pp, @"C:\Users\Kevin\AppData\Roaming\EXILED\Plugins\audio\Metal-Pipe.ogg", false, 100, VoiceChat.VoiceChatChannel.Proximity, false, false, true, 9999);
+            }
             ev.Player.Scale = new Vector3(1, 1, 1);
         }
 
@@ -292,9 +278,26 @@
                 Exiled.Events.Handlers.Player.Left -= Player_Leave;
             }
         }
-       private void Authing(PreAuthenticatingEventArgs ev)
-       {
-       }
+        public ItemConfigs.Items ItemConfigs { get; private set; } = null!;
+        private void Authing(PreAuthenticatingEventArgs ev)
+        {
+        }
+        private void LoadItems()
+        {
+            if (!Directory.Exists(spireConfigLoc + "CustomItems/"))
+                Directory.CreateDirectory(spireConfigLoc + "CustomItems/");
+            string filePath = spireConfigLoc + "CustomItems/global.yml";
+            if(!File.Exists(filePath))
+            {
+                ItemConfigs = new ItemConfigs.Items();
+                File.WriteAllText(filePath, Loader.Serializer.Serialize(ItemConfigs));
+            }
+            else
+            {
+                ItemConfigs = Loader.Deserializer.Deserialize<ItemConfigs.Items>(File.ReadAllText(filePath));
+                File.WriteAllText(filePath, Loader.Serializer.Serialize(ItemConfigs));
+            }
+        }
 
        private IEnumerator<float> startCheck()
        {
@@ -400,6 +403,7 @@
 
        private void Player_Joined(JoinedEventArgs ev)
         {
+            Timing.RunCoroutine(guiHandler.sendJoinLeave(ev.Player));
             guiHandler.killLoop = false;
             Timing.RunCoroutine(guiHandler.displayGUI(ev.Player));
             lastId = string.Empty;
@@ -481,7 +485,6 @@
                     {
                         case 2: ev.Player.Scale = Vector3.one * 0.7f; break;
                     }
-
                 }
             }
 
@@ -604,6 +607,7 @@
 
         void OnRoundStart()
          {
+            guiHandler.startHints();
             //Exiled.API.Features.Server.Broadcast.SendMessage("Lobby initialised. Awaiting round start.");
             //while(Exiled.API.Features.Player.List.Count() < 2)
             //{
@@ -614,9 +618,12 @@
 
             //}
             //Exiled.API.Features.Round.RestartSilently();
-            flickerHandle = Timing.RunCoroutine(randomFlicker());
+            Timing.KillCoroutines("flockerRoutine");
+            Timing.KillCoroutines("lockRoutine");
+
+            Timing.RunCoroutine(randomFlicker(), "flickerRoutine");
             Log.Info("Round has started!");
-            lockHandle = Timing.RunCoroutine(lockAnounce());
+            Timing.RunCoroutine(lockAnounce(), "lockRoutine");
             foreach (Door d in Door.List)
             {
                 if (d.Zone == ZoneType.Surface)

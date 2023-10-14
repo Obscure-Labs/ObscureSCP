@@ -13,14 +13,45 @@ namespace SpireLabs
     internal class guiHandler
     {
         internal static bool killLoop = false;
+        private static string joinLeave = string.Empty;
+        internal static IEnumerator<float> sendJoinLeave(Player p)
+        {
+            Timing.WaitForSeconds(3f);
+            while(joinLeave != string.Empty)
+            {
+                yield return Timing.WaitForSeconds(0.5f);
+            }
+            if (joinLeave == string.Empty)
+            {
+                joinLeave = $"Welcome, {p.DisplayNickname}!";
+                yield return Timing.WaitForSeconds(3);
+                joinLeave = string.Empty;
+            }
+        }
         internal static IEnumerator<float> sendHint(Player p, string h, int t)
         {
-            hint[p.Id] = h;
-            yield return Timing.WaitForSeconds(t);
-            hint[p.Id] = string.Empty;
+            while (hint[p.Id] != string.Empty)
+            {
+                yield return Timing.WaitForSeconds(0.5f);
+            }
+            if (hint[p.Id] == string.Empty)
+            {
+                hint[p.Id] = h;
+                yield return Timing.WaitForSeconds(t);
+                hint[p.Id] = string.Empty;
+            }           
         }
 
         internal static string[] hint = new string[60];
+
+        internal static void startHints()
+        {
+            for(int i = 0; i < hint.Length; i++)
+            {
+                hint[i] = string.Empty;
+            }        
+        }
+
         internal static IEnumerator<float> displayGUI(Player p)
         {
             hint[p.Id] = string.Empty;
@@ -31,19 +62,6 @@ namespace SpireLabs
                 yield return Timing.WaitForSeconds(1f);
                 string[] effects = { null, null, null, null, null, null, null, null, null };
                 Log.Debug("Created array");
-                //Log.Debug($"Array has {effects.Length} values assigned");
-                //try
-                //{
-                //    for (int i = 0; i < 9; i++)
-                //    {
-                //        Log.Debug($"Assigning effects[{i}] letter \"B\"");
-                //        effects[i] = "B";
-                //    }
-                //}
-                //catch (Exception e)
-                //{
-                //    Log.Error(e);
-                //}
                 Log.Debug("Success");
                 if (p.Role == RoleTypeId.Spectator)
                 {
@@ -105,20 +123,20 @@ namespace SpireLabs
                                     case "Poisoned":
                                         effects[i] = "<size=25><b><color=#02521e>Poisoned</color></b></size><size=10>\n\t</size>";
                                         break;
-                                    case "SinkHole":
-                                        effects[i] = "<size=25><b><color=#02521e>SinkHole</color></b></size><size=10>\n\t</size>";
-                                        break;
+                                    //case "SinkHole":
+                                    //    effects[i] = "<size=25><b><color=#02521e>Sink Hole</color></b></size><size=10>\n\t</size>";
+                                    //    break;
                                     case "DamageReduction":
-                                        effects[i] = "<size=25><b><color=#e3b76b>DamageReduction</color></b></size><size=10>\n\t</size>";
+                                        effects[i] = "<size=25><b><color=#e3b76b>Damage Reduction</color></b></size><size=10>\n\t</size>";
                                         break;
                                     case "MovementBoost":
-                                        effects[i] = "<size=25><b><color=#3bafd9>MovementBoost</color></b></size><size=10>\n\t</size>";
+                                        effects[i] = "<size=25><b><color=#3bafd9>Movement Boost</color></b></size><size=10>\n\t</size>";
                                         break;
                                     case "RainbowTaste":
-                                        effects[i] = "<size=25><b><color=#FF0000>R</color><color=#FF7F00>a</color><color=#FFFF00>i</color><color=#7FFF00>n</color><color=#00FF00>b</color><color=#00FF7F>o</color><color=#00FEFF>w</color><color=#007FFF>T</color><color=#0000FF>a</color><color=#7F00FF>s</color><color=#FF00FE>t</color><color=#FF007F>e</color></b></size><size=10>\n\t</size>";
+                                        effects[i] = "<size=25><b><color=#FF0000>R</color><color=#FF7F00>a</color><color=#FFFF00>i</color><color=#7FFF00>n</color><color=#00FF00>b</color><color=#00FF7F>o</color><color=#00FEFF>w</color><color=#007FFF> T</color><color=#0000FF>a</color><color=#7F00FF>s</color><color=#FF00FE>t</color><color=#FF007F>e</color></b></size><size=10>\n\t</size>";
                                         break;
                                     case "SeveredHands":
-                                        effects[i] = "<size=25><b><color=red>SeveredHands</color></b></size><size=10>\n\t</size>";
+                                        effects[i] = "<size=25><b><color=red>Severed Hands</color></b></size><size=10>\n\t</size>";
                                         break;
                                     case "Stained":
                                         effects[i] = "<size=25><b><color=#543601>Stained</color></b></size><size=10>\n\t</size>";
@@ -133,10 +151,10 @@ namespace SpireLabs
                                         effects[i] = "<size=25><b><color=#c9f59a>SCP1853</color></b></size><size=10>\n\t</size>";
                                         break;
                                     case "CardiacArrest":
-                                        effects[i] = "<size=25><b><color=red>CardiacArrest</color></b></size><size=10>\n\t</size>";
+                                        effects[i] = "<size=25><b><color=red>Cardiac Arrest</color></b></size><size=10>\n\t</size>";
                                         break;
                                     case "AntiScp207":
-                                        effects[i] = "<size=25><b><color=#fa70ff>AntiScp207</color></b></size><size=10>\n\t</size>";
+                                        effects[i] = "<size=25><b><color=#fa70ff>Anti Scp207</color></b></size><size=10>\n\t</size>";
                                         break;
                                     case "Invisible":
                                         effects[i] = "<size=25><b><color=#540042>Invisible</color></b></size><size=10>\n\t</size>";
@@ -145,7 +163,7 @@ namespace SpireLabs
                                         effects[i] = "<size=25><b><color=#bb80ff>Scp207</color></b></size><size=10>\n\t</size>";
                                         break;
                                     case "BodyshotReduction":
-                                        effects[i] = "<size=25><b><color=#c9af3a>BodyshotReduction</color></b></size><size=10>\n\t</size>";
+                                        effects[i] = "<size=25><b><color=#c9af3a>Bodyshot Reduction</color></b></size><size=10>\n\t</size>";
                                         break;
                                     case "Hemorrhage":
                                         effects[i] = "<size=25><b><color=red>Hemorrhage</color></b></size><size=10>\n\t</size>";
@@ -163,6 +181,7 @@ namespace SpireLabs
                                         effects[i] = "<size=25><b><color=#ffff00>Scanned</color></b></size><size=10>\n\t</size>";
                                         break;
                                 }
+                                Log.Debug($"{p.DisplayNickname} has effect {effects[i]} as player id {i}");
                             }
                             catch(Exception ex)
                             {
@@ -170,26 +189,6 @@ namespace SpireLabs
                             }
                         }
                     }
-                    //string msg = $"<size=15>\t</size>\n{hint[p.Id]}\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n<align=left>\t\n";
-                    //Log.Debug("Showing hint");
-                    //msg += $"{effects[7] ?? "\t"}\n";
-                    //Log.Debug("added effect 7");
-                    //msg += $"{effects[6] ?? "\t"}\n";
-                    //Log.Debug("added effect 6");
-                    //msg += $"{effects[5] ?? "\t"}\n";
-                    //Log.Debug("added effect 5");
-                    //msg += $"{effects[4] ?? "\t"}\n";
-                    //Log.Debug("added effect 4");
-                    //msg += $"{effects[3] ?? "\t"}\n";
-                    //Log.Debug("added effect 3");
-                    //msg += $"{effects[2] ?? "\t"}\n";
-                    //Log.Debug("added effect 2");
-                    //msg += $"{effects[1] ?? "\t"}\n";
-                    //Log.Debug("added effect 1");
-                    //msg += $"{effects[0] ?? "\t"}";
-                    //Log.Debug("added effect 0");
-
-                    //msg += $"</align><align=center>\n\t\n\t\n\t\n<b><align=center><size=15><b><color=#B300FF>S</color><color=#AE15FF>p</color><color=#AA2AFF>i</color><color=#A63FFF>r</color><color=#A255FF>e</color><color=#9D6AFF>L</color><color=#997FFF>a</color><color=#9594FF>b</color><color=#91AAFF>s</color> <color=#88D4FF>-</color> </b>Discord.gg/f8uEpZWcBv/</size>\n\t\n\t\n\t\n\t\n\t\n\t\n\t";
                     Log.Debug("Completed Message");
                     if (hint[p.Id].Length > 70)
                     {
@@ -197,7 +196,7 @@ namespace SpireLabs
                     }
                     else
                     {
-                        p.ShowHint($"<size=15>\t</size>\n{hint[p.Id]}\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n<align=left>\t\n{effects[7] ?? "\t"}\n{effects[6] ?? "\t"}\n{effects[5] ?? "\t"}\n{effects[4] ?? "\t"}\n{effects[3] ?? "\t"}\n{effects[2] ?? "\t"}\n{effects[1] ?? "\t"}\n{effects[0] ?? "\t"}</align><align=center>\n\t\n\t\n\t\n<b><align=center><size=15><b><color=#B300FF>S</color><color=#AE15FF>p</color><color=#AA2AFF>i</color><color=#A63FFF>r</color><color=#A255FF>e</color><color=#9D6AFF>L</color><color=#997FFF>a</color><color=#9594FF>b</color><color=#91AAFF>s</color> <color=#88D4FF>-</color> </b>Discord.gg/f8uEpZWcBv/</size>\n\t\n\t\n\t\n\t\n\t\n\t\n\t", 1.25f);
+                        p.ShowHint($"<size=15>{joinLeave}\t</size>\n{hint[p.Id]}\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n<align=left>\t\n{effects[7] ?? "\t"}\n{effects[6] ?? "\t"}\n{effects[5] ?? "\t"}\n{effects[4] ?? "\t"}\n{effects[3] ?? "\t"}\n{effects[2] ?? "\t"}\n{effects[1] ?? "\t"}\n{effects[0] ?? "\t"}</align><align=center>\n\t\n\t\n\t\n<b><align=center><size=15><b><color=#B300FF>S</color><color=#AE15FF>p</color><color=#AA2AFF>i</color><color=#A63FFF>r</color><color=#A255FF>e</color><color=#9D6AFF>L</color><color=#997FFF>a</color><color=#9594FF>b</color><color=#91AAFF>s</color> <color=#88D4FF>-</color> </b>Discord.gg/f8uEpZWcBv/</size>\n\t\n\t\n\t\n\t\n\t\n\t\n\t", 1.25f);
                     }
                     Log.Debug("Shown Hint");
                 }

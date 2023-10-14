@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UCRAPI = UncomplicatedCustomRoles.API.Features.Manager;
- 
+
 namespace SpireLabs
 {
     internal class customRoles
@@ -53,7 +53,7 @@ namespace SpireLabs
                 {
                     rd.Add(new roleData { player = p, UCRID = UCRID });
                 }
-                
+
                 if (UCRID == 4)
                 {
                     yield return Timing.WaitForSeconds(6);
@@ -66,51 +66,52 @@ namespace SpireLabs
                 }
             }
         }
-
-        internal static void spawnWave(RespawningTeamEventArgs ev)
-        {
-            var random = new Random();
-
-            SpawnableTeamType team = ev.NextKnownTeam;
-            try
-            {
-                if (team == SpawnableTeamType.ChaosInsurgency)
-                {
-                    Player pl = ev.Players[random.Next(0, ev.Players.Count())];
-                    var chance = random.Next(0, 100);
-                    if (chance > 60)
-                    {
-                        Log.Info(chance);
-                        UncomplicatedCustomRoles.Manager.SpawnManager.SummonCustomSubclass(pl, 9, true);
-                        Timing.RunCoroutine(SpawnCustom(pl, 9));
-                    }
-                }
-                if(team == SpawnableTeamType.NineTailedFox)
-                {
-                    Player pl = ev.Players[random.Next(0, ev.Players.Count())];
-                    int chance = random.Next(0, 100);
-                    if (chance > 85)
-                    {
-                        Log.Info(chance);
-                        Timing.RunCoroutine(SpawnCustom(pl, 8));
-                    }
-                }
-            }
-            catch { }
-        }
-
-        private static IEnumerator<float> SpawnCustom(Player p, int role)
-        {
-            yield return Timing.WaitForSeconds(0.1f);
-            if(role == 8)
-            {
-                UncomplicatedCustomRoles.Manager.SpawnManager.SummonCustomSubclass(p, 8, true);
-            }
-            else if(role==9)
-            {
-                UncomplicatedCustomRoles.Manager.SpawnManager.SummonCustomSubclass(p, 9, true);
-            }
-
-        }
     }
 }
+//        internal static void spawnWave(RespawningTeamEventArgs ev)
+//        {
+//            var random = new Random();
+
+//            SpawnableTeamType team = ev.NextKnownTeam;
+//            try
+//            {
+//                if (team == SpawnableTeamType.ChaosInsurgency)
+//                {
+//                    Player pl = ev.Players[random.Next(0, ev.Players.Count())];
+//                    var chance = random.Next(0, 100);
+//                    if (chance > 60)
+//                    {
+//                        Log.Info(chance);
+//                        UncomplicatedCustomRoles.Manager.SpawnManager.SummonCustomSubclass(pl, 9, true);
+//                        Timing.RunCoroutine(SpawnCustom(pl, 9));
+//                    }
+//                }
+//                if(team == SpawnableTeamType.NineTailedFox)
+//                {
+//                    Player pl = ev.Players[random.Next(0, ev.Players.Count())];
+//                    int chance = random.Next(0, 100);
+//                    if (chance > 85)
+//                    {
+//                        Log.Info(chance);
+//                        Timing.RunCoroutine(SpawnCustom(pl, 8));
+//                    }
+//                }
+//            }
+//            catch { }
+//        }
+
+//        private static IEnumerator<float> SpawnCustom(Player p, int role)
+//        {
+//            yield return Timing.WaitForSeconds(0.1f);
+//            if(role == 8)
+//            {
+//                UncomplicatedCustomRoles.Manager.SpawnManager.SummonCustomSubclass(p, 8, true);
+//            }
+//            else if(role==9)
+//            {
+//                UncomplicatedCustomRoles.Manager.SpawnManager.SummonCustomSubclass(p, 9, true);
+//            }
+
+//        }
+//    }
+//}
