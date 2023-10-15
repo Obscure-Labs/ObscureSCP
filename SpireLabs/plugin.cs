@@ -18,6 +18,7 @@
     using HarmonyLib;
     using UCRAPI = UncomplicatedCustomRoles.API.Features.Manager;
     using Exiled.Loader;
+    using Exiled.API.Features.Toys;
 
     public class Plugin : Plugin<config>
     {
@@ -216,7 +217,6 @@
             Exiled.Events.Handlers.Player.ChangedItem += IDThief.item_change;
             Exiled.Events.Handlers.Warhead.Detonated += map_nuked;
             Exiled.Events.Handlers.Scp106.Attacking += larry.onLarryAttack;
-            Exiled.Events.Handlers.Player.Dying += onPlayerDying;
             Exiled.Events.Handlers.Player.UsingItemCompleted += usingItem;
             Exiled.Events.Handlers.Player.Left += left;
             Exiled.Events.Handlers.Player.Verified += joinMsg;
@@ -226,6 +226,7 @@
         
         private void joinMsg(VerifiedEventArgs ev)
         {
+            
             Timing.RunCoroutine(guiHandler.sendJoinLeave(ev.Player, 'j'));
         }
 
@@ -234,16 +235,6 @@
             Timing.RunCoroutine(guiHandler.sendJoinLeave(ev.Player, 'l'));
         }
 
-        private void onPlayerDying(DyingEventArgs ev)
-        {
-            List<int> pp = new List<int>();
-            pp.Add(ev.Player.Id);
-            if(ev.DamageHandler.Type == DamageType.Falldown)
-            {
-                AudioPlayer.API.AudioController.PlayFromFilePlayer(pp, @"C:\Users\Kevin\AppData\Roaming\EXILED\Plugins\audio\Metal-Pipe.ogg", false, 100, VoiceChat.VoiceChatChannel.Proximity, false, false, true, 9999);
-            }
-            ev.Player.Scale = new Vector3(1, 1, 1);
-        }
 
         private void item_change(ChangedItemEventArgs ev)
         {
@@ -521,7 +512,7 @@
                     if (UCRAPI.Get(ev.Player).Id == 2)
                     {
                         ev.Player.EnableEffect(EffectType.MovementBoost);
-                        ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 30, 10);
+                        ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 80, 10);
                     }
                 }
             }

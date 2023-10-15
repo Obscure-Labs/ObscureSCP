@@ -55,11 +55,11 @@
             int num = rnd.Next(0, 100);
             if (num >= 95)
             {
-                itemTotal = 80;
+                itemTotal = 250;
             }
             else
             {
-                itemTotal = 10;
+                itemTotal = 50;
             }
 
             Log.Info("Running ammo fountain on " + p);
