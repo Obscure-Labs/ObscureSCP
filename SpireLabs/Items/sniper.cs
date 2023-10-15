@@ -76,7 +76,10 @@ namespace SpireLabs.Items
         private void hurt(HurtingEventArgs ev)
         {
             if (!Check(ev.Attacker.CurrentItem))
+            {
                 Log.Info($"Item {ev.Attacker.CurrentItem.ToString()} was deemed to be NOT a custom item");
+                return;
+            }
             Log.Info($"Item {ev.Attacker.CurrentItem.ToString()} was deemed to be a custom item");
             if (ev.Player.Role == RoleTypeId.Scp173|| ev.Player.Role == RoleTypeId.Scp049 || ev.Player.Role == RoleTypeId.Scp0492 || ev.Player.Role == RoleTypeId.Scp096 || ev.Player.Role == RoleTypeId.Scp106)
             {

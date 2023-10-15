@@ -218,8 +218,20 @@
             Exiled.Events.Handlers.Scp106.Attacking += larry.onLarryAttack;
             Exiled.Events.Handlers.Player.Dying += onPlayerDying;
             Exiled.Events.Handlers.Player.UsingItemCompleted += usingItem;
+            Exiled.Events.Handlers.Player.Left += left;
+            Exiled.Events.Handlers.Player.Verified += joinMsg;
             //Exiled.Events.Handlers.Server.RespawningTeam += customRoles.spawnWave;
             CustomItem.RegisterItems();
+        }
+        
+        private void joinMsg(VerifiedEventArgs ev)
+        {
+            Timing.RunCoroutine(guiHandler.sendJoinLeave(ev.Player, 'j'));
+        }
+
+        private void left(LeftEventArgs ev)
+        {
+            Timing.RunCoroutine(guiHandler.sendJoinLeave(ev.Player, 'l'));
         }
 
         private void onPlayerDying(DyingEventArgs ev)
@@ -402,7 +414,7 @@
 
        private void Player_Joined(JoinedEventArgs ev)
         {
-            Timing.RunCoroutine(guiHandler.sendJoinLeave(ev.Player));
+            
             guiHandler.killLoop = false;
             Timing.RunCoroutine(guiHandler.displayGUI(ev.Player));
             lastId = string.Empty;
