@@ -1,10 +1,15 @@
 # SpireSCP
 ## Official plugin for the "SpireLabs" SCP:SL Server
 Features Include:
+
 SCP Health rebalancing
+
 All coinflips cause a random result
+
 HID Damage Rebalancing
+
 Custom items
+
 And More
 
 
