@@ -30,17 +30,28 @@
     using Utf8Json.Resolvers.Internal;
     using Exiled.API.Features.Toys;
     using InventorySystem.Items.Usables.Scp330;
-    
+    using Exiled.API.Extensions;
+
     internal static class coin
     {
         public static string[] good = { "You gained 20HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!", "You are healed!", "GRENADE FOUNTAIN!", "Ammo pile!!", "FREE CANDY!", "You can't die for the next 3s!", "You bring health to those around you!", "Nice hat.." };
-        public static string[] bad = { "You now have 50HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "Pocket Sand!", "You got lost and found yourself in a random room!", "You flipped the coin so hard your hands fell off!", "BOOM!", "Sent To Qatar!!!", "Others percieve you as upside down!", "You caused a blackout in your zone!", "Door stuck! DOOR STUCK!", "Your coin melted :(" };
+        public static string[] bad = { "You now have 50HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "Pocket Sand!", "You got lost and found yourself in a random room!", "You flipped the coin so hard your hands fell off!", "Beep!", "Sent To Qatar!!!", "Others percieve you as upside down!", "You caused a blackout in your zone!", "Door stuck! DOOR STUCK!", "Your coin melted :(" };
 
         private static IEnumerator<float> grenadeFountain(Player p)
         {
             int bombs = 0;
             while (bombs != 5)
             {
+                p.ThrowGrenade(ProjectileType.FragGrenade, false);
+                p.ThrowGrenade(ProjectileType.FragGrenade, false);
+                p.ThrowGrenade(ProjectileType.FragGrenade, false);
+                p.ThrowGrenade(ProjectileType.FragGrenade, false);
+                p.ThrowGrenade(ProjectileType.FragGrenade, false);
+                p.ThrowGrenade(ProjectileType.FragGrenade, false);
+                p.ThrowGrenade(ProjectileType.FragGrenade, false);
+                p.ThrowGrenade(ProjectileType.FragGrenade, false);
+                p.ThrowGrenade(ProjectileType.FragGrenade, false);
+                p.ThrowGrenade(ProjectileType.FragGrenade, false);
                 p.ThrowGrenade(ProjectileType.FragGrenade, false);
                 p.ThrowGrenade(ProjectileType.FragGrenade, false);
                 yield return Timing.WaitForSeconds(0.1f);
@@ -55,7 +66,7 @@
             int num = rnd.Next(0, 100);
             if (num >= 95)
             {
-                itemTotal = 250;
+                itemTotal = 350;
             }
             else
             {
@@ -66,11 +77,11 @@
             int items = 0;
             while (items != itemTotal)
             {
-              Pickup.CreateAndSpawn(ItemType.Ammo9x19, p.Position, p.Rotation);
-              Pickup.CreateAndSpawn(ItemType.Ammo762x39, p.Position, p.Rotation);
-              Pickup.CreateAndSpawn(ItemType.Ammo12gauge, p.Position, p.Rotation);
-              Pickup.CreateAndSpawn(ItemType.Ammo556x45, p.Position, p.Rotation);
-              Pickup.CreateAndSpawn(ItemType.Ammo44cal, p.Position, p.Rotation);
+                Pickup.CreateAndSpawn(ItemType.Ammo9x19, p.Position, p.Rotation);
+                Pickup.CreateAndSpawn(ItemType.Ammo762x39, p.Position, p.Rotation);
+                Pickup.CreateAndSpawn(ItemType.Ammo12gauge, p.Position, p.Rotation);
+                Pickup.CreateAndSpawn(ItemType.Ammo556x45, p.Position, p.Rotation);
+                Pickup.CreateAndSpawn(ItemType.Ammo44cal, p.Position, p.Rotation);
 
 
                 yield return Timing.WaitForOneFrame;
@@ -124,7 +135,7 @@
 
         private static IEnumerator<float> scl(Player p)
         {
-            p.Scale = Vector3.one * -1;
+            p.Scale = new Vector3(1, -1, 1);
             yield return Timing.WaitForSeconds(30);
             p.Scale = Vector3.one;
 
@@ -132,9 +143,9 @@
 
         private static void pp(Player pl)
         {
-            
 
-            Primitive p = Primitive.Create(pl.Transform.position + (pl.Transform.forward*1.25f) +(pl.Transform.up * 0.75f), Vector3.zero, Vector3.one, false);
+
+            Primitive p = Primitive.Create(pl.Transform.position + (pl.Transform.forward * 1.25f) + (pl.Transform.up * 0.75f), Vector3.zero, Vector3.one, false);
 
             p.Color = new Color(0, 255, 0);
             p.Scale = Vector3.one * 0.25f;
@@ -258,7 +269,7 @@
                     case 1:
                         Timing.RunCoroutine(guiHandler.sendHint(ev.Player, good[1], 3));
                         ev.Player.EnableEffect(EffectType.MovementBoost, 5);
-                        ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 105, 5);
+                        ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 205, 5);
                         break;
                     case 2:
                         bool todrop = false;
@@ -300,7 +311,7 @@
                         else
                         {
                             if (todrop)
-                            { 
+                            {
                                 Pickup.CreateAndSpawn(ItemType.KeycardResearchCoordinator, ev.Player.Position, ev.Player.Rotation);
                             }
                             else
@@ -417,7 +428,8 @@
                         ev.Player.ChangeEffectIntensity(EffectType.CardiacArrest, 5);
                         break;
                     case 6:
-                        ev.Player.Vaporize();
+                        Timing.RunCoroutine(beep(ev.Player));
+                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, bad[6], 3));
                         break;
                     case 7:
                         Timing.RunCoroutine(guiHandler.sendHint(ev.Player, bad[7], 3));
@@ -457,6 +469,21 @@
             }
         }
 
+        private static IEnumerator<float> beep(Player p)
+        {
+            p.PlayBeepSound();
+            p.PlayShieldBreakSound();
+            yield return Timing.WaitForSeconds(0.5f);
+            p.PlayBeepSound();
+            p.PlayShieldBreakSound();
+            yield return Timing.WaitForSeconds(0.5f);
+            p.PlayBeepSound();
+            p.PlayShieldBreakSound();
+            yield return Timing.WaitForSeconds(0.5f);
+            p.PlayBeepSound();
+            p.PlayShieldBreakSound();
+            yield return Timing.WaitForSeconds(0.1f);
+        }
         private static IEnumerator<float> enterPD(Player p, ZoneType zt)
         {
             Door door = Room.List.FirstOrDefault().Doors.FirstOrDefault();

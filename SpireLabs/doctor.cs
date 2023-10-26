@@ -212,7 +212,7 @@
             ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 10, 10);
             //ev.Player.ShowHint("You provide speed to all SCP entities nearby!", 7);
             Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "You provide speed to all SCP entities nearby!", 7));
-            Timing.RunCoroutine(scpBoost(ev.Player));
+            Timing.RunCoroutine(fixedScpBoost(ev.Player));
         }
 
         internal static void call(SendingCallEventArgs ev)
@@ -221,11 +221,89 @@
             {
                 //ev.Player.ShowHint("You are giving HS to all SCP entities nearby \n(this can overflow past natural max)", 7);
                 Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "You are giving HS to all SCP entities nearby \n(this can overflow past natural max)", 7));
-                Timing.RunCoroutine(scpShield(ev.Player));
+                Timing.RunCoroutine(fixedScpShield(ev.Player));
             }
             else
                 return;
 
         }
+        internal static IEnumerator<float> fixedScpBoost(Player p)
+        {
+            yield return Timing.WaitForOneFrame;
+            for (int j = 0; j < 40; j++)
+            {
+                Timing.RunCoroutine(guiHandler.sendHint(p, "You provide speed to all SCP entities nearby!", 0.75f));
+                foreach (Player pp in Player.List)
+                {
+                    if (pp == p) continue;
+                    Player nP = Player.Get(p.Id);
+                    int loopCntr = 0;
+                    RaycastHit h = new RaycastHit();
+                    Player ppp = null;
+                    do
+                    {
+                        Vector3 dir = pp.Position - new Vector3(nP.Position.x, nP.Position.y + 0.1f, nP.Position.z);
+                        Physics.Raycast(nP.Position, dir, out h);
+                        loopCntr++;
+                    } while (!Player.TryGet(h.collider, out ppp) && loopCntr != 5);
+                    if (ppp == null) continue;
+                    if (Math.Sqrt((Math.Pow((nP.Position.x - ppp.Position.x), 2)) + (Math.Pow((nP.Position.y - ppp.Position.y), 2))) > 10) continue;
+                    if (!ppp.IsHuman)
+                    {
+                        //Log.Info($"{ppp.DisplayNickname} is {ppp.Role.Name} this role is {ppp.IsHuman}");
+                        Timing.RunCoroutine(guiHandler.sendHint(ppp, "You are recieving a speed boost from a nearby doctor!", 0.75f));
+                        ppp.EnableEffect(EffectType.MovementBoost, 1.5f);
+                        ppp.ChangeEffectIntensity(EffectType.MovementBoost, 30, 1.5f);
+                    }
+                }
+                yield return Timing.WaitForSeconds(0.5f);
+            }
+        }
+        internal static IEnumerator<float> fixedScpShield(Player p)
+        {
+            yield return Timing.WaitForOneFrame;
+            for (int j = 0; j < 40; j++)
+            {
+                Timing.RunCoroutine(guiHandler.sendHint(p, "You provide protection to all SCP entities nearby!", 0.75f));
+                foreach (Player pp in Player.List)
+                {
+                    if (pp == p) continue;
+                    Player nP = Player.Get(p.Id);
+                    int loopCntr = 0;
+                    RaycastHit h = new RaycastHit();
+                    Player ppp = null;
+                    do
+                    {
+                        Vector3 dir = pp.Position - new Vector3(nP.Position.x, nP.Position.y + 0.1f, nP.Position.z);
+                        Physics.Raycast(nP.Position, dir, out h);
+                        loopCntr++;
+                    } while (!Player.TryGet(h.collider, out ppp) && loopCntr != 5);
+                    if (ppp == null) continue;
+                    if (Math.Sqrt((Math.Pow((nP.Position.x - ppp.Position.x), 2)) + (Math.Pow((nP.Position.y - ppp.Position.y), 2))) > 10) continue;
+                    if (!ppp.IsHuman)
+                    {
+                        //Log.Info($"{ppp.DisplayNickname} is {ppp.Role.Name} this role is {ppp.IsHuman}");
+                        Timing.RunCoroutine(guiHandler.sendHint(ppp, "You are recieving HS points from a nearby doctor!", 0.75f));
+                        ppp.HumeShield += 2.7f;
+                    }
+                }
+                yield return Timing.WaitForSeconds(0.5f);
+            }
+            //for(int j = 0; j < 20; j++)
+            //{
+            //    Timing.RunCoroutine(guiHandler.sendHint(p, "You provide speed to all SCP entities nearby!", 1.5f));
+            //    foreach(Player target in Player.List)
+            //    {
+            //        if(p.CurrentRoom == target.CurrentRoom)
+            //        {
+            //            Timing.RunCoroutine(guiHandler.sendHint(target, "You are recieving a speed boost from a nearby doctor!", 1.5f));
+            //            target.EnableEffect(EffectType.MovementBoost, 1.5f);
+            //            target.ChangeEffectIntensity(EffectType.MovementBoost, 30, 1.5f);
+            //        }
+            //    }
+            //    yield return Timing.WaitForSeconds(1);
+            //}
+        }
     }
 }
+    

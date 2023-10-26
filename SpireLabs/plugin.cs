@@ -201,7 +201,7 @@
             //Exiled.Events.Handlers.Player.EnteringPocketDimension += pocketEnter;
             Exiled.Events.Handlers.Player.Hurting += theThing;
             Exiled.Events.Handlers.Player.Hurting += theNut.scp173DMG;
-            //Exiled.Events.Handlers.Scp173.Blinking += theNut.scp173TP;
+            Exiled.Events.Handlers.Scp173.Blinking += theNut.scp173TP;
             Exiled.Events.Handlers.Scp173.UsingBreakneckSpeeds += theNut.scp173ZOOM;
             Exiled.Events.Handlers.Scp106.Attacking += larry.pdExits;
             Exiled.Events.Handlers.Scp049.ActivatingSense += doctor.doctorBoost;
@@ -220,6 +220,7 @@
             Exiled.Events.Handlers.Player.UsingItemCompleted += usingItem;
             Exiled.Events.Handlers.Player.Left += left;
             Exiled.Events.Handlers.Player.Verified += joinMsg;
+            Exiled.Events.Handlers.Player.Dying += died;
             //Exiled.Events.Handlers.Server.RespawningTeam += customRoles.spawnWave;
             CustomItem.RegisterItems();
         }
@@ -228,6 +229,11 @@
         {
             
             Timing.RunCoroutine(guiHandler.sendJoinLeave(ev.Player, 'j'));
+        }
+
+        private void died(DyingEventArgs ev)
+        {
+            ev.Player.Scale = new Vector3(1, 1, 1);
         }
 
         private void left(LeftEventArgs ev)

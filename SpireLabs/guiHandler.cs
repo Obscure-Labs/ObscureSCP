@@ -38,18 +38,22 @@ namespace SpireLabs
                 }
             }
         }
-        internal static IEnumerator<float> sendHint(Player p, string h, int t)
+        internal static IEnumerator<float> sendHint(Player p, string h, float t)
         {
-            while (hint[p.Id] != string.Empty)
-            {
-                yield return Timing.WaitForSeconds(0.5f);
-            }
-            if (hint[p.Id] == string.Empty)
-            {
-                hint[p.Id] = h;
-                yield return Timing.WaitForSeconds(t);
-                hint[p.Id] = string.Empty;
-            }           
+            hint[p.Id] = h;
+            string localHint = h;
+            yield return Timing.WaitForSeconds(t);
+            if (p.CurrentHint.Content.Contains(localHint)) hint[p.Id] = string.Empty;
+            //while (hint[p.Id] != string.Empty)
+            //{
+            //    yield return Timing.WaitForSeconds(0.5f);
+            //}
+            //if (hint[p.Id] == string.Empty)
+            //{
+            //    hint[p.Id] = h;
+            //    yield return Timing.WaitForSeconds(t);
+            //    hint[p.Id] = string.Empty;
+            //}           
         }
 
         internal static string[] hint = new string[60];

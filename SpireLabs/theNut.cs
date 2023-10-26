@@ -39,6 +39,39 @@ namespace SpireLabs
             }
         }
 
+        internal static void scp173TP(BlinkingEventArgs ev)
+        {
+            Timing.RunCoroutine(killThing(ev.Player, ev.Scp173.BreakneckActive));
+        }
+
+        private static IEnumerator<float> killThing(Player p, bool isBreakneck)
+        {
+            yield return Timing.WaitForOneFrame;
+            if (isBreakneck && p.Health < 1000)
+            {
+                foreach (Player pp in Player.List)
+                {
+                    if (pp == p) continue;
+                    Player nP = Player.Get(p.Id);
+                    int loopCntr = 0;
+                    RaycastHit h = new RaycastHit();
+                    Player ppp = null;
+                    do
+                    {
+                        Vector3 dir = pp.Position - new Vector3(nP.Position.x, nP.Position.y + 0.1f, nP.Position.z);
+                        Physics.Raycast(nP.Position, dir, out h);
+                        loopCntr++;
+                    } while (!Player.TryGet(h.collider, out ppp) && loopCntr != 5);
+                    if (ppp == null) continue;
+                    if (Math.Sqrt((Math.Pow((nP.Position.x - ppp.Position.x), 2)) + (Math.Pow((nP.Position.y - ppp.Position.y), 2))) > 1.5) continue;
+                    if (ppp.IsHuman)
+                    {
+                        ppp.Hurt(200, DamageType.Crushed);
+                    }
+                }
+            }
+        }
+
         //internal static void scp173TP(BlinkingEventArgs ev)
         //{
         //    if (ev.Scp173.BreakneckActive && ev.Player.Health < 1000)
