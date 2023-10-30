@@ -382,6 +382,62 @@
             Damage caused by <see cref="F:ItemType.GunA7"/>.
             </summary>
         </member>
+        <member name="F:Exiled.API.Enums.DamageType.Scp3114">
+            <summary>
+            Damage caused by <see cref="F:PlayerRoles.RoleTypeId.Scp3114"/>.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.DamageType.Strangled">
+            <summary>
+            <see cref="F:Exiled.API.Enums.EffectType.Strangled"/>.
+            </summary>
+        </member>
+        <member name="T:Exiled.API.Enums.DecontaminationState">
+            <summary>
+            Represents the state of a <see cref="T:LightContainmentZoneDecontamination.DecontaminationController"/>.
+            </summary>
+            <seealso cref="P:Exiled.API.Features.Map.DecontaminationState"/>
+        </member>
+        <member name="F:Exiled.API.Enums.DecontaminationState.Disabled">
+            <summary>
+            Decontamination is disable.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.DecontaminationState.Start">
+            <summary>
+            Decontamination has started.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.DecontaminationState.Remain10Minutes">
+            <summary>
+            It's remain 10 minutes.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.DecontaminationState.Remain5Minutes">
+            <summary>
+            It's remain 5 minutes.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.DecontaminationState.Remain1Minute">
+            <summary>
+            It's remain 1 minutes.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.DecontaminationState.Countdown">
+            <summary>
+            It's remain 30 seconds.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.DecontaminationState.Lockdown">
+            <summary>
+            All doors is closed lock.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.DecontaminationState.Finish">
+            <summary>
+            The decontamination has been done.
+            </summary>
+        </member>
         <member name="T:Exiled.API.Enums.DoorBeepType">
             <summary>
             Door beep types.
@@ -987,6 +1043,16 @@
         <member name="F:Exiled.API.Enums.EffectType.PocketCorroding">
             <summary>
             Teleports the player to the pocket dimension and drains health until the player escapes or is killed.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.EffectType.Ghostly">
+            <summary>
+            The effect permit player to go trough door like Scp-106.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.EffectType.Strangled">
+            <summary>
+            Effect given to player when being strangled by SCP-3114.
             </summary>
         </member>
         <member name="T:Exiled.API.Enums.ElevatorType">
@@ -1923,7 +1989,7 @@
             <summary>
             SCP team. Same as <see cref="F:PlayerRoles.Team.SCPs"/>.
             Contains all SCP-related roles: <see cref="F:PlayerRoles.RoleTypeId.Scp049"/>, <see cref="F:PlayerRoles.RoleTypeId.Scp0492"/>, <see cref="F:PlayerRoles.RoleTypeId.Scp079"/>, <see cref="F:PlayerRoles.RoleTypeId.Scp096"/>,
-            <see cref="F:PlayerRoles.RoleTypeId.Scp106"/>, <see cref="F:PlayerRoles.RoleTypeId.Scp173"/>, and <see cref="F:PlayerRoles.RoleTypeId.Scp939"/>.
+            <see cref="F:PlayerRoles.RoleTypeId.Scp106"/>, <see cref="F:PlayerRoles.RoleTypeId.Scp173"/>, <see cref="F:PlayerRoles.RoleTypeId.Scp939"/>, and <see cref="F:PlayerRoles.RoleTypeId.Scp3114"/>.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.Side.Mtf">
@@ -2275,6 +2341,22 @@
             <typeparam name="T">Type of <see cref="T:System.Collections.Generic.IEnumerable`1"/> elements.</typeparam>
             <param name="condition">The condition to require.</param>
             <returns>Returns a random value from <see cref="T:System.Collections.Generic.IEnumerable`1"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Extensions.CommonExtensions.Multiply(UnityEngine.AnimationCurve,System.Single)">
+            <summary>
+            Will modify the curve with the amount used.
+            </summary>
+            <param name="curve">The AnimationCurve to mofify.</param>
+            <param name="amount">The multiplier number.</param>
+            <returns>The new modfied curve.</returns>
+        </member>
+        <member name="M:Exiled.API.Extensions.CommonExtensions.Add(UnityEngine.AnimationCurve,System.Single)">
+            <summary>
+            Will modify the curve with the amount used.
+            </summary>
+            <param name="curve">The AnimationCurve to mofify.</param>
+            <param name="amount">The add number.</param>
+            <returns>The new modfied curve.</returns>
         </member>
         <member name="T:Exiled.API.Extensions.DamageTypeExtensions">
             <summary>
@@ -3135,6 +3217,11 @@
             Gets the attribute's <see cref="T:PlayerRoles.RoleTypeId"/>.
             </summary>
         </member>
+        <member name="T:Exiled.API.Features.Attributes.DynamicEventDispatcherAttribute">
+            <summary>
+            An attribute to easily manage <see cref="T:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher"/> initialization.
+            </summary>
+        </member>
         <member name="T:Exiled.API.Features.Attributes.PatchGroupAttribute">
             <summary>
             This attribute is used within Harmony patches and the relative annotations to define a target element.
@@ -3162,13 +3249,12 @@
             Represents an in-game badge.
             </summary>
         </member>
-        <member name="M:Exiled.API.Features.Badge.#ctor(System.String,System.String,System.Int32,System.Boolean)">
+        <member name="M:Exiled.API.Features.Badge.#ctor(System.String,System.String,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.API.Features.Badge"/> struct.
             </summary>
             <param name="text">The badge text.</param>
             <param name="color">The badge color.</param>
-            <param name="type">The badge type.</param>
             <param name="isGlobal">Indicates whether the badge is global or not.</param>
         </member>
         <member name="P:Exiled.API.Features.Badge.Text">
@@ -3179,11 +3265,6 @@
         <member name="P:Exiled.API.Features.Badge.Color">
             <summary>
             Gets the badge color.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Badge.Type">
-            <summary>
-            Gets the badge type.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Badge.IsGlobal">
@@ -3612,12 +3693,17 @@
         </member>
         <member name="T:Exiled.API.Features.Core.Attributes.ManagedObjectTypeAttribute">
             <summary>
-            An attribute to easily manage CustomAbility initialization.
+            An attribute to mark an <see cref="T:Exiled.API.Features.Core.EObject"/> type as a managed object type.
             </summary>
         </member>
         <member name="M:Exiled.API.Features.Core.Attributes.ManagedObjectTypeAttribute.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.API.Features.Core.Attributes.ManagedObjectTypeAttribute"/> class.
+            </summary>
+        </member>
+        <member name="T:Exiled.API.Features.Core.Attributes.StateAttribute">
+            <summary>
+            An attribute to easily initialize states.
             </summary>
         </member>
         <member name="T:Exiled.API.Features.Core.EActor">
@@ -3758,6 +3844,35 @@
         </member>
         <member name="M:Exiled.API.Features.Core.EActor.OnBeginDestroy">
             <inheritdoc/>
+        </member>
+        <member name="T:Exiled.API.Features.Core.EBehaviour">
+            <summary>
+            <see cref="T:Exiled.API.Features.Core.EBehaviour"/> is a versatile component designed to enhance the functionality of playable characters.
+            <br>It can be easily integrated with various types of playable characters, making it a valuable tool for user-defined playable character behaviours.</br>
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.EBehaviour.Owner">
+            <summary>
+            Gets or sets the owner of the <see cref="T:Exiled.API.Features.Core.EBehaviour"/>.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Core.EBehaviour.PostInitialize">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Core.EBehaviour.Tick">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Core.EBehaviour.OnEndPlay">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Core.EBehaviour.BehaviourUpdate">
+            <summary>
+            Fired every tick.
+            <para>Code affecting the <see cref="T:Exiled.API.Features.Core.EBehaviour"/>'s base implementation should be placed here.</para>
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Core.EBehaviour.BehaviourUpdate_Implementation">
+            <inheritdoc cref="M:Exiled.API.Features.Core.EBehaviour.BehaviourUpdate"/>
         </member>
         <member name="T:Exiled.API.Features.Core.EObject">
             <summary>
@@ -4132,6 +4247,36 @@
             Fired when the current <see cref="T:Exiled.API.Features.Core.EObject"/> instance has been explicitly destroyed.
             </summary>
         </member>
+        <member name="T:Exiled.API.Features.Core.Generic.EBehaviour`1">
+            <summary>
+            <see cref="T:Exiled.API.Features.Core.EBehaviour"/> is a versatile component designed to enhance the functionality of playable characters.
+            <br>It can be easily integrated with various types of playable characters, making it a valuable tool for user-defined playable character behaviours.</br>
+            </summary>
+            <typeparam name="T">The type of user-defined playable character object.</typeparam>
+        </member>
+        <member name="P:Exiled.API.Features.Core.Generic.EBehaviour`1.Owner">
+            <summary>
+            Gets the owner of the <see cref="T:Exiled.API.Features.Core.EBehaviour"/>.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.EBehaviour`1.PostInitialize">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.EBehaviour`1.Tick">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.EBehaviour`1.OnEndPlay">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.EBehaviour`1.BehaviourUpdate">
+            <summary>
+            Fired every tick.
+            <para>Code affecting the <see cref="T:Exiled.API.Features.Core.EBehaviour"/>'s base implementation should be placed here.</para>
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.EBehaviour`1.BehaviourUpdate_Implementation">
+            <inheritdoc cref="M:Exiled.API.Features.Core.Generic.EBehaviour`1.BehaviourUpdate"/>
+        </member>
         <member name="T:Exiled.API.Features.Core.Generic.EnumClass`2">
             <summary>
             A class which allows <see cref="T:System.Enum"/> implicit conversions.
@@ -4334,7 +4479,7 @@
             <returns><see langword="true"/> if the object instance is not null and can be casted as the specified type; otherwise, <see langword="false"/>.</returns>
         </member>
         <member name="M:Exiled.API.Features.Core.Generic.Singleton`1.Create(`0)">
-            <inheritdoc cref="M:Exiled.API.Features.Core.Generic.Singleton`1.#ctor(`0)"/>
+            <inheritdoc cref="T:Exiled.API.Features.Core.Generic.Singleton`1"/>
         </member>
         <member name="M:Exiled.API.Features.Core.Generic.Singleton`1.Destroy(`0)">
             <summary>
@@ -4375,14 +4520,9 @@
             Gets a value indicating whether the <see cref="M:Exiled.API.Features.Core.Generic.StaticActor`1.OnEndPlay"/> method has already been called by Unity.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Core.Generic.StaticActor`1.Instance">
-            <summary>
-            Gets the global access point to the unique instance of this class.
-            </summary>
-        </member>
         <member name="M:Exiled.API.Features.Core.Generic.StaticActor`1.FindExistingInstance">
             <summary>
-            Looks or an existing instance of the <see cref="T:Exiled.API.Features.Core.Generic.StaticActor`1"/>.
+            Looks for an existing instance of the <see cref="T:Exiled.API.Features.Core.Generic.StaticActor`1"/>.
             </summary>
             <returns>The existing <typeparamref name="T"/> instance, or <see langword="null"/> if not found.</returns>
         </member>
@@ -4391,6 +4531,12 @@
             Creates a new instance of the <see cref="T:Exiled.API.Features.Core.Generic.StaticActor`1"/>.
             </summary>
             <returns>The created <typeparamref name="T"/> instance, or <see langword="null"/> if not found.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.Generic.StaticActor`1.Get">
+            <summary>
+            Gets or creates a new instance of <see cref="T:Exiled.API.Features.Core.Generic.StaticActor`1"/>.
+            </summary>
+            <returns>The found or created <typeparamref name="T"/> instance.</returns>
         </member>
         <member name="M:Exiled.API.Features.Core.Generic.StaticActor`1.PostInitialize">
             <inheritdoc/>
@@ -4716,6 +4862,223 @@
             <param name="depthInheritance">A value indicating whether or not subclasses should be considered.</param>
             <returns><see langword="true"/> if the component was found; otherwise, <see langword="false"/>.</returns>
         </member>
+        <member name="T:Exiled.API.Features.Core.StateMachine.IState">
+            <summary>
+            Defines the contract for basic state features.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.StateMachine.IState.Id">
+            <summary>
+            Gets the state's id.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.StateMachine.IState.Name">
+            <summary>
+            Gets the state's name.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.StateMachine.IState.Description">
+            <summary>
+            Gets the state's description.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StateMachine.IState.OnEnter(Exiled.API.Features.Core.StateMachine.StateController)">
+            <summary>
+            Fired when entering the state.
+            </summary>
+            <param name="stateController">The state controller.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StateMachine.IState.OnExit(Exiled.API.Features.Core.StateMachine.StateController)">
+            <summary>
+            Fired when exiting the state.
+            </summary>
+            <param name="stateController">The state controller.</param>
+        </member>
+        <member name="T:Exiled.API.Features.Core.StateMachine.State">
+            <summary>
+            The base class which handles in-context states.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.StateMachine.State.List">
+            <summary>
+            Gets all registered states.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.StateMachine.State.Id">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.API.Features.Core.StateMachine.State.Name">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.API.Features.Core.StateMachine.State.Description">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.API.Features.Core.StateMachine.State.Controllers">
+            <summary>
+            Gets all the <see cref="T:Exiled.API.Features.Core.StateMachine.StateController"/>s listening to this <see cref="T:Exiled.API.Features.Core.StateMachine.State"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.StateMachine.State.ActiveControllers">
+            <summary>
+            Gets all the <see cref="T:Exiled.API.Features.Core.StateMachine.StateController"/>s running on this <see cref="T:Exiled.API.Features.Core.StateMachine.State"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.StateMachine.State.InactiveControllers">
+            <summary>
+            Gets all the <see cref="T:Exiled.API.Features.Core.StateMachine.StateController"/>s running on a <see cref="T:Exiled.API.Features.Core.StateMachine.State"/> other than this.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StateMachine.State.InitializeStates(System.Boolean)">
+            <summary>
+            Initializes all states defined in the executing <see cref="T:System.Reflection.Assembly"/>.
+            </summary>
+            <param name="useAttribute">A value indicating whether attribute should be used.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StateMachine.State.Get(System.Byte)">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Core.StateMachine.State"/> belonging to the specified id.
+            </summary>
+            <param name="id">The state's id.</param>
+            <returns>The corresponding <see cref="T:Exiled.API.Features.Core.StateMachine.State"/>, or <see langword="null"/> if not found.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StateMachine.State.Get(System.String)">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Core.StateMachine.State"/> belonging to the specified name.
+            </summary>
+            <param name="name">The state's name.</param>
+            <returns>The corresponding <see cref="T:Exiled.API.Features.Core.StateMachine.State"/>, or <see langword="null"/> if not found.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StateMachine.State.Get(System.Type)">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Core.StateMachine.State"/> belonging to the specified <see cref="T:System.Type"/>.
+            </summary>
+            <param name="type">The state's <see cref="T:System.Type"/>.</param>
+            <returns>The corresponding <see cref="T:Exiled.API.Features.Core.StateMachine.State"/>, or <see langword="null"/> if not found.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StateMachine.State.Get(System.Byte,System.Byte)">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Core.StateMachine.State"/>s belonging to the specified id between the defined range.
+            </summary>
+            <param name="minRange">The minimum inclusive range.</param>
+            <param name="maxRange">The maximum exclusive range.</param>
+            <returns>All <see cref="T:Exiled.API.Features.Core.StateMachine.State"/>s belonging to the specified id between the specified range.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StateMachine.State.Get(System.Byte[])">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Core.StateMachine.State"/>s belonging to the specified id between the defined ids.
+            </summary>
+            <param name="ids">The ids to look for.</param>
+            <returns>All <see cref="T:Exiled.API.Features.Core.StateMachine.State"/>s belonging to the specified id between the defined ids.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StateMachine.State.Get(System.String[])">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Core.StateMachine.State"/>s belonging to the specified id between the defined names.
+            </summary>
+            <param name="names">The names to look for.</param>
+            <returns>All <see cref="T:Exiled.API.Features.Core.StateMachine.State"/>s belonging to the specified id between the defined names.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StateMachine.State.Get(System.Type[])">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Core.StateMachine.State"/>s belonging to the specified id between the defined types.
+            </summary>
+            <param name="types">The types to look for.</param>
+            <returns>All <see cref="T:Exiled.API.Features.Core.StateMachine.State"/>s belonging to the specified id between the defined types.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StateMachine.State.Get``1">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Core.StateMachine.State"/> belonging to the specified type <typeparamref name="T"/>.
+            </summary>
+            <typeparam name="T">The type to look for.</typeparam>
+            <returns>The corresponding <see cref="T:Exiled.API.Features.Core.StateMachine.State"/>, or <see langword="null"/> if not found.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StateMachine.State.TryGet(System.Byte,Exiled.API.Features.Core.StateMachine.State@)">
+            <summary>
+            Tries to get a <see cref="T:Exiled.API.Features.Core.StateMachine.State"/> given the specified id.
+            </summary>
+            <param name="id">The state's id.</param>
+            <param name="state">The corresponding <see cref="T:Exiled.API.Features.Core.StateMachine.State"/>, or <see langword="null"/> if not found.</param>
+            <returns><see langword="true"/> if a <see cref="T:Exiled.API.Features.Core.StateMachine.State"/> was found; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StateMachine.State.TryGet(System.String,Exiled.API.Features.Core.StateMachine.State@)">
+            <summary>
+            Tries to get a <see cref="T:Exiled.API.Features.Core.StateMachine.State"/> given the specified name.
+            </summary>
+            <param name="name">The state's name.</param>
+            <param name="state">The corresponding <see cref="T:Exiled.API.Features.Core.StateMachine.State"/>, or <see langword="null"/> if not found.</param>
+            <returns><see langword="true"/> if a <see cref="T:Exiled.API.Features.Core.StateMachine.State"/> was found; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StateMachine.State.TryGet(System.Type,Exiled.API.Features.Core.StateMachine.State@)">
+            <summary>
+            Tries to get a <see cref="T:Exiled.API.Features.Core.StateMachine.State"/> given the specified <see cref="T:System.Type"/>.
+            </summary>
+            <param name="type">The state's <see cref="T:System.Type"/>.</param>
+            <param name="state">The corresponding <see cref="T:Exiled.API.Features.Core.StateMachine.State"/>, or <see langword="null"/> if not found.</param>
+            <returns><see langword="true"/> if a <see cref="T:Exiled.API.Features.Core.StateMachine.State"/> was found; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StateMachine.State.TryGet``1(``0@)">
+            <summary>
+            Tries to get a <see cref="T:Exiled.API.Features.Core.StateMachine.State"/> given the specified <see cref="T:System.Type"/>.
+            </summary>
+            <typeparam name="T">The type to look for.</typeparam>
+            <param name="state">The corresponding <see cref="T:Exiled.API.Features.Core.StateMachine.State"/>, or <see langword="null"/> if not found.</param>
+            <returns><see langword="true"/> if a <see cref="T:Exiled.API.Features.Core.StateMachine.State"/> was found; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StateMachine.State.ToString">
+            <summary>
+            Converts the <see cref="T:Exiled.API.Features.Core.StateMachine.State"/> to a human readable <see cref="T:System.String"/> representation.
+            </summary>
+            <returns>A human readable <see cref="T:System.String"/> representation of the <see cref="T:Exiled.API.Features.Core.StateMachine.State"/> object.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StateMachine.State.OnEnter(Exiled.API.Features.Core.StateMachine.StateController)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StateMachine.State.OnExit(Exiled.API.Features.Core.StateMachine.StateController)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StateMachine.State.Tick">
+            <inheritdoc/>
+        </member>
+        <member name="T:Exiled.API.Features.Core.StateMachine.StateController">
+            <summary>
+            The base controller which handles actors using in-context states.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.StateMachine.StateController.States">
+            <summary>
+            Gets all handled states.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.StateMachine.StateController.CurrentState">
+            <summary>
+            Gets or sets the current state.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.StateMachine.StateController.PreviousState">
+            <summary>
+            Gets or sets the previous state.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.StateMachine.StateController.BeginStateMulticastDispatcher">
+            <summary>
+            Gets or sets the <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1"/> which handles all the delegates fired when entering a new state.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.StateMachine.StateController.EndStateMulticastDispatcher">
+            <summary>
+            Gets or sets the <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1"/> which handles all the delegates fired when exiting the current state.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StateMachine.StateController.StateUpdate(Exiled.API.Features.Core.StateMachine.State)">
+            <summary>
+            Fired every tick from the current state.
+            </summary>
+            <param name="state">The state firing the update.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Core.StateMachine.StateController.OnStateChanged">
+            <summary>
+            Fired when the state is changed.
+            </summary>
+        </member>
         <member name="T:Exiled.API.Features.Core.StaticActor">
             <summary>
             This is a generic Singleton implementation for components.
@@ -4747,21 +5110,11 @@
             Gets a value indicating whether the <see cref="M:Exiled.API.Features.Core.StaticActor.OnEndPlay"/> method has already been called by Unity.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Core.StaticActor.Instance">
-            <summary>
-            Gets the global access point to the unique instance of this class.
-            </summary>
-        </member>
-        <member name="M:Exiled.API.Features.Core.StaticActor.FindExistingInstance">
-            <summary>
-            Looks or an existing instance of the <see cref="T:Exiled.API.Features.Core.StaticActor"/>.
-            </summary>
-            <returns>The existing <see cref="T:Exiled.API.Features.Core.StaticActor"/> instance, or <see langword="null"/> if not found.</returns>
-        </member>
-        <member name="M:Exiled.API.Features.Core.StaticActor.CreateNewInstance">
+        <member name="M:Exiled.API.Features.Core.StaticActor.CreateNewInstance(System.Type)">
             <summary>
             Creates a new instance of the <see cref="T:Exiled.API.Features.Core.StaticActor"/>.
             </summary>
+            <param name="type">The type of the <see cref="T:Exiled.API.Features.Core.StaticActor"/>.</param>
             <returns>The created <see cref="T:Exiled.API.Features.Core.StaticActor"/> instance, or <see langword="null"/> if not found.</returns>
         </member>
         <member name="M:Exiled.API.Features.Core.StaticActor.Get``1">
@@ -4784,7 +5137,7 @@
             Gets a <see cref="T:Exiled.API.Features.Core.StaticActor"/> given the specified type.
             </summary>
             <param name="type">The the type of the <see cref="T:Exiled.API.Features.Core.StaticActor"/> to look for.</param>
-            <returns>The corresponding <see cref="T:Exiled.API.Features.Core.StaticActor"/>, or <see langword="null"/> if not found.</returns>
+            <returns>The corresponding <see cref="T:Exiled.API.Features.Core.StaticActor"/>.</returns>
         </member>
         <member name="M:Exiled.API.Features.Core.StaticActor.PostInitialize">
             <inheritdoc/>
@@ -5726,6 +6079,11 @@
             Gets a value indicating the precise state of the door, from <c>0-1</c>. A value of <c>0</c> indicates the door is fully closed, while a value of <c>1</c> indicates the door is fully open. Values in-between represent the door's animation progress.
             </summary>
         </member>
+        <member name="P:Exiled.API.Features.Doors.Door.IsConsideredOpen">
+            <summary>
+            Gets a value indicating whether the door is considered open by the game.
+            </summary>
+        </member>
         <member name="P:Exiled.API.Features.Doors.Door.IsOpen">
             <summary>
             Gets or sets a value indicating whether the door is open.
@@ -6089,15 +6447,346 @@
             </summary>
             <returns>A string containing Door-related data.</returns>
         </member>
+        <member name="T:Exiled.API.Features.DynamicEvents.DynamicDelegate">
+            <summary>
+            The <see cref="T:Exiled.API.Features.DynamicEvents.DynamicDelegate"/> allows user-defined delegate routes bound to an <see cref="T:System.Object"/> reference.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.DynamicDelegate.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.DynamicEvents.DynamicDelegate"/> class.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.DynamicDelegate.#ctor(System.Object,System.Action)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.DynamicEvents.DynamicDelegate"/> class.
+            </summary>
+            <param name="target"><inheritdoc cref="P:Exiled.API.Features.DynamicEvents.DynamicDelegate.Target"/></param>
+            <param name="delegate"><inheritdoc cref="P:Exiled.API.Features.DynamicEvents.DynamicDelegate.Delegate"/></param>
+        </member>
+        <member name="P:Exiled.API.Features.DynamicEvents.DynamicDelegate.Target">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.DynamicEvents.DynamicDelegate"/>'s target.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.DynamicEvents.DynamicDelegate.Delegate">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.DynamicEvents.DynamicDelegate"/>'s delegate.
+            </summary>
+        </member>
+        <member name="T:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher">
+            <summary>
+            The class which handles delegates dynamically acting as multicast listener.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher"/> class.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher.#ctor(System.Collections.Generic.Dictionary{System.Object,System.Collections.Generic.List{System.Action}})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher"/> class.
+            </summary>
+            <param name="delegates">The delegates to be bound.</param>
+        </member>
+        <member name="P:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher.BoundDelegates">
+            <summary>
+            Gets all the bound delegates.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher.Item(System.Object)">
+            <summary>
+            This indexer allows access to bound listeners using an <see cref="T:System.Object"/> reference.
+            </summary>
+            <param name="object">The listener to look for.</param>
+            <returns>The obund listener corresponding to the specified reference.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher.op_Addition(Exiled.API.Features.DynamicEvents.DynamicEventDispatcher,System.Action)">
+            <summary>
+            Binds a delegate the event dispatcher.
+            </summary>
+            <param name="left">The <see cref="T:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher"/> to bind the listener to.</param>
+            <param name="right">The delegate to bind.</param>
+            <returns>The left-hand <see cref="T:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher"/> operator.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher.op_Addition(Exiled.API.Features.DynamicEvents.DynamicEventDispatcher,Exiled.API.Features.DynamicEvents.DynamicDelegate)">
+            <summary>
+            Binds a listener from the event dispatcher.
+            </summary>
+            <param name="left">The <see cref="T:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher"/> to bind the listener from.</param>
+            <param name="right">The <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicDelegate`1"/> containing the listener to bind.</param>
+            <returns>The left-hand <see cref="T:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher"/> operator.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher.op_Addition(Exiled.API.Features.DynamicEvents.DynamicEventDispatcher,Exiled.API.Features.DynamicEvents.DynamicEventDispatcher)">
+            <summary>
+            Binds all bound listeners to a <see cref="T:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher"/> to the event dispatcher.
+            </summary>
+            <param name="left">The <see cref="T:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher"/> to bind the listeners from.</param>
+            <param name="right">The <see cref="T:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher"/> containing the listeners to bind.</param>
+            <returns>The left-hand <see cref="T:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher"/> operator.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher.op_Subtraction(Exiled.API.Features.DynamicEvents.DynamicEventDispatcher,System.Action)">
+            <summary>
+            Unbinds a delegate the event dispatcher.
+            </summary>
+            <param name="left">The <see cref="T:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher"/> to unbind the listener from.</param>
+            <param name="right">The delegate to bind.</param>
+            <returns>The left-hand <see cref="T:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher"/> operator.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher.op_Subtraction(Exiled.API.Features.DynamicEvents.DynamicEventDispatcher,Exiled.API.Features.DynamicEvents.DynamicDelegate)">
+            <summary>
+            Unbinds a listener from the event dispatcher.
+            </summary>
+            <param name="left">The <see cref="T:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher"/> to unbind the listener from.</param>
+            <param name="right">The <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicDelegate`1"/> containing the listener to unbind.</param>
+            <returns>The left-hand <see cref="T:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher"/> operator.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher.op_Subtraction(Exiled.API.Features.DynamicEvents.DynamicEventDispatcher,Exiled.API.Features.DynamicEvents.DynamicEventDispatcher)">
+            <summary>
+            Unbinds all bound listeners to a <see cref="T:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher"/> from the event dispatcher.
+            </summary>
+            <param name="left">The <see cref="T:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher"/> to unbind the listeners from.</param>
+            <param name="right">The <see cref="T:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher"/> containing the listeners to unbind.</param>
+            <returns>The left-hand <see cref="T:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher"/> operator.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher.Bind(System.Object,System.Action)">
+            <summary>
+            Binds a listener to the event dispatcher.
+            </summary>
+            <param name="obj">The listener instance.</param>
+            <param name="del">The delegate to be bound.</param>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher.Unbind(System.Object)">
+            <summary>
+            Unbinds a listener from the event dispatcher.
+            </summary>
+            <param name="obj">The listener instance.</param>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher.Invoke(System.Object)">
+            <summary>
+            Invokes the delegates from the specified listener.
+            </summary>
+            <param name="obj">The listener instance.</param>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher.InvokeAll">
+            <summary>
+            Invokes all the delegates from all the bound delegates.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher.UnbindAll">
+            <inheritdoc/>
+        </member>
+        <member name="T:Exiled.API.Features.DynamicEvents.DynamicEventManager">
+            <summary>
+            The class which handles all the multicast delegates.
+            </summary>
+        </member>
+        <member name="T:Exiled.API.Features.DynamicEvents.DynamicEventManager.FDelegate`1">
+            <summary>
+            The custom <see cref="T:System.EventHandler"/> delegate.
+            </summary>
+            <typeparam name="T">The <see cref="T:System.EventHandler`1"/> type.</typeparam>
+            <param name="ev">The <see cref="T:System.EventHandler`1"/> instance.</param>
+        </member>
+        <member name="T:Exiled.API.Features.DynamicEvents.DynamicEventManager.FDelegate">
+            <summary>
+            The custom <see cref="T:System.EventHandler"/> delegate, with empty parameters.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.DynamicEventManager.CreateFromTypeInstance(System.Object)">
+            <inheritdoc cref="M:Exiled.API.Features.DynamicEvents.DynamicEventManager.CreateFromTypeInstance(System.Object)"/>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.DynamicEventManager.DestroyFromTypeInstance(System.Object)">
+            <inheritdoc cref="M:Exiled.API.Features.DynamicEvents.DynamicEventManager.UnbindAllFromTypeInstance(System.Object)"/>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.DynamicEventManager.InvokeSafely``1(Exiled.API.Features.DynamicEvents.DynamicEventManager.FDelegate{``0},``0)">
+            <summary>
+            Executes all <see cref="T:Exiled.API.Features.DynamicEvents.DynamicEventManager.FDelegate`1"/> listeners safely.
+            </summary>
+            <typeparam name="T">Event arg type.</typeparam>
+            <param name="ev">Source event.</param>
+            <param name="arg">Event arg.</param>
+            <exception cref="T:System.ArgumentNullException">Event or its arg is null.</exception>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.DynamicEventManager.InvokeSafely(Exiled.API.Features.DynamicEvents.DynamicEventManager.FDelegate)">
+            <summary>
+            Executes all <see cref="T:Exiled.API.Features.DynamicEvents.DynamicEventManager.FDelegate`1"/> listeners safely.
+            </summary>
+            <param name="ev">Source event.</param>
+            <exception cref="T:System.ArgumentNullException">Event is null.</exception>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.DynamicEventManager.BindAllFromTypeInstance(System.Object)">
+            <summary>
+            Initializes all the dynamic handlers in the specified type instance.
+            </summary>
+            <param name="obj">The type instance.</param>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.DynamicEventManager.UnbindAllFromTypeInstance(System.Object)">
+            <summary>
+            Unbinds all the dynamic handlers in the specified type instance.
+            </summary>
+            <param name="obj">The type instance.</param>
+        </member>
+        <member name="T:Exiled.API.Features.DynamicEvents.IDynamicEventDispatcher">
+            <summary>
+            Defines a dynamic event dispatcher.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.IDynamicEventDispatcher.UnbindAll">
+            <summary>
+            Unbinds all the delegates from all the bound delegates.
+            </summary>
+        </member>
+        <member name="T:Exiled.API.Features.DynamicEvents.TDynamicDelegate`1">
+            <summary>
+            The <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicDelegate`1"/> allows user-defined delegate routes bound to an <see cref="T:System.Object"/> reference.
+            </summary>
+            <typeparam name="T">The delegate type parameter.</typeparam>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.TDynamicDelegate`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicDelegate`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.TDynamicDelegate`1.#ctor(System.Object,System.Action{`0})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicDelegate`1"/> class.
+            </summary>
+            <param name="target"><inheritdoc cref="P:Exiled.API.Features.DynamicEvents.TDynamicDelegate`1.Target"/></param>
+            <param name="delegate"><inheritdoc cref="P:Exiled.API.Features.DynamicEvents.TDynamicDelegate`1.Delegate"/></param>
+        </member>
+        <member name="P:Exiled.API.Features.DynamicEvents.TDynamicDelegate`1.Target">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicDelegate`1"/>'s target.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.DynamicEvents.TDynamicDelegate`1.Delegate">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicDelegate`1"/>'s delegate.
+            </summary>
+        </member>
+        <member name="T:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1">
+            <summary>
+            The <see cref="T:Exiled.API.Features.DynamicEvents.DynamicEventDispatcher"/>'s generic version which accepts a type parameter.
+            </summary>
+            <typeparam name="T">The event type parameter.</typeparam>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1.#ctor(System.Collections.Generic.Dictionary{System.Object,System.Collections.Generic.List{System.Action{`0}}})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1"/> class.
+            </summary>
+            <param name="delegates">The delegates to be bound.</param>
+        </member>
+        <member name="P:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1.BoundDelegates">
+            <summary>
+            Gets all the bound delegates.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1.Item(System.Object)">
+            <summary>
+            This indexer allows access to bound listeners using an <see cref="T:System.Object"/> reference.
+            </summary>
+            <param name="object">The listener to look for.</param>
+            <returns>The obund listener corresponding to the specified reference.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1.op_Addition(Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher{`0},System.Action{`0})">
+            <summary>
+            Binds a delegate the event dispatcher.
+            </summary>
+            <param name="left">The <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1"/> to bind the listener to.</param>
+            <param name="right">The delegate to bind.</param>
+            <returns>The left-hand <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1"/> operator.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1.op_Addition(Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher{`0},Exiled.API.Features.DynamicEvents.TDynamicDelegate{`0})">
+            <summary>
+            Binds a listener to the event dispatcher.
+            </summary>
+            <param name="left">The <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1"/> to bind the listener to.</param>
+            <param name="right">The <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicDelegate`1"/> containing the listener to bind.</param>
+            <returns>The left-hand <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1"/> operator.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1.op_Addition(Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher{`0},Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher{`0})">
+            <summary>
+            Binds all bound listeners to a <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1"/> to the event dispatcher.
+            </summary>
+            <param name="left">The <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1"/> to bind the listeners to.</param>
+            <param name="right">The <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1"/> containing the listeners to bind.</param>
+            <returns>The left-hand <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1"/> operator.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1.op_Subtraction(Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher{`0},System.Action{`0})">
+            <summary>
+            Unbinds a delegate the event dispatcher.
+            </summary>
+            <param name="left">The <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1"/> to unbind the listener from.</param>
+            <param name="right">The delegate to unbind.</param>
+            <returns>The left-hand <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1"/> operator.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1.op_Subtraction(Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher{`0},Exiled.API.Features.DynamicEvents.TDynamicDelegate{`0})">
+            <summary>
+            Unbinds a delegate from the event dispatcher.
+            </summary>
+            <param name="left">The <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1"/> to unbind the delegate from.</param>
+            <param name="right">The <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicDelegate`1"/> containing the delegate to unbind.</param>
+            <returns>The left-hand <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1"/> operator.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1.op_Subtraction(Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher{`0},Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher{`0})">
+            <summary>
+            Unbinds all bound listeners to a <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1"/> from the event dispatcher.
+            </summary>
+            <param name="left">The <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1"/> to unbind the listeners from.</param>
+            <param name="right">The <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1"/> containing the listeners to unbind.</param>
+            <returns>The left-hand <see cref="T:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1"/> operator.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1.Bind(System.Object,System.Action{`0})">
+            <summary>
+            Binds a listener to the event dispatcher.
+            </summary>
+            <param name="obj">The listener instance.</param>
+            <param name="del">The delegate to be bound.</param>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1.Unbind(System.Object)">
+            <summary>
+            Unbinds a listener from the event dispatcher.
+            </summary>
+            <param name="obj">The listener instance.</param>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1.Invoke(System.Object,`0)">
+            <summary>
+            Invokes the delegates from the specified listener.
+            </summary>
+            <param name="obj">The listener instance.</param>
+            <param name="instance">The .</param>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1.InvokeAll(`0)">
+            <summary>
+            Invokes all the delegates from all the bound delegates.
+            </summary>
+            <param name="instance">The parameter instance.</param>
+        </member>
+        <member name="M:Exiled.API.Features.DynamicEvents.TDynamicEventDispatcher`1.UnbindAll">
+            <inheritdoc/>
+        </member>
         <member name="T:Exiled.API.Features.Effect">
             <summary>
-            Useful class to save hint configs in a cleaner way.
+            Useful class to save effect configs in a cleaner way.
             </summary>
         </member>
         <member name="M:Exiled.API.Features.Effect.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.API.Features.Effect"/> class.
             </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Effect.#ctor(CustomPlayerEffects.StatusEffectBase)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Effect"/> class.
+            </summary>
+            <param name="statusEffectBase">Get all the information of the effect>.</param>
         </member>
         <member name="M:Exiled.API.Features.Effect.#ctor(Exiled.API.Enums.EffectType,System.Single,System.Byte,System.Boolean,System.Boolean)">
             <summary>
@@ -6534,6 +7223,27 @@
             <param name="player">Player to check.</param>
             <returns><see langword="true"/> if player is in hazard zone. Otherwise, false.</returns>
         </member>
+        <member name="T:Exiled.API.Features.Hazards.PrismaticCloud">
+            <summary>
+            A wrapper for <see cref="T:Hazards.PrismaticCloud"/>.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Hazards.PrismaticCloud.#ctor(Hazards.PrismaticCloud)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Hazards.PrismaticCloud"/> class.
+            </summary>
+            <param name="hazard">The <see cref="T:Hazards.PrismaticCloud"/> instance.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.PrismaticCloud.Base">
+            <summary>
+            Gets the <see cref="T:Hazards.PrismaticCloud"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.PrismaticCloud.SynchronisedPosition">
+            <summary>
+            Gets or sets the synced position.
+            </summary>
+        </member>
         <member name="T:Exiled.API.Features.Hazards.SinkholeHazard">
             <summary>
             Represents a sinkhole hazard.
@@ -6579,6 +7289,11 @@
         <member name="P:Exiled.API.Features.Hazards.TantrumHazard.CorrectPosition">
             <summary>
             Gets or sets the correct position of tantrum hazard.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Hazards.TantrumHazard.TargetedTeams">
+            <summary>
+            Gets or sets the teams that will be affected by this Tantrum.
             </summary>
         </member>
         <member name="T:Exiled.API.Features.Hazards.TemporaryHazard">
@@ -6849,6 +7564,9 @@
             </summary>
             <returns> New <see cref="T:Exiled.API.Features.Items.Armor"/> object. </returns>
         </member>
+        <member name="M:Exiled.API.Features.Items.Armor.ReadPickupInfo(Exiled.API.Features.Pickups.Pickup)">
+            <inheritdoc/>
+        </member>
         <member name="T:Exiled.API.Features.Items.Consumable">
             <summary>
             A wrapper class for <see cref="T:InventorySystem.Items.Usables.Consumable"/>.
@@ -6947,6 +7665,9 @@
             Clones current <see cref="T:Exiled.API.Features.Items.ExplosiveGrenade"/> object.
             </summary>
             <returns> New <see cref="T:Exiled.API.Features.Items.ExplosiveGrenade"/> object. </returns>
+        </member>
+        <member name="M:Exiled.API.Features.Items.ExplosiveGrenade.ReadPickupInfo(Exiled.API.Features.Pickups.Pickup)">
+            <inheritdoc/>
         </member>
         <member name="T:Exiled.API.Features.Items.Firearm">
             <summary>
@@ -7137,6 +7858,15 @@
             Removes all attachments from the firearm.
             </summary>
         </member>
+        <member name="M:Exiled.API.Features.Items.Firearm.CreatePickup(UnityEngine.Vector3,UnityEngine.Quaternion,System.Boolean)">
+            <summary>
+            Creates the <see cref="T:Exiled.API.Features.Pickups.Pickup"/> that based on this <see cref="T:Exiled.API.Features.Items.Item"/>.
+            </summary>
+            <param name="position">The location to spawn the item.</param>
+            <param name="rotation">The rotation of the item.</param>
+            <param name="spawn">Whether the <see cref="T:Exiled.API.Features.Pickups.Pickup"/> should be initially spawned.</param>
+            <returns>The created <see cref="T:Exiled.API.Features.Pickups.Pickup"/>.</returns>
+        </member>
         <member name="M:Exiled.API.Features.Items.Firearm.GetAttachment(Exiled.API.Structs.AttachmentIdentifier)">
             <summary>
             Gets a <see cref="T:InventorySystem.Items.Firearms.Attachments.Components.Attachment"/> of the specified <see cref="T:Exiled.API.Structs.AttachmentIdentifier"/>.
@@ -7249,15 +7979,6 @@
             Clears all the existing preferences from <see cref="P:Exiled.API.Features.Items.Firearm.PlayerPreferences"/>.
             </summary>
         </member>
-        <member name="M:Exiled.API.Features.Items.Firearm.CreatePickup(UnityEngine.Vector3,UnityEngine.Quaternion,System.Boolean)">
-            <summary>
-            Creates the <see cref="T:Exiled.API.Features.Pickups.Pickup"/> that based on this <see cref="T:Exiled.API.Features.Items.Item"/>.
-            </summary>
-            <param name="position">The location to spawn the item.</param>
-            <param name="rotation">The rotation of the item.</param>
-            <param name="spawn">Whether the <see cref="T:Exiled.API.Features.Pickups.Pickup"/> should be initially spawned.</param>
-            <returns>The created <see cref="T:Exiled.API.Features.Pickups.Pickup"/>.</returns>
-        </member>
         <member name="M:Exiled.API.Features.Items.Firearm.Clone">
             <summary>
             Clones current <see cref="T:Exiled.API.Features.Items.Firearm"/> object.
@@ -7334,25 +8055,29 @@
             </summary>
             <returns>A string containing FlashGrenade-related data.</returns>
         </member>
+        <member name="M:Exiled.API.Features.Items.FlashGrenade.ReadPickupInfo(Exiled.API.Features.Pickups.Pickup)">
+            <inheritdoc/>
+        </member>
         <member name="T:Exiled.API.Features.Items.Flashlight">
             <summary>
-            A wrapped class for <see cref="T:InventorySystem.Items.Flashlight.FlashlightItem"/>.
+            A wrapped class for <see cref="T:InventorySystem.Items.SwitchableLightSources.SwitchableLightSourceItemBase"/>.
             </summary>
         </member>
-        <member name="M:Exiled.API.Features.Items.Flashlight.#ctor(InventorySystem.Items.Flashlight.FlashlightItem)">
+        <member name="M:Exiled.API.Features.Items.Flashlight.#ctor(InventorySystem.Items.SwitchableLightSources.SwitchableLightSourceItemBase)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.API.Features.Items.Flashlight"/> class.
             </summary>
-            <param name="itemBase">The base <see cref="T:InventorySystem.Items.Flashlight.FlashlightItem"/> class.</param>
+            <param name="itemBase">The base <see cref="T:InventorySystem.Items.SwitchableLightSources.SwitchableLightSourceItemBase"/> class.</param>
         </member>
-        <member name="M:Exiled.API.Features.Items.Flashlight.#ctor">
+        <member name="M:Exiled.API.Features.Items.Flashlight.#ctor(ItemType)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.API.Features.Items.Flashlight"/> class, as well as a new Flashlight item.
             </summary>
+            <param name="type">The <see cref="T:ItemType"/> of the flashlight.</param>
         </member>
         <member name="P:Exiled.API.Features.Items.Flashlight.Base">
             <summary>
-            Gets the <see cref="T:InventorySystem.Items.Flashlight.FlashlightItem"/> that this class is encapsulating.
+            Gets the <see cref="T:InventorySystem.Items.SwitchableLightSources.Flashlight.FlashlightItem"/> that this class is encapsulating.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Items.Flashlight.Active">
@@ -7564,6 +8289,12 @@
             <param name="oldOwner">old <see cref="T:Exiled.API.Features.Items.Item"/> owner.</param>
             <param name="newOwner">new <see cref="T:Exiled.API.Features.Items.Item"/> owner.</param>
         </member>
+        <member name="M:Exiled.API.Features.Items.Item.ReadPickupInfo(Exiled.API.Features.Pickups.Pickup)">
+            <summary>
+            Helper method for saving data between items and pickups.
+            </summary>
+            <param name="pickup"><see cref="T:Exiled.API.Features.Pickups.Pickup"/>-related data to give to the <see cref="T:Exiled.API.Features.Items.Item"/>.</param>
+        </member>
         <member name="T:Exiled.API.Features.Items.Jailbird">
             <summary>
             A wrapped class for <see cref="T:InventorySystem.Items.Jailbird.JailbirdItem"/>.
@@ -7637,6 +8368,9 @@
             </summary>
             <returns>A string containing JailBird-related data.</returns>
         </member>
+        <member name="M:Exiled.API.Features.Items.Jailbird.ReadPickupInfo(Exiled.API.Features.Pickups.Pickup)">
+            <inheritdoc/>
+        </member>
         <member name="T:Exiled.API.Features.Items.Keycard">
             <summary>
             A wrapper class for <see cref="T:InventorySystem.Items.Keycards.KeycardItem"/>.
@@ -7675,6 +8409,9 @@
             Returns the Keycard in a human readable format.
             </summary>
             <returns>A string containing Keycard-related data.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycard.ReadPickupInfo(Exiled.API.Features.Pickups.Pickup)">
+            <inheritdoc/>
         </member>
         <member name="T:Exiled.API.Features.Items.MicroHid">
             <summary>
@@ -8230,6 +8967,9 @@
             </summary>
             <exception cref="T:System.InvalidOperationException">The <see cref="P:Exiled.API.Features.Items.Item.Owner"/> of the item cannot be <see langword="null"/>.</exception>
         </member>
+        <member name="M:Exiled.API.Features.Items.Usable.ReadPickupInfo(Exiled.API.Features.Pickups.Pickup)">
+            <inheritdoc/>
+        </member>
         <member name="T:Exiled.API.Features.Lift">
             <summary>
             The in-game lift.
@@ -8345,6 +9085,26 @@
         <member name="P:Exiled.API.Features.Lift.AnimationTime">
             <summary>
             Gets or sets the <see cref="P:Exiled.API.Features.Lift.AnimationTime"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Lift.RotationTime">
+            <summary>
+            Gets the <see cref="P:Exiled.API.Features.Lift.RotationTime"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Lift.DoorOpenTime">
+            <summary>
+            Gets the <see cref="P:Exiled.API.Features.Lift.DoorOpenTime"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Lift.DoorCloseTime">
+            <summary>
+            Gets the <see cref="P:Exiled.API.Features.Lift.DoorCloseTime"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Lift.MoveTime">
+            <summary>
+            Gets the total <see cref="P:Exiled.API.Features.Lift.MoveTime"/>.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Lift.CurrentLevel">
@@ -8579,6 +9339,11 @@
             A list of <see cref="T:Exiled.API.Features.Toys.AdminToy"/>s on the map.
             </summary>
         </member>
+        <member name="P:Exiled.API.Features.Map.PrismaticCloud">
+            <summary>
+            Gets the prismatic prefab.
+            </summary>
+        </member>
         <member name="P:Exiled.API.Features.Map.TantrumPrefab">
             <summary>
             Gets the tantrum prefab.
@@ -8592,6 +9357,11 @@
         <member name="P:Exiled.API.Features.Map.IsLczDecontaminated">
             <summary>
             Gets a value indicating whether decontamination has begun in the light containment zone.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Map.DecontaminationState">
+            <summary>
+            Gets a value indicating whether decontamination phase is in the light containment zone.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Map.PocketDimensionTeleports">
@@ -8666,6 +9436,17 @@
             <param name="duration">The duration of the blackout.</param>
             <param name="zoneTypes">The <see cref="T:Exiled.API.Enums.ZoneType"/>s to affect.</param>
         </member>
+        <member name="M:Exiled.API.Features.Map.ChangeLightsColor(UnityEngine.Color)">
+            <summary>
+            Changes the <see cref="T:UnityEngine.Color"/> of all lights in the facility.
+            </summary>
+            <param name="color">The new <see cref="T:UnityEngine.Color"/> of the lights.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Map.ResetLightsColor">
+            <summary>
+            Resets the <see cref="T:UnityEngine.Color">color</see> of all lights in the facility.
+            </summary>
+        </member>
         <member name="M:Exiled.API.Features.Map.GetRandomLocker">
             <summary>
             Gets a random <see cref="T:MapGeneration.Distributors.Locker"/>.
@@ -8712,7 +9493,7 @@
         </member>
         <member name="M:Exiled.API.Features.Map.CleanAllRagdolls">
             <summary>
-            Destroy all <see cref="T:BasicRagdoll"/> objects.
+            Destroy all <see cref="T:PlayerRoles.Ragdolls.BasicRagdoll"/> objects.
             </summary>
         </member>
         <member name="M:Exiled.API.Features.Map.CleanAllRagdolls(System.Collections.Generic.IEnumerable{Exiled.API.Features.Ragdoll})">
@@ -8848,7 +9629,7 @@
             </summary>
             <param name="name">The name of the NPC.</param>
             <param name="role">The RoleTypeId of the NPC.</param>
-            <param name="id">The player ID of the NPC.</param>
+            <param name="id">The Network ID of the NPC. If 0, one is made.</param>
             <param name="userId">The userID of the NPC.</param>
             <param name="position">The position to spawn the NPC.</param>
             <returns>The <see cref="T:Exiled.API.Features.Npc"/> spawned.</returns>
@@ -9061,7 +9842,7 @@
         </member>
         <member name="P:Exiled.API.Features.Pickups.BodyArmorPickup.MovementSpeedMultiplier">
             <summary>
-            Gets or sets how much the users movement speed should be affected when wearing this armor. (higher values = slower movement).
+            Gets how much the users movement speed should be affected when wearing this armor. (higher values = slower movement).
             </summary>
             <exception cref="T:System.ArgumentOutOfRangeException">When attempting to set the value below 0 or above 1.</exception>
         </member>
@@ -9081,10 +9862,10 @@
             </summary>
             <returns>A string containing BodyArmorPickup related data.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Pickups.BodyArmorPickup.GetItemInfo(Exiled.API.Features.Items.Item)">
+        <member name="M:Exiled.API.Features.Pickups.BodyArmorPickup.ReadItemInfo(Exiled.API.Features.Items.Item)">
             <inheritdoc/>
         </member>
-        <member name="M:Exiled.API.Features.Pickups.BodyArmorPickup.GetPickupInfo(Exiled.API.Features.Items.Item)">
+        <member name="M:Exiled.API.Features.Pickups.BodyArmorPickup.InitializeProperties(InventorySystem.Items.ItemBase)">
             <inheritdoc/>
         </member>
         <member name="T:Exiled.API.Features.Pickups.ExplosiveGrenadePickup">
@@ -9128,13 +9909,13 @@
             Gets or sets how long the <see cref="F:Exiled.API.Enums.EffectType.Concussed"/> effect will last.
             </summary>
         </member>
-        <member name="M:Exiled.API.Features.Pickups.ExplosiveGrenadePickup.GetItemInfo(Exiled.API.Features.Items.Item)">
+        <member name="M:Exiled.API.Features.Pickups.ExplosiveGrenadePickup.ReadItemInfo(Exiled.API.Features.Items.Item)">
             <inheritdoc/>
         </member>
-        <member name="M:Exiled.API.Features.Pickups.ExplosiveGrenadePickup.GetPickupInfo(Exiled.API.Features.Items.Item)">
+        <member name="M:Exiled.API.Features.Pickups.ExplosiveGrenadePickup.WriteProjectileInfo(Exiled.API.Features.Pickups.Projectiles.Projectile)">
             <inheritdoc/>
         </member>
-        <member name="M:Exiled.API.Features.Pickups.ExplosiveGrenadePickup.GetPickupInfo(Exiled.API.Features.Pickups.Projectiles.Projectile)">
+        <member name="M:Exiled.API.Features.Pickups.ExplosiveGrenadePickup.InitializeProperties(InventorySystem.Items.ItemBase)">
             <inheritdoc/>
         </member>
         <member name="T:Exiled.API.Features.Pickups.FirearmPickup">
@@ -9221,13 +10002,13 @@
             Gets or sets the how mush the flash grenade going to be intensified when explode at <see cref="F:Exiled.API.Enums.RoomType.Surface"/>.
             </summary>
         </member>
-        <member name="M:Exiled.API.Features.Pickups.FlashGrenadePickup.GetItemInfo(Exiled.API.Features.Items.Item)">
+        <member name="M:Exiled.API.Features.Pickups.FlashGrenadePickup.ReadItemInfo(Exiled.API.Features.Items.Item)">
             <inheritdoc/>
         </member>
-        <member name="M:Exiled.API.Features.Pickups.FlashGrenadePickup.GetPickupInfo(Exiled.API.Features.Items.Item)">
+        <member name="M:Exiled.API.Features.Pickups.FlashGrenadePickup.WriteProjectileInfo(Exiled.API.Features.Pickups.Projectiles.Projectile)">
             <inheritdoc/>
         </member>
-        <member name="M:Exiled.API.Features.Pickups.FlashGrenadePickup.GetPickupInfo(Exiled.API.Features.Pickups.Projectiles.Projectile)">
+        <member name="M:Exiled.API.Features.Pickups.FlashGrenadePickup.InitializeProperties(InventorySystem.Items.ItemBase)">
             <inheritdoc/>
         </member>
         <member name="T:Exiled.API.Features.Pickups.GrenadePickup">
@@ -9273,12 +10054,14 @@
             </summary>
             <param name="attacker">The <see cref="T:Footprinting.Footprint"/> of the explosion.</param>
         </member>
-        <member name="M:Exiled.API.Features.Pickups.GrenadePickup.GetPickupInfo(Exiled.API.Features.Pickups.Projectiles.Projectile)">
+        <member name="M:Exiled.API.Features.Pickups.GrenadePickup.WriteProjectileInfo(Exiled.API.Features.Pickups.Projectiles.Projectile)">
             <summary>
-            Returns the Projectile with the according property from the Pickup.
+            Helper method for saving data between projectiles and pickups.
             </summary>
-            <param name="projectile"> Pickup-related data to give to the Projectile.</param>
-            <returns>A Projectile containing the Pickup-related data.</returns>
+            <param name="projectile"><see cref="T:Exiled.API.Features.Pickups.Projectiles.Projectile"/>-related data to write to.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.GrenadePickup.InitializeProperties(InventorySystem.Items.ItemBase)">
+            <inheritdoc/>
         </member>
         <member name="T:Exiled.API.Features.Pickups.JailbirdPickup">
             <summary>
@@ -9342,10 +10125,10 @@
             </summary>
             <returns>A string containing jailbird related data.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Pickups.JailbirdPickup.GetItemInfo(Exiled.API.Features.Items.Item)">
+        <member name="M:Exiled.API.Features.Pickups.JailbirdPickup.ReadItemInfo(Exiled.API.Features.Items.Item)">
             <inheritdoc/>
         </member>
-        <member name="M:Exiled.API.Features.Pickups.JailbirdPickup.GetPickupInfo(Exiled.API.Features.Items.Item)">
+        <member name="M:Exiled.API.Features.Pickups.JailbirdPickup.InitializeProperties(InventorySystem.Items.ItemBase)">
             <inheritdoc/>
         </member>
         <member name="T:Exiled.API.Features.Pickups.KeycardPickup">
@@ -9375,10 +10158,10 @@
             Gets the <see cref="T:InventorySystem.Items.Keycards.KeycardPickup"/> that this class is encapsulating.
             </summary>
         </member>
-        <member name="M:Exiled.API.Features.Pickups.KeycardPickup.GetItemInfo(Exiled.API.Features.Items.Item)">
+        <member name="M:Exiled.API.Features.Pickups.KeycardPickup.ReadItemInfo(Exiled.API.Features.Items.Item)">
             <inheritdoc/>
         </member>
-        <member name="M:Exiled.API.Features.Pickups.KeycardPickup.GetPickupInfo(Exiled.API.Features.Items.Item)">
+        <member name="M:Exiled.API.Features.Pickups.KeycardPickup.InitializeProperties(InventorySystem.Items.ItemBase)">
             <inheritdoc/>
         </member>
         <member name="T:Exiled.API.Features.Pickups.MicroHIDPickup">
@@ -9550,11 +10333,6 @@
             Gets a value indicating whether this pickup is spawned.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Pickups.Pickup.IsLoaded">
-            <summary>
-            Gets a value indicating whether or not this is a worn item.
-            </summary>
-        </member>
         <member name="M:Exiled.API.Features.Pickups.Pickup.Get(InventorySystem.Items.Pickups.ItemPickupBase)">
             <summary>
             Gets an existing <see cref="T:Exiled.API.Features.Pickups.Pickup"/> or creates a new instance of one.
@@ -9671,7 +10449,7 @@
             <param name="rotation">The rotation to spawn the <see cref="T:Exiled.API.Features.Pickups.Pickup"/>.</param>
             <param name="previousOwner">An optional previous owner of the item.</param>
             <returns>The <see cref="T:Exiled.API.Features.Pickups.Pickup"/> Spawn.</returns>
-            <seealso cref="M:Exiled.API.Features.Pickups.Projectiles.Projectile.Spawn(Exiled.API.Features.Pickups.Projectiles.Projectile,UnityEngine.Vector3,UnityEngine.Quaternion,System.Boolean,Exiled.API.Features.Player)"/>
+            <seealso cref="M:Exiled.API.Features.Pickups.Projectiles.Projectile.Spawn(UnityEngine.Vector3,UnityEngine.Quaternion,System.Boolean,Exiled.API.Features.Player)"/>
         </member>
         <member name="M:Exiled.API.Features.Pickups.Pickup.PickupTimeForPlayer(Exiled.API.Features.Player)">
             <summary>
@@ -9684,9 +10462,19 @@
         </member>
         <member name="M:Exiled.API.Features.Pickups.Pickup.Spawn">
             <summary>
-            Spawns pickup on server.
+            Spawns pickup on a server.
             </summary>
             <seealso cref="M:Exiled.API.Features.Pickups.Pickup.UnSpawn"/>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Pickup.Spawn(UnityEngine.Vector3,UnityEngine.Quaternion,Exiled.API.Features.Player)">
+            <summary>
+            Spawns pickup on a server.
+            </summary>
+            <param name="position">The position to spawn the <see cref="T:Exiled.API.Features.Pickups.Pickup"/> at.</param>
+            <param name="rotation">The rotation to spawn the <see cref="T:Exiled.API.Features.Pickups.Pickup"/>.</param>
+            <param name="previousOwner">An optional previous owner of the item.</param>
+            <returns>The spawned <see cref="T:Exiled.API.Features.Pickups.Pickup"/>.</returns>
+            <seealso cref="M:Exiled.API.Features.Pickups.Projectiles.Projectile.Spawn(UnityEngine.Vector3,UnityEngine.Quaternion,System.Boolean,Exiled.API.Features.Player)"/>
         </member>
         <member name="M:Exiled.API.Features.Pickups.Pickup.UnSpawn">
             <summary>
@@ -9713,19 +10501,17 @@
             </summary>
             <returns>A string containing Pickup-related data.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Pickups.Pickup.GetItemInfo(Exiled.API.Features.Items.Item)">
+        <member name="M:Exiled.API.Features.Pickups.Pickup.ReadItemInfo(Exiled.API.Features.Items.Item)">
             <summary>
-            Returns the Pickup with the according property from the Item.
+            Helper method for saving data between items and pickups.
             </summary>
-            <param name="item"> Item-related data to give to the Pickup.</param>
-            <returns>A Pickup containing the Item-related data.</returns>
+            <param name="item"> <see cref="T:Exiled.API.Features.Items.Item"/>-related data to give to the <see cref="T:Exiled.API.Features.Pickups.Pickup"/>.</param>
         </member>
-        <member name="M:Exiled.API.Features.Pickups.Pickup.GetPickupInfo(Exiled.API.Features.Items.Item)">
+        <member name="M:Exiled.API.Features.Pickups.Pickup.InitializeProperties(InventorySystem.Items.ItemBase)">
             <summary>
-            Returns the Item with the according property from the Pickup.
+            initialize item properties.
             </summary>
-            <param name="item"> Pickup-related data to give to the Item.</param>
-            <returns>A Item containing the Pickup-related data.</returns>
+            <param name="itemBase">target item.</param>
         </member>
         <member name="T:Exiled.API.Features.Pickups.Projectiles.EffectGrenadeProjectile">
             <summary>
@@ -9900,17 +10686,6 @@
             <param name="projectiletype">The <see cref="P:Exiled.API.Features.Pickups.Projectiles.Projectile.ProjectileType"/> of the pickup.</param>
             <returns>The created <see cref="T:Exiled.API.Features.Pickups.Pickup"/>.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Pickups.Projectiles.Projectile.CreateAndSpawn(Exiled.API.Enums.ProjectileType,UnityEngine.Vector3,UnityEngine.Quaternion,System.Boolean,Exiled.API.Features.Player)">
-            <summary>
-            Creates and spawns a <see cref="T:Exiled.API.Features.Pickups.Projectiles.Projectile"/>.
-            </summary>
-            <param name="type">The <see cref="T:ItemType"/> of the pickup.</param>
-            <param name="position">The position to spawn the <see cref="T:Exiled.API.Features.Pickups.Projectiles.Projectile"/> at.</param>
-            <param name="rotation">The rotation to spawn the <see cref="T:Exiled.API.Features.Pickups.Projectiles.Projectile"/>.</param>
-            <param name="shouldBeActive">Whether the <see cref="T:Exiled.API.Features.Pickups.Projectiles.Projectile"/> should be in active state after spawn.</param>
-            <param name="previousOwner">An optional previous owner of the item.</param>
-            <returns>The <see cref="T:Exiled.API.Features.Pickups.Projectiles.Projectile"/>. See documentation of <see cref="M:Exiled.API.Features.Pickups.Pickup.Create(ItemType)"/> for more information on casting.</returns>
-        </member>
         <member name="M:Exiled.API.Features.Pickups.Projectiles.Projectile.Spawn(Exiled.API.Features.Pickups.Projectiles.Projectile,UnityEngine.Vector3,UnityEngine.Quaternion,System.Boolean,Exiled.API.Features.Player)">
             <summary>
             Spawns a <see cref="T:Exiled.API.Features.Pickups.Projectiles.Projectile"/>.
@@ -9922,10 +10697,31 @@
             <param name="previousOwner">An optional previous owner of the item.</param>
             <returns>The <see cref="T:Exiled.API.Features.Pickups.Projectiles.Projectile"/> Spawn.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Pickups.Projectiles.Projectile.Active">
+        <member name="M:Exiled.API.Features.Pickups.Projectiles.Projectile.CreateAndSpawn(Exiled.API.Enums.ProjectileType,UnityEngine.Vector3,UnityEngine.Quaternion,System.Boolean,Exiled.API.Features.Player)">
+            <summary>
+            Creates and spawns a <see cref="T:Exiled.API.Features.Pickups.Projectiles.Projectile"/>.
+            </summary>
+            <param name="type">The <see cref="T:ItemType"/> of the pickup.</param>
+            <param name="position">The position to spawn the <see cref="T:Exiled.API.Features.Pickups.Projectiles.Projectile"/> at.</param>
+            <param name="rotation">The rotation to spawn the <see cref="T:Exiled.API.Features.Pickups.Projectiles.Projectile"/>.</param>
+            <param name="shouldBeActive">Whether the <see cref="T:Exiled.API.Features.Pickups.Projectiles.Projectile"/> should be in active state after spawn.</param>
+            <param name="previousOwner">An optional previous owner of the item.</param>
+            <returns>The <see cref="T:Exiled.API.Features.Pickups.Projectiles.Projectile"/>. See documentation of <see cref="M:Exiled.API.Features.Pickups.Pickup.Create(ItemType)"/> for more information on casting.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Projectiles.Projectile.Activate">
             <summary>
             Activates the current <see cref="T:Exiled.API.Features.Pickups.Projectiles.Projectile"/>.
             </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Projectiles.Projectile.Spawn(UnityEngine.Vector3,UnityEngine.Quaternion,System.Boolean,Exiled.API.Features.Player)">
+            <summary>
+            Spawns a <see cref="T:Exiled.API.Features.Pickups.Projectiles.Projectile"/>.
+            </summary>
+            <param name="position">The position to spawn the <see cref="T:Exiled.API.Features.Pickups.Projectiles.Projectile"/> at.</param>
+            <param name="rotation">The rotation to spawn the <see cref="T:Exiled.API.Features.Pickups.Projectiles.Projectile"/>.</param>
+            <param name="shouldBeActive">Whether the <see cref="T:Exiled.API.Features.Pickups.Projectiles.Projectile"/> should be in active state after spawn.</param>
+            <param name="previousOwner">An optional previous owner of the item.</param>
+            <returns>The spawned <see cref="T:Exiled.API.Features.Pickups.Projectiles.Projectile"/>.</returns>
         </member>
         <member name="M:Exiled.API.Features.Pickups.Projectiles.Projectile.ToString">
             <summary>
@@ -10293,10 +11089,10 @@
             Gets or sets how long after using starts a player has to cancel using the item.
             </summary>
         </member>
-        <member name="M:Exiled.API.Features.Pickups.UsablePickup.GetItemInfo(Exiled.API.Features.Items.Item)">
+        <member name="M:Exiled.API.Features.Pickups.UsablePickup.ReadItemInfo(Exiled.API.Features.Items.Item)">
             <inheritdoc/>
         </member>
-        <member name="M:Exiled.API.Features.Pickups.UsablePickup.GetPickupInfo(Exiled.API.Features.Items.Item)">
+        <member name="M:Exiled.API.Features.Pickups.UsablePickup.InitializeProperties(InventorySystem.Items.ItemBase)">
             <inheritdoc/>
         </member>
         <member name="T:Exiled.API.Features.Player">
@@ -10307,6 +11103,11 @@
         <member name="F:Exiled.API.Features.Player.ItemsValue">
             <summary>
             A list of the player's items.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Features.Player.OverrideMaxHealth">
+            <summary>
+            A overriden <see cref="P:Exiled.API.Features.Player.MaxHealth"/> value.
             </summary>
         </member>
         <member name="M:Exiled.API.Features.Player.#ctor(ReferenceHub)">
@@ -10530,12 +11331,25 @@
             <summary>
             Gets a value indicating whether or not the player has a reserved slot.
             </summary>
-            <seealso cref="M:Exiled.API.Features.Player.GiveReservedSlot"/>
-            <seealso cref="M:Exiled.API.Features.Player.AddReservedSlot(System.String)"/>
+            <seealso cref="M:Exiled.API.Features.Player.GiveReservedSlot(System.Boolean)"/>
+            <seealso cref="M:Exiled.API.Features.Player.AddReservedSlot(System.String,System.Boolean)"/>
+        </member>
+        <member name="P:Exiled.API.Features.Player.IsWhitelisted">
+            <summary>
+            Gets a value indicating whether or not the player is in whitelist.
+            </summary>
+            <remarks>It will always return <see langword="true"/> if a whitelist is disabled on the server.</remarks>
+            <seealso cref="M:Exiled.API.Features.Player.GrantWhitelist(System.Boolean)"/>
+            <seealso cref="M:Exiled.API.Features.Player.AddToWhitelist(System.String,System.Boolean)"/>
         </member>
         <member name="P:Exiled.API.Features.Player.RemoteAdminAccess">
             <summary>
             Gets a value indicating whether or not the player has Remote Admin access.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Player.AdminChatAccess">
+            <summary>
+            Gets a value indicating whether or not the player has Admin Chat access.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Player.KickPower">
@@ -10786,6 +11600,11 @@
         <member name="P:Exiled.API.Features.Player.UnitName">
             <summary>
             Gets the player's unit name.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Player.UnitId">
+            <summary>
+            Gets or sets the player's unit id.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Player.Health">
@@ -11202,9 +12021,32 @@
             <returns><see langword="true"/> if the slot was successfully added, or <see langword="false"/> if the provided UserId already has a reserved slot.</returns>
             <seealso cref="M:Exiled.API.Features.Player.GiveReservedSlot"/>
         </member>
+        <member name="M:Exiled.API.Features.Player.AddReservedSlot(System.String,System.Boolean)">
+            <summary>
+            Adds a player's UserId to the list of reserved slots.
+            </summary>
+            <param name="userId">The UserId of the player to add.</param>
+            <param name="isPermanent"> Whether or not to add a <see langword="userId"/> permanently. It will write a <see langword="userId"/> to UserIDReservedSlots.txt file.</param>
+            <returns><see langword="true"/> if the slot was successfully added, or <see langword="false"/> if the provided UserId already has a reserved slot.</returns>
+            <seealso cref="M:Exiled.API.Features.Player.GiveReservedSlot(System.Boolean)"/>
+        </member>
+        <member name="M:Exiled.API.Features.Player.AddToWhitelist(System.String,System.Boolean)">
+            <summary>
+            Adds a player's UserId to the whitelist.
+            </summary>
+            <param name="userId">The UserId of the player to add.</param>
+            <param name="isPermanent"> Whether or not to add a <see langword="userId"/> permanently. It will write a <see langword="userId"/> to UserIDWhitelist.txt file.</param>
+            <returns><see langword="true"/> if the record was successfully added, or <see langword="false"/> if the provided UserId already is in whitelist.</returns>
+            <seealso cref="M:Exiled.API.Features.Player.GrantWhitelist(System.Boolean)"/>
+        </member>
         <member name="M:Exiled.API.Features.Player.ReloadReservedSlots">
             <summary>
             Reloads the reserved slot list, clearing all reserved slot changes made with add/remove methods and reverting to the reserved slots files.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Player.ReloadWhitelist">
+            <summary>
+            Reloads the whitelist, clearing all whitelist changes made with add/remove methods and reverting to the whitelist files.
             </summary>
         </member>
         <member name="M:Exiled.API.Features.Player.GiveReservedSlot">
@@ -11214,6 +12056,22 @@
             <remarks>This method does not permanently give a user a reserved slot. The slot will be removed if the reserved slots are reloaded.</remarks>
             <returns><see langword="true"/> if the slot was successfully added, or <see langword="false"/> if the player already has a reserved slot.</returns>
             <seealso cref="M:Exiled.API.Features.Player.AddReservedSlot(System.String)"/>
+        </member>
+        <member name="M:Exiled.API.Features.Player.GiveReservedSlot(System.Boolean)">
+            <summary>
+            Adds a player's UserId to the list of reserved slots.
+            </summary>
+            <param name="isPermanent"> Whether or not to add a player's UserId permanently. It will write a player's UserId to UserIDReservedSlots.txt file.</param>
+            <returns><see langword="true"/> if the slot was successfully added, or <see langword="false"/> if the provided UserId already has a reserved slot.</returns>
+            <seealso cref="M:Exiled.API.Features.Player.AddReservedSlot(System.String,System.Boolean)"/>
+        </member>
+        <member name="M:Exiled.API.Features.Player.GrantWhitelist(System.Boolean)">
+            <summary>
+            Adds a player's UserId to the whitelist.
+            </summary>
+            <param name="isPermanent"> Whether or not to add a player's UserId permanently. It will write a player's UserId to UserIDWhitelist.txt file.</param>
+            <returns><see langword="true"/> if the record was successfully added, or <see langword="false"/> if the provided UserId already is in whitelist.</returns>
+            <seealso cref="M:Exiled.API.Features.Player.AddToWhitelist(System.String,System.Boolean)"/>
         </member>
         <member name="M:Exiled.API.Features.Player.SetFriendlyFire(PlayerRoles.RoleTypeId,System.Single)">
             <summary>
@@ -11626,6 +12484,22 @@
             <param name="success">Indicates whether or not the message should be highlighted as success.</param>
             <param name="pluginName">The plugin name.</param>
         </member>
+        <member name="M:Exiled.API.Features.Player.SendStaffMessage(System.String,EncryptedChannelManager.EncryptedChannel)">
+            <summary>
+            Sends a message to the player's Remote Admin Chat.
+            </summary>
+            <param name="message">The message to be sent.</param>
+            <param name="channel">Indicates whether or not the message should be highlighted as success.</param>
+            <returns><see langword="true"/> if message was send; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Player.SendStaffPing(System.String,EncryptedChannelManager.EncryptedChannel)">
+            <summary>
+            Sends a message to the player's Remote Admin Chat.
+            </summary>
+            <param name="message">The message to be sent.</param>
+            <param name="channel">Indicates whether or not the message should be highlighted as success.</param>
+            <returns><see langword="true"/> if message was send; otherwise, <see langword="false"/>.</returns>
+        </member>
         <member name="M:Exiled.API.Features.Player.Broadcast(System.UInt16,System.String,Broadcast.BroadcastFlags,System.Boolean)">
             <summary>
             Shows a broadcast to the player. Doesn't get logged to the console and can be monospaced.
@@ -11693,11 +12567,26 @@
             <param name="category">The <see cref="T:ItemCategory"/> to check.</param>
             <returns>The maximum amount of items in the category that the player can hold.</returns>
         </member>
+        <member name="M:Exiled.API.Features.Player.AddItem(ItemType)">
+            <summary>
+            Adds an item of the specified type with default durability(ammo/charge) and no mods to the player's inventory.
+            </summary>
+            <param name="itemType">The item to be added.</param>
+            <returns>The <see cref="T:Exiled.API.Features.Items.Item"/> given to the player.</returns>
+        </member>
         <member name="M:Exiled.API.Features.Player.AddItem(ItemType,System.Collections.Generic.IEnumerable{Exiled.API.Structs.AttachmentIdentifier})">
             <summary>
             Adds an item of the specified type with default durability(ammo/charge) and no mods to the player's inventory.
             </summary>
             <param name="itemType">The item to be added.</param>
+            <param name="identifiers">The attachments to be added to the item.</param>
+            <returns>The <see cref="T:Exiled.API.Features.Items.Item"/> given to the player.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Player.AddItem(Exiled.API.Enums.FirearmType,System.Collections.Generic.IEnumerable{Exiled.API.Structs.AttachmentIdentifier})">
+            <summary>
+            Adds an firearm of the specified type with default durability(ammo/charge) and no mods to the player's inventory.
+            </summary>
+            <param name="firearmType">The firearm to be added.</param>
             <param name="identifiers">The attachments to be added to the item.</param>
             <returns>The <see cref="T:Exiled.API.Features.Items.Item"/> given to the player.</returns>
         </member>
@@ -11718,6 +12607,15 @@
             <param name="identifiers">The attachments to be added to the item.</param>
             <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1"/> containing the items given.</returns>
         </member>
+        <member name="M:Exiled.API.Features.Player.AddItem(Exiled.API.Enums.FirearmType,System.Int32,System.Collections.Generic.IEnumerable{Exiled.API.Structs.AttachmentIdentifier})">
+            <summary>
+            Adds the amount of firearms of the specified type with default durability(ammo/charge) and no mods to the player's inventory.
+            </summary>
+            <param name="firearmType">The item to be added.</param>
+            <param name="amount">The amount of items to be added.</param>
+            <param name="identifiers">The attachments to be added to the item.</param>
+            <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1"/> containing the items given.</returns>
+        </member>
         <member name="M:Exiled.API.Features.Player.AddItem(System.Collections.Generic.IEnumerable{ItemType})">
             <summary>
             Adds the list of items of the specified type with default durability(ammo/charge) and no mods to the player's inventory.
@@ -11726,6 +12624,13 @@
             <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1"/> containing the items given.</returns>
         </member>
         <member name="M:Exiled.API.Features.Player.AddItem(System.Collections.Generic.Dictionary{ItemType,System.Collections.Generic.IEnumerable{Exiled.API.Structs.AttachmentIdentifier}})">
+            <summary>
+            Adds the list of items of the specified type with default durability(ammo/charge) and no mods to the player's inventory.
+            </summary>
+            <param name="items">The <see cref="T:System.Collections.Generic.Dictionary`2"/> of <see cref="T:ItemType"/> and <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Structs.AttachmentIdentifier"/> to be added.</param>
+            <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1"/> containing the items given.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Player.AddItem(System.Collections.Generic.Dictionary{Exiled.API.Enums.FirearmType,System.Collections.Generic.IEnumerable{Exiled.API.Structs.AttachmentIdentifier}})">
             <summary>
             Adds the list of items of the specified type with default durability(ammo/charge) and no mods to the player's inventory.
             </summary>
@@ -11821,6 +12726,23 @@
             <param name="destroy">Whether or not to fully destroy the old items.</param>
             <seealso cref="M:Exiled.API.Features.Player.ResetInventory(System.Collections.Generic.IEnumerable{Exiled.API.Features.Items.Item})"/>
             <seealso cref="M:Exiled.API.Features.Player.ResetInventory(System.Collections.Generic.IEnumerable{ItemType})"/>
+            <seealso cref="M:Exiled.API.Features.Player.DropItems"/>
+        </member>
+        <member name="M:Exiled.API.Features.Player.ClearItems(System.Boolean)">
+            <summary>
+            Clears the player's items.
+            </summary>
+            <param name="destroy">Whether or not to fully destroy the old items.</param>
+            <seealso cref="M:Exiled.API.Features.Player.ResetInventory(System.Collections.Generic.IEnumerable{Exiled.API.Features.Items.Item})"/>
+            <seealso cref="M:Exiled.API.Features.Player.ResetInventory(System.Collections.Generic.IEnumerable{ItemType})"/>
+            <seealso cref="M:Exiled.API.Features.Player.DropItems"/>
+        </member>
+        <member name="M:Exiled.API.Features.Player.ClearAmmo">
+            <summary>
+            Clears all ammo in the inventory.
+            </summary>
+            <seealso cref="M:Exiled.API.Features.Player.ResetInventory(System.Collections.Generic.IEnumerable{Exiled.API.Features.Items.Item})"/>
+            <seealso cref="M:Exiled.API.Features.Player.SetAmmo(Exiled.API.Enums.AmmoType,System.UInt16)"/>
             <seealso cref="M:Exiled.API.Features.Player.DropItems"/>
         </member>
         <member name="M:Exiled.API.Features.Player.DropItems">
@@ -11932,11 +12854,31 @@
             <param name="addDurationIfActive">If the effect is already active, setting to <see langword="true"/> will add this duration onto the effect.</param>
             <returns>A bool indicating whether or not the effect was valid and successfully enabled.</returns>
         </member>
+        <member name="M:Exiled.API.Features.Player.EnableEffect``1(System.Byte,System.Single,System.Boolean)">
+            <summary>
+            Enables a <see cref="T:CustomPlayerEffects.StatusEffectBase">status effect</see> on the player.
+            </summary>
+            <typeparam name="T">The <see cref="T:CustomPlayerEffects.StatusEffectBase"/> to enable.</typeparam>
+            <param name="intensity">The intensity of the effect will be active for.</param>
+            <param name="duration">The amount of time the effect will be active for.</param>
+            <param name="addDurationIfActive">If the effect is already active, setting to <see langword="true"/> will add this duration onto the effect.</param>
+            <returns>A bool indicating whether or not the effect was valid and successfully enabled.</returns>
+        </member>
         <member name="M:Exiled.API.Features.Player.EnableEffect(CustomPlayerEffects.StatusEffectBase,System.Single,System.Boolean)">
             <summary>
             Enables a <see cref="T:CustomPlayerEffects.StatusEffectBase">status effect</see> on the player.
             </summary>
             <param name="statusEffect">The name of the <see cref="T:CustomPlayerEffects.StatusEffectBase"/> to enable.</param>
+            <param name="duration">The amount of time the effect will be active for.</param>
+            <param name="addDurationIfActive">If the effect is already active, setting to <see langword="true"/> will add this duration onto the effect.</param>
+            <returns>A bool indicating whether or not the effect was valid and successfully enabled.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Player.EnableEffect(CustomPlayerEffects.StatusEffectBase,System.Byte,System.Single,System.Boolean)">
+            <summary>
+            Enables a <see cref="T:CustomPlayerEffects.StatusEffectBase">status effect</see> on the player.
+            </summary>
+            <param name="statusEffect">The name of the <see cref="T:CustomPlayerEffects.StatusEffectBase"/> to enable.</param>
+            <param name="intensity">The intensity of the effect will be active for.</param>
             <param name="duration">The amount of time the effect will be active for.</param>
             <param name="addDurationIfActive">If the effect is already active, setting to <see langword="true"/> will add this duration onto the effect.</param>
             <returns>A bool indicating whether or not the effect was valid and successfully enabled.</returns>
@@ -11950,6 +12892,16 @@
             <param name="addDurationIfActive">If the effect is already active, setting to <see langword="true"/> will add this duration onto the effect.</param>
             <returns>The <see cref="T:CustomPlayerEffects.StatusEffectBase"/> instance of the activated effect.</returns>
         </member>
+        <member name="M:Exiled.API.Features.Player.EnableEffect(System.String,System.Byte,System.Single,System.Boolean)">
+            <summary>
+            Enables a <see cref="T:CustomPlayerEffects.StatusEffectBase">status effect</see> on the player.
+            </summary>
+            <param name="effectName">The name of the <see cref="T:CustomPlayerEffects.StatusEffectBase"/> to enable.</param>
+            <param name="intensity">The intensity of the effect will be active for.</param>
+            <param name="duration">The amount of time the effect will be active for.</param>
+            <param name="addDurationIfActive">If the effect is already active, setting to <see langword="true"/> will add this duration onto the effect.</param>
+            <returns>The <see cref="T:CustomPlayerEffects.StatusEffectBase"/> instance of the activated effect.</returns>
+        </member>
         <member name="M:Exiled.API.Features.Player.EnableEffect(Exiled.API.Enums.EffectType,System.Single,System.Boolean)">
             <summary>
             Enables a <see cref="T:Exiled.API.Enums.EffectType">status effect</see> on the player.
@@ -11958,17 +12910,43 @@
             <param name="duration">The amount of time the effect will be active for.</param>
             <param name="addDurationIfActive">If the effect is already active, setting to <see langword="true"/> will add this duration onto the effect.</param>
         </member>
+        <member name="M:Exiled.API.Features.Player.EnableEffect(Exiled.API.Enums.EffectType,System.Byte,System.Single,System.Boolean)">
+            <summary>
+            Enables a <see cref="T:Exiled.API.Enums.EffectType">status effect</see> on the player.
+            </summary>
+            <param name="type">The <see cref="T:Exiled.API.Enums.EffectType"/> to enable.</param>
+            <param name="intensity">The intensity of the effect will be active for.</param>
+            <param name="duration">The amount of time the effect will be active for.</param>
+            <param name="addDurationIfActive">If the effect is already active, setting to <see langword="true"/> will add this duration onto the effect.</param>
+            <returns>return if the effect has been Enable.</returns>
+        </member>
         <member name="M:Exiled.API.Features.Player.EnableEffect(Exiled.API.Features.Effect)">
             <summary>
             Enables a <see cref="T:Exiled.API.Features.Effect">status effect</see> on the player.
             </summary>
             <param name="effect">The <see cref="T:Exiled.API.Features.Effect"/> to enable.</param>
         </member>
+        <member name="M:Exiled.API.Features.Player.SyncEffect(Exiled.API.Features.Effect)">
+            <summary>
+            Syncs the <see cref="T:Exiled.API.Features.Effect">status effect</see> on the player.
+            </summary>
+            <param name="effect">The <see cref="T:Exiled.API.Features.Effect"/> to sync.</param>
+        </member>
         <member name="M:Exiled.API.Features.Player.ApplyRandomEffect(Exiled.API.Enums.EffectCategory,System.Single,System.Boolean)">
             <summary>
             Enables a random <see cref="T:Exiled.API.Enums.EffectType"/> on the player.
             </summary>
             <param name="category">An optional category to filter the applied effect. Set to <see cref="F:Exiled.API.Enums.EffectCategory.None"/> for any effect.</param>
+            <param name="duration">The amount of time the effect will be active for.</param>
+            <param name="addDurationIfActive">If the effect is already active, setting to <see langword="true"/> will add this duration onto the effect.</param>
+            <returns>A <see cref="T:Exiled.API.Enums.EffectType"/> that was given to the player.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Player.ApplyRandomEffect(Exiled.API.Enums.EffectCategory,System.Byte,System.Single,System.Boolean)">
+            <summary>
+            Enables a random <see cref="T:Exiled.API.Enums.EffectType"/> on the player.
+            </summary>
+            <param name="category">An optional category to filter the applied effect. Set to <see cref="F:Exiled.API.Enums.EffectCategory.None"/> for any effect.</param>
+            <param name="intensity">The intensity of the effect will be active for.</param>
             <param name="duration">The amount of time the effect will be active for.</param>
             <param name="addDurationIfActive">If the effect is already active, setting to <see langword="true"/> will add this duration onto the effect.</param>
             <returns>A <see cref="T:Exiled.API.Enums.EffectType"/> that was given to the player.</returns>
@@ -11984,6 +12962,12 @@
         <member name="M:Exiled.API.Features.Player.EnableEffects(System.Collections.Generic.IEnumerable{Exiled.API.Features.Effect})">
             <summary>
             Enables a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Effect"/> on the player.
+            </summary>
+            <param name="effects">The <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Effect"/> to enable.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Player.SyncEffects(System.Collections.Generic.IEnumerable{Exiled.API.Features.Effect})">
+            <summary>
+            Syncs a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Effect"/> on the player.
             </summary>
             <param name="effects">The <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Effect"/> to enable.</param>
         </member>
@@ -12479,14 +13463,14 @@
         </member>
         <member name="F:Exiled.API.Features.Ragdoll.BasicRagdollToRagdoll">
             <summary>
-            A <see cref="T:System.Collections.Generic.Dictionary`2"/> containing all known <see cref="T:BasicRagdoll"/>s and their corresponding <see cref="T:Exiled.API.Features.Ragdoll"/>.
+            A <see cref="T:System.Collections.Generic.Dictionary`2"/> containing all known <see cref="T:PlayerRoles.Ragdolls.BasicRagdoll"/>s and their corresponding <see cref="T:Exiled.API.Features.Ragdoll"/>.
             </summary>
         </member>
-        <member name="M:Exiled.API.Features.Ragdoll.#ctor(BasicRagdoll)">
+        <member name="M:Exiled.API.Features.Ragdoll.#ctor(PlayerRoles.Ragdolls.BasicRagdoll)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.API.Features.Ragdoll"/> class.
             </summary>
-            <param name="ragdoll">The encapsulated <see cref="T:BasicRagdoll"/>.</param>
+            <param name="ragdoll">The encapsulated <see cref="T:PlayerRoles.Ragdolls.BasicRagdoll"/>.</param>
         </member>
         <member name="P:Exiled.API.Features.Ragdoll.List">
             <summary>
@@ -12495,7 +13479,7 @@
         </member>
         <member name="P:Exiled.API.Features.Ragdoll.FreezeTime">
             <summary>
-            Gets or sets the <see cref="T:BasicRagdoll"/>s clean up time.
+            Gets or sets the <see cref="T:PlayerRoles.Ragdolls.BasicRagdoll"/>s clean up time.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Ragdoll.AllowCleanUp">
@@ -12505,7 +13489,7 @@
         </member>
         <member name="P:Exiled.API.Features.Ragdoll.Base">
             <summary>
-            Gets the <see cref="T:BasicRagdoll"/> instance of the ragdoll.
+            Gets the <see cref="T:PlayerRoles.Ragdolls.BasicRagdoll"/> instance of the ragdoll.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Ragdoll.GameObject">
@@ -12520,7 +13504,7 @@
         </member>
         <member name="P:Exiled.API.Features.Ragdoll.NetworkInfo">
             <summary>
-            Gets or sets the ragdoll's <see cref="T:RagdollData"/>.
+            Gets or sets the ragdoll's <see cref="T:PlayerRoles.Ragdolls.RagdollData"/>.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Ragdoll.DamageHandler">
@@ -12621,7 +13605,7 @@
         </member>
         <member name="P:Exiled.API.Features.Ragdoll.IgnoredRagdolls">
             <summary>
-            Gets or sets a <see cref="T:System.Collections.Generic.HashSet`1"/> of <see cref="T:BasicRagdoll"/>'s that will be ignored by clean up event.
+            Gets or sets a <see cref="T:System.Collections.Generic.HashSet`1"/> of <see cref="T:PlayerRoles.Ragdolls.BasicRagdoll"/>'s that will be ignored by clean up event.
             </summary>
         </member>
         <member name="M:Exiled.API.Features.Ragdoll.GetLast(Exiled.API.Features.Player)">
@@ -12631,7 +13615,7 @@
             <param name="player">The player to get the last ragdoll.</param>
             <returns>The Last Ragdoll.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Ragdoll.TryCreate(RagdollData,Exiled.API.Features.Ragdoll@)">
+        <member name="M:Exiled.API.Features.Ragdoll.TryCreate(PlayerRoles.Ragdolls.RagdollData,Exiled.API.Features.Ragdoll@)">
             <summary>
             Creates a new ragdoll.
             </summary>
@@ -12661,7 +13645,7 @@
             <param name="owner">The optional owner of the ragdoll.</param>
             <returns>The ragdoll.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Ragdoll.CreateAndSpawn(RagdollData)">
+        <member name="M:Exiled.API.Features.Ragdoll.CreateAndSpawn(PlayerRoles.Ragdolls.RagdollData)">
             <summary>
             Creates and spawns a new ragdoll.
             </summary>
@@ -12692,11 +13676,11 @@
             <param name="owner">The optional owner of the ragdoll.</param>
             <returns>The ragdoll.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Ragdoll.Get(BasicRagdoll)">
+        <member name="M:Exiled.API.Features.Ragdoll.Get(PlayerRoles.Ragdolls.BasicRagdoll)">
             <summary>
-            Gets the <see cref="T:Exiled.API.Features.Ragdoll"/> belonging to the <see cref="T:BasicRagdoll"/>, if any.
+            Gets the <see cref="T:Exiled.API.Features.Ragdoll"/> belonging to the <see cref="T:PlayerRoles.Ragdolls.BasicRagdoll"/>, if any.
             </summary>
-            <param name="ragdoll">The <see cref="T:BasicRagdoll"/> to get.</param>
+            <param name="ragdoll">The <see cref="T:PlayerRoles.Ragdolls.BasicRagdoll"/> to get.</param>
             <returns>A <see cref="T:Exiled.API.Features.Ragdoll"/> or <see langword="null"/> if not found.</returns>
         </member>
         <member name="M:Exiled.API.Features.Ragdoll.Get(Exiled.API.Features.Player)">
@@ -12910,7 +13894,12 @@
         </member>
         <member name="P:Exiled.API.Features.Respawn.NextKnownTeam">
             <summary>
-            Gets the next known <see cref="T:Respawning.SpawnableTeamType"/> that will spawn.
+            Gets or sets the next known <see cref="T:Respawning.SpawnableTeamType"/> that will spawn.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Respawn.TimeUntilNextPhase">
+            <summary>
+            Gets or sets the amount of seconds before the next respawn phase will occur.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Respawn.TimeUntilSpawnWave">
@@ -13008,6 +13997,13 @@
             </summary>
             <param name="team">The <see cref="T:Respawning.SpawnableTeamType"/> to remove tickets from.</param>
             <param name="amount">The amount of tickets to remove.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Respawn.ModifyTickets(Respawning.SpawnableTeamType,System.Single)">
+            <summary>
+            Modify tickets from a <see cref="T:Respawning.SpawnableTeamType"/>.
+            </summary>
+            <param name="team">The <see cref="T:Respawning.SpawnableTeamType"/> to modify tickets from.</param>
+            <param name="amount">The amount of tickets to modify.</param>
         </member>
         <member name="M:Exiled.API.Features.Respawn.ForceWave(Respawning.SpawnableTeamType,System.Boolean)">
             <summary>
@@ -13190,7 +14186,7 @@
         </member>
         <member name="P:Exiled.API.Features.Roles.HumanRole.UnitName">
             <summary>
-            Gets the <see cref="P:Exiled.API.Features.Roles.HumanRole.UnitName"/>.
+            Gets the player's unit name.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Roles.HumanRole.UnitNameId">
@@ -13521,7 +14517,7 @@
             Gets the amount of time in between SCP-049-2 attacks.
             </summary>
         </member>
-        <member name="M:Exiled.API.Features.Roles.Scp0492Role.IsInConsumeRange(BasicRagdoll)">
+        <member name="M:Exiled.API.Features.Roles.Scp0492Role.IsInConsumeRange(PlayerRoles.Ragdolls.BasicRagdoll)">
             <summary>
             Returns a <see langword="bool"/> indicating whether or not SCP-049-2 is close enough to a ragdoll to consume it.
             </summary>
@@ -13607,6 +14603,36 @@
             Gets all the dead zombies.
             </summary>
         </member>
+        <member name="P:Exiled.API.Features.Roles.Scp049Role.CallAbilityDuration">
+            <summary>
+            Gets or sets how mush time the Call Ability will be effective.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp049Role.CallAbilityBaseCooldown">
+            <summary>
+            Gets or sets the Cooldown of the Call Ability.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp049Role.SenseAbilityBaseCooldown">
+            <summary>
+            Gets or sets the Cooldown of the Sense Ability.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp049Role.SenseAbilityReducedCooldown">
+            <summary>
+            Gets or sets the Cooldown of the Sense Ability when you lost your target.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp049Role.SenseAbilityDuration">
+            <summary>
+            Gets or sets the Cooldown of the Sense Ability when it's failed.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp049Role.SenseAbilityFailCooldown">
+            <summary>
+            Gets or sets how mush time the Sense Ability will be effective.
+            </summary>
+        </member>
         <member name="P:Exiled.API.Features.Roles.Scp049Role.ResurrectedPlayers">
             <summary>
             Gets all the resurrected players.
@@ -13690,7 +14716,7 @@
             <param name="player">The <see cref="T:Exiled.API.Features.Player"/>to check.</param>
             <returns>The amount of resurrections of the checked player.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Roles.Scp049Role.CanResurrect(BasicRagdoll)">
+        <member name="M:Exiled.API.Features.Roles.Scp049Role.CanResurrect(PlayerRoles.Ragdolls.BasicRagdoll)">
             <summary>
             Returns a <see langword="bool"/> indicating whether or not the ragdoll can be resurrected by SCP-049.
             </summary>
@@ -13704,11 +14730,11 @@
             <param name="ragdoll">The ragdoll to check.</param>
             <returns><see langword="true"/> if the body can be revived; otherwise, <see langword="false"/>.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Roles.Scp049Role.IsInRecallRange(BasicRagdoll)">
+        <member name="M:Exiled.API.Features.Roles.Scp049Role.IsInRecallRange(PlayerRoles.Ragdolls.BasicRagdoll)">
             <summary>
             Returns a <see langword="bool"/> indicating whether or not SCP-049 is close enough to a ragdoll to revive it.
             </summary>
-            <remarks>This method only returns whether or not SCP-049 is close enough to the body to revive it; the body may have expired. Make sure to check <see cref="M:Exiled.API.Features.Roles.Scp049Role.CanResurrect(BasicRagdoll)"/> to ensure the body can be revived.</remarks>
+            <remarks>This method only returns whether or not SCP-049 is close enough to the body to revive it; the body may have expired. Make sure to check <see cref="M:Exiled.API.Features.Roles.Scp049Role.CanResurrect(PlayerRoles.Ragdolls.BasicRagdoll)"/> to ensure the body can be revived.</remarks>
             <param name="ragdoll">The ragdoll to check.</param>
             <returns><see langword="true"/> if close enough to revive the body; otherwise, <see langword="false"/>.</returns>
         </member>
@@ -13982,6 +15008,19 @@
             </summary>
             <param name="door">The door to lock.</param>
             <returns><see langword="true"/> if the door has been lock; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Roles.Scp079Role.LockDoor(Exiled.API.Features.Doors.Door,System.Boolean)">
+            <summary>
+            Locks the provided <paramref name="door"/>.
+            </summary>
+            <param name="door">The door to lock.</param>
+            <returns><see langword="true"/> if the door has been lock; otherwise, <see langword="false"/>.</returns>
+            <param name="consumeEnergy">Indicates if the energy cost should be consumed or not.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Roles.Scp079Role.UnlockDoor">
+            <summary>
+            Unlocks the <see cref="P:Exiled.API.Features.Roles.Scp079Role.LockedDoor"/>.
+            </summary>
         </member>
         <member name="M:Exiled.API.Features.Roles.Scp079Role.UnlockDoor(Exiled.API.Features.Doors.Door)">
             <summary>
@@ -14291,7 +15330,7 @@
         </member>
         <member name="P:Exiled.API.Features.Roles.Scp106Role.VigorComponent">
             <summary>
-            Gets the <see cref="T:PlayerRoles.PlayableScps.Scp106.Scp106Vigor"/>.
+            Gets the <see cref="T:PlayerRoles.PlayableScps.Scp106.VigorStat"/>.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Roles.Scp106Role.Attack">
@@ -14377,6 +15416,51 @@
         <member name="P:Exiled.API.Features.Roles.Scp106Role.SinkholeSpeedMultiplier">
             <summary>
             Gets the speed multiplier of the sinkhole.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp106Role.VigorStalkCostStationary">
+            <summary>
+            Gets or sets how mush cost the Ability Stalk will cost per tick when being stationary.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp106Role.VigorStalkCostMoving">
+            <summary>
+            Gets or sets how mush cost the Ability Stalk will cost per tick when moving.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp106Role.VigorRegeneration">
+            <summary>
+            Gets or sets how mush vigor will be regenerate while moving per seconds.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp106Role.AttackDamage">
+            <summary>
+            Gets or sets how mush damage Scp106 will dealt when attacking a player.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp106Role.CorrodingTime">
+            <summary>
+            Gets or sets the duration of Corroding effect.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp106Role.VigorCaptureReward">
+            <summary>
+            Gets or sets how mush vigor Scp106 will gain when being reward for having caught a player.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp106Role.CooldownReductionReward">
+            <summary>
+            Gets or sets how mush reduction cooldown Scp106 will gain when being reward for having caught a player.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp106Role.SinkholeCooldownDuration">
+            <summary>
+            Gets or sets the cooldown duration of it's Sinkhole ability's.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp106Role.HuntersAtlasCostPerMeter">
+            <summary>
+            Gets or sets how mush vigor it's ability Hunter Atlas will cost per meter.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Roles.Scp106Role.CaptureCooldown">
@@ -14563,6 +15647,103 @@
         <member name="M:Exiled.API.Features.Roles.Scp173Role.GetSpawnChance(System.Collections.Generic.List{PlayerRoles.RoleTypeId})">
             <summary>
             Gets the Spawn Chance of SCP-173.
+            </summary>
+            <param name="alreadySpawned">The List of Roles already spawned.</param>
+            <returns>The Spawn Chance.</returns>
+        </member>
+        <member name="T:Exiled.API.Features.Roles.Scp3114Role">
+            <summary>
+            Defines a role that represents SCP-3114.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Roles.Scp3114Role.#ctor(PlayerRoles.PlayableScps.Scp3114.Scp3114Role)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Roles.Scp3114Role"/> class.
+            </summary>
+            <param name="baseRole">the base <see cref="T:PlayerRoles.PlayableScps.Scp3114.Scp3114Role"/>.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp3114Role.Type">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp3114Role.SubroutineModule">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp3114Role.HumeShieldModule">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp3114Role.Slap">
+            <summary>
+            Gets Scp3114's <see cref="T:PlayerRoles.PlayableScps.Scp3114.Scp3114Slap"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp3114Role.Dance">
+            <summary>
+            Gets Scp3114's <see cref="T:PlayerRoles.PlayableScps.Scp3114.Scp3114Dance"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp3114Role.Reveal">
+            <summary>
+            Gets Scp3114's <see cref="T:PlayerRoles.PlayableScps.Scp3114.Scp3114Reveal"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp3114Role.Identity">
+            <summary>
+            Gets Scp3114's <see cref="T:PlayerRoles.PlayableScps.Scp3114.Scp3114Identity"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp3114Role.History">
+            <summary>
+            Gets Scp3114's <see cref="T:PlayerRoles.PlayableScps.Scp3114.Scp3114History"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp3114Role.FakeModelManager">
+            <summary>
+            Gets Scp3114's <see cref="T:PlayerRoles.PlayableScps.Scp3114.Scp3114FakeModelManager"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp3114Role.Disguise">
+            <summary>
+            Gets Scp3114's <see cref="T:PlayerRoles.PlayableScps.Scp3114.Scp3114Disguise"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp3114Role.Base">
+            <summary>
+            Gets the <see cref="T:PlayerRoles.PlayableScps.Scp3114.Scp3114Role"/> instance.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp3114Role.StolenRole">
+            <summary>
+            Gets or sets the SCP-3114's Stolen Role.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp3114Role.Ragdoll">
+            <summary>
+            Gets or sets the SCP-3114's Ragdoll used for it's FakeIdentity.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp3114Role.UnitId">
+            <summary>
+            Gets or sets the SCP-3114's UnitId used for it's FakeIdentity.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp3114Role.DisguiseStatus">
+            <summary>
+            Gets or sets the SCP-3114's UnitId used for it's FakeIdentity.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp3114Role.DisguiseDuration">
+            <summary>
+            Gets or sets the SCP-3114's Disguise duration.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Roles.Scp3114Role.ResetIdentity">
+            <summary>
+            Reset Scp3114 FakeIdentity.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Roles.Scp3114Role.GetSpawnChance(System.Collections.Generic.List{PlayerRoles.RoleTypeId})">
+            <summary>
+            Gets the Spawn Chance of SCP-3114.
             </summary>
             <param name="alreadySpawned">The List of Roles already spawned.</param>
             <returns>The Spawn Chance.</returns>
@@ -15112,6 +16293,11 @@
             Gets a value indicating whether the round is lobby or not.
             </summary>
         </member>
+        <member name="P:Exiled.API.Features.Round.ChaosTargetCount">
+            <summary>
+            Gets or sets a value indicating the amount of Chaos Targets remaining.
+            </summary>
+        </member>
         <member name="P:Exiled.API.Features.Round.IsLocked">
             <summary>
             Gets or sets a value indicating whether the round is locked or not.
@@ -15258,6 +16444,11 @@
             Gets a value indicating whether SCP-914 is active and currently processing items.
             </summary>
         </member>
+        <member name="P:Exiled.API.Features.Scp914.InsideIntake">
+            <summary>
+            Gets a value indicating all of the GameObjects currently present inside SCP-914's intake chamber.
+            </summary>
+        </member>
         <member name="P:Exiled.API.Features.Scp914.IntakeBooth">
             <summary>
             Gets the intake booth <see cref="T:UnityEngine.Transform"/>.
@@ -15268,21 +16459,26 @@
              Gets the output booth <see cref="T:UnityEngine.Transform"/>.
             </summary>
         </member>
+        <member name="M:Exiled.API.Features.Scp914.Scp914InputObject(System.Collections.Generic.IEnumerable{Exiled.API.Features.Player}@,System.Collections.Generic.IEnumerable{Exiled.API.Features.Pickups.Pickup}@)">
+            <summary>
+            Filters all GameObjects inside SCP-914's intake chamber into players and items.
+            </summary>
+            <param name="playersret">The <see cref="T:System.Collections.Generic.List`1"/> to return.</param>
+            <param name="pickupsret">The <see cref="T:System.Collections.Generic.List`1"/> to return.</param>
+            <returns>All GameObjects present inside SCP-914's intake chamber. And also return Player and Pickup casted.</returns>
+        </member>
         <member name="M:Exiled.API.Features.Scp914.PlaySound(Scp914.Scp914InteractCode)">
             <summary>
             Plays the SCP-914's sound.
             </summary>
-            <param name="soundId">The soundId to play.</param>
-            <remarks>There are two sounds only.
-            The values to identify them are <c>0</c>, which stands for the soundId played when SCP-914 is being activated,
-            and <c>1</c>, which stands for the soundId played when SCP-914's knob state is being changed.</remarks>
+            <param name="soundId">The <see cref="T:Scp914.Scp914InteractCode"/> to play.</param>
         </member>
         <member name="M:Exiled.API.Features.Scp914.Start(Exiled.API.Features.Player,Scp914.Scp914InteractCode)">
             <summary>
             Starts SCP-914.
             </summary>
-            <param name="player">Player who interacts with Scp914.</param>
-            <param name="code">Activated code.</param>
+            <param name="player"><see cref="T:Exiled.API.Features.Player"/> who interacts with Scp914.</param>
+            <param name="code"><see cref="T:Scp914.Scp914InteractCode"/> Interact code.</param>
         </member>
         <member name="T:Exiled.API.Features.Server">
             <summary>
@@ -15460,6 +16656,14 @@
             </summary>
             <param name="command">The command to be run.</param>
             <param name="sender">The <see cref="T:CommandSender"/> running the command.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Server.ExecuteCommand(System.String,CommandSender)">
+            <summary>
+            Executes a server command.
+            </summary>
+            <param name="command">The command to be run.</param>
+            <param name="sender">The <see cref="T:CommandSender"/> running the command.</param>
+            <returns>Command response, if there is one; otherwise, <see langword="null"/>.</returns>
         </member>
         <member name="M:Exiled.API.Features.Server.TryGetSessionVariable``1(System.String,``0@)">
             <summary>
@@ -15931,6 +17135,17 @@
             <param name="spawn">Whether the <see cref="T:Exiled.API.Features.Toys.Light"/> should be initially spawned.</param>
             <returns>The new <see cref="T:Exiled.API.Features.Toys.Light"/>.</returns>
         </member>
+        <member name="M:Exiled.API.Features.Toys.Light.Create(System.Nullable{UnityEngine.Vector3},System.Nullable{UnityEngine.Vector3},System.Nullable{UnityEngine.Vector3},System.Boolean,System.Nullable{UnityEngine.Color})">
+            <summary>
+            Creates a new <see cref="T:Exiled.API.Features.Toys.Light"/>.
+            </summary>
+            <param name="position">The position of the <see cref="T:Exiled.API.Features.Toys.Light"/>.</param>
+            <param name="rotation">The rotation of the <see cref="T:Exiled.API.Features.Toys.Light"/>.</param>
+            <param name="scale">The scale of the <see cref="T:Exiled.API.Features.Toys.Light"/>.</param>
+            <param name="spawn">Whether the <see cref="T:Exiled.API.Features.Toys.Light"/> should be initially spawned.</param>
+            <param name="color">The color of the <see cref="T:Exiled.API.Features.Toys.Light"/>.</param>
+            <returns>The new <see cref="T:Exiled.API.Features.Toys.Light"/>.</returns>
+        </member>
         <member name="M:Exiled.API.Features.Toys.Light.Get(AdminToys.LightSourceToy)">
             <summary>
             Gets the <see cref="T:Exiled.API.Features.Toys.Light"/> belonging to the <see cref="T:AdminToys.LightSourceToy"/>.
@@ -15988,6 +17203,36 @@
             <param name="rotation">The rotation of the <see cref="T:Exiled.API.Features.Toys.Primitive"/>.</param>
             <param name="scale">The scale of the <see cref="T:Exiled.API.Features.Toys.Primitive"/>.</param>
             <param name="spawn">Whether or not the <see cref="T:Exiled.API.Features.Toys.Primitive"/> should be initially spawned.</param>
+            <returns>The new <see cref="T:Exiled.API.Features.Toys.Primitive"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Toys.Primitive.Create(System.Nullable{UnityEngine.Vector3},System.Nullable{UnityEngine.Vector3},System.Nullable{UnityEngine.Vector3},System.Boolean,System.Nullable{UnityEngine.Color})">
+            <summary>
+            Creates a new <see cref="T:Exiled.API.Features.Toys.Primitive"/>.
+            </summary>
+            <param name="position">The position of the <see cref="T:Exiled.API.Features.Toys.Primitive"/>.</param>
+            <param name="rotation">The rotation of the <see cref="T:Exiled.API.Features.Toys.Primitive"/>.</param>
+            <param name="scale">The scale of the <see cref="T:Exiled.API.Features.Toys.Primitive"/>.</param>
+            <param name="spawn">Whether or not the <see cref="T:Exiled.API.Features.Toys.Primitive"/> should be initially spawned.</param>
+            <param name="color">The color of the <see cref="T:Exiled.API.Features.Toys.Primitive"/>.</param>
+            <returns>The new <see cref="T:Exiled.API.Features.Toys.Primitive"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Toys.Primitive.Create(UnityEngine.PrimitiveType,System.Nullable{UnityEngine.Vector3},System.Nullable{UnityEngine.Vector3},System.Nullable{UnityEngine.Vector3},System.Boolean,System.Nullable{UnityEngine.Color})">
+            <summary>
+            Creates a new <see cref="T:Exiled.API.Features.Toys.Primitive"/>.
+            </summary>
+            <param name="primitiveType">The type of primitive to spawn.</param>
+            <param name="position">The position of the <see cref="T:Exiled.API.Features.Toys.Primitive"/>.</param>
+            <param name="rotation">The rotation of the <see cref="T:Exiled.API.Features.Toys.Primitive"/>.</param>
+            <param name="scale">The scale of the <see cref="T:Exiled.API.Features.Toys.Primitive"/>.</param>
+            <param name="spawn">Whether or not the <see cref="T:Exiled.API.Features.Toys.Primitive"/> should be initially spawned.</param>
+            <param name="color">The color of the <see cref="T:Exiled.API.Features.Toys.Primitive"/>.</param>
+            <returns>The new <see cref="T:Exiled.API.Features.Toys.Primitive"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Toys.Primitive.Create(Exiled.API.Structs.PrimitiveSettings)">
+            <summary>
+            Creates a new <see cref="T:Exiled.API.Features.Toys.Primitive"/>.
+            </summary>
+            <param name="primitiveSettings">The settings of the <see cref="T:Exiled.API.Features.Toys.Primitive"/>.</param>
             <returns>The new <see cref="T:Exiled.API.Features.Toys.Primitive"/>.</returns>
         </member>
         <member name="M:Exiled.API.Features.Toys.Primitive.Get(AdminToys.PrimitiveObjectToy)">
@@ -16812,6 +18057,52 @@
             </summary>
             <param name="attachmentIdentifier">The <see cref="T:Exiled.API.Structs.AttachmentIdentifier"/> to compare with the current instance.</param>
             <returns><see langword="true"/> if <see cref="T:Exiled.API.Structs.AttachmentIdentifier"/> and this instance represent the same value; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="T:Exiled.API.Structs.PrimitiveSettings">
+            <summary>
+            Settings for primitives.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Structs.PrimitiveSettings.#ctor(UnityEngine.PrimitiveType,UnityEngine.Color,UnityEngine.Vector3,UnityEngine.Vector3,UnityEngine.Vector3,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Structs.PrimitiveSettings"/> struct.
+            </summary>
+            <param name="primitiveType">The type of the primitive.</param>
+            <param name="color">The color of the primitive.</param>
+            <param name="position">The position of the primitive.</param>
+            <param name="rotation">The rotation of the primitive.</param>
+            <param name="scale">The scale of the primitive.</param>
+            <param name="spawn">Whether or not the primitive should be spawned.</param>
+        </member>
+        <member name="P:Exiled.API.Structs.PrimitiveSettings.PrimitiveType">
+            <summary>
+            Gets the primitive type.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Structs.PrimitiveSettings.Color">
+            <summary>
+            Gets the primitive color.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Structs.PrimitiveSettings.Position">
+            <summary>
+            Gets the primitive position.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Structs.PrimitiveSettings.Rotation">
+            <summary>
+            Gets the primitive rotation.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Structs.PrimitiveSettings.Scale">
+            <summary>
+            Gets the primitive scale.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Structs.PrimitiveSettings.Spawn">
+            <summary>
+            Gets a value indicating whether or not the primitive should be spawned.
+            </summary>
         </member>
         <member name="T:Exiled.API.Structs.RadioRangeSettings">
             <summary>

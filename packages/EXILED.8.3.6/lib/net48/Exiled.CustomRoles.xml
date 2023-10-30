@@ -1060,7 +1060,7 @@
         </member>
         <member name="P:Exiled.CustomRoles.Config.UsedAbilityHint">
             <summary>
-            Gets the hint that is shown when someone used a <see cref="T:Exiled.CustomRoles.API.Features.CustomAbility"/>.
+            Gets the hint that is shown when someone used a <see cref="T:Exiled.CustomRoles.API.Features.ActiveAbility"/>.
             </summary>
         </member>
         <member name="P:Exiled.CustomRoles.Config.UseKeypressActivation">
@@ -1071,6 +1071,16 @@
         <member name="P:Exiled.CustomRoles.Config.ActivateOnlySelected">
             <summary>
             Gets or sets a value indicating whether abilities that are not the keypress primary can still be activated.
+            </summary>
+        </member>
+        <member name="P:Exiled.CustomRoles.Config.FailedActionHint">
+            <summary>
+            Gets or sets the hint that is shown when someone fails to use a <see cref="T:Exiled.CustomRoles.API.Features.ActiveAbility"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.CustomRoles.Config.SwitchedAbilityHint">
+            <summary>
+            Gets or sets the hint that is shown when someone switches their selected <see cref="T:Exiled.CustomRoles.API.Features.ActiveAbility"/>.
             </summary>
         </member>
         <member name="T:Exiled.CustomRoles.CustomRoles">

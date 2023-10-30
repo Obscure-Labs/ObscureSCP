@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UCRAPI = UncomplicatedCustomRoles.API.Features.Manager;
+using SpireSCP.GUI.API.Features;
 
 namespace SpireLabs
 {
@@ -57,7 +58,7 @@ namespace SpireLabs
                 if (UCRID == 4)
                 {
                     yield return Timing.WaitForSeconds(6);
-                    Timing.RunCoroutine(guiHandler.sendHint(p, $"<b>The currently active SCP subjects are: {scps}", 7));
+                    Manager.SendHint(p, $"<b>The currently active SCP subjects are: {scps}", 7);
                 }
 
                 if (UCRID == 3)

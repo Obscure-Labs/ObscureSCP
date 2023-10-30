@@ -20,6 +20,7 @@ using System.Reflection.Emit;
 using NorthwoodLib.Pools;
 using Exiled.API.Features.Roles;
 using Exiled.Events.EventArgs.Scp173;
+using SpireSCP.GUI.API.Features;
 
 namespace SpireLabs
 {
@@ -34,7 +35,7 @@ namespace SpireLabs
                 if(num < 20 && num > 13)
                 {
                     ev.Amount = 0;
-                    Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "You just ignored some damage!", 5));
+                    Manager.SendHint(ev.Player, "You just ignored some damage!", 5);
                 }
             }
         }

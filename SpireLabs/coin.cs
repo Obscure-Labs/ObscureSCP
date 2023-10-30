@@ -31,10 +31,11 @@
     using Exiled.API.Features.Toys;
     using InventorySystem.Items.Usables.Scp330;
     using Exiled.API.Extensions;
+    using SpireSCP.GUI.API.Features;
 
     internal static class coin
     {
-        public static string[] good = { "You gained 20HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!", "You are healed!", "GRENADE FOUNTAIN!", "Ammo pile!!", "FREE CANDY!", "You can't die for the next 3s!", "You bring health to those around you!", "Nice hat.." };
+        public static string[] good = { "You gained 20HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!", "You are healed!", "GRENADE FOUNTAIN!", "Ammo pile!!", "FREE CANDY!", "You can't die for the next 3s!", "You bring health to those around you!", "Nice hat..", "You now have intercom for 15 seconds!" };
         public static string[] bad = { "You now have 50HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "Pocket Sand!", "You got lost and found yourself in a random room!", "You flipped the coin so hard your hands fell off!", "Beep!", "Sent To Qatar!!!", "Others percieve you as upside down!", "You caused a blackout in your zone!", "Door stuck! DOOR STUCK!", "Your coin melted :(" };
 
         private static IEnumerator<float> grenadeFountain(Player p)
@@ -125,7 +126,7 @@
                 {
                     Scp330.Candies.Add(CandyKindID.Pink);
                 }
-                Pickup.Spawn(Scp330, new Vector3(p.Position.x, p.Position.y, p.Position.z), p.Rotation);
+                Scp330.Spawn(new Vector3(p.Position.x, p.Position.y, p.Position.z), p.Rotation);
 
                 yield return Timing.WaitForOneFrame;
 
@@ -158,86 +159,116 @@
 
         private static IEnumerator<float> raycastHeal(Player p)
         {
-            for (int l = 0; l < 10; l++)
+            yield return Timing.WaitForSeconds(1.5f);
+            for (int j = 0; j < 20; j++)
             {
+                Manager.SendHint(p, "You are providing health to those around you!", 0.75f);
                 foreach (Player pp in Player.List)
                 {
-                    if (pp.DisplayNickname == null)
-                    { }
-                    else
+                    if (pp == p) continue;
+                    Player nP = Player.Get(p.Id);
+                    int loopCntr = 0;
+                    RaycastHit h = new RaycastHit();
+                    Player ppp = null;
+                    do
                     {
-                        if (pp != p)
-                        {
-                            RaycastHit hit;
-                            Vector3 dir = pp.Transform.position - new Vector3(p.Transform.position.x - 0.1f, p.Transform.position.y, p.Transform.position.z);
-                            dir = dir.normalized;
-                            Ray r = new Ray(new Vector3(p.Transform.position.x - 0.1f, p.Transform.position.y, p.Transform.position.z), dir);
-                            Physics.Raycast(r, out hit, maxDistance: 5);
-                            Player ppp;
-                            Player.TryGet(hit.collider, out ppp);
-                            if (ppp != pp)
-                            {
-                                dir = pp.Transform.position - new Vector3(p.Transform.position.x + 0.1f, p.Transform.position.y, p.Transform.position.z);
-                                r = new Ray(new Vector3(p.Transform.position.x + 0.1f, p.Transform.position.y, p.Transform.position.z), dir);
-                                Physics.Raycast(r, out hit, maxDistance: 5);
-                                Player.TryGet(hit.collider, out ppp);
-                                if (ppp != pp)
-                                {
-                                    dir = pp.Transform.position - new Vector3(p.Transform.position.x, p.Transform.position.y, p.Transform.position.z + 0.1f);
-                                    r = new Ray(new Vector3(p.Transform.position.x, p.Transform.position.y, p.Transform.position.z + 0.1f), dir);
-                                    Physics.Raycast(r, out hit, maxDistance: 5);
-                                    Player.TryGet(hit.collider, out ppp);
-                                    if (ppp != pp)
-                                    {
-                                        dir = pp.Transform.position - new Vector3(p.Transform.position.x, p.Transform.position.y, p.Transform.position.z - 0.1f);
-                                        r = new Ray(new Vector3(p.Transform.position.x, p.Transform.position.y, p.Transform.position.z - 0.1f), dir);
-                                        Physics.Raycast(r, out hit, maxDistance: 5);
-                                        Player.TryGet(hit.collider, out ppp);
-                                        if (ppp != pp)
-                                        {
-                                            dir = pp.Transform.position - new Vector3(p.Transform.position.x, p.Transform.position.y + 0.1f, p.Transform.position.z);
-                                            r = new Ray(new Vector3(p.Transform.position.x, p.Transform.position.y + 0.1f, p.Transform.position.z), dir);
-                                            Physics.Raycast(r, out hit, maxDistance: 5);
-                                            Player.TryGet(hit.collider, out ppp);
-                                        }
-                                        else
-                                        {
-                                            if (ppp.IsHuman)
-                                            {
-                                                ppp.Heal(7.5f, false);
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (ppp.IsHuman)
-                                        {
-                                            ppp.Heal(7.5f, false);
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    if (ppp.IsHuman)
-                                    {
-                                        ppp.Heal(7.5f, false);
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                if (ppp.IsHuman)
-                                {
-                                    ppp.Heal(7.5f, false);
-                                }
-                            }
-                        }
+                        Vector3 dir = pp.Position - new Vector3(nP.Position.x, nP.Position.y + 0.1f, nP.Position.z);
+                        Physics.Raycast(nP.Position, dir, out h);
+                        loopCntr++;
+                    } while (!Player.TryGet(h.collider, out ppp) && loopCntr != 5);
+                    if (ppp == null) continue;
+                    if (Math.Sqrt((Math.Pow((nP.Position.x - ppp.Position.x), 2)) + (Math.Pow((nP.Position.y - ppp.Position.y), 2))) > 10) continue;
+                    if (ppp.IsHuman)
+                    {
+                        //Log.Info($"{ppp.DisplayNickname} is {ppp.Role.Name} this role is {ppp.IsHuman}");
+                        Manager.SendHint(ppp, "Someone's coinflip is giving you health!", 0.75f);
+                        ppp.HumeShield += 4.75f;
                     }
-
                 }
-                yield return Timing.WaitForSeconds(0.5f);
             }
-            yield return Timing.WaitForSeconds(1f);
+                yield return Timing.WaitForSeconds(0.5f);
+                #region oldrayCastlol
+                //for (int l = 0; l < 10; l++)
+                //{
+                //    foreach (Player pp in Player.List)
+                //    {
+                //        if (pp.DisplayNickname == null)
+                //        { }
+                //        else
+                //        {
+                //            if (pp != p)
+                //            {
+                //                RaycastHit hit;
+                //                Vector3 dir = pp.Transform.position - new Vector3(p.Transform.position.x - 0.1f, p.Transform.position.y, p.Transform.position.z);
+                //                dir = dir.normalized;
+                //                Ray r = new Ray(new Vector3(p.Transform.position.x - 0.1f, p.Transform.position.y, p.Transform.position.z), dir);
+                //                Physics.Raycast(r, out hit, maxDistance: 5);
+                //                Player ppp;
+                //                Player.TryGet(hit.collider, out ppp);
+                //                if (ppp != pp)
+                //                {
+                //                    dir = pp.Transform.position - new Vector3(p.Transform.position.x + 0.1f, p.Transform.position.y, p.Transform.position.z);
+                //                    r = new Ray(new Vector3(p.Transform.position.x + 0.1f, p.Transform.position.y, p.Transform.position.z), dir);
+                //                    Physics.Raycast(r, out hit, maxDistance: 5);
+                //                    Player.TryGet(hit.collider, out ppp);
+                //                    if (ppp != pp)
+                //                    {
+                //                        dir = pp.Transform.position - new Vector3(p.Transform.position.x, p.Transform.position.y, p.Transform.position.z + 0.1f);
+                //                        r = new Ray(new Vector3(p.Transform.position.x, p.Transform.position.y, p.Transform.position.z + 0.1f), dir);
+                //                        Physics.Raycast(r, out hit, maxDistance: 5);
+                //                        Player.TryGet(hit.collider, out ppp);
+                //                        if (ppp != pp)
+                //                        {
+                //                            dir = pp.Transform.position - new Vector3(p.Transform.position.x, p.Transform.position.y, p.Transform.position.z - 0.1f);
+                //                            r = new Ray(new Vector3(p.Transform.position.x, p.Transform.position.y, p.Transform.position.z - 0.1f), dir);
+                //                            Physics.Raycast(r, out hit, maxDistance: 5);
+                //                            Player.TryGet(hit.collider, out ppp);
+                //                            if (ppp != pp)
+                //                            {
+                //                                dir = pp.Transform.position - new Vector3(p.Transform.position.x, p.Transform.position.y + 0.1f, p.Transform.position.z);
+                //                                r = new Ray(new Vector3(p.Transform.position.x, p.Transform.position.y + 0.1f, p.Transform.position.z), dir);
+                //                                Physics.Raycast(r, out hit, maxDistance: 5);
+                //                                Player.TryGet(hit.collider, out ppp);
+                //                            }
+                //                            else
+                //                            {
+                //                                if (ppp.IsHuman)
+                //                                {
+                //                                    ppp.Heal(7.5f, false);
+                //                                }
+                //                            }
+                //                        }
+                //                        else
+                //                        {
+                //                            if (ppp.IsHuman)
+                //                            {
+                //                                ppp.Heal(7.5f, false);
+                //                            }
+                //                        }
+                //                    }
+                //                    else
+                //                    {
+                //                        if (ppp.IsHuman)
+                //                        {
+                //                            ppp.Heal(7.5f, false);
+                //                        }
+                //                    }
+                //                }
+                //                else
+                //                {
+                //                    if (ppp.IsHuman)
+                //                    {
+                //                        ppp.Heal(7.5f, false);
+                //                    }
+                //                }
+                //            }
+                //        }
+
+                //    }
+                //    yield return Timing.WaitForSeconds(0.5f);
+                //}
+                //yield return Timing.WaitForSeconds(1f);
+                #endregion
         }
 
         internal static void Player_FlippingCoin(FlippingCoinEventArgs ev)
@@ -255,7 +286,7 @@
                 {
                     case 0:
                         //ev.Player.ShowHint(good[0], 3);
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, good[0], 3));
+                        Manager.SendHint(ev.Player, good[0], 3);
                         ev.Player.Heal(20, true);
                         if (ev.Player.Role == RoleTypeId.NtfCaptain)
                         {
@@ -267,13 +298,13 @@
                         }
                         break;
                     case 1:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, good[1], 3));
+                        Manager.SendHint(ev.Player, good[1], 3);
                         ev.Player.EnableEffect(EffectType.MovementBoost, 5);
                         ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 205, 5);
                         break;
                     case 2:
                         bool todrop = false;
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, good[2], 3));
+                        Manager.SendHint(ev.Player, good[2], 3);
                         if (ev.Player.IsInventoryFull)
                         {
                             todrop = true;
@@ -321,36 +352,37 @@
                         }
                         break;
                     case 3:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, good[3], 3));
+                        Manager.SendHint(ev.Player, good[3], 3);
                         ev.Player.EnableEffect(EffectType.Invisible, 5);
+                        ev.Player.ChangeEffectIntensity(EffectType.Invisible, 1, 5);
                         break;
                     case 4:
                         ev.Player.Heal(150, false);
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, good[4], 3));
+                        Manager.SendHint(ev.Player, good[4], 3);
                         break;
                     case 5:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, good[5], 3));
+                        Manager.SendHint(ev.Player, good[5], 3);
                         Timing.RunCoroutine(grenadeFountain(ev.Player));
                         break;
                     case 6:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, good[6], 3));
+                        Manager.SendHint(ev.Player, good[6], 3);
                         Timing.RunCoroutine(ammoFountain(ev.Player));
                         break;
                     case 7:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, good[7], 3));
+                        Manager.SendHint(ev.Player, good[7], 3);
                         Timing.RunCoroutine(candyFountain(ev.Player));
                         break;
                     case 8:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, good[8], 3));
+                        Manager.SendHint(ev.Player, good[8], 3);
                         ev.Player.EnableEffect(EffectType.DamageReduction, 3);
                         ev.Player.ChangeEffectIntensity(EffectType.DamageReduction, 255, 3);
                         break;
                     case 9:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, good[9], 3));
+                        Manager.SendHint(ev.Player, good[9], 1.5f);
                         Timing.RunCoroutine(raycastHeal(ev.Player));
                         break;
                     case 10:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, good[10], 3));
+                        Manager.SendHint(ev.Player, good[10], 3);
                         bool tp = false;
                         if (ev.Player.IsInventoryFull) tp = true;
                         else tp = false;
@@ -372,25 +404,27 @@
                 switch (rnd.Next(0, bad.Count()))
                 {
                     case 0:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, bad[0], 3));
+                        Manager.SendHint(ev.Player, bad[0], 3);
                         ev.Player.Health = 50;
                         break;
                     case 1:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, bad[1], 3));
+                        Manager.SendHint(ev.Player, bad[1], 3);
                         ev.Player.DropItems();
                         break;
                     case 2:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, bad[2], 3));
-                        ev.Player.EnableEffect(EffectType.SinkHole, 5);
+                        Manager.SendHint(ev.Player, bad[2], 3);
+                        ev.Player.EnableEffect(EffectType.SinkHole, 5, true);
+                        ev.Player.ChangeEffectIntensity(EffectType.SinkHole, 1, 5);
                         break;
                     case 3:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, bad[3], 3));
-                        ev.Player.EnableEffect(EffectType.Flashed, 5);
+                       Manager.SendHint(ev.Player, bad[3], 3);
+                        ev.Player.EnableEffect(EffectType.Flashed, 5, true);
+                        ev.Player.ChangeEffectIntensity(EffectType.Flashed, 1, 5);
                         break;
                     case 4:
                         if (Warhead.IsDetonated)
                             break;
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, bad[4], 3));
+                        Manager.SendHint(ev.Player, bad[4], 3);
                         var r = new System.Random();
                         var n = r.Next(0, 2);
                         bool goodRoom = false;
@@ -422,17 +456,17 @@
 
                         break;
                     case 5:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, bad[5], 3));
+                        Manager.SendHint(ev.Player, bad[5], 3);
                         ev.Player.EnableEffect(EffectType.SeveredHands, 999);
                         ev.Player.EnableEffect(EffectType.CardiacArrest, 60);
                         ev.Player.ChangeEffectIntensity(EffectType.CardiacArrest, 5);
                         break;
                     case 6:
                         Timing.RunCoroutine(beep(ev.Player));
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, bad[6], 3));
+                        Manager.SendHint(ev.Player, bad[6], 3);
                         break;
                     case 7:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, bad[7], 3));
+                        Manager.SendHint(ev.Player, bad[7], 3);
                         ZoneType zt = ev.Player.CurrentRoom.Zone;
                         ev.Player.Teleport(Room.List.FirstOrDefault(x => x.Type == RoomType.Pocket));
                         ev.Player.EnableEffect(EffectType.PocketCorroding, 999);
@@ -440,23 +474,23 @@
                         Timing.RunCoroutine(enterPD(ev.Player, zt));
                         break;
                     case 8:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, bad[8], 3));
+                        Manager.SendHint(ev.Player, bad[8], 3);
 
                         ev.Player.Scale = Vector3.one * -1;
                         Timing.RunCoroutine(scl(ev.Player));
                         break;
                     case 9:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, bad[9], 3));
+                        Manager.SendHint(ev.Player, bad[9], 3);
                         var zone = ev.Player.CurrentRoom.Zone;
                         Map.TurnOffAllLights(30f, zone);
                         break;
                     case 10:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, bad[10], 3));
+                        Manager.SendHint(ev.Player, bad[10], 3);
                         Room rm = ev.Player.CurrentRoom;
                         rm.LockDown(10);
                         break;
                     case 11:
-                        Timing.RunCoroutine(guiHandler.sendHint(ev.Player, bad[11], 3));
+                        Manager.SendHint(ev.Player, bad[11], 3);
                         ev.Player.RemoveHeldItem(true);
                         break;
                 }
@@ -465,7 +499,7 @@
             {
                 Exiled.API.Features.Log.Info($"{ev.Player.Nickname} flipped a coin and got nothing!");
                 //ev.Player.ShowHint("No consequences, this time...", 3);
-                Timing.RunCoroutine(guiHandler.sendHint(ev.Player, "No consequences, this time...", 5));
+                Manager.SendHint(ev.Player, "No consequences, this time...", 5);
             }
         }
 

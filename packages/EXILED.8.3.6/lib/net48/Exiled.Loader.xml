@@ -27,7 +27,7 @@
         </member>
         <member name="P:Exiled.Loader.Config.ShouldLoadOutdatedExiled">
             <summary>
-            Gets or sets a value indicating whether outdated exiled should be loaded or not.
+            Gets or sets a value indicating whether outdated Exiled versions should be loaded or not.
             </summary>
         </member>
         <member name="P:Exiled.Loader.Config.ShouldLoadOutdatedPlugins">
@@ -58,6 +58,21 @@
         <member name="P:Exiled.Loader.Config.MultiLineScalarStyle">
             <summary>
             Gets or sets the quotes wrapper type.
+            </summary>
+        </member>
+        <member name="P:Exiled.Loader.Config.ShouldDownloadTestingReleases">
+            <summary>
+            Gets or sets a value indicating whether testing releases have to be downloaded or not.
+            </summary>
+        </member>
+        <member name="P:Exiled.Loader.Config.ExcludeAssemblies">
+            <summary>
+            Gets or sets which assemblies should be excluded from the update.
+            </summary>
+        </member>
+        <member name="P:Exiled.Loader.Config.EnableAutoUpdates">
+            <summary>
+            Gets or sets a value indicating whether Exiled should auto-update itself as soon as a new release is available.
             </summary>
         </member>
         <member name="T:Exiled.Loader.ConfigManager">
@@ -365,6 +380,158 @@
         <member name="M:Exiled.Loader.Features.PluginPriorityComparer.Compare(Exiled.API.Interfaces.IPlugin{Exiled.API.Interfaces.IConfig},Exiled.API.Interfaces.IPlugin{Exiled.API.Interfaces.IConfig})">
             <inheritdoc/>
         </member>
+        <member name="T:Exiled.Loader.GHApi.ApiProvider">
+            <summary>
+            An API bridge to GitHub services.
+            </summary>
+        </member>
+        <member name="F:Exiled.Loader.GHApi.ApiProvider.GetReleasesTemplate">
+            <summary>
+            The API template to get releases.
+            </summary>
+        </member>
+        <member name="M:Exiled.Loader.GHApi.ApiProvider.GetReleases(System.Int64,Exiled.Loader.GHApi.Settings.GetReleasesSettings,System.Net.Http.HttpClient)">
+            <summary>
+            Gets all releases from a git repository.
+            </summary>
+            <param name="repoId">The repository from which get the releases.</param>
+            <param name="settings">The settings.</param>
+            <param name="client">The <see cref="T:System.Net.Http.HttpClient"/>.</param>
+            <returns>A <see cref="T:Exiled.Loader.GHApi.Models.Release"/>[] containing all requested releases.</returns>
+        </member>
+        <member name="T:Exiled.Loader.GHApi.HttpClientExtensions">
+            <summary>
+            A set of extensions to be used along with https clients.
+            </summary>
+        </member>
+        <member name="M:Exiled.Loader.GHApi.HttpClientExtensions.GetReleases(System.Net.Http.HttpClient,System.Int64,Exiled.Loader.GHApi.Settings.GetReleasesSettings)">
+            <summary>
+            Gets all releases from a git repository.
+            </summary>
+            <param name="client">The <see cref="T:System.Net.Http.HttpClient"/>.</param>
+            <param name="repoId">The repository from which get the releases.</param>
+            <param name="settings">The settings.</param>
+            <returns>A <see cref="T:Exiled.Loader.GHApi.Models.Release"/>[] containing all requested releases.</returns>
+        </member>
+        <member name="T:Exiled.Loader.GHApi.Models.Release">
+            <summary>
+            An asset containing all release data.
+            </summary>
+        </member>
+        <member name="F:Exiled.Loader.GHApi.Models.Release.Id">
+            <summary>
+            The release's id.
+            </summary>
+        </member>
+        <member name="F:Exiled.Loader.GHApi.Models.Release.TagName">
+            <summary>
+            The release's tag name.
+            </summary>
+        </member>
+        <member name="F:Exiled.Loader.GHApi.Models.Release.PreRelease">
+            <summary>
+            A value indicating whether the release is a pre-release.
+            </summary>
+        </member>
+        <member name="F:Exiled.Loader.GHApi.Models.Release.CreatedAt">
+            <summary>
+            The release's creation date.
+            </summary>
+        </member>
+        <member name="F:Exiled.Loader.GHApi.Models.Release.Assets">
+            <summary>
+            The release's assets.
+            </summary>
+        </member>
+        <member name="M:Exiled.Loader.GHApi.Models.Release.#ctor(System.Int32,System.String,System.Boolean,System.DateTime,Exiled.Loader.GHApi.Models.ReleaseAsset[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Loader.GHApi.Models.Release"/> struct.
+            </summary>
+            <param name="id"><inheritdoc cref="F:Exiled.Loader.GHApi.Models.Release.Id"/></param>
+            <param name="tag_name"><inheritdoc cref="F:Exiled.Loader.GHApi.Models.Release.TagName"/></param>
+            <param name="prerelease"><inheritdoc cref="F:Exiled.Loader.GHApi.Models.Release.PreRelease"/></param>
+            <param name="created_at"><inheritdoc cref="F:Exiled.Loader.GHApi.Models.Release.CreatedAt"/></param>
+            <param name="assets"><inheritdoc cref="F:Exiled.Loader.GHApi.Models.Release.Assets"/></param>
+        </member>
+        <member name="T:Exiled.Loader.GHApi.Models.ReleaseAsset">
+            <summary>
+            An asset containing all information about a release.
+            </summary>
+        </member>
+        <member name="F:Exiled.Loader.GHApi.Models.ReleaseAsset.Id">
+            <summary>
+            The release's id.
+            </summary>
+        </member>
+        <member name="F:Exiled.Loader.GHApi.Models.ReleaseAsset.Name">
+            <summary>
+            The release's name.
+            </summary>
+        </member>
+        <member name="F:Exiled.Loader.GHApi.Models.ReleaseAsset.Size">
+            <summary>
+            The release's size.
+            </summary>
+        </member>
+        <member name="F:Exiled.Loader.GHApi.Models.ReleaseAsset.Url">
+            <summary>
+            The release's URL.
+            </summary>
+        </member>
+        <member name="F:Exiled.Loader.GHApi.Models.ReleaseAsset.BrowserDownloadUrl">
+            <summary>
+            The release's download URL.
+            </summary>
+        </member>
+        <member name="M:Exiled.Loader.GHApi.Models.ReleaseAsset.#ctor(System.Int32,System.String,System.Int32,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Loader.GHApi.Models.ReleaseAsset"/> struct.
+            </summary>
+            <param name="id"><inheritdoc cref="F:Exiled.Loader.GHApi.Models.ReleaseAsset.Id"/></param>
+            <param name="name"><inheritdoc cref="F:Exiled.Loader.GHApi.Models.ReleaseAsset.Name"/></param>
+            <param name="size"><inheritdoc cref="F:Exiled.Loader.GHApi.Models.ReleaseAsset.Size"/></param>
+            <param name="url"><inheritdoc cref="F:Exiled.Loader.GHApi.Models.ReleaseAsset.Url"/></param>
+            <param name="browser_download_url"><inheritdoc cref="F:Exiled.Loader.GHApi.Models.ReleaseAsset.BrowserDownloadUrl"/></param>
+        </member>
+        <member name="T:Exiled.Loader.GHApi.Settings.GetReleasesSettings">
+            <summary>
+            An asset containing all settings to be used when getting releases.
+            </summary>
+        </member>
+        <member name="F:Exiled.Loader.GHApi.Settings.GetReleasesSettings.PerPage">
+            <summary>
+            The amount of results per page to be shown.
+            </summary>
+        </member>
+        <member name="F:Exiled.Loader.GHApi.Settings.GetReleasesSettings.Page">
+            <summary>
+            The page.
+            </summary>
+        </member>
+        <member name="M:Exiled.Loader.GHApi.Settings.GetReleasesSettings.#ctor(System.Byte,System.UInt32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Loader.GHApi.Settings.GetReleasesSettings"/> struct.
+            </summary>
+            <param name="perPage"><inheritdoc cref="F:Exiled.Loader.GHApi.Settings.GetReleasesSettings.PerPage"/></param>
+            <param name="page"><inheritdoc cref="F:Exiled.Loader.GHApi.Settings.GetReleasesSettings.Page"/></param>
+        </member>
+        <member name="M:Exiled.Loader.GHApi.Settings.GetReleasesSettings.Build">
+            <summary>
+            Builds the query.
+            </summary>
+            <returns>A query containing the specified settings.</returns>
+        </member>
+        <member name="T:Exiled.Loader.LinuxPermission">
+            <summary>
+            A set of extensions to easily interact with Linux/Unix environment.
+            </summary>
+        </member>
+        <member name="M:Exiled.Loader.LinuxPermission.SetFileUserAndGroupReadWriteExecutePermissions(System.String)">
+            <summary>
+            Sets rw and execution permissions given a file, for the current user and group.
+            </summary>
+            <param name="path">The path of the file.</param>
+        </member>
         <member name="T:Exiled.Loader.Loader">
             <summary>
             Used to handle plugins.
@@ -456,6 +623,7 @@
             Runs the plugin manager, by loading all dependencies, plugins, configs and then enables all plugins.
             </summary>
             <param name="dependencies">The dependencies that could have been loaded by Exiled.Bootstrap.</param>
+            <returns>A MEC <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
         </member>
         <member name="M:Exiled.Loader.Loader.IsDerivedFromPlugin(System.Type)">
             <summary>
@@ -494,6 +662,98 @@
             <summary>
             Called by PluginAPI when the plugin is enabled.
             </summary>
+        </member>
+        <member name="T:Exiled.Loader.Models.ExiledLib">
+            <summary>
+            An asset containing all information about an assembly's version.
+            </summary>
+        </member>
+        <member name="F:Exiled.Loader.Models.ExiledLib.Library">
+            <summary>
+            The assembly.
+            </summary>
+        </member>
+        <member name="F:Exiled.Loader.Models.ExiledLib.Version">
+            <summary>
+            The version.
+            </summary>
+        </member>
+        <member name="M:Exiled.Loader.Models.ExiledLib.#ctor(System.Reflection.Assembly)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Loader.Models.ExiledLib"/> struct.
+            </summary>
+            <param name="lib"><inheritdoc cref="F:Exiled.Loader.Models.ExiledLib.Library"/></param>
+        </member>
+        <member name="M:Exiled.Loader.Models.ExiledLib.CompareTo(System.Object)">
+            <summary>
+            Compares the current instance with another object of the same type and returns
+            an integer that indicates whether the current instance precedes, follows, or
+            occurs in the same position in the sort order as the other object.
+            </summary>
+            <param name="obj">An object to compare with this instance.</param>
+            <returns>
+            A value that indicates the relative order of the objects being compared.
+            The return value has these meanings: Value Meaning Less than zero This instance precedes other in the sort order.
+            Zero This instance occurs in the same position in the sort order as other.
+            Greater than zero This instance follows other in the sort order.
+            </returns>
+        </member>
+        <member name="M:Exiled.Loader.Models.ExiledLib.CompareTo(Exiled.Loader.Models.ExiledLib)">
+            <summary>
+            Compares the current instance with another object of the same type and returns
+            an integer that indicates whether the current instance precedes, follows, or
+            occurs in the same position in the sort order as the other object.
+            </summary>
+            <param name="other">An object to compare with this instance.</param>
+            <returns>
+            A value that indicates the relative order of the objects being compared.
+            The return value has these meanings: Value Meaning Less than zero This instance precedes other in the sort order.
+            Zero This instance occurs in the same position in the sort order as other.
+            Greater than zero This instance follows other in the sort order.
+            </returns>
+        </member>
+        <member name="T:Exiled.Loader.Models.NewVersion">
+            <summary>
+            An asset containing all data about a new version.
+            </summary>
+        </member>
+        <member name="F:Exiled.Loader.Models.NewVersion.Release">
+            <summary>
+            The release.
+            </summary>
+        </member>
+        <member name="F:Exiled.Loader.Models.NewVersion.Asset">
+            <summary>
+            The asset of the release.
+            </summary>
+        </member>
+        <member name="M:Exiled.Loader.Models.NewVersion.#ctor(Exiled.Loader.GHApi.Models.Release,Exiled.Loader.GHApi.Models.ReleaseAsset)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Loader.Models.NewVersion"/> struct.
+            </summary>
+            <param name="release"><inheritdoc cref="F:Exiled.Loader.Models.NewVersion.Release"/></param>
+            <param name="asset"><inheritdoc cref="F:Exiled.Loader.Models.NewVersion.Asset"/></param>
+        </member>
+        <member name="T:Exiled.Loader.Models.TaggedRelease">
+            <summary>
+            An asset containing all information about a tagged release.
+            </summary>
+        </member>
+        <member name="F:Exiled.Loader.Models.TaggedRelease.Release">
+            <summary>
+            The release.
+            </summary>
+        </member>
+        <member name="F:Exiled.Loader.Models.TaggedRelease.Version">
+            <summary>
+            The asset of the release.
+            </summary>
+        </member>
+        <member name="M:Exiled.Loader.Models.TaggedRelease.#ctor(Exiled.Loader.GHApi.Models.Release)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Loader.Models.TaggedRelease"/> struct.
+            </summary>
+            <param name="release"><inheritdoc cref="F:Exiled.Loader.Models.TaggedRelease.Release"/></param>
         </member>
         <member name="T:Exiled.Loader.PathExtensions">
             <summary>
@@ -590,6 +850,33 @@
             </summary>
             <param name="plugin">The plugin which its translations will be loaded.</param>
             <returns>The translation of the desired plugin.</returns>
+        </member>
+        <member name="T:Exiled.Loader.Updater">
+            <summary>
+            A tool to automatically handle updates.
+            </summary>
+        </member>
+        <member name="P:Exiled.Loader.Updater.Instance">
+            <summary>
+            Gets the updater instance.
+            </summary>
+        </member>
+        <member name="P:Exiled.Loader.Updater.Busy">
+            <summary>
+            Gets a value indicating whether the updater is busy.
+            </summary>
+        </member>
+        <member name="M:Exiled.Loader.Updater.Initialize(Exiled.Loader.Config)">
+            <summary>
+            Initializes the updater.
+            </summary>
+            <param name="config">The loader config.</param>
+            <returns>The updater instance.</returns>
+        </member>
+        <member name="M:Exiled.Loader.Updater.CheckUpdate">
+            <summary>
+            Looks for any updates.
+            </summary>
         </member>
     </members>
 </doc>

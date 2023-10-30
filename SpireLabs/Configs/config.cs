@@ -9,6 +9,7 @@ namespace SpireLabs
         public bool enabled { get; set; }
         public int healthOverride { get; set; }
     }
+
     public class ScalingData
     {
         public bool enabled { get; set; }
@@ -31,6 +32,7 @@ namespace SpireLabs
         public OverrideData Scp106Override { get; set; } = new OverrideData { enabled = false, healthOverride = 0 };
         public OverrideData Scp173Override { get; set; } = new OverrideData { enabled = false, healthOverride = 0 };
         public OverrideData Scp939Override { get; set; } = new OverrideData { enabled = false, healthOverride = 0 };
+        public OverrideData Scp3114Override { get; set; } = new OverrideData { enabled = false, healthOverride = 0 };
         public OverrideData CaptainOverride { get; set; } = new OverrideData { enabled = false, healthOverride = 0 };
         [Description("Amount of health per player to add:")]
         public ScalingData Scp049 { get; set; } = new ScalingData { enabled = true, healthIncrease = 0 };
@@ -40,6 +42,7 @@ namespace SpireLabs
         public ScalingData Scp106 { get; set; } = new ScalingData { enabled = true, healthIncrease = 0 };
         public ScalingData Scp173 { get; set; } = new ScalingData { enabled = true, healthIncrease = 0 };
         public ScalingData Scp939 { get; set; } = new ScalingData { enabled = true, healthIncrease = 0 };
+        public ScalingData Scp3114 { get; set; } = new ScalingData { enabled = true, healthIncrease = 0 };
         [Description("Roles to consider:")]
         public bool classd { get; set; }
         public bool scientist { get; set; }
@@ -51,5 +54,7 @@ namespace SpireLabs
         public UnityEngine.Vector3 spawnRoomVector3 { get; set; } = new UnityEngine.Vector3((float)-9.94, 1005, (float)82.37);
         [Description("Use Lobby Function?")]
         public bool lobbyEnabled { get; set; } = false;
+        [Description("SCP3114 Damage Override")]
+        public int Scp3114Damage { get; set; } = 10;
     }
 }

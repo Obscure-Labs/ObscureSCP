@@ -64,9 +64,11 @@ namespace SpireLabs.Items
             ev.Player.EnableEffect(EffectType.DamageReduction,15);
             ev.Player.ChangeEffectIntensity(EffectType.DamageReduction, 10, 15);
             ev.Player.EnableEffect(EffectType.Concussed, 15);
+            ev.Player.ChangeEffectIntensity(EffectType.Concussed, 1, 15);
             ev.Player.EnableEffect(EffectType.MovementBoost, 15);
             ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 35, 15);
             ev.Player.EnableEffect(EffectType.Deafened, 15);
+            ev.Player.ChangeEffectIntensity(EffectType.Deafened, 1, 15);
             ev.Player.EnableEffect(EffectType.Invigorated, 15);
             ev.Player.ChangeEffectIntensity(EffectType.Invigorated, 15, 15);
         }

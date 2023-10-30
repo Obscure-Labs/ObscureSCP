@@ -19,6 +19,7 @@
     using UCRAPI = UncomplicatedCustomRoles.API.Features.Manager;
     using Exiled.Loader;
     using Exiled.API.Features.Toys;
+    using SpireSCP.GUI.API.Features;
 
     public class Plugin : Plugin<config>
     {
@@ -42,6 +43,8 @@
         public static OverrideData OScp106;
         public static OverrideData OScp173;
         public static OverrideData OScp939;
+        public static OverrideData OScp3114;
+        public static int Scp3114DMG;
         public static OverrideData OCaptain;
 
         public static ScalingData Scp049;
@@ -51,6 +54,7 @@
         public static ScalingData Scp106;
         public static ScalingData Scp173;
         public static ScalingData Scp939;
+        public static ScalingData Scp3114;
 
         public static bool classd;
         public static bool scientist;
@@ -146,7 +150,7 @@
             RegisterEvents();
             _harmony = new("DevDummies-Rotation-Patch");
             _harmony.PatchAll();
-
+            
             Log.SendRaw("[KevinIsBent] [SpireLabs]\n\r\n .d8888b.           d8b                 .d8888b.   .d8888b.  8888888b.  \r\nd88P  Y88b          Y8P                d88P  Y88b d88P  Y88b 888   Y88b \r\nY88b.                                  Y88b.      888    888 888    888 \r\n \"Y888b.   88888b.  888 888d888 .d88b.  \"Y888b.   888        888   d88P \r\n    \"Y88b. 888 \"88b 888 888P\"  d8P  Y8b    \"Y88b. 888        8888888P\"  \r\n      \"888 888  888 888 888    88888888      \"888 888    888 888        \r\nY88b  d88P 888 d88P 888 888    Y8b.    Y88b  d88P Y88b  d88P 888        \r\n \"Y8888P\"  88888P\"  888 888     \"Y8888  \"Y8888P\"   \"Y8888P\"  888        \r\n           888                                                          \r\n           888                                                          \r\n           888                                                          \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n", color: ConsoleColor.DarkMagenta);
             if (Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Spire/"))
             {
@@ -170,6 +174,7 @@
             OScp106 = Config.Scp106Override;
             OScp173 = Config.Scp173Override;
             OScp939 = Config.Scp939Override;
+            OScp3114 = Config.Scp3114Override;
             OCaptain = Config.CaptainOverride;
 
             Scp049 = Config.Scp049;
@@ -179,6 +184,7 @@
             Scp106 = Config.Scp106;
             Scp173 = Config.Scp173;
             Scp939 = Config.Scp939;
+            Scp3114 = Config.Scp3114;
 
             classd = Config.classd;
             scientist = Config.scientist;
@@ -190,7 +196,7 @@
             lobbyVector = Config.spawnRoomVector3;
             isLobbyEnabledConfig = Config.lobbyEnabled;
 
-
+            Scp3114DMG = Config.Scp3114Damage;
             //file = File.ReadAllLines(@"C:\Users\Kevin\AppData\Roaming\EXILED\Configs\Spire/lines.txt");
             Timing.RunCoroutine(ShowHint());
             inLobby = false;
@@ -228,7 +234,7 @@
         private void joinMsg(VerifiedEventArgs ev)
         {
             
-            Timing.RunCoroutine(guiHandler.sendJoinLeave(ev.Player, 'j'));
+            Manager.SendJoinLeave(ev.Player, 'j');
         }
 
         private void died(DyingEventArgs ev)
@@ -238,7 +244,7 @@
 
         private void left(LeftEventArgs ev)
         {
-            Timing.RunCoroutine(guiHandler.sendJoinLeave(ev.Player, 'l'));
+            Manager.SendJoinLeave(ev.Player, 'l');
         }
 
 
@@ -264,13 +270,13 @@
             //        hint += "\n";
             //    }
             //}
-            Timing.RunCoroutine(guiHandler.sendHint(ev.Player, hint, 5));
+            Manager.SendHint(ev.Player, hint, 5);
             
         }
 
         private void restarting()
         {
-            guiHandler.killLoop = true;
+            Manager.killLoop(true);
             if (realRoundEnd)
             {
                 Exiled.API.Features.Log.Info("Restarting the round (real restart)");
@@ -411,9 +417,8 @@
 
        private void Player_Joined(JoinedEventArgs ev)
         {
-            
-            guiHandler.killLoop = false;
-            Timing.RunCoroutine(guiHandler.displayGUI(ev.Player));
+
+            Manager.killLoop(false);
             lastId = string.Empty;
            ConMet = false;
            playerCount++;
@@ -476,6 +481,10 @@
                 //Log.Info($"Conk hit {ev.Player.DisplayNickname}");
                 ev.Amount *= (cokeDPS / 100);
             }
+             if(ev.DamageHandler.Type == DamageType.Scp3114)
+            {
+                ev.Amount = Scp3114DMG;
+            }
          } 
          public static void Item_KeycardInteracting(KeycardInteractingEventArgs ev)
          {
@@ -494,6 +503,102 @@
                         case 2: ev.Player.Scale = Vector3.one * 0.7f; break;
                     }
                 }
+            }
+            Player p = ev.Player;
+            int humanPlayers = 0;
+            foreach(Player rP in Player.List)
+            {
+                if (rP.IsHuman)
+                {
+                    humanPlayers++;
+                }
+            }
+            switch (p.RoleManager.CurrentRole.RoleTypeId)
+            {
+                case RoleTypeId.Scp049:
+                    if (OScp049.enabled)
+                    {
+                        p.MaxHealth = OScp049.healthOverride;
+                    }
+                    Task.Delay(50);
+                    if (Scp049.enabled)
+                    {
+                        p.MaxHealth += (Scp049.healthIncrease * humanPlayers);
+                        p.Heal(p.MaxHealth);
+                    }
+                    break;
+                case RoleTypeId.Scp079:
+                    if (OScp079.enabled)
+                    {
+                        p.MaxHealth = OScp079.healthOverride;
+                    }
+                    Task.Delay(50);
+                    if (Scp079.enabled)
+                    { 
+                        p.MaxHealth += (Scp079.healthIncrease * humanPlayers);
+                        p.Heal(p.MaxHealth);
+                    }
+                    break;
+                case RoleTypeId.Scp096:
+                    if (OScp096.enabled)
+                    {
+                        p.MaxHealth = OScp096.healthOverride;
+                    }
+                    Task.Delay(50);
+                    if (Scp096.enabled)
+                    {
+                        p.MaxHealth += (Scp096.healthIncrease * humanPlayers);
+                        p.Heal(p.MaxHealth);
+                    }
+                    break;
+                case RoleTypeId.Scp106:
+                    if (OScp106.enabled)
+                    {
+                        p.MaxHealth = OScp106.healthOverride;
+                    }
+                    Task.Delay(50);
+                    if (Scp106.enabled)
+                    {
+                        p.MaxHealth += (Scp106.healthIncrease * humanPlayers);
+                        p.Heal(p.MaxHealth);
+                    }
+                    break;
+                case RoleTypeId.Scp173:
+                    if (OScp173.enabled)
+                    {
+                        p.MaxHealth = OScp173.healthOverride;
+                    }
+                    Task.Delay(50);
+                    if (Scp173.enabled)
+                    {
+                        p.MaxHealth += (Scp173.healthIncrease * humanPlayers);
+                        p.Heal(p.MaxHealth);
+                    }
+                    break;
+                case RoleTypeId.Scp939:
+                    if (OScp939.enabled)
+                    {
+                        p.MaxHealth = OScp939.healthOverride;
+                    }
+                    Task.Delay(50);
+                    if (Scp939.enabled)
+                    {
+                        p.MaxHealth += (Scp939.healthIncrease * humanPlayers);
+                        p.Heal(p.MaxHealth);
+                    }
+                    break;
+                case RoleTypeId.Scp3114:
+                    if (OScp3114.enabled)
+                    {
+                        p.MaxHealth = OScp3114.healthOverride;
+                    }
+                    Task.Delay(50);
+                    if (Scp939.enabled)
+                    {
+                        p.MaxHealth += (Scp3114.healthIncrease * humanPlayers);
+                        p.Heal(p.MaxHealth);
+                    }
+                    break;
             }
 
             Timing.RunCoroutine(customRoles.CheckRoles(ev.Player));
@@ -552,7 +657,7 @@
                 {
                     if (!p.IsDead)
                     {
-                        Timing.RunCoroutine(guiHandler.sendHint(p, hintMessage, 5));
+                        Manager.SendHint(p, hintMessage, 5);
                     }
 
                 }
@@ -585,7 +690,7 @@
         {
             while (true)
             {
-                if (guiHandler.killLoop) break;
+                if (Manager.checkLoop()) break;
                 var roomFlicker = Room.Random(ZoneType.LightContainment);
                 roomFlicker.TurnOffLights(0.15f);
                 yield return Timing.WaitForSeconds(1);
@@ -606,7 +711,7 @@
         private IEnumerator<float> lockAnounce()
         {
             yield return Timing.WaitForSeconds(600);
-            if (guiHandler.killLoop) { }
+            if (Manager.checkLoop()) { }
             else
             {
                 Cassie.Message(@"jam_043_3 Surface armory has been opened for all jam_020_3 pitch_0.8 warhead pitch_1 authorized personnel . . . enter with pitch_0.7 jam_010_1 caution", false, false, true);
@@ -615,7 +720,6 @@
 
         void OnRoundStart()
          {
-            guiHandler.startHints();
             //Exiled.API.Features.Server.Broadcast.SendMessage("Lobby initialised. Awaiting round start.");
             //while(Exiled.API.Features.Player.List.Count() < 2)
             //{
@@ -677,81 +781,81 @@
              }
              foreach (Player p in SCPS)
              {
-                 switch (p.RoleManager.CurrentRole.RoleTypeId)
-                 {
-                     case RoleTypeId.Scp049:
-                         if (OScp049.enabled)
-                         {
-                             p.MaxHealth = OScp049.healthOverride;
-                         }
-                         Task.Delay(50);
-                         if (Scp049.enabled)
-                         {
-                             p.MaxHealth += (Scp049.healthIncrease * humanPlayers);
-                             p.Heal(p.MaxHealth);
-                         }
-                         break;
-                     case RoleTypeId.Scp079:
-                         if (OScp079.enabled)
-                         {
-                             p.MaxHealth = OScp079.healthOverride;
-                         }
-                         Task.Delay(50);
-                         if (Scp079.enabled)
-                         {
-                             p.MaxHealth += (Scp079.healthIncrease * humanPlayers);
-                             p.Heal(p.MaxHealth);
-                         }
-                         break;
-                     case RoleTypeId.Scp096:
-                         if (OScp096.enabled)
-                         {
-                             p.MaxHealth = OScp096.healthOverride;
-                         }
-                         Task.Delay(50);
-                         if (Scp096.enabled)
-                         {
-                             p.MaxHealth += (Scp096.healthIncrease * humanPlayers);
-                             p.Heal(p.MaxHealth);
-                         }
-                         break;
-                     case RoleTypeId.Scp106:
-                         if (OScp106.enabled)
-                         {
-                             p.MaxHealth = OScp106.healthOverride;
-                         }
-                         Task.Delay(50);
-                         if (Scp106.enabled)
-                         {
-                             p.MaxHealth += (Scp106.healthIncrease * humanPlayers);
-                             p.Heal(p.MaxHealth);
-                         }
-                         break;
-                     case RoleTypeId.Scp173:
-                         if (OScp173.enabled)
-                         {
-                             p.MaxHealth = OScp173.healthOverride;
-                         }
-                         Task.Delay(50);
-                         if (Scp173.enabled)
-                         {
-                             p.MaxHealth += (Scp173.healthIncrease * humanPlayers);
-                             p.Heal(p.MaxHealth);
-                         }
-                         break;
-                     case RoleTypeId.Scp939:
-                         if (OScp939.enabled)
-                         {
-                             p.MaxHealth = OScp939.healthOverride;
-                         }
-                         Task.Delay(50);
-                         if (Scp939.enabled)
-                         {
-                             p.MaxHealth += (Scp939.healthIncrease * humanPlayers);
-                             p.Heal(p.MaxHealth);
-                         }
-                         break;
-                 }
+                 //switch (p.RoleManager.CurrentRole.RoleTypeId)
+                 //{
+                 //    case RoleTypeId.Scp049:
+                 //        if (OScp049.enabled)
+                 //        {
+                 //            p.MaxHealth = OScp049.healthOverride;
+                 //        }
+                 //        Task.Delay(50);
+                 //        if (Scp049.enabled)
+                 //        {
+                 //            p.MaxHealth += (Scp049.healthIncrease * humanPlayers);
+                 //            p.Heal(p.MaxHealth);
+                 //        }
+                 //        break;
+                 //    case RoleTypeId.Scp079:
+                 //        if (OScp079.enabled)
+                 //        {
+                 //            p.MaxHealth = OScp079.healthOverride;
+                 //        }
+                 //        Task.Delay(50);
+                 //        if (Scp079.enabled)
+                 //        {
+                 //            p.MaxHealth += (Scp079.healthIncrease * humanPlayers);
+                 //            p.Heal(p.MaxHealth);
+                 //        }
+                 //        break;
+                 //    case RoleTypeId.Scp096:
+                 //        if (OScp096.enabled)
+                 //        {
+                 //            p.MaxHealth = OScp096.healthOverride;
+                 //        }
+                 //        Task.Delay(50);
+                 //        if (Scp096.enabled)
+                 //        {
+                 //            p.MaxHealth += (Scp096.healthIncrease * humanPlayers);
+                 //            p.Heal(p.MaxHealth);
+                 //        }
+                 //        break;
+                 //    case RoleTypeId.Scp106:
+                 //        if (OScp106.enabled)
+                 //        {
+                 //            p.MaxHealth = OScp106.healthOverride;
+                 //        }
+                 //        Task.Delay(50);
+                 //        if (Scp106.enabled)
+                 //        {
+                 //            p.MaxHealth += (Scp106.healthIncrease * humanPlayers);
+                 //            p.Heal(p.MaxHealth);
+                 //        }
+                 //        break;
+                 //    case RoleTypeId.Scp173:
+                 //        if (OScp173.enabled)
+                 //        {
+                 //            p.MaxHealth = OScp173.healthOverride;
+                 //        }
+                 //        Task.Delay(50);
+                 //        if (Scp173.enabled)
+                 //        {
+                 //            p.MaxHealth += (Scp173.healthIncrease * humanPlayers);
+                 //            p.Heal(p.MaxHealth);
+                 //        }
+                 //        break;
+                 //    case RoleTypeId.Scp939:
+                 //        if (OScp939.enabled)
+                 //        {
+                 //            p.MaxHealth = OScp939.healthOverride;
+                 //        }
+                 //        Task.Delay(50);
+                 //        if (Scp939.enabled)
+                 //        {
+                 //            p.MaxHealth += (Scp939.healthIncrease * humanPlayers);
+                 //            p.Heal(p.MaxHealth);
+                 //        }
+                 //        break;
+                 //}
              }
          }
     }

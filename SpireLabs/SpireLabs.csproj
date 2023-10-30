@@ -36,53 +36,54 @@
       <HintPath>..\refs\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\packages\EXILED.8.2.1\lib\net48\Assembly-CSharp-Publicized.dll</HintPath>
+      <HintPath>..\packages\EXILED.8.3.6\lib\net48\Assembly-CSharp-Publicized.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
       <HintPath>..\refs\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
-    <Reference Include="AudioPlayer">
-      <HintPath>..\..\..\..\Downloads\AudioPlayer.dll</HintPath>
+    <Reference Include="Assembly-CSharp-Publicized, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EXILED.8.3.6\lib\net48\Assembly-CSharp-Publicized.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="CommandSystem.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\EXILED.8.2.1\lib\net48\CommandSystem.Core.dll</HintPath>
+      <HintPath>..\packages\EXILED.8.3.6\lib\net48\CommandSystem.Core.dll</HintPath>
     </Reference>
     <Reference Include="CustomItems, Version=1.8.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CustomItems.1.8.2\lib\net472\CustomItems.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.API, Version=8.2.1.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\EXILED.8.2.1\lib\net48\Exiled.API.dll</HintPath>
+    <Reference Include="Exiled.API, Version=8.3.6.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\EXILED.8.3.6\lib\net48\Exiled.API.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.CreditTags, Version=8.2.1.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\EXILED.8.2.1\lib\net48\Exiled.CreditTags.dll</HintPath>
+    <Reference Include="Exiled.CreditTags, Version=8.3.6.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\EXILED.8.3.6\lib\net48\Exiled.CreditTags.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.CustomItems, Version=8.2.1.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\EXILED.8.2.1\lib\net48\Exiled.CustomItems.dll</HintPath>
+    <Reference Include="Exiled.CustomItems, Version=8.3.6.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\EXILED.8.3.6\lib\net48\Exiled.CustomItems.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.CustomRoles, Version=8.2.1.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\EXILED.8.2.1\lib\net48\Exiled.CustomRoles.dll</HintPath>
+    <Reference Include="Exiled.CustomRoles, Version=8.3.6.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\EXILED.8.3.6\lib\net48\Exiled.CustomRoles.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Events, Version=8.2.1.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\EXILED.8.2.1\lib\net48\Exiled.Events.dll</HintPath>
+    <Reference Include="Exiled.Events, Version=8.3.6.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\EXILED.8.3.6\lib\net48\Exiled.Events.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Loader, Version=8.2.1.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\EXILED.8.2.1\lib\net48\Exiled.Loader.dll</HintPath>
+    <Reference Include="Exiled.Loader, Version=8.3.6.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\EXILED.8.3.6\lib\net48\Exiled.Loader.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Permissions, Version=8.2.1.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\EXILED.8.2.1\lib\net48\Exiled.Permissions.dll</HintPath>
-    </Reference>
-    <Reference Include="Exiled.Updater, Version=3.1.2.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\EXILED.8.2.1\lib\net48\Exiled.Updater.dll</HintPath>
+    <Reference Include="Exiled.Permissions, Version=8.3.6.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\EXILED.8.3.6\lib\net48\Exiled.Permissions.dll</HintPath>
     </Reference>
     <Reference Include="Mirror">
       <HintPath>..\refs\Mirror.dll</HintPath>
     </Reference>
     <Reference Include="NorthwoodLib, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\EXILED.8.2.1\lib\net48\NorthwoodLib.dll</HintPath>
+      <HintPath>..\packages\EXILED.8.3.6\lib\net48\NorthwoodLib.dll</HintPath>
     </Reference>
-    <Reference Include="PluginAPI, Version=12.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\EXILED.8.2.1\lib\net48\PluginAPI.dll</HintPath>
+    <Reference Include="PluginAPI, Version=13.1.2.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\EXILED.8.3.6\lib\net48\PluginAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="SpireSCP.GUI">
+      <HintPath>..\refs\SpireSCP.GUI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -105,28 +106,30 @@
       <HintPath>..\refs\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
     <Reference Include="YamlDotNet, Version=11.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e, processorArchitecture=MSIL">
-      <HintPath>..\packages\EXILED.8.2.1\lib\net48\YamlDotNet.dll</HintPath>
+      <HintPath>..\packages\EXILED.8.3.6\lib\net48\YamlDotNet.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SCPs\boner.cs" />
     <Compile Include="customRoles.cs" />
     <Compile Include="guiHandler.cs" />
     <Compile Include="IDthief.cs" />
     <Compile Include="Configs\ItemConfig.cs" />
     <Compile Include="Items\sniper.cs" />
-    <Compile Include="larry.cs" />
+    <Compile Include="SCPs\larry.cs" />
     <Compile Include="coin.cs" />
     <Compile Include="Configs\config.cs" />
-    <Compile Include="doctor.cs" />
+    <Compile Include="SCPs\doctor.cs" />
     <Compile Include="Items\essentialOils.cs" />
     <Compile Include="plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="theNut.cs" />
-    <Compile Include="zombieHandler.cs" />
+    <Compile Include="SCPs\theNut.cs" />
+    <Compile Include="SCPs\zombieHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
