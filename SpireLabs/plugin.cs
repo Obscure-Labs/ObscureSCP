@@ -217,6 +217,8 @@
             Exiled.Events.Handlers.Player.Spawned += IDThief.Player_Spawned;
             Exiled.Events.Handlers.Player.FlippingCoin += coin.Player_FlippingCoin;
             Exiled.Events.Handlers.Player.Joined += Player_Joined;
+            Exiled.Events.Handlers.Player.Verified += profiles.OnPlayerJoined;
+            Exiled.Events.Handlers.Player.Left += profiles.OnPlayerLeave;
             Exiled.Events.Handlers.Player.PreAuthenticating += Authing;
             Exiled.Events.Handlers.Server.RestartingRound += restarting;
             Exiled.Events.Handlers.Player.ChangedItem += item_change;
@@ -273,6 +275,8 @@
             Manager.SendHint(ev.Player, hint, 5);
             
         }
+
+        
 
         private void restarting()
         {

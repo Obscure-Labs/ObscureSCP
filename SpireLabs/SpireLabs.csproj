@@ -42,9 +42,8 @@
     <Reference Include="Assembly-CSharp-firstpass">
       <HintPath>..\refs\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp-Publicized, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\EXILED.8.3.6\lib\net48\Assembly-CSharp-Publicized.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="AudioPlayer">
+      <HintPath>..\refs\AudioPlayer.dll</HintPath>
     </Reference>
     <Reference Include="CommandSystem.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EXILED.8.3.6\lib\net48\CommandSystem.Core.dll</HintPath>
@@ -87,6 +86,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -110,6 +110,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Jukebox\JBPlay.cs" />
+    <Compile Include="profiles.cs" />
     <Compile Include="SCPs\boner.cs" />
     <Compile Include="customRoles.cs" />
     <Compile Include="guiHandler.cs" />
