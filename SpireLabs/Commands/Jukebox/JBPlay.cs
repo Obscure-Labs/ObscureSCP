@@ -83,7 +83,6 @@ namespace SpireLabs.Commands.Jukebox
                         Log.Warn(i);
                     }
                     AudioPlayer.API.AudioController.PlayFromFilePlayer(l, filder.ElementAt(audioID), false, 4, VoiceChat.VoiceChatChannel.Proximity);
-                    AudioPlayer.API.AudioController.StopPlayerFromPlaying(s);
                     response = $"Now playing: {filder.ElementAt(audioID).Replace(".ogg", "").Replace(@"C:\Users\Kevin\AppData\Roaming\EXILED\Configs\Spire\Audio\", "")}!";
                     return true;
                 }
@@ -98,9 +97,19 @@ namespace SpireLabs.Commands.Jukebox
             }
             if (arguments.FirstElement().ToLower() == "toggle")
             {
-                if (!profiles.Profiles.FirstOrDefault(x => x.steam64 == Player.Get(sender).UserId).audioToggle) response = $"You toggled the jukebox on!"; else response = $"You toggled the jukebox off!";
-                AudioPlayer.API.AudioController.StopPlayerFromPlaying(new List<int> { Player.Get(sender).Id });
-                profiles.toggleAudio(Player.Get(sender));
+                if (!profiles.Profiles.FirstOrDefault(x => x.steam64 == Player.Get(sender).UserId).audioToggle)
+                {
+                    profiles.toggleAudio(Player.Get(sender));
+                    response = $"You toggled the jukebox on!";
+                }
+                else
+                {
+                    profiles.toggleAudio(Player.Get(sender));
+                    response = $"You toggled the jukebox off!";
+                    AudioPlayer.API.AudioController.StopPlayerFromPlaying(new List<int> { Player.Get(sender).Id });
+                }
+
+
 
                 return false;
             }
