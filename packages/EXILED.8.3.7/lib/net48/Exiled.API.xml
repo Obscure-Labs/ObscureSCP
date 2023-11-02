@@ -15711,6 +15711,16 @@
             Gets the <see cref="T:PlayerRoles.PlayableScps.Scp3114.Scp3114Role"/> instance.
             </summary>
         </member>
+        <member name="P:Exiled.API.Features.Roles.Scp3114Role.SlapDamage">
+            <summary>
+            Gets the damage amount of SCP-3114's slap ability.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.Scp3114Role.StrangleTarget">
+            <summary>
+            Gets the current target of SCP-3114's strangle ability. Can be <see langword="null"/>.
+            </summary>
+        </member>
         <member name="P:Exiled.API.Features.Roles.Scp3114Role.StolenRole">
             <summary>
             Gets or sets the SCP-3114's Stolen Role.
@@ -15728,7 +15738,7 @@
         </member>
         <member name="P:Exiled.API.Features.Roles.Scp3114Role.DisguiseStatus">
             <summary>
-            Gets or sets the SCP-3114's UnitId used for it's FakeIdentity.
+            Gets or sets current state of SCP-3114's disguise ability.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Roles.Scp3114Role.DisguiseDuration">

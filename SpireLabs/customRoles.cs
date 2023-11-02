@@ -12,6 +12,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UCRAPI = UncomplicatedCustomRoles.API.Features.Manager;
 using SpireSCP.GUI.API.Features;
+using Exiled.API.Enums;
+using System.Xml.Linq;
 
 namespace SpireLabs
 {
@@ -49,16 +51,17 @@ namespace SpireLabs
             if (UCRAPI.HasCustomRole(p))
             {
                 UCRID = UCRAPI.Get(p).Id;
-                var plData = rd.SingleOrDefault(x => x.player.NetId == p.NetId) ?? null;
-                if (plData == null)
-                {
-                    rd.Add(new roleData { player = p, UCRID = UCRID });
-                }
 
                 if (UCRID == 4)
                 {
                     yield return Timing.WaitForSeconds(6);
                     Manager.SendHint(p, $"<b>The currently active SCP subjects are: {scps}", 7);
+                }
+
+                if (UCRID == 10)
+                {
+                    yield return Timing.WaitForSeconds(1);
+                    p.EnableEffect(EffectType.Marshmallow);
                 }
 
                 if (UCRID == 3)

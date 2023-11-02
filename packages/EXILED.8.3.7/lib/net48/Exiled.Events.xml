@@ -1715,13 +1715,13 @@
                 Contains all information before a player cancels usage of an item.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.CancelledItemUseEventArgs.#ctor(Exiled.API.Features.Player,InventorySystem.Items.Usables.UsableItem)">
+        <member name="M:Exiled.Events.EventArgs.Player.CancelledItemUseEventArgs.#ctor(Exiled.API.Features.Player,Exiled.API.Features.Items.Item)">
             <summary>
                 Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.CancelledItemUseEventArgs" /> class.
             </summary>
             <param name="player">The player who's stopping the use of an item.</param>
             <param name="item">
-                <inheritdoc cref="P:Exiled.Events.EventArgs.Player.UsedItemEventArgs.Item" />
+                <inheritdoc cref="P:Exiled.Events.EventArgs.Player.CancelledItemUseEventArgs.Usable" />
             </param>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.CancelledItemUseEventArgs.Usable">

@@ -231,6 +231,8 @@
         internal static IEnumerator<float> fixedScpBoost(Player p)
         {
             yield return Timing.WaitForOneFrame;
+            p.EnableEffect(EffectType.MovementBoost, 15f);
+            p.EnableEffect(EffectType.MovementBoost, 30, 15f);
             for (int j = 0; j < 40; j++)
             {
                 Manager.SendHint(p, "You provide speed to all SCP entities nearby!", 0.75f);
@@ -249,7 +251,7 @@
                     } while (!Player.TryGet(h.collider, out ppp) && loopCntr != 5);
                     if (ppp == null) continue;
                     if (Math.Sqrt((Math.Pow((nP.Position.x - ppp.Position.x), 2)) + (Math.Pow((nP.Position.y - ppp.Position.y), 2))) > 10) continue;
-                    if (!ppp.IsHuman)
+                    if (!ppp.IsHuman && ppp != p)
                     {
                         //Log.Info($"{ppp.DisplayNickname} is {ppp.Role.Name} this role is {ppp.IsHuman}");
                         Manager.SendHint(ppp, "You are recieving a speed boost from a nearby doctor!", 0.75f);
@@ -281,7 +283,7 @@
                     } while (!Player.TryGet(h.collider, out ppp) && loopCntr != 5);
                     if (ppp == null) continue;
                     if (Math.Sqrt((Math.Pow((nP.Position.x - ppp.Position.x), 2)) + (Math.Pow((nP.Position.y - ppp.Position.y), 2))) > 10) continue;
-                    if (!ppp.IsHuman)
+                    if (!ppp.IsHuman && ppp != p)
                     {
                         //Log.Info($"{ppp.DisplayNickname} is {ppp.Role.Name} this role is {ppp.IsHuman}");
                         Manager.SendHint(ppp, "You are recieving HS points from a nearby doctor!", 1.15f);

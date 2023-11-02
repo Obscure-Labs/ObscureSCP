@@ -1,4 +1,4 @@
-﻿namespace SpireLabs
+namespace SpireLabs
 {
     using Exiled.API.Enums;
     using Exiled.API.Features;
@@ -20,6 +20,10 @@
     using Exiled.Loader;
     using Exiled.API.Features.Toys;
     using SpireSCP.GUI.API.Features;
+    using Interactables.Interobjects.DoorUtils;
+    using InventorySystem.Items;
+    using Exiled.API.Extensions;
+    using static SpireLabs.customRoles;
 
     public class Plugin : Plugin<config>
     {
@@ -229,10 +233,41 @@
             Exiled.Events.Handlers.Player.Left += left;
             Exiled.Events.Handlers.Player.Verified += joinMsg;
             Exiled.Events.Handlers.Player.Dying += died;
-            //Exiled.Events.Handlers.Server.RespawningTeam += customRoles.spawnWave;
+            Exiled.Events.Handlers.Scp3114.Disguised += boner.OnDisguise;
+            Exiled.Events.Handlers.Scp3114.Revealed += boner.OnReveal;
+            Exiled.Events.Handlers.Player.DryfiringWeapon += eventone;
+            Exiled.Events.Handlers.Player.InteractingDoor += mallowDoor;
             CustomItem.RegisterItems();
         }
-        
+
+        void mallowDoor(InteractingDoorEventArgs ev)
+        {
+            if(UCRAPI.HasCustomRole(ev.Player))
+            {
+                if (UCRAPI.Get(ev.Player).Id == 10)
+                {
+                    if (ev.Door.IsKeycardDoor)
+                    {
+                        if (ev.Door.Type != DoorType.Scp106Primary && ev.Door.Type != DoorType.Scp106Secondary && !ev.Door.IsLocked)
+                        {
+                            ev.Door.IsOpen = !ev.Door.IsOpen;
+                        }
+                    }
+                }
+            }
+        }
+        void eventone(DryfiringWeaponEventArgs ev)
+        {
+            if(ev.Player.CurrentItem.Type == ItemType.Marshmallow)
+            {
+                Log.Warn("dryfire");
+            }
+            if(ev.Player.Role == RoleTypeId.Scp3114)
+            {
+                Log.Warn("The boner dryfired !!!!!!!!!!!!!!!! lmao");
+            }
+        }
+
         private void joinMsg(VerifiedEventArgs ev)
         {
             
