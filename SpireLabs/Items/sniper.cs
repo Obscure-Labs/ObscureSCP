@@ -78,14 +78,14 @@ namespace SpireLabs.Items
             if (ev.Attacker == null || ev.Attacker.CurrentItem == null) return;
             if (!Check(ev.Attacker.CurrentItem))
             {
-                Log.Info($"Item {ev.Attacker.CurrentItem.ToString()} was deemed to be NOT a custom item");
+                Log.Debug($"Item {ev.Attacker.CurrentItem.ToString()} was deemed to be NOT a custom item");
                 return;
             }
-            Log.Info($"Item {ev.Attacker.CurrentItem.ToString()} was deemed to be a custom item");
+            Log.Debug($"Item {ev.Attacker.CurrentItem.ToString()} was deemed to be a custom item");
             if (ev.Player.Role == RoleTypeId.Scp173 || ev.Player.Role == RoleTypeId.Scp049 || ev.Player.Role == RoleTypeId.Scp0492 || ev.Player.Role == RoleTypeId.Scp096 || ev.Player.Role == RoleTypeId.Scp106)
             {
                 ev.Player.Hurt(ev.Attacker, 200f, DamageType.Revolver, null);
-                Log.Warn("should have taken 400 damage");
+                Log.Debug("should have taken 400 damage");
             }
         }
     }
