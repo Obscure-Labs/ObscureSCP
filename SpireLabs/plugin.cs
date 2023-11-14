@@ -530,22 +530,12 @@ namespace SpireLabs
              Log.Info($"Door opened, requires: {ev.Door.RequiredPermissions.RequiredPermissions}");
         }
 
-        private void Player_Spawned(SpawnedEventArgs ev)
+        private IEnumerator<float> OverrideHealth(SpawnedEventArgs ev)
         {
-            if(ev.Player.Role == RoleTypeId.Scp0492)
-            {
-                var plData = customRoles.rd.SingleOrDefault(x => x.player.NetId == ev.Player.NetId) ?? null; 
-                if(plData != null)
-                {
-                    switch(plData.UCRID)
-                    {
-                        case 2: ev.Player.Scale = Vector3.one * 0.7f; break;
-                    }
-                }
-            }
+            yield return Timing.WaitForSeconds(0.25f);
             Player p = ev.Player;
             int humanPlayers = 0;
-            foreach(Player rP in Player.List)
+            foreach (Player rP in Player.List)
             {
                 if (rP.IsHuman)
                 {
@@ -573,7 +563,7 @@ namespace SpireLabs
                     }
                     Task.Delay(50);
                     if (Scp079.enabled)
-                    { 
+                    {
                         p.MaxHealth += (Scp079.healthIncrease * humanPlayers);
                         p.Heal(p.MaxHealth);
                     }
@@ -639,7 +629,23 @@ namespace SpireLabs
                     }
                     break;
             }
+        }
 
+        private void Player_Spawned(SpawnedEventArgs ev)
+        {
+            if(ev.Player.Role == RoleTypeId.Scp0492)
+            {
+                var plData = customRoles.rd.SingleOrDefault(x => x.player.NetId == ev.Player.NetId) ?? null; 
+                if(plData != null)
+                {
+                    switch(plData.UCRID)
+                    {
+                        case 2: ev.Player.Scale = Vector3.one * 0.7f; break;
+                    }
+                }
+            }
+
+            Timing.RunCoroutine(OverrideHealth(ev));
             Timing.RunCoroutine(customRoles.CheckRoles(ev.Player));
 
             if (OCaptain.enabled)
