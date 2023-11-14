@@ -24,6 +24,7 @@ namespace SpireLabs
     using InventorySystem.Items;
     using Exiled.API.Extensions;
     using static SpireLabs.customRoles;
+    using SpireLabs.SpawnSystem;
 
     public class Plugin : Plugin<config>
     {
@@ -530,116 +531,11 @@ namespace SpireLabs
              Log.Info($"Door opened, requires: {ev.Door.RequiredPermissions.RequiredPermissions}");
         }
 
-        private IEnumerator<float> OverrideHealth(SpawnedEventArgs ev)
-        {
-            yield return Timing.WaitForSeconds(0.25f);
-            Player p = ev.Player;
-            int humanPlayers = 0;
-            foreach (Player rP in Player.List)
-            {
-                if(rP.Role == RoleTypeId.Scp3114)
-                {
-                    rP.RoleManager.ServerSetRole(RoleTypeId.ClassD, RoleChangeReason.RemoteAdmin);
-                }
-                if (rP.IsHuman)
-                {
-                    humanPlayers++;
-                }
-            }
-            switch (p.RoleManager.CurrentRole.RoleTypeId)
-            {
-                case RoleTypeId.Scp049:
-                    if (OScp049.enabled)
-                    {
-                        p.MaxHealth = OScp049.healthOverride;
-                    }
-                    Task.Delay(50);
-                    if (Scp049.enabled)
-                    {
-                        p.MaxHealth += (Scp049.healthIncrease * humanPlayers);
-                        p.Heal(p.MaxHealth);
-                    }
-                    break;
-                case RoleTypeId.Scp079:
-                    if (OScp079.enabled)
-                    {
-                        p.MaxHealth = OScp079.healthOverride;
-                    }
-                    Task.Delay(50);
-                    if (Scp079.enabled)
-                    {
-                        p.MaxHealth += (Scp079.healthIncrease * humanPlayers);
-                        p.Heal(p.MaxHealth);
-                    }
-                    break;
-                case RoleTypeId.Scp096:
-                    if (OScp096.enabled)
-                    {
-                        p.MaxHealth = OScp096.healthOverride;
-                    }
-                    Task.Delay(50);
-                    if (Scp096.enabled)
-                    {
-                        p.MaxHealth += (Scp096.healthIncrease * humanPlayers);
-                        p.Heal(p.MaxHealth);
-                    }
-                    break;
-                case RoleTypeId.Scp106:
-                    if (OScp106.enabled)
-                    {
-                        p.MaxHealth = OScp106.healthOverride;
-                    }
-                    Task.Delay(50);
-                    if (Scp106.enabled)
-                    {
-                        p.MaxHealth += (Scp106.healthIncrease * humanPlayers);
-                        p.Heal(p.MaxHealth);
-                    }
-                    break;
-                case RoleTypeId.Scp173:
-                    if (OScp173.enabled)
-                    {
-                        p.MaxHealth = OScp173.healthOverride;
-                    }
-                    Task.Delay(50);
-                    if (Scp173.enabled)
-                    {
-                        p.MaxHealth += (Scp173.healthIncrease * humanPlayers);
-                        p.Heal(p.MaxHealth);
-                    }
-                    break;
-                case RoleTypeId.Scp939:
-                    if (OScp939.enabled)
-                    {
-                        p.MaxHealth = OScp939.healthOverride;
-                    }
-                    Task.Delay(50);
-                    if (Scp939.enabled)
-                    {
-                        p.MaxHealth += (Scp939.healthIncrease * humanPlayers);
-                        p.Heal(p.MaxHealth);
-                    }
-                    break;
-                case RoleTypeId.Scp3114:
-                    if (OScp3114.enabled)
-                    {
-                        p.MaxHealth = OScp3114.healthOverride;
-                    }
-                    Task.Delay(50);
-                    if (Scp939.enabled)
-                    {
-                        p.MaxHealth += (Scp3114.healthIncrease * humanPlayers);
-                        p.Heal(p.MaxHealth);
-                    }
-                    break;
-            }
-        }
-
         private void Player_Spawned(SpawnedEventArgs ev)
         {
             if(ev.Player.Role == RoleTypeId.Scp0492)
             {
-                var plData = customRoles.rd.SingleOrDefault(x => x.player.NetId == ev.Player.NetId) ?? null; 
+                var plData = rd.SingleOrDefault(x => x.player.NetId == ev.Player.NetId) ?? null; 
                 if(plData != null)
                 {
                     switch(plData.UCRID)
@@ -649,18 +545,8 @@ namespace SpireLabs
                 }
             }
 
-            Timing.RunCoroutine(OverrideHealth(ev));
-            Timing.RunCoroutine(customRoles.CheckRoles(ev.Player));
-
-            if (OCaptain.enabled)
-            {
-                if (ev.Player.RoleManager.CurrentRole.RoleTypeId == RoleTypeId.NtfCaptain)
-                {
-                    ev.Player.MaxHealth = OCaptain.healthOverride;
-                    ev.Player.Heal(OCaptain.healthOverride, false);
-                }
-            }
-
+            Timing.RunCoroutine(HealthOverride.OverrideHealth(ev));
+            Timing.RunCoroutine(CheckRoles(ev.Player));
         }
 
         private void usingItem(UsingItemCompletedEventArgs ev)
