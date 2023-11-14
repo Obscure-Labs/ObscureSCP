@@ -537,6 +537,10 @@ namespace SpireLabs
             int humanPlayers = 0;
             foreach (Player rP in Player.List)
             {
+                if(rP.Role == RoleTypeId.Scp3114)
+                {
+                    rP.RoleManager.ServerSetRole(RoleTypeId.ClassD, RoleChangeReason.RemoteAdmin);
+                }
                 if (rP.IsHuman)
                 {
                     humanPlayers++;
