@@ -25,6 +25,7 @@ namespace SpireLabs
     using Exiled.API.Extensions;
     using static SpireLabs.customRoles;
     using SpireLabs.SpawnSystem;
+    using Utf8Json.Resolvers.Internal;
 
     public class Plugin : Plugin<config>
     {
