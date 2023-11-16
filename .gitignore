@@ -3,3 +3,5 @@ SpireLabs/bin/
 *.cache
 
 SpireLabs/obj/
+
+.vs/SpireLabs/v17/.suo
