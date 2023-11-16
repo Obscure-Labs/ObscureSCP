@@ -11,6 +11,7 @@ using Exiled.Events.EventArgs.Player;
 using MEC;
 using UnityEngine;
 using Player = Exiled.Events.Handlers.Player;
+using SpireSCP.GUI.API.Features;
 namespace SpireLabs.Items
 {
     [CustomItem(ItemType.Painkillers)]
@@ -18,7 +19,7 @@ namespace SpireLabs.Items
     {
         public override uint Id { get; set; } = 0;
         public override string Name { get; set; } = "Essential Oils";
-        public override string Description { get; set; } = "The warning label says \"DO NOT CONSUME\" but they just look so good.";
+        public override string Description { get; set; } = "\t";
         public override float Weight { get; set; } = 0.25f;
         private SpawnLocationType pos;
         public override SpawnProperties SpawnProperties { get; set; } = new()
@@ -47,26 +48,37 @@ namespace SpireLabs.Items
         protected override void SubscribeEvents()
         {
             Player.UsingItemCompleted += usingOils;
+            Player.ChangedItem += changedToItem;
             base.SubscribeEvents();
         }
         protected override void UnsubscribeEvents()
         {
             Player.UsingItemCompleted -= usingOils;
+            Player.ChangedItem -= changedToItem;
             base.UnsubscribeEvents();
         }
+
+        private void changedToItem(ChangedItemEventArgs ev)
+        {
+            if (!Check(ev.Item))
+                return;
+            Manager.SendHint(ev.Player, "You equipped the <b>Essential Oils</b> \nThe label reads: <b>DO NOT EAT - TOXIC TO HUMANS</b>.", 3.0f);
+        }
+
 
         private void usingOils(UsingItemCompletedEventArgs ev)
         {
             if (!Check(ev.Item))
                 return;
+            Manager.SendHint(ev.Player, "You feel a little odd... maybe you should have read the label", 5.0f);
             ev.Player.EnableEffect(EffectType.BodyshotReduction, 15);
-            ev.Player.ChangeEffectIntensity(EffectType.BodyshotReduction, 10, 15);
+            ev.Player.ChangeEffectIntensity(EffectType.BodyshotReduction, 50, 15);
             ev.Player.EnableEffect(EffectType.DamageReduction,15);
             ev.Player.ChangeEffectIntensity(EffectType.DamageReduction, 10, 15);
             ev.Player.EnableEffect(EffectType.Concussed, 15);
             ev.Player.ChangeEffectIntensity(EffectType.Concussed, 1, 15);
             ev.Player.EnableEffect(EffectType.MovementBoost, 15);
-            ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 35, 15);
+            ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 55, 15);
             ev.Player.EnableEffect(EffectType.Deafened, 15);
             ev.Player.ChangeEffectIntensity(EffectType.Deafened, 1, 15);
             ev.Player.EnableEffect(EffectType.Invigorated, 15);

@@ -71,7 +71,7 @@ namespace SpireLabs
             {
                 return;
             }
-;           Log.Info(customRoleID);
+;           Log.Debug($"{ev.Player.DisplayNickname} is custom role ID: {customRoleID}");
             if (customRoleID == -1)
             {
                 return;
@@ -110,7 +110,7 @@ namespace SpireLabs
                 }
                 else if (ev.Item.Type == ItemType.GunShotgun || ev.Item.Type == ItemType.GunRevolver || ev.Item.Type == ItemType.GunAK || ev.Item.Type == ItemType.GunA7 || ev.Item.Type == ItemType.GunCOM15 || ev.Item.Type == ItemType.GunCOM18 || ev.Item.Type == ItemType.GunCom45 || ev.Item.Type == ItemType.GunCrossvec || ev.Item.Type == ItemType.GunE11SR || ev.Item.Type == ItemType.GunFRMG0 || ev.Item.Type == ItemType.GunFSP9 || ev.Item.Type == ItemType.GunLogicer || ev.Item.Type == ItemType.Jailbird || ev.Item.Type == ItemType.MicroHID)
                 {
-                    Log.Info("Gun");
+                    Log.Debug("Gun");
                     IsCard = false;
                     IsGun = true;
 

@@ -230,10 +230,11 @@
         }
         internal static IEnumerator<float> fixedScpBoost(Player p)
         {
-            yield return Timing.WaitForOneFrame;
             p.EnableEffect(EffectType.MovementBoost, 15f);
             p.EnableEffect(EffectType.MovementBoost, 30, 15f);
-            for (int j = 0; j < 40; j++)
+
+            Log.Info("Running fixedScpBoost");
+            for (int j = 0; j < 60; j++)
             {
                 Manager.SendHint(p, "You provide speed to all SCP entities nearby!", 0.75f);
                 foreach (Player pp in Player.List)
@@ -261,11 +262,12 @@
                 }
                 yield return Timing.WaitForSeconds(0.5f);
             }
+            Log.Info("Stopped fixedScpBoost");
         }
         internal static IEnumerator<float> fixedScpShield(Player p)
         {
-            yield return Timing.WaitForOneFrame;
-            for (int j = 0; j < 40; j++)
+            Log.Info("Running fixedScpShield");
+            for (int j = 0; j < 120; j++)
             {
                 Manager.SendHint(p, "You provide protection to all SCP entities nearby!", 0.75f);
                 foreach (Player pp in Player.List)
@@ -286,12 +288,13 @@
                     if (!ppp.IsHuman && ppp != p)
                     {
                         //Log.Info($"{ppp.DisplayNickname} is {ppp.Role.Name} this role is {ppp.IsHuman}");
-                        Manager.SendHint(ppp, "You are recieving HS points from a nearby doctor!", 1.15f);
+                        Manager.SendHint(ppp, "You are recieving HS points from a nearby doctor!", 0.75f);
                         ppp.HumeShield += 2.7f;
                     }
                 }
                 yield return Timing.WaitForSeconds(0.5f);
             }
+            Log.Info("Stopped fixedScpShield");
             //for(int j = 0; j < 20; j++)
             //{
             //    Timing.RunCoroutine(guiHandler.sendHint(p, "You provide speed to all SCP entities nearby!", 1.5f));

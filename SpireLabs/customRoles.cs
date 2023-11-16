@@ -58,12 +58,6 @@ namespace SpireLabs
                     Manager.SendHint(p, $"<b>The currently active SCP subjects are: {scps}", 7);
                 }
 
-                if (UCRID == 10)
-                {
-                    yield return Timing.WaitForSeconds(1);
-                    p.EnableEffect(EffectType.Marshmallow);
-                }
-
                 if (UCRID == 3)
                 {
                     p.ChangeAppearance(RoleTypeId.FacilityGuard);
