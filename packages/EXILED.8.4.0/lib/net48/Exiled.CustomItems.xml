@@ -227,7 +227,7 @@
         </member>
         <member name="M:Exiled.CustomItems.API.Features.CustomGrenade.Throw(UnityEngine.Vector3,System.Single,System.Single,System.Single,ItemType,Exiled.API.Features.Player)">
             <summary>
-            Throw the actual CustomGrenade object.
+            Throw the CustomGrenade object.
             </summary>
             <param name="position">The <see cref="T:UnityEngine.Vector3"/>position to throw at.</param>
             <param name="force">The amount of force to throw with.</param>
@@ -239,7 +239,7 @@
         </member>
         <member name="M:Exiled.CustomItems.API.Features.CustomGrenade.Check(Exiled.API.Features.Pickups.Projectiles.Projectile)">
             <summary>
-            Checks to see if the grenade is a tracked custom grenade.
+            Checks to see if the grenade is a custom grenade.
             </summary>
             <param name="grenade">The <see cref="T:Exiled.API.Features.Pickups.Projectiles.Projectile">grenade</see> to check.</param>
             <returns>True if it is a custom grenade.</returns>

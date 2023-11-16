@@ -9,7 +9,6 @@ using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.Events.EventArgs.Item;
 using Exiled.Events.EventArgs.Player;
-using MEC;
 
 namespace SpireLabs.SpawnSystem
 {
@@ -30,10 +29,6 @@ namespace SpireLabs.SpawnSystem
             int humanPlayers = 0;
             foreach (Player rP in Player.List)
             {
-                if (rP.Role == RoleTypeId.Scp3114)
-                {
-                    rP.RoleManager.ServerSetRole(RoleTypeId.ClassD, RoleChangeReason.RemoteAdmin);
-                }
                 if (rP.IsHuman)
                 {
                     humanPlayers++;

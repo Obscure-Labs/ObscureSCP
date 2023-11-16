@@ -88,7 +88,6 @@ namespace SpireLabs
         public static bool hasRestarted = false;
         public static bool ConMet = false;
 
-        public static CoroutineHandle handle;
         public static bool realRoundEnd = false;
         public static bool startingRound = false;
         public static bool initing = false;
@@ -98,9 +97,6 @@ namespace SpireLabs
         public string spireConfigLoc;
 
         private Harmony _harmony;
-
-        public static CoroutineHandle flickerHandle;
-        public static CoroutineHandle lockHandle;
 
         public override void OnDisabled()
         {
@@ -148,6 +144,27 @@ namespace SpireLabs
             }
         }
 
+        private IEnumerator<float> chaosUpdate()
+        {
+            yield return Timing.WaitForSeconds(1f);
+            while(true)
+            {
+                yield return Timing.WaitForSeconds(1f);
+                int chaos = 0;
+                foreach (Player p in Player.List)
+                {
+                    if (p.IsCHI)
+                    {
+                        chaos++;
+                    }
+                }
+                if (chaos != 0)
+                {
+                    Round.ChaosTargetCount = chaos;
+                }
+                yield return Timing.WaitForSeconds(2f);
+            }
+        }
         public override void OnEnabled()
         {
             CustomItem.RegisterItems(overrideClass: ItemConfigs);
@@ -260,14 +277,7 @@ namespace SpireLabs
         }
         void eventone(DryfiringWeaponEventArgs ev)
         {
-            if(ev.Player.CurrentItem.Type == ItemType.Marshmallow)
-            {
-                Log.Warn("dryfire");
-            }
-            if(ev.Player.Role == RoleTypeId.Scp3114)
-            {
-                Log.Warn("The boner dryfired !!!!!!!!!!!!!!!! lmao");
-            }
+            
         }
 
         private void joinMsg(VerifiedEventArgs ev)
@@ -394,7 +404,7 @@ namespace SpireLabs
            ev.Player.RoleManager.ServerSetRole(RoleTypeId.ClassD, RoleChangeReason.RemoteAdmin, RoleSpawnFlags.UseSpawnpoint);
            yield return Timing.WaitForSeconds((float)0.25);
            ev.Player.Teleport(lobbyVector);
-            handle = Timing.RunCoroutine(startCheck());
+           Timing.RunCoroutine(startCheck());
             //File.WriteAllText(@"C:\Users\Kevin\AppData\Roaming\EXILED\Configs\Spire/stinky.txt", "pp");
             File.WriteAllText((spireConfigLoc + "stinky.txt"), "pp");
 
@@ -532,8 +542,15 @@ namespace SpireLabs
              Log.Info($"Door opened, requires: {ev.Door.RequiredPermissions.RequiredPermissions}");
         }
 
+        private IEnumerator<float> Uppies(SpawnedEventArgs ev)
+        {
+            yield return Timing.WaitForSeconds(0.25f);
+            ev.Player.Position = new Vector3(ev.Player.Position.x, ev.Player.Position.y + 0.3f, ev.Player.Position.z);
+        }
+
         private void Player_Spawned(SpawnedEventArgs ev)
         {
+            Timing.RunCoroutine(Uppies(ev));
             if(ev.Player.Role == RoleTypeId.Scp0492)
             {
                 var plData = rd.SingleOrDefault(x => x.player.NetId == ev.Player.NetId) ?? null; 
@@ -668,10 +685,12 @@ namespace SpireLabs
             //Exiled.API.Features.Round.RestartSilently();
             Timing.KillCoroutines("flockerRoutine");
             Timing.KillCoroutines("lockRoutine");
-
-            Timing.RunCoroutine(randomFlicker(), "flickerRoutine");
+            Timing.KillCoroutines("chaosChecker");
+            SCPHandler.doSCPThings();
+            Timing.RunCoroutine(chaosUpdate(), tag: "chaosChecker");
+            Timing.RunCoroutine(randomFlicker(), tag: "flickerRoutine");
             Log.Info("Round has started!");
-            Timing.RunCoroutine(lockAnounce(), "lockRoutine");
+            Timing.RunCoroutine(lockAnounce(), tag: "lockRoutine");
             foreach (Door d in Door.List)
             {
                 if (d.Zone == ZoneType.Surface)

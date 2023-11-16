@@ -22,7 +22,7 @@
         </member>
         <member name="F:Exiled.API.Enums.AdminToyType.ShootingTarget">
             <summary>
-            Primitive Object toy.
+            ShootingTarget toy.
             </summary>
         </member>
         <member name="T:Exiled.API.Enums.AmmoType">
@@ -64,7 +64,8 @@
         </member>
         <member name="F:Exiled.API.Enums.AmmoType.Ammo44Cal">
             <summary>
-            44 caliber.
+            44 Caliber Revolver Ammo
+            Used by <see cref="F:ItemType.GunRevolver"/>
             </summary>
         </member>
         <member name="T:Exiled.API.Enums.AuthenticationType">
@@ -85,7 +86,7 @@
         </member>
         <member name="F:Exiled.API.Enums.AuthenticationType.Northwood">
             <summary>
-            Indicates that the player has been authenticated as a Northwood staffer.
+            Indicates that the player has been authenticated as a Northwood staff member.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.AuthenticationType.Unknown">
@@ -384,12 +385,17 @@
         </member>
         <member name="F:Exiled.API.Enums.DamageType.Scp3114">
             <summary>
-            Damage caused by <see cref="F:PlayerRoles.RoleTypeId.Scp3114"/>.
+            Damage caused by <see cref="F:PlayerRoles.RoleTypeId.Scp3114"/>
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.DamageType.Strangled">
             <summary>
-            <see cref="F:Exiled.API.Enums.EffectType.Strangled"/>.
+            Damage caused by Scp3114's strangling ability.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.DamageType.Marshmallow">
+            <summary>
+            Damage caused by the marshmallow man.
             </summary>
         </member>
         <member name="T:Exiled.API.Enums.DecontaminationState">
@@ -977,12 +983,12 @@
         </member>
         <member name="F:Exiled.API.Enums.EffectType.RainbowTaste">
             <summary>
-            Severely reduces damage taken.
+            Reduces the severity of negative effects.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.EffectType.SeveredHands">
             <summary>
-            Drops the player's current item and deals damage while effect is active.
+            Drops the player's current item, disables interaction with objects, and deals damage while effect is active.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.EffectType.Stained">
@@ -992,17 +998,17 @@
         </member>
         <member name="F:Exiled.API.Enums.EffectType.Vitality">
             <summary>
-            Causes the player to slowly regenerate health.
+            Causes the player to become gain immunity to certain negative status effects.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.EffectType.Hypothermia">
             <summary>
-            Cause the player to slowly take damage by Hyporthermia.
+            Cause the player to slowly take damage, reduces bullet accuracy, and increases item pickup time.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.EffectType.Scp1853">
             <summary>
-            Cause the player more effective for fight.
+            Increases the player's motor function, causing the player to reduce the weapon draw time, reload spead, item pickup speed, and medical item usage.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.EffectType.CardiacArrest">
@@ -1022,37 +1028,47 @@
         </member>
         <member name="F:Exiled.API.Enums.EffectType.SpawnProtected">
             <summary>
-            Protect player from enemy if the config is Enable.
+            Protects players from enemy damage if the config is enabled.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.EffectType.Traumatized">
             <summary>
-            Make Scp106 able to see you when he are in the ground (stalking).
+            Make Scp106 able to see you when he is in the ground (stalking), causes the player's screens to become monochromatic when seeing Scp106, and instantly killed if attacked by Scp106.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.EffectType.AntiScp207">
             <summary>
-            Same effect as Scp207, but Healing instead of Hurting.
+            It slows down the player, providing a passive health regeneration and saving the player from death once.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.EffectType.Scanned">
             <summary>
-            The effect that SCP-079 gives the Scanned player with the Breach Scanner.
+            The effect that SCP-079 gives the scanned player with the Breach Scanner.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.EffectType.PocketCorroding">
             <summary>
-            Teleports the player to the pocket dimension and drains health until the player escapes or is killed.
+            Teleports the player to the pocket dimension and drains health until the player escapes or is killed. The amount of damage recieved increases the longer the effect is applied.
             </summary>
         </member>
-        <member name="F:Exiled.API.Enums.EffectType.Ghostly">
+        <member name="F:Exiled.API.Enums.EffectType.SilentWalk">
             <summary>
-            The effect permit player to go trough door like Scp-106.
+            Reduces walking sound by 10%.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.EffectType.Marshmallow">
+            <summary>
+            Makes you a marshmallow guy.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.EffectType.Strangled">
             <summary>
-            Effect given to player when being strangled by SCP-3114.
+            The effect that is given to the player when getting attacked by SCP-3114's Strangle ability.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.EffectType.Ghostly">
+            <summary>
+            Makes the player nearly invisible, and allows them to pass through doors.
             </summary>
         </member>
         <member name="T:Exiled.API.Enums.ElevatorType">
@@ -1124,7 +1140,7 @@
         </member>
         <member name="F:Exiled.API.Enums.EnvironmentType.ProductionDebug">
             <summary>
-            The Production environemnt, for public, with debug.
+            The Production enviroemnt, for the public, with debugging features.
             </summary>
         </member>
         <member name="T:Exiled.API.Enums.EscapeScenario">
@@ -1254,7 +1270,7 @@
         </member>
         <member name="F:Exiled.API.Enums.GeneratorState.None">
             <summary>
-            None.
+            Generator is locked.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.GeneratorState.Unlocked">
@@ -1285,27 +1301,27 @@
         </member>
         <member name="F:Exiled.API.Enums.GlassType.Unknown">
             <summary>
-            Represents an unknown Window.
+            Represents an unknown window.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.GlassType.GR18">
             <summary>
-            Represents all the Window in <see cref="F:Exiled.API.Enums.RoomType.LczGlassBox"/>.
+            Represents all the windows in <see cref="F:Exiled.API.Enums.RoomType.LczGlassBox"/>.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.GlassType.Scp049">
             <summary>
-            Represents all the Window in <see cref="F:Exiled.API.Enums.RoomType.Hcz049"/>.
+            Represents the window in <see cref="F:Exiled.API.Enums.RoomType.Hcz049"/>.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.GlassType.MicroHid">
             <summary>
-            Represents all the Window in <see cref="F:Exiled.API.Enums.RoomType.HczHid"/>.
+            Represents the windows in <see cref="F:Exiled.API.Enums.RoomType.HczHid"/>.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.GlassType.Scp079">
             <summary>
-            Represents all the Window in <see cref="F:Exiled.API.Enums.RoomType.Hcz079"/>.
+            Represents the window in <see cref="F:Exiled.API.Enums.RoomType.Hcz079"/>.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.GlassType.Scp079Trigger">
@@ -1315,27 +1331,27 @@
         </member>
         <member name="F:Exiled.API.Enums.GlassType.Scp330">
             <summary>
-            Represents all the Window in <see cref="F:Exiled.API.Enums.RoomType.Lcz330"/>.
+            Represents the window in <see cref="F:Exiled.API.Enums.RoomType.Lcz330"/>.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.GlassType.Plants">
             <summary>
-            Represents all the Window in <see cref="F:Exiled.API.Enums.RoomType.LczPlants"/>.
+            Represents all the windows in <see cref="F:Exiled.API.Enums.RoomType.LczPlants"/>.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.GlassType.HczEzCheckpointA">
             <summary>
-            Represents all the Window in <see cref="F:Exiled.API.Enums.RoomType.HczEzCheckpointA"/>.
+            Represents all the windows in <see cref="F:Exiled.API.Enums.RoomType.HczEzCheckpointA"/>.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.GlassType.HczEzCheckpointB">
             <summary>
-            Represents all the Window in <see cref="F:Exiled.API.Enums.RoomType.HczEzCheckpointB"/>.
+            Represents all the windows in <see cref="F:Exiled.API.Enums.RoomType.HczEzCheckpointB"/>.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.GlassType.TestRoom">
             <summary>
-            Represents all the Window in <see cref="F:Exiled.API.Enums.RoomType.HczTestRoom"/>.
+            Represents the window in <see cref="F:Exiled.API.Enums.RoomType.HczTestRoom"/>.
             </summary>
         </member>
         <member name="T:Exiled.API.Enums.KeycardPermissions">
@@ -1368,7 +1384,7 @@
         </member>
         <member name="F:Exiled.API.Enums.KeycardPermissions.AlphaWarhead">
             <summary>
-            Opens the Alpha Warhead detonation room on surface.
+            Opens the Alpha Warhead detonation button on surface.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.KeycardPermissions.ContainmentLevelOne">
@@ -1537,7 +1553,7 @@
         </member>
         <member name="F:Exiled.API.Enums.ProjectileType.FragGrenade">
             <summary>
-            Frag grenade.
+            High explosive grenade.
             Used by <see cref="F:ItemType.GrenadeHE"/>.
             </summary>
         </member>
@@ -1567,7 +1583,7 @@
         </member>
         <member name="F:Exiled.API.Enums.RadioRange.Short">
             <summary>
-            The shortest range with the least battery usage.
+            The shortest range with the lowest battery usage.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RadioRange.Medium">
@@ -1646,227 +1662,227 @@
         </member>
         <member name="F:Exiled.API.Enums.RoomType.LczArmory">
             <summary>
-            Lower Containment Armory.
+            Light Containment Zone's Armory.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.LczCurve">
             <summary>
-            Lower Containment L-Shaped Room.
+            Light Containment Zone's Curved Hall.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.LczStraight">
             <summary>
-            Lower Containment |-Shaped Room.
+            Light Containment Zone's Straight Hall.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.Lcz914">
             <summary>
-            Lower Containment SCP-914 Room.
+            Light Containment Zone's SCP-914 room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.LczCrossing">
             <summary>
-            Lower Containment X-Shaped Room.
+            Light Containment Zone's 4-Way intersection.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.LczTCross">
             <summary>
-            Lower Containment T-Shaped Room.
+            Light Containment Zone's 3-Way intersection.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.LczCafe">
             <summary>
-            Lower Containment Cafe Room.
+            Light Containment Zone's PC-15's room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.LczPlants">
             <summary>
-            Lower Containment T-Shaped Plants Room.
+            Light Containment Zone's VT-00's room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.LczToilets">
             <summary>
-            Lower Containment Toilets Room.
+            Light Containment Zone's Water Closet.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.LczAirlock">
             <summary>
-            Lower Containment Airlock Room.
+            Light Containment Zone's Airlock room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.Lcz173">
             <summary>
-            Lower Containment SCP-173 Room.
+            Light Containment Zone's PT-00 room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.LczClassDSpawn">
             <summary>
-            Lower Containment Class-D Spawn Room.
+            Light Containment Zone's Class-D spawn room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.LczCheckpointB">
             <summary>
-            Lower Containment Checkpoint B Room.
+            Light Containment Zone's Checkpoint B room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.LczGlassBox">
             <summary>
-            Lower Containment Glass Box Room.
+            Light Containment Zone's GR-18's room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.LczCheckpointA">
             <summary>
-            Lower Containment Checkpoint A Room.
+            Light Containment Zone's Checkpoint A room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.Hcz079">
             <summary>
-            Heavy Containment SCP-079 Room.
+            Heavy Containment Zone's SCP-079 room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.HczEzCheckpointA">
             <summary>
-            Heavy Containment Entrance Checkpoint A Room.
+            Heavy Containment Zone's Entrance Checkpoint A room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.HczEzCheckpointB">
             <summary>
-            Heavy Containment Entrance Checkpoint B Room.
+            Heavy Containment Zone's Entrance Checkpoint B room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.HczArmory">
             <summary>
-            Heavy Containment T-Shaped Armory Room.
+            Heavy Containment Zone's 3-Way Intersection + Armory room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.Hcz939">
             <summary>
-            Heavy Containment SCP-939 Room.
+            Heavy Containment Zone's SCP-939 room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.HczHid">
             <summary>
-            Heavy Containment HID-Spawn Room.
+            Heavy Containment Zone's MicroHID straight hall.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.Hcz049">
             <summary>
-            Heavy Containment SCP-049 Room.
+            Heavy Containment Zone's SCP-049 + SCP-173's room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.HczCrossing">
             <summary>
-            Heavy Containment X-Shaped Room.
+            Heavy Containment Zone's 4-way intersection.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.Hcz106">
             <summary>
-            Heavy Containment SCP-106 Room.
+            Heavy Containment Zone's SCP-106 room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.HczNuke">
             <summary>
-            Heavy Containment Nuke Room.
+            Heavy Containment Zone's nuke room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.HczTesla">
             <summary>
-            Heavy Containment Tesla Room.
+            Heavy Containment Zone's Tesla straight hall.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.HczServers">
             <summary>
-            Heavy Containment Servers Room.
+            Heavy Containment Zone's Servers room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.HczTCross">
             <summary>
-            Heavy Containment T-Shaped Room.
+            Heavy Containment Zone's 3-way intersection.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.HczCurve">
             <summary>
-            Heavy Containment L-Shaped Room.
+            Heavy Containment Zone's cruved hall.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.Hcz096">
             <summary>
-            Heavy Containment SCP-096 Room.
+            Heavy Containment Zone's SCP-096 room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.EzVent">
             <summary>
-            Entrance Red Vent Room.
+            Entrance Zone's Red Vent room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.EzIntercom">
             <summary>
-            Entrance Intercom Room.
+            Entrance Zone's Intercom room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.EzGateA">
             <summary>
-            Entrance Gate A Room.
+            Entrance Zone's Gate A room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.EzDownstairsPcs">
             <summary>
-            Entrance PC Room With Downstairs.
+            Entrance Zone's straight hall with PC's on a lower level.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.EzCurve">
             <summary>
-            Entrance L-Shaped Room.
+            Entrance Zone's curved hall.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.EzPcs">
             <summary>
-            Entrance PC Room.
+            Entrance Zone's straight hall with PC's on the main level.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.EzCrossing">
             <summary>
-            Entrance X-Shaped Room.
+            Entrance Zone's 4-way intersection.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.EzCollapsedTunnel">
             <summary>
-            Entrance Red Collapsed Tunnel Room.
+            Entrance Zone's Red Collapsed Tunnel Room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.EzConference">
             <summary>
-            Entrance |-Shaped Dr.L Room.
+            Entrance Zone's straight hall with Dr.L's locked room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.EzStraight">
             <summary>
-            Entrance |-Shaped Room
+            Entrance Zone's straight hall
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.EzCafeteria">
             <summary>
-            Entrance Cafeteria Room.
+            Entrance Zone's Cafeteria Room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.EzUpstairsPcs">
             <summary>
-            Entrance PC Room With Upstairs.
+            Entrance Zone's straight hall with PC's and upper level.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.EzGateB">
             <summary>
-            Entrance Gate B Room.
+            Entrance Zone's Gate B room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.EzShelter">
             <summary>
-            Entrance Shelter Room.
+            Entrance Zone's Shelter rfoom.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.Pocket">
             <summary>
-            Pocket Dimension.
+            The Pocket Dimension.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.Surface">
@@ -1876,37 +1892,37 @@
         </member>
         <member name="F:Exiled.API.Enums.RoomType.HczStraight">
             <summary>
-            Heavy Containment |-Shaped Room.
+            Heavy Containment Zone's straight hall.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.EzTCross">
             <summary>
-            Entrance T-Shaped Room.
+            Entrance Zone's 3-way intersection.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.Lcz330">
             <summary>
-            Lower Containment SCP-330 Room.
+            Light Containment ZOne's SCP-330 room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.EzCheckpointHallway">
             <summary>
-            Entrance Room before Checkpoint.
+            Entrance Zone's straight hall before the entrance/heavy checkpoint.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.HczTestRoom">
             <summary>
-            Heavy Containment Test Room.
+            Heavy Containment Zone's test room's straight hall.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.HczElevatorA">
             <summary>
-            Heavy Containment Elevator System A Room.
+            Heavy Containment Zone's Elevator System A room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.RoomType.HczElevatorB">
             <summary>
-            Heavy Containment Elevator System B Room.
+            Heavy Containment Elevator Zone's System B room.
             </summary>
         </member>
         <member name="T:Exiled.API.Enums.ShootingTargetButton">
@@ -1989,7 +2005,7 @@
             <summary>
             SCP team. Same as <see cref="F:PlayerRoles.Team.SCPs"/>.
             Contains all SCP-related roles: <see cref="F:PlayerRoles.RoleTypeId.Scp049"/>, <see cref="F:PlayerRoles.RoleTypeId.Scp0492"/>, <see cref="F:PlayerRoles.RoleTypeId.Scp079"/>, <see cref="F:PlayerRoles.RoleTypeId.Scp096"/>,
-            <see cref="F:PlayerRoles.RoleTypeId.Scp106"/>, <see cref="F:PlayerRoles.RoleTypeId.Scp173"/>, <see cref="F:PlayerRoles.RoleTypeId.Scp939"/>, and <see cref="F:PlayerRoles.RoleTypeId.Scp3114"/>.
+            <see cref="F:PlayerRoles.RoleTypeId.Scp106"/>, <see cref="F:PlayerRoles.RoleTypeId.Scp173"/>, and <see cref="F:PlayerRoles.RoleTypeId.Scp939"/>.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.Side.Mtf">
@@ -2022,12 +2038,12 @@
         </member>
         <member name="F:Exiled.API.Enums.SpawnLocationType.Inside330">
             <summary>
-            The inside of 330's room.
+            The inside of SCP-330's room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.SpawnLocationType.Inside330Chamber">
             <summary>
-            The inside of 330's room test chamber.
+            The inside of SCP-330's room test chamber.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.SpawnLocationType.Inside049Armory">
@@ -2082,7 +2098,7 @@
         </member>
         <member name="F:Exiled.API.Enums.SpawnLocationType.InsideLczCafe">
             <summary>
-            Inside the LCZ office room with computers.
+            Inside the LCZ PC-15 room.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.SpawnLocationType.InsideNukeArmory">
@@ -2127,7 +2143,7 @@
         </member>
         <member name="F:Exiled.API.Enums.SpawnLocationType.InsideHczArmory">
             <summary>
-            Inside the T-Junction HCZ Armory.
+            Inside the 3-way intersection HCZ Armory.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.SpawnLocationType.InsideHid">
@@ -2344,15 +2360,15 @@
         </member>
         <member name="M:Exiled.API.Extensions.CommonExtensions.Multiply(UnityEngine.AnimationCurve,System.Single)">
             <summary>
-            Will modify the curve with the amount used.
+            Modify the curve with the amount used.
             </summary>
-            <param name="curve">The AnimationCurve to mofify.</param>
+            <param name="curve">The AnimationCurve to modify.</param>
             <param name="amount">The multiplier number.</param>
             <returns>The new modfied curve.</returns>
         </member>
         <member name="M:Exiled.API.Extensions.CommonExtensions.Add(UnityEngine.AnimationCurve,System.Single)">
             <summary>
-            Will modify the curve with the amount used.
+            Modify the curve with the amount used.
             </summary>
             <param name="curve">The AnimationCurve to mofify.</param>
             <param name="amount">The add number.</param>
@@ -2380,7 +2396,7 @@
         </member>
         <member name="M:Exiled.API.Extensions.DamageTypeExtensions.IsWeapon(Exiled.API.Enums.DamageType,System.Boolean)">
             <summary>
-            Check if a <see cref="T:Exiled.API.Enums.DamageType">damage type</see> is caused by weapon.
+            Check if a <see cref="T:Exiled.API.Enums.DamageType">damage type</see> is caused by a weapon.
             </summary>
             <param name="type">The damage type to be checked.</param>
             <param name="checkMicro">Indicates whether or not the MicroHid damage type should be taken into account.</param>
@@ -2388,7 +2404,7 @@
         </member>
         <member name="M:Exiled.API.Extensions.DamageTypeExtensions.IsScp(Exiled.API.Enums.DamageType,System.Boolean)">
             <summary>
-            Check if a <see cref="T:Exiled.API.Enums.DamageType">damage type</see> is caused by SCP.
+            Check if a <see cref="T:Exiled.API.Enums.DamageType">damage type</see> is caused by a SCP.
             </summary>
             <param name="type">The damage type to be checked.</param>
             <param name="checkItems">Indicates whether or not the SCP-items damage types should be taken into account.</param>
@@ -2396,7 +2412,7 @@
         </member>
         <member name="M:Exiled.API.Extensions.DamageTypeExtensions.IsStatusEffect(Exiled.API.Enums.DamageType)">
             <summary>
-            Check if a <see cref="T:Exiled.API.Enums.DamageType">damage type</see> is caused by status effect.
+            Check if a <see cref="T:Exiled.API.Enums.DamageType">damage type</see> is caused by a status effect.
             </summary>
             <param name="type">The damage type to be checked.</param>
             <returns>Returns whether or not the <see cref="T:Exiled.API.Enums.DamageType"/> is caused by status effect.</returns>
@@ -2436,7 +2452,17 @@
         </member>
         <member name="T:Exiled.API.Extensions.EffectTypeExtension">
             <summary>
-            Contains an extension method to get <see cref="T:System.Type"/> from <see cref="T:Exiled.API.Enums.EffectType"/>.
+            A set of extensions for <see cref="T:Exiled.API.Enums.EffectType"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Extensions.EffectTypeExtension.EffectTypeToType">
+            <summary>
+            Gets a dictionary that maps each <see cref="T:Exiled.API.Enums.EffectType"/> to its corresponding <see cref="T:System.Type"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Extensions.EffectTypeExtension.TypeToEffectType">
+            <summary>
+            Gets a dictionary that maps each <see cref="T:System.Type"/> to its corresponding <see cref="T:Exiled.API.Enums.EffectType"/>.
             </summary>
         </member>
         <member name="M:Exiled.API.Extensions.EffectTypeExtension.Type(Exiled.API.Enums.EffectType)">
@@ -2712,11 +2738,6 @@
         <member name="P:Exiled.API.Extensions.MirrorExtensions.SendSpawnMessageMethodInfo">
             <summary>
             Gets a NetworkServer.SendSpawnMessage's <see cref="T:System.Reflection.MethodInfo"/>.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Extensions.MirrorExtensions.BufferRpcMethodInfo">
-            <summary>
-            Gets a NetworkConnectionToClient.BufferRpc's <see cref="T:System.Reflection.MethodInfo"/>.
             </summary>
         </member>
         <member name="M:Exiled.API.Extensions.MirrorExtensions.PlayBeepSound(Exiled.API.Features.Player)">
@@ -3533,7 +3554,7 @@
         </member>
         <member name="P:Exiled.API.Features.Cassie.IsSpeaking">
             <summary>
-            Gets a value indicating whether or not C.A.S.S.I.E is currently announcing. Does not include decontamination messages.
+            Gets a value indicating whether or not C.A.S.S.I.E is currently announcing. Does not include decontamination or Alpha Warhead Messages.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Cassie.VoiceLines">
@@ -4270,7 +4291,7 @@
         </member>
         <member name="M:Exiled.API.Features.Core.Generic.EBehaviour`1.BehaviourUpdate">
             <summary>
-            Fired every tick.
+            Ran every tick.
             <para>Code affecting the <see cref="T:Exiled.API.Features.Core.EBehaviour"/>'s base implementation should be placed here.</para>
             </summary>
         </member>
@@ -5392,7 +5413,7 @@
         </member>
         <member name="T:Exiled.API.Features.DamageHandlers.DamageHandler">
             <summary>
-            A wrapper to easily manipulate the behavior of <see cref="T:PlayerStatsSystem.DamageHandlerBase"/>.
+            A wrapper to easily manipulate the behavior of the <see cref="T:PlayerStatsSystem.DamageHandlerBase"/>.
             </summary>
         </member>
         <member name="M:Exiled.API.Features.DamageHandlers.DamageHandler.#ctor">
@@ -5659,7 +5680,7 @@
         </member>
         <member name="T:Exiled.API.Features.DamageHandlers.GenericDamageHandler">
             <summary>
-            Allows generic damage to player.
+            Allows generic damage to a player.
             </summary>
         </member>
         <member name="M:Exiled.API.Features.DamageHandlers.GenericDamageHandler.#ctor(Exiled.API.Features.Player,Exiled.API.Features.Player,System.Single,Exiled.API.Enums.DamageType,Exiled.API.Features.DamageHandlers.DamageHandlerBase.CassieAnnouncement,System.String)">
@@ -5676,12 +5697,12 @@
         </member>
         <member name="P:Exiled.API.Features.DamageHandlers.GenericDamageHandler.Base">
             <summary>
-            Gets or sets custom base.
+            Gets or sets a custom base.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.DamageHandlers.GenericDamageHandler.Attacker">
             <summary>
-            Gets or sets current attacker.
+            Gets or sets the current attacker.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.DamageHandlers.GenericDamageHandler.AllowSelfDamage">
@@ -6774,7 +6795,7 @@
         </member>
         <member name="T:Exiled.API.Features.Effect">
             <summary>
-            Useful class to save effect configs in a cleaner way.
+            Useful class to save effect-related configs cleanly.
             </summary>
         </member>
         <member name="M:Exiled.API.Features.Effect.#ctor">
@@ -7223,27 +7244,6 @@
             <param name="player">Player to check.</param>
             <returns><see langword="true"/> if player is in hazard zone. Otherwise, false.</returns>
         </member>
-        <member name="T:Exiled.API.Features.Hazards.PrismaticCloud">
-            <summary>
-            A wrapper for <see cref="T:Hazards.PrismaticCloud"/>.
-            </summary>
-        </member>
-        <member name="M:Exiled.API.Features.Hazards.PrismaticCloud.#ctor(Hazards.PrismaticCloud)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Exiled.API.Features.Hazards.PrismaticCloud"/> class.
-            </summary>
-            <param name="hazard">The <see cref="T:Hazards.PrismaticCloud"/> instance.</param>
-        </member>
-        <member name="P:Exiled.API.Features.Hazards.PrismaticCloud.Base">
-            <summary>
-            Gets the <see cref="T:Hazards.PrismaticCloud"/>.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Hazards.PrismaticCloud.SynchronisedPosition">
-            <summary>
-            Gets or sets the synced position.
-            </summary>
-        </member>
         <member name="T:Exiled.API.Features.Hazards.SinkholeHazard">
             <summary>
             Represents a sinkhole hazard.
@@ -7289,11 +7289,6 @@
         <member name="P:Exiled.API.Features.Hazards.TantrumHazard.CorrectPosition">
             <summary>
             Gets or sets the correct position of tantrum hazard.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Hazards.TantrumHazard.TargetedTeams">
-            <summary>
-            Gets or sets the teams that will be affected by this Tantrum.
             </summary>
         </member>
         <member name="T:Exiled.API.Features.Hazards.TemporaryHazard">
@@ -7535,13 +7530,11 @@
             <summary>
             Gets or sets how much faster stamina will drain when wearing this armor.
             </summary>
-            <exception cref="T:System.ArgumentOutOfRangeException">When attempting to set the value below 1 or above 2.</exception>
         </member>
         <member name="P:Exiled.API.Features.Items.Armor.MovementSpeedMultiplier">
             <summary>
             Gets or sets how much the users movement speed should be affected when wearing this armor. (higher values = slower movement).
             </summary>
-            <exception cref="T:System.ArgumentOutOfRangeException">When attempting to set the value below 0 or above 1.</exception>
         </member>
         <member name="P:Exiled.API.Features.Items.Armor.CivilianDownsideMultiplier">
             <summary>
@@ -8060,42 +8053,48 @@
         </member>
         <member name="T:Exiled.API.Features.Items.Flashlight">
             <summary>
-            A wrapped class for <see cref="T:InventorySystem.Items.SwitchableLightSources.SwitchableLightSourceItemBase"/>.
+            A wrapped class for <see cref="T:InventorySystem.Items.ToggleableLights.ToggleableLightItemBase"/>.
             </summary>
         </member>
-        <member name="M:Exiled.API.Features.Items.Flashlight.#ctor(InventorySystem.Items.SwitchableLightSources.SwitchableLightSourceItemBase)">
+        <member name="M:Exiled.API.Features.Items.Flashlight.#ctor(InventorySystem.Items.ToggleableLights.ToggleableLightItemBase)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.API.Features.Items.Flashlight"/> class.
             </summary>
-            <param name="itemBase">The base <see cref="T:InventorySystem.Items.SwitchableLightSources.SwitchableLightSourceItemBase"/> class.</param>
+            <param name="itemBase">The base <see cref="T:InventorySystem.Items.ToggleableLights.ToggleableLightItemBase"/> class.</param>
         </member>
         <member name="M:Exiled.API.Features.Items.Flashlight.#ctor(ItemType)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.API.Features.Items.Flashlight"/> class, as well as a new Flashlight item.
             </summary>
-            <param name="type">The <see cref="T:ItemType"/> of the flashlight.</param>
+            <param name="type"><see cref="F:ItemType.Flashlight"/> or <see cref="F:ItemType.Lantern"/>.</param>
         </member>
         <member name="P:Exiled.API.Features.Items.Flashlight.Base">
             <summary>
-            Gets the <see cref="T:InventorySystem.Items.SwitchableLightSources.Flashlight.FlashlightItem"/> that this class is encapsulating.
+            Gets the <see cref="T:InventorySystem.Items.ToggleableLights.ToggleableLightItemBase"/> that this class is encapsulating.
             </summary>
+            <remarks>Can be <see cref="T:InventorySystem.Items.ToggleableLights.Flashlight.FlashlightItem"/> or <see cref="T:InventorySystem.Items.ToggleableLights.Lantern.LanternItem"/>.</remarks>
         </member>
         <member name="P:Exiled.API.Features.Items.Flashlight.Active">
+            <inheritdoc cref="P:Exiled.API.Features.Items.Flashlight.IsEmittingLight"/>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Flashlight.IsEmittingLight">
             <summary>
-            Gets or sets a value indicating whether the flashlight is turned on.
+            Gets or sets a value indicating whether the item is emitting light.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Flashlight.NextAllowedTime">
+            <summary>
+            Gets or sets time since level loaded when player will be able to change <see cref="P:Exiled.API.Features.Items.Flashlight.IsEmittingLight"/> again.
             </summary>
         </member>
         <member name="M:Exiled.API.Features.Items.Flashlight.Clone">
-            <summary>
-            Clones current <see cref="T:Exiled.API.Features.Items.Flashlight"/> object.
-            </summary>
-            <returns> New <see cref="T:Exiled.API.Features.Items.Flashlight"/> object. </returns>
+            <inheritdoc/>
         </member>
         <member name="M:Exiled.API.Features.Items.Flashlight.ToString">
             <summary>
-            Returns the Flashlight in a human readable format.
+            Returns the item in a human readable format.
             </summary>
-            <returns>A string containing Flashlight-related data.</returns>
+            <returns>A string containing item-related data.</returns>
         </member>
         <member name="T:Exiled.API.Features.Items.Item">
             <summary>
@@ -8191,12 +8190,22 @@
         </member>
         <member name="P:Exiled.API.Features.Items.Item.IsUsable">
             <summary>
-            Gets a value indicating whether or not this item can be used by player.
+            Gets a value indicating whether or not this item can be used by a player.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Items.Item.IsWeapon">
             <summary>
             Gets a value indicating whether or not this item is a weapon.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Item.IsLightEmitter">
+            <summary>
+            Gets a value indicating whether or not this item emits light.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Item.IsDisarmer">
+            <summary>
+            Gets a value indicating whether or not this item can be used to disarm players.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Items.Item.Owner">
@@ -8750,6 +8759,11 @@
             Initializes a new instance of the <see cref="T:Exiled.API.Features.Items.Scp330"/> class, as well as a new SCP-330 bag item.
             </summary>
         </member>
+        <member name="P:Exiled.API.Features.Items.Scp330.AvailableCandies">
+            <summary>
+            Gets the <see cref="T:System.Collections.Generic.Dictionary`2"/> with all presented in game candies.
+            </summary>
+        </member>
         <member name="P:Exiled.API.Features.Items.Scp330.Base">
             <summary>
             Gets the <see cref="T:InventorySystem.Items.Usables.Scp330.Scp330Bag"/> that this class is encapsulating.
@@ -9203,7 +9217,7 @@
         </member>
         <member name="T:Exiled.API.Features.Log">
             <summary>
-            A set of tools to print messages on the server console.
+            A set of tools to print messages to the server console.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Log.DebugEnabled">
@@ -9337,11 +9351,6 @@
         <member name="F:Exiled.API.Features.Map.ToysValue">
             <summary>
             A list of <see cref="T:Exiled.API.Features.Toys.AdminToy"/>s on the map.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Map.PrismaticCloud">
-            <summary>
-            Gets the prismatic prefab.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Map.TantrumPrefab">
@@ -9629,7 +9638,7 @@
             </summary>
             <param name="name">The name of the NPC.</param>
             <param name="role">The RoleTypeId of the NPC.</param>
-            <param name="id">The Network ID of the NPC. If 0, one is made.</param>
+            <param name="id">The player ID of the NPC.</param>
             <param name="userId">The userID of the NPC.</param>
             <param name="position">The position to spawn the NPC.</param>
             <returns>The <see cref="T:Exiled.API.Features.Npc"/> spawned.</returns>
@@ -9838,13 +9847,11 @@
             <summary>
             Gets or sets how much faster stamina will drain when wearing this armor.
             </summary>
-            <exception cref="T:System.ArgumentOutOfRangeException">When attempting to set the value below 1 or above 2.</exception>
         </member>
         <member name="P:Exiled.API.Features.Pickups.BodyArmorPickup.MovementSpeedMultiplier">
             <summary>
             Gets how much the users movement speed should be affected when wearing this armor. (higher values = slower movement).
             </summary>
-            <exception cref="T:System.ArgumentOutOfRangeException">When attempting to set the value below 0 or above 1.</exception>
         </member>
         <member name="P:Exiled.API.Features.Pickups.BodyArmorPickup.AmmoLimits">
             <summary>
@@ -9962,7 +9969,7 @@
         </member>
         <member name="P:Exiled.API.Features.Pickups.FirearmPickup.Attachments">
             <summary>
-            Gets or sets a value indicating whether the Attachement code have this <see cref="T:Exiled.API.Features.Pickups.FirearmPickup"/>.
+            Gets or sets a value indicating whether the attachment code have this <see cref="T:Exiled.API.Features.Pickups.FirearmPickup"/>.
             </summary>
         </member>
         <member name="M:Exiled.API.Features.Pickups.FirearmPickup.ToString">
@@ -9973,7 +9980,7 @@
         </member>
         <member name="T:Exiled.API.Features.Pickups.FlashGrenadePickup">
             <summary>
-            A wrapper class for dropped Flash Pickup.
+            A wrapper class for dropped Flashbang Pickup.
             </summary>
         </member>
         <member name="M:Exiled.API.Features.Pickups.FlashGrenadePickup.#ctor(InventorySystem.Items.ThrowableProjectiles.TimedGrenadePickup)">
@@ -10013,7 +10020,7 @@
         </member>
         <member name="T:Exiled.API.Features.Pickups.GrenadePickup">
             <summary>
-            A wrapper class for a grenade pickup.
+            A wrapper class for a high explosive grenade pickup.
             </summary>
         </member>
         <member name="M:Exiled.API.Features.Pickups.GrenadePickup.#ctor(InventorySystem.Items.ThrowableProjectiles.TimedGrenadePickup)">
@@ -10187,7 +10194,7 @@
         </member>
         <member name="P:Exiled.API.Features.Pickups.MicroHIDPickup.Energy">
             <summary>
-            Gets or sets the MicroHID Energy.
+            Gets or sets the MicroHID Energy Level.
             </summary>
         </member>
         <member name="M:Exiled.API.Features.Pickups.MicroHIDPickup.ToString">
@@ -10632,7 +10639,7 @@
         </member>
         <member name="P:Exiled.API.Features.Pickups.Projectiles.FlashbangProjectile.SurfaceDistanceIntensifier">
             <summary>
-            Gets or sets the how mush the FlashBang going to be intensified when explode at <see cref="F:Exiled.API.Enums.RoomType.Surface"/>.
+            Gets or sets the how much the flashbang going to be intensified when exploding on <see cref="F:Exiled.API.Enums.RoomType.Surface"/>.
             </summary>
         </member>
         <member name="M:Exiled.API.Features.Pickups.Projectiles.FlashbangProjectile.ToString">
@@ -10894,7 +10901,7 @@
         </member>
         <member name="P:Exiled.API.Features.Pickups.RadioPickup.BatteryLevel">
             <summary>
-            Gets or sets the Radio Energy.
+            Gets or sets the Radio Battery Level.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Pickups.RadioPickup.Range">
@@ -11103,11 +11110,6 @@
         <member name="F:Exiled.API.Features.Player.ItemsValue">
             <summary>
             A list of the player's items.
-            </summary>
-        </member>
-        <member name="F:Exiled.API.Features.Player.OverrideMaxHealth">
-            <summary>
-            A overriden <see cref="P:Exiled.API.Features.Player.MaxHealth"/> value.
             </summary>
         </member>
         <member name="M:Exiled.API.Features.Player.#ctor(ReferenceHub)">
@@ -11425,6 +11427,7 @@
             <br /><see cref="F:PlayerRoles.RoleTypeId.Scp096"/> = <see cref="T:Exiled.API.Features.Roles.Scp096Role"/>.
             <br /><see cref="F:PlayerRoles.RoleTypeId.Scp106"/> = <see cref="T:Exiled.API.Features.Roles.Scp106Role"/>.
             <br /><see cref="F:PlayerRoles.RoleTypeId.Scp173"/> = <see cref="T:Exiled.API.Features.Roles.Scp173Role"/>.
+            <br /><see cref="F:PlayerRoles.RoleTypeId.Scp3114"/> = <see cref="T:Exiled.API.Features.Roles.Scp3114Role"/>.
             <br /><see cref="F:PlayerRoles.RoleTypeId.Scp939"/> = <see cref="T:Exiled.API.Features.Roles.Scp939Role"/>.
             <br />If not listed above, the type of Role will be <see cref="T:Exiled.API.Features.Roles.HumanRole"/>.
             </para>
@@ -13815,7 +13818,7 @@
         </member>
         <member name="P:Exiled.API.Features.Recontainer.IsContainmentSequenceSuccessful">
             <summary>
-            Gets or sets a value indicating whether the containment sequence is successful done.
+            Gets or sets a value indicating whether the containment sequence is successfully done.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Recontainer.LockedDoors">
@@ -14223,12 +14226,12 @@
         </member>
         <member name="T:Exiled.API.Features.Roles.ISubroutinedScpRole">
             <summary>
-            Defines a interface that represents a <see cref="T:PlayerRoles.PlayableScps.Subroutines.SubroutineManagerModule"/> in player's role.
+            Defines a interface that represents a <see cref="T:PlayerRoles.Subroutines.SubroutineManagerModule"/> in player's role.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Roles.ISubroutinedScpRole.SubroutineModule">
             <summary>
-            Gets the SCP <see cref="T:PlayerRoles.PlayableScps.Subroutines.SubroutineManagerModule"/>.
+            Gets the SCP <see cref="T:PlayerRoles.Subroutines.SubroutineManagerModule"/>.
             </summary>
         </member>
         <member name="T:Exiled.API.Features.Roles.NoneRole">
@@ -14546,7 +14549,7 @@
         </member>
         <member name="P:Exiled.API.Features.Roles.Scp049Role.TurnedPlayers">
             <summary>
-            Gets a list of players who will be turned away from SCP-049 Sense Ability.
+            Gets a list of players who are turned away from SCP-049 Sense Ability.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Roles.Scp049Role.Type">
@@ -14580,7 +14583,7 @@
         </member>
         <member name="P:Exiled.API.Features.Roles.Scp049Role.IsRecalling">
             <summary>
-            Gets a value indicating whether or not SCP-049 is currently recalling a player.
+            Gets a value indicating whether or not SCP-049 is currently reviving a player.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Roles.Scp049Role.IsCallActive">
@@ -14645,7 +14648,7 @@
         </member>
         <member name="P:Exiled.API.Features.Roles.Scp049Role.GoodSenseCooldown">
             <summary>
-            Gets or sets the amount of time before SCP-049 can use its Good Sense ability again.
+            Gets or sets the amount of time before SCP-049 can use its Good Sense of the Doctor ability again.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Roles.Scp049Role.RemainingAttackCooldown">
@@ -15360,7 +15363,7 @@
         </member>
         <member name="P:Exiled.API.Features.Roles.Scp106Role.Vigor">
             <summary>
-            Gets or sets SCP-106's Vigor.
+            Gets or sets SCP-106's Vigor Level.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Roles.Scp106Role.IsSubmerged">
@@ -15706,6 +15709,11 @@
             Gets Scp3114's <see cref="T:PlayerRoles.PlayableScps.Scp3114.Scp3114Disguise"/>.
             </summary>
         </member>
+        <member name="P:Exiled.API.Features.Roles.Scp3114Role.VoiceLines">
+            <summary>
+            Gets Scp3114's <see cref="T:PlayerRoles.PlayableScps.Scp3114.Scp3114VoiceLines"/>.
+            </summary>
+        </member>
         <member name="P:Exiled.API.Features.Roles.Scp3114Role.Base">
             <summary>
             Gets the <see cref="T:PlayerRoles.PlayableScps.Scp3114.Scp3114Role"/> instance.
@@ -15746,10 +15754,21 @@
             Gets or sets the SCP-3114's Disguise duration.
             </summary>
         </member>
+        <member name="P:Exiled.API.Features.Roles.Scp3114Role.WarningTime">
+            <summary>
+            Gets or sets the warning time seconds.
+            </summary>
+        </member>
         <member name="M:Exiled.API.Features.Roles.Scp3114Role.ResetIdentity">
             <summary>
             Reset Scp3114 FakeIdentity.
             </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Roles.Scp3114Role.PlaySound(PlayerRoles.PlayableScps.Scp3114.Scp3114VoiceLines.VoiceLinesName)">
+            <summary>
+            Plays a random Scp3114 voice line.
+            </summary>
+            <param name="voiceLine">The type of voice line to play.</param>
         </member>
         <member name="M:Exiled.API.Features.Roles.Scp3114Role.GetSpawnChance(System.Collections.Generic.List{PlayerRoles.RoleTypeId})">
             <summary>
@@ -17465,6 +17484,11 @@
             Gets or sets a value indicating whether or not the warhead can be disabled.
             </summary>
         </member>
+        <member name="P:Exiled.API.Features.Warhead.Kills">
+            <summary>
+            Gets or sets the amount of kills caused by the warhead (shown on the summary screen).
+            </summary>
+        </member>
         <member name="P:Exiled.API.Features.Warhead.CanBeStarted">
             <summary>
             Gets a value indicating whether or not the warhead can be started.
@@ -17672,12 +17696,12 @@
         </member>
         <member name="T:Exiled.API.Interfaces.IDamageableDoor">
             <summary>
-            Interface for doors which can be damaged.
+            Interface for doors that can be damaged.
             </summary>
         </member>
         <member name="P:Exiled.API.Interfaces.IDamageableDoor.Health">
             <summary>
-            Gets or sets remaining health of the door.
+            Gets or sets the health of the door.
             </summary>
         </member>
         <member name="P:Exiled.API.Interfaces.IDamageableDoor.MaxHealth">

@@ -23,7 +23,7 @@
         </member>
         <member name="T:Exiled.Permissions.Commands.Permissions.Group.Add">
             <summary>
-            Adds a group to permissions.
+            Adds a group to a permission.
             </summary>
         </member>
         <member name="P:Exiled.Permissions.Commands.Permissions.Group.Add.Command">
@@ -65,7 +65,7 @@
         </member>
         <member name="T:Exiled.Permissions.Commands.Permissions.Group.Remove">
             <summary>
-            Removes a group to permissions.
+            Removes a group from a permission.
             </summary>
         </member>
         <member name="P:Exiled.Permissions.Commands.Permissions.Group.Remove.Command">

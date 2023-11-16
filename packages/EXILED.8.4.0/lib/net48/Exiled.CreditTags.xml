@@ -76,7 +76,7 @@
         </member>
         <member name="F:Exiled.CreditTags.Enums.InfoSide.Both">
             <summary>
-            Includes both of them.
+            Includes both options.
             </summary>
         </member>
         <member name="T:Exiled.CreditTags.Enums.RankType">
@@ -86,7 +86,7 @@
         </member>
         <member name="F:Exiled.CreditTags.Enums.RankType.None">
             <summary>
-            Nothing.
+            No EXILED roles.
             </summary>
         </member>
         <member name="F:Exiled.CreditTags.Enums.RankType.Dev">
@@ -157,6 +157,40 @@
             <summary>
             Gets a value representing the rank's color as a hex value.
             </summary>
+        </member>
+        <member name="F:Exiled.CreditTags.Features.ThreadSafeRequest.done">
+            <summary>
+            Handles the Safe Thread Request.
+            </summary>
+        </member>
+        <member name="P:Exiled.CreditTags.Features.ThreadSafeRequest.Result">
+            <summary>
+            Gets the result.
+            </summary>
+        </member>
+        <member name="P:Exiled.CreditTags.Features.ThreadSafeRequest.Success">
+            <summary>
+            Gets a value indicating whether or not it was successful.
+            </summary>
+        </member>
+        <member name="P:Exiled.CreditTags.Features.ThreadSafeRequest.Code">
+            <summary>
+            Gets the HTTP Status Code.
+            </summary>
+        </member>
+        <member name="P:Exiled.CreditTags.Features.ThreadSafeRequest.Done">
+            <summary>
+            Gets a value indicating whether or not the request was successful.
+            </summary>
+        </member>
+        <member name="M:Exiled.CreditTags.Features.ThreadSafeRequest.Go(System.String,System.Action{Exiled.CreditTags.Features.ThreadSafeRequest},System.Action{System.String},UnityEngine.GameObject)">
+            <summary>
+            Gets the call to the website to obtain users to their roles.
+            </summary>
+            <param name="url">The URL.</param>
+            <param name="errorHandler">The error handling <see cref="T:System.Action`1"/>.</param>
+            <param name="resultHandler">The result handling <see cref="T:System.Action`1"/>.</param>
+            <param name="issuer">The <see cref="T:UnityEngine.GameObject"/> issuing the request.</param>
         </member>
     </members>
 </doc>

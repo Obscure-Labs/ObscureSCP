@@ -82,14 +82,14 @@
         </member>
         <member name="M:Exiled.Loader.ConfigManager.LoadSorted(System.String)">
             <summary>
-            Loads all plugin configs.
+            Loads all the plugin configs.
             </summary>
             <param name="rawConfigs">The raw configs to be loaded.</param>
             <returns>Returns a dictionary of loaded configs.</returns>
         </member>
         <member name="M:Exiled.Loader.ConfigManager.LoadConfig(Exiled.API.Interfaces.IPlugin{Exiled.API.Interfaces.IConfig},System.Collections.Generic.Dictionary{System.String,System.Object})">
             <summary>
-            Loads the config of a plugin using the actual distribution.
+            Loads the config of a plugin using the distribution.
             </summary>
             <param name="plugin">The plugin which config will be loaded.</param>
             <param name="rawConfigs">The raw configs to detect if the plugin already has generated configs.</param>
@@ -112,7 +112,7 @@
         </member>
         <member name="M:Exiled.Loader.ConfigManager.Reload">
             <summary>
-            Reads, Loads and Saves plugin configs.
+            Reads, loads, and saves plugin configs.
             </summary>
             <returns>Returns a value indicating if the reloading process has been completed successfully or not.</returns>
         </member>
@@ -157,7 +157,7 @@
         </member>
         <member name="T:Exiled.Loader.Features.Configs.CommentGatheringTypeInspector">
             <summary>
-            Spurce: https://dotnetfiddle.net/8M6iIE.
+            Source: https://dotnetfiddle.net/8M6iIE.
             </summary>
         </member>
         <member name="M:Exiled.Loader.Features.Configs.CommentGatheringTypeInspector.#ctor(YamlDotNet.Serialization.ITypeInspector)">
@@ -650,7 +650,7 @@
         </member>
         <member name="T:Exiled.Loader.LoaderPlugin">
             <summary>
-            The PluginAPI Plugin class for the EXILED Loader.
+            The Northwood PluginAPI Plugin class for the EXILED Loader.
             </summary>
         </member>
         <member name="F:Exiled.Loader.LoaderPlugin.Config">
@@ -783,7 +783,7 @@
         </member>
         <member name="M:Exiled.Loader.TranslationManager.Load(System.String)">
             <summary>
-            Loads all plugin translations.
+            Loads all of the plugin's translations.
             </summary>
             <param name="rawTranslations">The raw translations to be loaded.</param>
             <returns>Returns a dictionary of loaded translations.</returns>
@@ -798,7 +798,7 @@
         </member>
         <member name="M:Exiled.Loader.TranslationManager.Reload">
             <summary>
-            Reads, Loads and Saves plugin translations.
+            Reads, loads, and saves plugin translations.
             </summary>
             <returns>Returns a value indicating if the reloading process has been completed successfully or not.</returns>
         </member>
@@ -875,8 +875,56 @@
         </member>
         <member name="M:Exiled.Loader.Updater.CheckUpdate">
             <summary>
-            Looks for any updates.
+            Checks for any updates.
             </summary>
+        </member>
+        <member name="M:Exiled.Loader.Updater.CreateHttpClient">
+            <summary>
+            Creates a HTTP Client, and checks at the Exiled-Team GitHub repository.
+            </summary>
+            <returns>Client determining if it was successful connecting to the Exiled GitHub repository.</returns>
+        </member>
+        <member name="M:Exiled.Loader.Updater.FindUpdate(System.Net.Http.HttpClient,System.Boolean,Exiled.Loader.Models.NewVersion@)">
+            <summary>
+            Finds an update using the client.
+            </summary>
+            <param name="client"> is the HTTP Client.</param>
+            <param name="forced"> if the detection was forced.</param>
+            <param name="newVersion"> if there is a new version of EXILED.</param>
+            <returns>Returns true if there is an update, otherwise false.</returns>
+        </member>
+        <member name="M:Exiled.Loader.Updater.Update(System.Net.Http.HttpClient,Exiled.Loader.Models.NewVersion)">
+            <summary>
+            Updates the client's version of Exiled.
+            </summary>
+            <param name="client"> is the HTTP Client.</param>
+            <param name="newVersion"> is the updated version of Exiled.</param>
+        </member>
+        <member name="M:Exiled.Loader.Updater.TagReleases(Exiled.Loader.GHApi.Models.Release[])">
+            <summary>
+            Gets the releases of Exiled.
+            </summary>
+            <param name="releases"> gets the array of releases that has been made.</param>
+            <returns>The last item in the array, which is the newest version of Exiled.</returns>
+        </member>
+        <member name="M:Exiled.Loader.Updater.FindRelease(Exiled.Loader.Models.TaggedRelease[],Exiled.Loader.GHApi.Models.Release@,Exiled.Loader.Models.ExiledLib,System.Boolean)">
+            <summary>
+            Is able to find the release specificed.
+            </summary>
+            <param name="releases"> is the list of releases (array).</param>
+            <param name="release"> is the most recent release of Exiled.</param>
+            <param name="smallestVersion"> finds the smallest version of the Exiled Library.</param>
+            <param name="forced"> if this update was forced or not.</param>
+            <returns>the if the specific release was found or not.</returns>
+        </member>
+        <member name="M:Exiled.Loader.Updater.FindAsset(System.String,Exiled.Loader.GHApi.Models.Release,Exiled.Loader.GHApi.Models.ReleaseAsset@)">
+            <summary>
+            Finds the specified asset.
+            </summary>
+            <param name="assetName"> passes in the specified asset name.</param>
+            <param name="release"> passes in the release version.</param>
+            <param name="asset"> is the asset that is tied to the release.</param>
+            <returns>if it was able to find the asset or not.</returns>
         </member>
     </members>
 </doc>
