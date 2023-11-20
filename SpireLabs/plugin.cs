@@ -92,6 +92,8 @@ namespace SpireLabs
         public static bool startingRound = false;
         public static bool initing = false;
 
+        internal static bool[] corruptGuards = new bool[60];
+
         public static bool isLobbyEnabledConfig = false;
 
         public string spireConfigLoc;
@@ -256,6 +258,8 @@ namespace SpireLabs
             Exiled.Events.Handlers.Scp3114.Revealed += boner.OnReveal;
             Exiled.Events.Handlers.Player.DryfiringWeapon += eventone;
             Exiled.Events.Handlers.Player.InteractingDoor += mallowDoor;
+            Exiled.Events.Handlers.Player.Spawned += corruptGuard.spawned;
+            Exiled.Events.Handlers.Player.Shot += corruptGuard.shot;
             CustomItem.RegisterItems();
         }
 
@@ -691,6 +695,7 @@ namespace SpireLabs
             Timing.RunCoroutine(randomFlicker(), tag: "flickerRoutine");
             Log.Info("Round has started!");
             Timing.RunCoroutine(lockAnounce(), tag: "lockRoutine");
+            Timing.RunCoroutine(corruptGuard.initcantShoot());
             foreach (Door d in Door.List)
             {
                 if (d.Zone == ZoneType.Surface)
