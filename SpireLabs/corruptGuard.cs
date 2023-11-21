@@ -1,5 +1,6 @@
 ﻿using Exiled.Events.EventArgs.Player;
 using MEC;
+using PlayerRoles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,11 +52,11 @@ namespace SpireLabs
 
         internal static void shot(ShotEventArgs ev)
         {
-            if (cantShoot[ev.Player.Id] == true)
+            if (cantShoot[ev.Player.Id] == true && ev.Target.Role == RoleTypeId.FacilityGuard)
             {
                 ev.CanHurt = false;
             }
-            if (cantShoot[ev.Target.Id] == true)
+            if (cantShoot[ev.Target.Id] == true && ev.Player.Role == RoleTypeId.FacilityGuard)
             {
                 ev.CanHurt = false;
             }
