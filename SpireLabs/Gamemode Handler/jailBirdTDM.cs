@@ -15,6 +15,9 @@ using PlayerRoles;
 using MapEditorReborn;
 using UnityEngine;
 using Exiled.API.Enums;
+using CustomItems.API;
+using SpireLabs.Items;
+using InventorySystem.Items;
 
 namespace SpireLabs.Gamemode_Handler
 {
@@ -24,7 +27,7 @@ namespace SpireLabs.Gamemode_Handler
         static bool team = true;
         public static IEnumerator<float> startJbTDM()
         {
-
+            var item = ItemType.Coin;
             var rnd = new System.Random();
             int num = rnd.Next(1, 100);
             Log.Info($"Minigame RNG was: {num} (should be between 30-60)");
@@ -39,6 +42,11 @@ namespace SpireLabs.Gamemode_Handler
             public static IEnumerator<float> lateJoin()
             {
             var loop = true;
+
+
+
+
+
             yield return Timing.WaitForSeconds(1.25f);
             int? count = 0;
                 while (loop = true)
@@ -46,6 +54,7 @@ namespace SpireLabs.Gamemode_Handler
                     yield return Timing.WaitForSeconds(0.1f);
                     foreach (Player p in Player.List)
                 {
+
 
                     if (count >= 0 && count <= 120)
                     {
@@ -74,7 +83,6 @@ namespace SpireLabs.Gamemode_Handler
 
         public static IEnumerator<float> runJbTDM()
             {
-            yield return Timing.WaitForOneFrame;
                 gamemodeactive = true;
                 Log.Warn("Unloading all default maps");
                 MapEditorReborn.API.Features.MapUtils.LoadMap("empty");
@@ -84,11 +92,14 @@ namespace SpireLabs.Gamemode_Handler
                 Timing.WaitForSeconds(0.1f);
                 Timing.RunCoroutine(lateJoin());
                 Server.Broadcast.BroadcastMessage("MINIGAME ROUND!");
+                var rnd69 = new System.Random();
+                int num69 = rnd69.Next(0, 3);
 
             foreach (Player p in Player.List)
                 {
                     p.Scale = new UnityEngine.Vector3(1, 1, 1);
-                    yield return Timing.WaitForOneFrame;
+                yield return Timing.WaitForSeconds(0.1f);
+
                 if (team == true)
                 {
                     Log.Warn($"{p.DisplayNickname} is CHAOS INSURGENCY TEAM");
@@ -108,9 +119,34 @@ namespace SpireLabs.Gamemode_Handler
                     p.EnableEffect(Exiled.API.Enums.EffectType.Vitality, 999999999);
                 }
                 p.Broadcast(5, "<color=green><b>MINIGAME ROUND!");
+                if (num69 == 0)
+                {
+                    Log.Warn("Giving 0");
+                    Exiled.CustomItems.API.Features.CustomItem.Get((uint)1).Give(p);
+                    p.AddAmmo(AmmoType.Ammo44Cal, 99);
+                }
+                if (num69 == 1)
+                {
+                    Log.Warn("Giving 1");
+                    var item = p.AddItem(ItemType.Jailbird);
+                    p.CurrentItem = item;
+                }
+                if (num69 == 2)
+                {
+                    Log.Warn("Giving 2");
+                    var item = p.AddItem(ItemType.SCP018);
+                    p.AddItem(ItemType.SCP018);
+                    p.AddItem(ItemType.SCP018);
+                    p.AddItem(ItemType.SCP018);
+                    p.AddItem(ItemType.SCP018);
+                    p.AddItem(ItemType.SCP018);
+                    p.AddItem(ItemType.SCP018);
+                    p.AddItem(ItemType.SCP018);
+                    p.CurrentItem = item;
+                }
+
                 yield return Timing.WaitForOneFrame;
             }
             }
-
         }
     }
