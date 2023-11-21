@@ -1,4 +1,4 @@
-﻿using AudioPlayer.Commands.SubCommands;
+using AudioPlayer.Commands.SubCommands;
 using Exiled.Events.EventArgs.Server;
 using Exiled.Events.EventArgs.Player;
 using Exiled.Events.EventArgs.Warhead;
