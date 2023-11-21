@@ -37,27 +37,36 @@ namespace SpireLabs.Gamemode_Handler
 
             public static IEnumerator<float> lateJoin()
             {
-                int? count = 0;
-                while (true)
+            var loop = true;
+            yield return Timing.WaitForSeconds(1.25f);
+            int? count = 0;
+                while (loop = true)
                 {
                     yield return Timing.WaitForSeconds(0.1f);
                     foreach (Player p in Player.List)
+                {
+
+                    if (count >= 0 && count <= 120)
                     {
-                        if (count == 0 && count <= 120)
-                        if (p != null)
+                        if (p == null)
                         {
                         }
                         else
                         {
-                            if (p.IsAlive && p.Role.Type != RoleTypeId.ChaosConscript || p.Role.Type != RoleTypeId.NtfSergeant)
+                            if (p.Role.Type != RoleTypeId.ChaosConscript && p.Role.Type != RoleTypeId.NtfSergeant && p.Role.Type != RoleTypeId.Spectator && p.Role.Type != RoleTypeId.None)
                             {
                                 p.Role.Set(RoleTypeId.Spectator);
-                                Log.Warn($"{p.DisplayNickname} joined late/was assigned the wrong role and has been set to spectator");
+                                Log.Warn($"{p.DisplayNickname} joined late (or was assigned the wrong role somehow) and has been set to spectator");
                             }
+
                         }
                         yield return Timing.WaitForSeconds(0.25f);
+                        count++;
                     }
-    ;
+                    else { break; loop = false; }
+
+
+                }
                 }
 
             }
