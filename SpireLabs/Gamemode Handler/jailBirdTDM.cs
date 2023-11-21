@@ -82,28 +82,31 @@ namespace SpireLabs.Gamemode_Handler
                 Log.Warn("Starting checks for players with wrong roles");
                 Timing.WaitForSeconds(0.1f);
                 Timing.RunCoroutine(lateJoin());
+                Server.Broadcast.BroadcastMessage("MINIGAME ROUND!");
+
             foreach (Player p in Player.List)
                 {
                     p.Scale = new UnityEngine.Vector3(1, 1, 1);
                     yield return Timing.WaitForOneFrame;
-                    if (team == true)
-                    {
-                        Log.Warn($"{p.DisplayNickname} is CHAOS INSURGENCY TEAM");
-                        team = false;
-                        p.Role.Set(RoleTypeId.ChaosConscript);
-                        p.ClearInventory(true);
-                        p.Teleport(new UnityEngine.Vector3(8.48f, 1106.5f, 35.46f));
+                if (team == true)
+                {
+                    Log.Warn($"{p.DisplayNickname} is CHAOS INSURGENCY TEAM");
+                    team = false;
+                    p.Role.Set(RoleTypeId.ChaosConscript);
+                    p.ClearInventory(true);
+                    p.Teleport(new UnityEngine.Vector3(8.48f, 1106.5f, 35.46f));
                     p.Rotation.SetLookRotation(new UnityEngine.Vector3(0, 180, 0));
                 }
                 else
-                    {
-                        Log.Warn($"{p.DisplayNickname} is NTF TEAM");
-                        team = true;
-                        p.Role.Set(RoleTypeId.NtfSergeant);
-                        p.ClearInventory(true);
-                        p.Teleport(new UnityEngine.Vector3(-20.8f, 1107.5f, 51.66f));
+                {
+                    Log.Warn($"{p.DisplayNickname} is NTF TEAM");
+                    team = true;
+                    p.Role.Set(RoleTypeId.NtfSergeant);
+                    p.ClearInventory(true);
+                    p.Teleport(new UnityEngine.Vector3(-20.8f, 1107.5f, 51.66f));
                     p.Rotation.SetLookRotation(new UnityEngine.Vector3(0, 180, 0));
                 }
+                p.Broadcast(5, "<color=green><b>MINIGAME ROUND!");
                 yield return Timing.WaitForOneFrame;
             }
             }
