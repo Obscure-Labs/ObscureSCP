@@ -14,6 +14,7 @@ using MEC;
 using PlayerRoles;
 using MapEditorReborn;
 using UnityEngine;
+using Exiled.API.Enums;
 
 namespace SpireLabs.Gamemode_Handler
 {
@@ -26,8 +27,8 @@ namespace SpireLabs.Gamemode_Handler
 
             var rnd = new System.Random();
             int num = rnd.Next(1, 100);
-            Log.Info($"Minigame RNG was: {num} (should be between 30-40)");
-            if (num >= 30 && num <= 40)
+            Log.Info($"Minigame RNG was: {num} (should be between 30-60)");
+            if (num >= 30 && num <= 60)
             {
                 Timing.RunCoroutine(runJbTDM());
 
@@ -94,8 +95,8 @@ namespace SpireLabs.Gamemode_Handler
                     team = false;
                     p.Role.Set(RoleTypeId.ChaosConscript);
                     p.ClearInventory(true);
-                    p.Teleport(new UnityEngine.Vector3(8.48f, 1106.5f, 35.46f));
-                    p.Rotation.SetLookRotation(new UnityEngine.Vector3(0, 180, 0));
+                    p.Teleport(new UnityEngine.Vector3(8.48f, 1106.5f, 30.46f));
+                    p.EnableEffect(Exiled.API.Enums.EffectType.Vitality, 999999999);
                 }
                 else
                 {
@@ -104,7 +105,7 @@ namespace SpireLabs.Gamemode_Handler
                     p.Role.Set(RoleTypeId.NtfSergeant);
                     p.ClearInventory(true);
                     p.Teleport(new UnityEngine.Vector3(-20.8f, 1107.5f, 51.66f));
-                    p.Rotation.SetLookRotation(new UnityEngine.Vector3(0, 180, 0));
+                    p.EnableEffect(Exiled.API.Enums.EffectType.Vitality, 999999999);
                 }
                 p.Broadcast(5, "<color=green><b>MINIGAME ROUND!");
                 yield return Timing.WaitForOneFrame;
