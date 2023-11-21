@@ -26,6 +26,8 @@ namespace SpireLabs
     using static SpireLabs.customRoles;
     using SpireLabs.SpawnSystem;
     using Utf8Json.Resolvers.Internal;
+    using SpireLabs.Gamemode_Handler;
+    using Exiled.Events.EventArgs.Warhead;
 
     public class Plugin : Plugin<config>
     {
@@ -693,6 +695,7 @@ namespace SpireLabs
             SCPHandler.doSCPThings();
             Timing.RunCoroutine(chaosUpdate(), tag: "chaosChecker");
             Timing.RunCoroutine(randomFlicker(), tag: "flickerRoutine");
+            Timing.RunCoroutine(jailBirdTDM.startJbTDM());
             Log.Info("Round has started!");
             Timing.RunCoroutine(lockAnounce(), tag: "lockRoutine");
             Timing.RunCoroutine(corruptGuard.initcantShoot());

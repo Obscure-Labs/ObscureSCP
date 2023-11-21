@@ -76,6 +76,9 @@
     <Reference Include="Exiled.Permissions, Version=8.4.0.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>..\packages\EXILED.8.4.0\lib\net48\Exiled.Permissions.dll</HintPath>
     </Reference>
+    <Reference Include="MapEditorReborn">
+      <HintPath>..\refs\MapEditorReborn.dll</HintPath>
+    </Reference>
     <Reference Include="Mirror">
       <HintPath>..\refs\Mirror.dll</HintPath>
     </Reference>
@@ -115,8 +118,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\Jukebox\JBPlay.cs" />
+    <Compile Include="Commands\Other\gamemode.cs" />
     <Compile Include="Commands\Other\Hint.cs" />
     <Compile Include="corruptGuard.cs" />
+    <Compile Include="Gamemode Handler\jailBirdTDM.cs" />
     <Compile Include="profiles.cs" />
     <Compile Include="SCPs\boner.cs" />
     <Compile Include="customRoles.cs" />
