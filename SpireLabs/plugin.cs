@@ -265,18 +265,22 @@ namespace SpireLabs
 
         void mallowDoor(InteractingDoorEventArgs ev)
         {
-            if(UCRAPI.HasCustomRole(ev.Player))
+            //if(UCRAPI.HasCustomRole(ev.Player))
+            //{
+            //    if (UCRAPI.Get(ev.Player).Id == 10)
+            //    {
+            //        if (ev.Door.IsKeycardDoor)
+            //        {
+            //            if (ev.Door.Type != DoorType.Scp106Primary && ev.Door.Type != DoorType.Scp106Secondary && !ev.Door.IsLocked)
+            //            {
+            //                ev.Door.IsOpen = !ev.Door.IsOpen;
+            //            }
+            //        }
+            //    }
+            //}
+            if(ev.Door.IsLocked && ev.Player.Role != RoleTypeId.Scp079)
             {
-                if (UCRAPI.Get(ev.Player).Id == 10)
-                {
-                    if (ev.Door.IsKeycardDoor)
-                    {
-                        if (ev.Door.Type != DoorType.Scp106Primary && ev.Door.Type != DoorType.Scp106Secondary && !ev.Door.IsLocked)
-                        {
-                            ev.Door.IsOpen = !ev.Door.IsOpen;
-                        }
-                    }
-                }
+                ev.IsAllowed = false;
             }
         }
         void eventone(DryfiringWeaponEventArgs ev)
