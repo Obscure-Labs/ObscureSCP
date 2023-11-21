@@ -27,6 +27,7 @@ namespace SpireLabs.Gamemode_Handler
         static bool team = true;
         public static IEnumerator<float> startJbTDM()
         {
+            bool gamemodeactive = false;
             var item = ItemType.Coin;
             var rnd = new System.Random();
             int num = rnd.Next(1, 100);
@@ -49,7 +50,7 @@ namespace SpireLabs.Gamemode_Handler
 
             yield return Timing.WaitForSeconds(1.25f);
             int? count = 0;
-                while (loop = true)
+                while (gamemodeactive = true)
                 {
                     yield return Timing.WaitForSeconds(0.1f);
                     foreach (Player p in Player.List)
@@ -73,7 +74,6 @@ namespace SpireLabs.Gamemode_Handler
                         yield return Timing.WaitForSeconds(0.25f);
                         count++;
                     }
-                    else { break; loop = false; }
 
 
                 }
@@ -89,7 +89,7 @@ namespace SpireLabs.Gamemode_Handler
                 Log.Warn("Loading Map: pvpA1_2t");
                 MapEditorReborn.API.Features.MapUtils.LoadMap("pvpA1_2t");
                 Log.Warn("Starting checks for players with wrong roles");
-                Timing.WaitForSeconds(0.1f);
+                Timing.WaitForSeconds(0.6f);
                 Timing.RunCoroutine(lateJoin());
                 Server.Broadcast.BroadcastMessage("MINIGAME ROUND!");
                 var rnd69 = new System.Random();
@@ -97,7 +97,7 @@ namespace SpireLabs.Gamemode_Handler
 
             foreach (Player p in Player.List)
                 {
-                    p.Scale = new UnityEngine.Vector3(1, 1, 1);
+
                 yield return Timing.WaitForSeconds(0.1f);
 
                 if (team == true)
@@ -107,7 +107,9 @@ namespace SpireLabs.Gamemode_Handler
                     p.Role.Set(RoleTypeId.ChaosConscript);
                     p.ClearInventory(true);
                     p.Teleport(new UnityEngine.Vector3(8.48f, 1106.5f, 30.46f));
-                    p.EnableEffect(Exiled.API.Enums.EffectType.Vitality, 999999999);
+                    p.EnableEffect(EffectType.Invigorated, 10, false);
+                    p.EnableEffect(EffectType.Ensnared, 10, false);
+                    p.EnableEffect(EffectType.Flashed, 10, false);
                 }
                 else
                 {
@@ -116,7 +118,9 @@ namespace SpireLabs.Gamemode_Handler
                     p.Role.Set(RoleTypeId.NtfSergeant);
                     p.ClearInventory(true);
                     p.Teleport(new UnityEngine.Vector3(-20.8f, 1107.5f, 51.66f));
-                    p.EnableEffect(Exiled.API.Enums.EffectType.Vitality, 999999999);
+                    p.EnableEffect(EffectType.Invigorated, 10, false);
+                    p.EnableEffect(EffectType.Ensnared, 10, false);
+                    p.EnableEffect(EffectType.Flashed, 10, false);
                 }
                 p.Broadcast(5, "<color=green><b>MINIGAME ROUND!");
                 if (num69 == 0)
@@ -144,6 +148,7 @@ namespace SpireLabs.Gamemode_Handler
                     p.AddItem(ItemType.SCP018);
                     p.CurrentItem = item;
                 }
+                p.Scale = new Vector3(1, 1, 1);
 
                 yield return Timing.WaitForOneFrame;
             }
