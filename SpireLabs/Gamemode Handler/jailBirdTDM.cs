@@ -19,18 +19,30 @@ using CustomItems.API;
 using SpireLabs.Items;
 using InventorySystem.Items;
 using Exiled.API.Features.Items;
+using PluginAPI.Events;
+using System.Runtime.Remoting.Messaging;
 
 namespace SpireLabs.Gamemode_Handler
 {
+
+
     internal static class jailBirdTDM
     {
 
+
+
+
+
+
         static string mapName = "empty";
-        public static string[] maps = { "pvpA1_2t", "pvpA2_2t", "pvpRA1_2t" };
+        public static string[] maps = { "pvpA1_2t", "pvpA2_2t", "pvpRA1_2t", "pvpMZA1_2t" };
         static bool gamemodeactive = false;
         static bool team = true;
         public static IEnumerator<float> startJbTDM()
         {
+
+
+            Respawn.TimeUntilNextPhase = 86400;
             bool gamemodeactive = false;
             var item = ItemType.Coin;
             var rnd = new System.Random();
@@ -44,10 +56,9 @@ namespace SpireLabs.Gamemode_Handler
             }
         }
 
-            public static IEnumerator<float> lateJoin()
+        public static IEnumerator<float> lateJoin()
             {
             var loop = true;
-
 
 
 
@@ -103,6 +114,12 @@ namespace SpireLabs.Gamemode_Handler
                         spawnNTF = new Vector3(-53.97f, 1107f, 58.32f);
                         num69 = rnd69.Next(0, 3); // This is to prevent balls and grenades on this map due to it being smaller and easy for players to run out of items before anyone actually dies
                         break;
+                    case 3:
+                        mapName = maps[3];
+                        spawnCI = new Vector3(23.96f, 1126f, 30.74f);
+                        spawnNTF = new Vector3(-30.74f, 1126f, -16.93f);
+                        num69 = rnd69.Next(0, 3); // This is to prevent balls and grenades on this map due to it being far too big and easy for players to run out of items before anyone actually dies
+                    break;
             }
 
             gamemodeactive = true;
