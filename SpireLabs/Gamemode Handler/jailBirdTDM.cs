@@ -42,7 +42,7 @@ namespace SpireLabs.Gamemode_Handler
         {
 
 
-            Respawn.TimeUntilNextPhase = 86400;
+
             bool gamemodeactive = false;
             var item = ItemType.Coin;
             var rnd = new System.Random();
@@ -100,6 +100,7 @@ namespace SpireLabs.Gamemode_Handler
         {
             Vector3 spawnCI = new Vector3(0f, 1000f, 0f);
             Vector3 spawnNTF = new Vector3(0f, 1000f, 0f);
+            Respawn.TimeUntilNextPhase = 86400;
             var rndMap = new System.Random();
             int numMap = rndMap.Next(0, 4);
             var rnd69 = new System.Random();
