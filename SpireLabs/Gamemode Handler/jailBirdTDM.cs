@@ -111,13 +111,13 @@ namespace SpireLabs.Gamemode_Handler
                     case 1: mapName = maps[1]; spawnCI = new Vector3(9.7f, 1102f, 52.46f); spawnNTF = new Vector3(-20.20f, 1102f, 35.37f); break;
                     case 2:
                         mapName = maps[2]; 
-                        spawnCI = new Vector3(9.7f, 1102f, 52.46f); 
-                        spawnNTF = new Vector3(-53.97f, 1107f, 58.32f);
+                        spawnCI = new Vector3(-53.97f, 1107f, 57.76f); 
+                        spawnNTF = new Vector3(-53.97f, 1107f, 29.32f);
                         num69 = rnd69.Next(0, 3); // This is to prevent balls and grenades on this map due to it being smaller and easy for players to run out of items before anyone actually dies
                         break;
                     case 3:
                         mapName = maps[3];
-                        spawnCI = new Vector3(23.96f, 1126f, 30.74f);
+                        spawnCI = new Vector3(23.96f, 1126f, 29.14f);
                         spawnNTF = new Vector3(-30.74f, 1126f, -16.93f);
                         num69 = rnd69.Next(0, 3); // This is to prevent balls and grenades on this map due to it being far too big and easy for players to run out of items before anyone actually dies
                     break;
