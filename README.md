@@ -12,6 +12,7 @@ Custom items
 
 And More
 
+Get the GUI compoenent here : https://github.com/ImIsaacTbh/SpireSCP.GUI
 
 ## You might have some difficulty getting this plugin working on your server as it is not designed to really be public but if you really want to then go for it 
 
