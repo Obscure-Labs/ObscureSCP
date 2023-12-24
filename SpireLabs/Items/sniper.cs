@@ -50,10 +50,12 @@ namespace SpireLabs.Items
             AttachmentName.StandardStock,
         };
 
-        protected override void OnReloading(ReloadingWeaponEventArgs ev)
+        private void Reloading(ReloadingWeaponEventArgs ev)
         {
+            Log.Info("Fired event");
             if (!Check(ev.Item)) return;
             ev.IsAllowed = false;
+            Log.Info("Blocked event");
             int cal44 = ev.Player.GetAmmo(AmmoType.Ammo44Cal);
             if(cal44 != 0 && ev.Firearm.Ammo == 0 && ev.Firearm.Ammo != 1)
             {
@@ -63,10 +65,13 @@ namespace SpireLabs.Items
             }
         }
 
+
+
         protected override void SubscribeEvents()
         {
             Player.ChangedItem += changedToItem;
             Player.Hurting += hurt;
+            Player.ReloadingWeapon += Reloading;
             base.SubscribeEvents();
         }
         protected override void UnsubscribeEvents()
