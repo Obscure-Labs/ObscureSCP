@@ -123,6 +123,9 @@
     <Compile Include="Commands\Other\Hint.cs" />
     <Compile Include="corruptGuard.cs" />
     <Compile Include="Gamemode Handler\jailBirdTDM.cs" />
+    <Compile Include="Items\aidsLauncher.cs" />
+    <Compile Include="Items\clusterfuck.cs" />
+    <Compile Include="Items\impactNades.cs" />
     <Compile Include="profiles.cs" />
     <Compile Include="SCPs\boner.cs" />
     <Compile Include="customRoles.cs" />
