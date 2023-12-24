@@ -2222,17 +2222,17 @@
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.ClosingGeneratorEventArgs.IsAllowed">
             <summary>
-                Gets or sets a value indicating whether or not the generator door can be opened.
+                Gets or sets a value indicating whether or not the generator door can be closed.
             </summary>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.ClosingGeneratorEventArgs.Generator">
             <summary>
-                Gets the generator that is opening.
+                Gets the generator that is being closed.
             </summary>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.ClosingGeneratorEventArgs.Player">
             <summary>
-                Gets the player who's opening the generator door.
+                Gets the player who's closing the generator door.
             </summary>
         </member>
         <member name="T:Exiled.Events.EventArgs.Player.DamagingDoorEventArgs">
@@ -2431,7 +2431,7 @@
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.DestroyingEventArgs.Player">
             <summary>
-                Gets the destoying player.
+                Gets the destroying player.
             </summary>
         </member>
         <member name="T:Exiled.Events.EventArgs.Player.DiedEventArgs">
@@ -3441,6 +3441,34 @@
             Gets the pickup that the item originated from or <see langword="null"/> if the item was not picked up.
             </summary>
         </member>
+        <member name="T:Exiled.Events.EventArgs.Player.ItemRemovedEventArgs">
+            <summary>
+            Contains all information after removing an item from a player's inventory.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Player.ItemRemovedEventArgs.#ctor(ReferenceHub,InventorySystem.Items.ItemBase,InventorySystem.Items.Pickups.ItemPickupBase)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.ItemRemovedEventArgs"/> class.
+            </summary>
+            <param name="referenceHub">The <see cref="T:ReferenceHub"/> the item was removed to.</param>
+            <param name="itemBase">The removed <see cref="T:InventorySystem.Items.ItemBase"/>.</param>
+            <param name="pickupBase">The <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/> the <see cref="T:InventorySystem.Items.ItemBase"/> originated from, or <see langword="null"/> if the item was not picked up.</param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.ItemRemovedEventArgs.Player">
+            <summary>
+            Gets the player that had the item removed.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.ItemRemovedEventArgs.Item">
+            <summary>
+            Gets the item that was removed.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.ItemRemovedEventArgs.Pickup">
+            <summary>
+            Gets the pickup that the item originated from or <see langword="null"/> if the item was not picked up.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.EventArgs.Player.JoinedEventArgs">
             <summary>
                 Contains all information after a player joins the server.
@@ -3760,12 +3788,12 @@
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.PickingUpItemEventArgs.Pickup">
             <summary>
-                Gets the dropped pickup.
+                Gets the pickup that's being picked up.
             </summary>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.PickingUpItemEventArgs.Player">
             <summary>
-                Gets the player who dropped the item.
+                Gets the player who's picking up an item.
             </summary>
         </member>
         <member name="T:Exiled.Events.EventArgs.Player.PreAuthenticatingEventArgs">
@@ -4587,7 +4615,7 @@
                 Contains all information before a player toggles a flashlight.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.TogglingFlashlightEventArgs.#ctor(ReferenceHub,InventorySystem.Items.ToggleableLights.Flashlight.FlashlightItem,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Player.TogglingFlashlightEventArgs.#ctor(ReferenceHub,InventorySystem.Items.ToggleableLights.ToggleableLightItemBase,System.Boolean)">
             <summary>
                 Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.TogglingFlashlightEventArgs" /> class.
             </summary>
@@ -6626,7 +6654,7 @@
         </member>
         <member name="T:Exiled.Events.EventArgs.Scp244.OpeningScp244EventArgs">
             <summary>
-                Contains all information before a player picks up an SCP-244.
+                Contains all information before a player opens SCP-244.
             </summary>
         </member>
         <member name="M:Exiled.Events.EventArgs.Scp244.OpeningScp244EventArgs.#ctor(InventorySystem.Items.Usables.Scp244.Scp244DeployablePickup)">
@@ -6639,17 +6667,17 @@
         </member>
         <member name="P:Exiled.Events.EventArgs.Scp244.OpeningScp244EventArgs.Pickup">
             <summary>
-            Gets a value representing the <see cref="T:Exiled.API.Features.Pickups.Scp244Pickup"/> being picked up.
+            Gets a value representing the <see cref="T:Exiled.API.Features.Pickups.Scp244Pickup"/> being opened.
             </summary>
         </member>
         <member name="P:Exiled.Events.EventArgs.Scp244.OpeningScp244EventArgs.IsAllowed">
             <summary>
-                Gets or sets a value indicating whether or not the player can interact with SCP-330.
+                Gets or sets a value indicating whether or not the player can open SCP-244.
             </summary>
         </member>
         <member name="T:Exiled.Events.EventArgs.Scp244.UsingScp244EventArgs">
             <summary>
-                Contains all information before radio battery charge is changed.
+                Contains all information before SCP-244 is used.
             </summary>
         </member>
         <member name="M:Exiled.Events.EventArgs.Scp244.UsingScp244EventArgs.#ctor(InventorySystem.Items.Usables.Scp244.Scp244Item,Exiled.API.Features.Player,System.Boolean)">
@@ -6673,12 +6701,12 @@
         </member>
         <member name="P:Exiled.Events.EventArgs.Scp244.UsingScp244EventArgs.IsAllowed">
             <summary>
-                Gets or sets a value indicating whether the radio battery charge can be changed or not.
+                Gets or sets a value indicating whether the SCP-244 can be used.
             </summary>
         </member>
         <member name="P:Exiled.Events.EventArgs.Scp244.UsingScp244EventArgs.Player">
             <summary>
-                Gets the player who's using the radio.
+                Gets the player who's using the SCP-244.
             </summary>
         </member>
         <member name="T:Exiled.Events.EventArgs.Scp3114.DisguisedEventArgs">
@@ -7452,7 +7480,7 @@
                 Contains all information before ending a round.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Server.EndingRoundEventArgs.#ctor(RoundSummary.LeadingTeam,RoundSummary.SumInfo_ClassList,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Server.EndingRoundEventArgs.#ctor(RoundSummary.LeadingTeam,RoundSummary.SumInfo_ClassList,System.Boolean,System.Boolean)">
             <summary>
                 Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Server.EndingRoundEventArgs" /> class.
             </summary>
@@ -7464,6 +7492,9 @@
             </param>
             <param name="isAllowed">
                 <inheritdoc cref="P:Exiled.Events.EventArgs.Server.EndingRoundEventArgs.IsRoundEnded" />
+            </param>
+            <param name="isForceEnded">
+                <inheritdoc cref="P:Exiled.Events.EventArgs.Server.EndingRoundEventArgs.IsForceEnded" />
             </param>
         </member>
         <member name="P:Exiled.Events.EventArgs.Server.EndingRoundEventArgs.ClassList">
@@ -7479,6 +7510,11 @@
         <member name="P:Exiled.Events.EventArgs.Server.EndingRoundEventArgs.IsRoundEnded">
             <summary>
                 Gets or sets a value indicating whether the round is going to finish or not.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Server.EndingRoundEventArgs.IsForceEnded">
+            <summary>
+                Gets or Sets a value indicating whether the round is ended by API call.
             </summary>
         </member>
         <member name="P:Exiled.Events.EventArgs.Server.EndingRoundEventArgs.IsAllowed">
@@ -8752,6 +8788,11 @@
             Invoked after a <see cref="T:Exiled.API.Features.Player" /> has an item added to their inventory.
             </summary>
         </member>
+        <member name="P:Exiled.Events.Handlers.Player.ItemRemoved">
+            <summary>
+            Invoked after a <see cref="T:Exiled.API.Features.Player" /> has an item removed from their inventory.
+            </summary>
+        </member>
         <member name="P:Exiled.Events.Handlers.Player.KillingPlayer">
             <summary>
             Invoked before KillPlayer is called.
@@ -9198,6 +9239,14 @@
             </summary>
             <param name="referenceHub">The <see cref="T:ReferenceHub"/> the item was added to.</param>
             <param name="itemBase">The added <see cref="T:InventorySystem.Items.ItemBase"/>.</param>
+            <param name="pickupBase">The <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/> the <see cref="T:InventorySystem.Items.ItemBase"/> originated from, or <see langword="null"/> if the item was not picked up.</param>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Player.OnItemRemoved(ReferenceHub,InventorySystem.Items.ItemBase,InventorySystem.Items.Pickups.ItemPickupBase)">
+            <summary>
+            Called after a <see cref="T:Exiled.API.Features.Player" /> has an item removed from their inventory.
+            </summary>
+            <param name="referenceHub">The <see cref="T:ReferenceHub"/> the item was removed from.</param>
+            <param name="itemBase">The removed <see cref="T:InventorySystem.Items.ItemBase"/>.</param>
             <param name="pickupBase">The <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/> the <see cref="T:InventorySystem.Items.ItemBase"/> originated from, or <see langword="null"/> if the item was not picked up.</param>
         </member>
         <member name="M:Exiled.Events.Handlers.Player.OnEnteringEnvironmentalHazard(Exiled.Events.EventArgs.Player.EnteringEnvironmentalHazardEventArgs)">
@@ -11637,10 +11686,16 @@
             Patches <see cref="M:PlayerRoles.PlayableScps.Scp079.Scp079Speaker.OnRegistered"/>.
             </summary>
         </member>
+        <member name="T:Exiled.Events.Patches.Generic.StaminaRegen">
+            <summary>
+            Patches <see cref="P:InventorySystem.Inventory.StaminaRegenMultiplier"/>.
+            Implements <see cref="P:Exiled.API.Features.Roles.FpcRole.StaminaRegenMultiplier"/>.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.Patches.Generic.StaminaUsage">
             <summary>
-            Patches <see cref="M:PlayerRoles.FirstPersonControl.FpcStateProcessor.UpdateMovementState(PlayerRoles.FirstPersonControl.PlayerMovementState)"/>.
-            Implements <see cref="P:Exiled.API.Features.Player.IsUsingStamina"/>.
+            Patches <see cref="P:InventorySystem.Inventory.StaminaUsageMultiplier"/>.
+            Implements <see cref="P:Exiled.API.Features.Player.IsUsingStamina"/>, <see cref="P:Exiled.API.Features.Roles.FpcRole.IsUsingStamina"/> and <see cref="P:Exiled.API.Features.Roles.FpcRole.StaminaUsageMultiplier"/>.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Generic.TeleportList">

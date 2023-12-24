@@ -2906,11 +2906,19 @@
         </member>
         <member name="M:Exiled.API.Extensions.ReflectionExtensions.InvokeStaticMethod(System.Type,System.String,System.Object[])">
             <summary>
-            Invoke a static method.
+            Invokes a static method.
             </summary>
             <param name="type">The method type.</param>
             <param name="methodName">The method name.</param>
             <param name="param">The method parameters.</param>
+        </member>
+        <member name="M:Exiled.API.Extensions.ReflectionExtensions.InvokeStaticEvent(System.Type,System.String,System.Object[])">
+            <summary>
+            Invokes a static event.
+            </summary>
+            <param name="type">The event type.</param>
+            <param name="eventName">The event name.</param>
+            <param name="param">The event arguments.</param>
         </member>
         <member name="M:Exiled.API.Extensions.ReflectionExtensions.CopyProperties(System.Object,System.Object)">
             <summary>
@@ -7712,8 +7720,9 @@
         </member>
         <member name="P:Exiled.API.Features.Items.Firearm.MaxAmmo">
             <summary>
-            Gets the max ammo for this firearm.
+            Gets or sets the max ammo for this firearm.
             </summary>
+            <remarks>Disruptor can't be used for MaxAmmo.</remarks>
         </member>
         <member name="P:Exiled.API.Features.Items.Firearm.FirearmType">
             <summary>
@@ -7733,6 +7742,16 @@
         <member name="P:Exiled.API.Features.Items.Firearm.FlashlightEnabled">
             <summary>
             Gets a value indicating whether the firearm's flashlight module is enabled.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Firearm.NightVisionEnabled">
+            <summary>
+            Gets a value indicating whether the firearm's NightVision is being used.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Firearm.CanSeeThroughDark">
+            <summary>
+            Gets a value indicating whether the firearm's flashlight module is enabled or NightVision is being used.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Items.Firearm.IsAutomatic">
@@ -12230,12 +12249,25 @@
             <param name="broadcast">The <see cref="T:Exiled.API.Features.Broadcast"/> to be broadcasted.</param>
             <param name="shouldClearPrevious">Clears all player's broadcasts before sending the new one.</param>
         </member>
+        <member name="M:Exiled.API.Features.Player.DropItem(Exiled.API.Features.Items.Item,System.Boolean)">
+            <summary>
+            Drops an item from the player's inventory.
+            </summary>
+            <param name="item">The <see cref="T:Exiled.API.Features.Items.Item"/> to be dropped.</param>
+            <param name="isThrown">Is the item Thrown?.</param>
+        </member>
         <member name="M:Exiled.API.Features.Player.DropItem(Exiled.API.Features.Items.Item)">
             <summary>
             Drops an item from the player's inventory.
             </summary>
-            <param name="item">The item to be dropped.</param>
+            <param name="item">The <see cref="T:Exiled.API.Features.Items.Item"/> to be dropped.</param>
             <returns>dropped <see cref="T:Exiled.API.Features.Pickups.Pickup"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Player.DropHeldItem(System.Boolean)">
+            <summary>
+            Drops the held item. Will not do anything if the player is not holding an item.
+            </summary>
+            <param name="isThrown">Is the item Thrown?.</param>
         </member>
         <member name="M:Exiled.API.Features.Player.DropHeldItem">
             <summary>
@@ -14110,6 +14142,21 @@
             Gets or sets a value indicating whether or not the player is invisible.
             </summary>
         </member>
+        <member name="P:Exiled.API.Features.Roles.FpcRole.IsUsingStamina">
+            <summary>
+            Gets or sets a value indicating whether or not the player should use stamina system. Resets on death.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.FpcRole.StaminaUsageMultiplier">
+            <summary>
+            Gets or sets the stamina usage multiplier. Resets on death.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.FpcRole.StaminaRegenMultiplier">
+            <summary>
+            Gets or sets the stamina regen multiplier. Resets on death.
+            </summary>
+        </member>
         <member name="P:Exiled.API.Features.Roles.FpcRole.IsInvisibleFor">
             <summary>
             Gets a list of players who can't see the player.
@@ -14167,6 +14214,12 @@
             <returns><see cref="T:System.Boolean"/> indicating status.</returns>
             <remarks>For permitting a player to enter and exit noclip freely, see <see cref="P:Exiled.API.Features.Player.IsNoclipPermitted"/>.</remarks>
             <seealso cref="P:Exiled.API.Features.Player.IsNoclipPermitted"/>
+        </member>
+        <member name="M:Exiled.API.Features.Roles.FpcRole.ResetStamina(System.Boolean)">
+            <summary>
+            Resets the <see cref="T:Exiled.API.Features.Player"/>'s stamina.
+            </summary>
+            <param name="multipliers">Resets <see cref="P:Exiled.API.Features.Roles.FpcRole.StaminaUsageMultiplier"/> and <see cref="P:Exiled.API.Features.Roles.FpcRole.StaminaRegenMultiplier"/>.</param>
         </member>
         <member name="T:Exiled.API.Features.Roles.HumanRole">
             <summary>
