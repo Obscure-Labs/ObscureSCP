@@ -1,4 +1,5 @@
-﻿using Exiled.API.Features;
+﻿using Exiled.API.Extensions;
+using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
 using MEC;
 using PlayerRoles;
@@ -38,6 +39,7 @@ namespace SpireLabs
                 customRoleID = UCRAPI.Get(ev.Player).Id;
                 if (customRoleID == 3)
                 {
+                    ev.Player.ChangeAppearance(RoleTypeId.FacilityGuard);
                     cantShoot[ev.Player.Id] = true;
                     Timing.RunCoroutine(thing(ev.Player.Id));
                     Plugin.corruptGuards[ev.Player.Id] = true;

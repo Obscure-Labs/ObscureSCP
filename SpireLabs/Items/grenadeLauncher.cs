@@ -28,14 +28,14 @@ using Exiled.API.Features.Components;
 namespace SpireLabs.Items
 {
     [CustomItem(ItemType.GunLogicer)]
-    public class aidsLauncher : Exiled.CustomItems.API.Features.CustomWeapon
+    public class grenadeLauncher : Exiled.CustomItems.API.Features.CustomWeapon
     {
 
 
         private Exiled.CustomItems.API.Features.CustomGrenade? loadedCustomGrenade = null;
         private ProjectileType loadedGrenade = ProjectileType.FragGrenade;
         public override float Damage { get; set; } = 0f;
-        public override string Name { get; set; } = "Nade Launcher";
+        public override string Name { get; set; } = "Grenade Launcher";
         public override uint Id { get; set; } = 3;
         public override string Description { get; set; } = "\t";
         public override float Weight { get; set; } = 1.25f;
@@ -53,7 +53,7 @@ namespace SpireLabs.Items
                 new()
                 {
                     Chance = 50,
-                    Location = Exiled.API.Enums.SpawnLocationType.InsideHczArmory,
+                    Location = Exiled.API.Enums.SpawnLocationType.Inside096,
                 }
             },
         };
@@ -72,7 +72,7 @@ namespace SpireLabs.Items
         private void Equipped(ChangedItemEventArgs ev)
         {
             if (!Check(ev.Item)) return;
-            Manager.SendHint(ev.Player, "You equipped the <b>Grenade Launcher</b> \n <b>This will explode into multiple smaller grenades</b>.", 3.0f);
+            Manager.SendHint(ev.Player, "You equipped the <b>Grenade Launcher</b> \n <b>This is a single loaded grenade launcher that can fire Flashbangs and HE grenades</b>.", 3.0f);
         }
 
         protected override void OnShooting(ShootingEventArgs ev)
@@ -80,7 +80,7 @@ namespace SpireLabs.Items
             ev.IsAllowed = false;
 
             if (ev.Player.CurrentItem is Firearm firearm)
-                if (firearm.Ammo != ClipSize) ev.Player.Connection.Send(new RequestMessage(ev.Firearm.Serial, RequestType.Dryfire)); else firearm.Ammo -= 1;
+                if (firearm.Ammo != ClipSize) { ev.Player.Connection.Send(new RequestMessage(ev.Firearm.Serial, RequestType.Dryfire)); return; } else firearm.Ammo -= 1;
             Projectile projectile;
             if(loadedCustomGrenade != null)
             {

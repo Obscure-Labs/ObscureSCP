@@ -38,23 +38,8 @@ namespace SpireLabs.Gamemode_Handler
         public static string[] maps = { "pvpA1_2t", "pvpA2_2t", "pvpRA1_2t", "pvpMZA1_2t" };
         static bool gamemodeactive = false;
         static bool team = true;
-        public static IEnumerator<float> startJbTDM()
-        {
 
 
-
-            bool gamemodeactive = false;
-            var item = ItemType.Coin;
-            var rnd = new System.Random();
-            int num = rnd.Next(1, 100);
-            Log.Info($"Minigame RNG was: {num} (should be between 30-60)");
-            if (num >= 30 && num <= 60)
-            {
-                Timing.RunCoroutine(runJbTDM());
-
-                yield return Timing.WaitForOneFrame;
-            }
-        }
 
         public static IEnumerator<float> lateJoin()
             {
@@ -81,7 +66,7 @@ namespace SpireLabs.Gamemode_Handler
                         {
                             if (p.Role.Type != RoleTypeId.ChaosConscript && p.Role.Type != RoleTypeId.NtfSergeant && p.Role.Type != RoleTypeId.Spectator && p.Role.Type != RoleTypeId.None)
                             {
-                                p.Role.Set(RoleTypeId.Spectator);
+                                //p.Role.Set(RoleTypeId.Spectator);
                                 Log.Warn($"{p.DisplayNickname} joined late (or was assigned the wrong role somehow) and has been set to spectator");
                             }
 
@@ -130,14 +115,49 @@ namespace SpireLabs.Gamemode_Handler
                 MapEditorReborn.API.Features.MapUtils.LoadMap($"{mapName}");
                 Log.Warn("Starting checks for players with wrong roles");
                 Timing.WaitForSeconds(0.6f);
-                Timing.RunCoroutine(lateJoin());
+                
 
+            Timing.WaitForSeconds(0.1f);
+            for(int i = 0; i < Math.Floor((double)(Plugin.PlayerList.Count() / 2)); i++)
+            {
+                Log.Info("Setting CHAOS");
+                int playerid = rnd69.Next(0, Plugin.PlayerList.Count());
+                Player p = Plugin.PlayerList.ElementAt(playerid);
+                if(p.Role != RoleTypeId.ChaosConscript)
+                {
+                    p.Role.Set(RoleTypeId.ChaosConscript);
+                    p.ClearInventory(true);
+                    p.Teleport(spawnCI);
+                    p.EnableEffect(EffectType.RainbowTaste, 999, false);
+                    p.EnableEffect(EffectType.Ensnared, 10, false);
+                    p.EnableEffect(EffectType.Flashed, 10, false);
+                    p.EnableEffect(EffectType.SoundtrackMute, 999, false);
+                    p.EnableEffect(EffectType.DamageReduction, 10, false);
+                    p.ChangeEffectIntensity(EffectType.DamageReduction, 255, 1f);
+                }
+            }
+            foreach(Player p in Plugin.PlayerList)
+            {
+                if (p.Role != RoleTypeId.ChaosConscript)
+                {
+                    p.Role.Set(RoleTypeId.NtfSergeant);
+                    p.ClearInventory(true);
+                    p.Teleport(spawnNTF);
+                    p.EnableEffect(EffectType.RainbowTaste, 999, false);
+                    p.EnableEffect(EffectType.Ensnared, 10, false);
+                    p.EnableEffect(EffectType.Flashed, 10, false);
+                    p.EnableEffect(EffectType.SoundtrackMute, 999, false);
+                    p.EnableEffect(EffectType.DamageReduction, 10, false);
+                    p.ChangeEffectIntensity(EffectType.DamageReduction, 255, 1f);
+                }
+
+            }
             foreach (Player p in Player.List)
                 {
 
                 yield return Timing.WaitForSeconds(0.1f);
 
-                if (team == true)
+                /*if (team == true)
                 {
                     Log.Warn($"{p.DisplayNickname} is CHAOS INSURGENCY TEAM");
                     team = false;
@@ -164,7 +184,9 @@ namespace SpireLabs.Gamemode_Handler
                     p.EnableEffect(EffectType.SoundtrackMute, 999, false);
                     p.EnableEffect(EffectType.DamageReduction, 10, false);
                     p.ChangeEffectIntensity(EffectType.DamageReduction, 255, 1f);
-                }
+                }*/
+
+
                 p.Broadcast(5, "<color=green><b>MINIGAME ROUND BEGINS IN 10S!");
                 if (num69 == 0)
                 {
@@ -200,7 +222,7 @@ namespace SpireLabs.Gamemode_Handler
                     p.CurrentItem = item;
                 }
                 p.Scale = new Vector3(1, 1, 1);
-
+                Timing.RunCoroutine(lateJoin());
                 yield return Timing.WaitForOneFrame;
             }
             }

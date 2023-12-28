@@ -77,6 +77,8 @@ namespace SpireLabs
 
         public static bool inLobby = false;
 
+        public static List<Player> PlayerList = new List<Player>();
+
         public static UnityEngine.Vector3 lobbyVector;
 
         public static string lastId;
@@ -98,10 +100,11 @@ namespace SpireLabs
 
         public static bool isLobbyEnabledConfig = false;
 
-        public string spireConfigLoc;
+        public static string spireConfigLoc;
 
         private Harmony _harmony;
 
+        public static bool IsActiveEventround = false;
         public override void OnDisabled()
         {
             UnregisterEvents();
@@ -337,6 +340,7 @@ namespace SpireLabs
 
         private void restarting()
         {
+            PlayerList.Clear();
             Manager.killLoop(true);
             if (realRoundEnd)
             {
@@ -398,6 +402,8 @@ namespace SpireLabs
                }
            }
        }
+
+
 
         private IEnumerator<float> EngageLobby(JoinedEventArgs ev)
        {
@@ -462,6 +468,7 @@ namespace SpireLabs
 
        private void Player_Leave(LeftEventArgs ev)
        {
+            PlayerList.Remove(ev.Player);
            if (lastId != ev.Player.UserId)
            {
                playerCount--;
@@ -478,7 +485,7 @@ namespace SpireLabs
 
        private void Player_Joined(JoinedEventArgs ev)
         {
-
+            PlayerList.Add(ev.Player);
             Manager.killLoop(false);
             lastId = string.Empty;
            ConMet = false;
@@ -673,11 +680,11 @@ namespace SpireLabs
 
         private IEnumerator<float> lockAnounce()
         {
-            yield return Timing.WaitForSeconds(600);
+            yield return Timing.WaitForSeconds(420);
             if (Manager.checkLoop()) { }
             else
             {
-                Cassie.Message(@"jam_043_3 Surface armory has been opened for all jam_020_3 pitch_0.8 warhead pitch_1 authorized personnel . . . enter with pitch_0.7 jam_010_1 caution", false, false, true);
+                Cassie.Message(@"jam_043_3 Surface armory has been opened for all jam_020_3 pitch_0.8 warhead pitch_1 authorized personnel . . . enter with pitch_0.9 jam_010_1 caution", false, false, true);
             }
         }
 
@@ -699,7 +706,12 @@ namespace SpireLabs
             SCPHandler.doSCPThings();
             Timing.RunCoroutine(chaosUpdate(), tag: "chaosChecker");
             Timing.RunCoroutine(randomFlicker(), tag: "flickerRoutine");
-            Timing.RunCoroutine(jailBirdTDM.startJbTDM());
+            //Timing.RunCoroutine(jailBirdTDM.startJbTDM());
+            if (!IsActiveEventround)
+            {
+                gamemodeHandler.WriteAllGMInfo(false, -1, gamemodeHandler.ReadNext());
+                gamemodeHandler.AttemptGMRound(false);
+            }
             Log.Info("Round has started!");
             Timing.RunCoroutine(lockAnounce(), tag: "lockRoutine");
             Timing.RunCoroutine(corruptGuard.initcantShoot());

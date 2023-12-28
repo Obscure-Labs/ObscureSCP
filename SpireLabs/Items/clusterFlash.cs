@@ -19,11 +19,11 @@ using Exiled.Events.EventArgs.Map;
 
 namespace SpireLabs.Items
 {
-    [CustomItem(ItemType.GrenadeHE)]
-    public class clusterfuck : Exiled.CustomItems.API.Features.CustomGrenade
+    [CustomItem(ItemType.GrenadeFlash)]
+    public class clusterFlash : Exiled.CustomItems.API.Features.CustomGrenade
     {
-        public override string Name { get; set; } = "Cluster Grenade";
-        public override uint Id { get; set; } = 2;
+        public override string Name { get; set; } = "Cluster Flashbang";
+        public override uint Id { get; set; } = 7;
         public override string Description { get; set; } = "\t";
         public override float Weight { get; set; } = 0.25f;
         public override SpawnProperties SpawnProperties { get; set; } = new()
@@ -39,7 +39,12 @@ namespace SpireLabs.Items
                 new()
                 {
                     Chance = 50,
-                    Location = Exiled.API.Enums.SpawnLocationType.InsideHczArmory,
+                    Location = Exiled.API.Enums.SpawnLocationType.InsideNukeArmory,
+                },
+                new()
+                {
+                    Chance = 50,
+                    Location = Exiled.API.Enums.SpawnLocationType.Inside049Armory,
                 }
             },
         };
@@ -80,9 +85,8 @@ namespace SpireLabs.Items
             yield return Timing.WaitForOneFrame;
             for (int i = 0; i < 15; i++)
             {
-                ExplosiveGrenade grenade = (ExplosiveGrenade)Item.Create(ItemType.GrenadeHE);
+                FlashGrenade grenade = (FlashGrenade)Item.Create(ItemType.GrenadeFlash);
                 grenade.FuseTime = (float)((float)(rnd.Next(75, 125))/100);
-                grenade.ScpDamageMultiplier = 0.25f;
                 grenade.SpawnActive(ev.Position, ev.Player);
             }
         }
@@ -90,7 +94,7 @@ namespace SpireLabs.Items
         private void changedToItem(ChangedItemEventArgs ev)
         {
             if(!Check(ev.Item)) return;
-            Manager.SendHint(ev.Player, "You equipped the <b>Cluster Grenade</b> \n <b>This will explode into multiple smaller grenades</b>.", 3.0f);
+            Manager.SendHint(ev.Player, "You equipped the <b>Cluster Flashbang</b> \n <b>This will explode into multiple smaller Flashbang</b>.", 3.0f);
         }
     }
 }

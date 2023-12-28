@@ -14,7 +14,7 @@ using static HarmonyLib.Code;
 namespace SpireLabs.Items
 {
     [CustomItem(ItemType.GrenadeHE)]
-    public class impactNades : Exiled.CustomItems.API.Features.CustomGrenade
+    public class impactGrenades : Exiled.CustomItems.API.Features.CustomGrenade
     {
         public override string Name { get; set; } = "Impact Grenade";
         public override uint Id { get; set; } = 4;

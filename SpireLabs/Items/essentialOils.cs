@@ -30,6 +30,11 @@ namespace SpireLabs.Items
                 new()
                 {
                     Chance = 50,
+                    Location = Exiled.API.Enums.SpawnLocationType.InsideLocker,
+                },
+                new()
+                {
+                    Chance = 50,
                     Location = Exiled.API.Enums.SpawnLocationType.Inside049Armory,
                 },
                 new()
@@ -78,7 +83,7 @@ namespace SpireLabs.Items
             ev.Player.EnableEffect(EffectType.Concussed, 15);
             ev.Player.ChangeEffectIntensity(EffectType.Concussed, 1, 15);
             ev.Player.EnableEffect(EffectType.MovementBoost, 15);
-            ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 55, 15);
+            ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 65, 15);
             ev.Player.EnableEffect(EffectType.Deafened, 15);
             ev.Player.ChangeEffectIntensity(EffectType.Deafened, 1, 15);
             ev.Player.EnableEffect(EffectType.Invigorated, 15);

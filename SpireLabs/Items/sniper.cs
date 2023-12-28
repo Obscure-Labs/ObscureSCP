@@ -26,13 +26,18 @@ namespace SpireLabs.Items
         public override string Description { get; set; } = "\t";
         public override SpawnProperties? SpawnProperties { get; set; } = new()
         {
-            Limit = 3,
+            Limit = 1,
             DynamicSpawnPoints = new List<DynamicSpawnPoint>
             {
                 new()
                 {
                     Chance = 50,
-                    Location = Exiled.API.Enums.SpawnLocationType.InsideHczArmory,
+                    Location = Exiled.API.Enums.SpawnLocationType.InsideNukeArmory,
+                },
+                new()
+                {
+                    Chance = 50,
+                    Location = Exiled.API.Enums.SpawnLocationType.InsideLocker,
                 },
             },
         };
@@ -52,10 +57,8 @@ namespace SpireLabs.Items
 
         private void Reloading(ReloadingWeaponEventArgs ev)
         {
-            Log.Info("Fired event");
             if (!Check(ev.Item)) return;
             ev.IsAllowed = false;
-            Log.Info("Blocked event");
             int cal44 = ev.Player.GetAmmo(AmmoType.Ammo44Cal);
             if(cal44 != 0 && ev.Firearm.Ammo == 0 && ev.Firearm.Ammo != 1)
             {
