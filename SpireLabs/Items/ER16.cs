@@ -26,9 +26,7 @@ namespace SpireLabs.Items
     public class ER16 : Exiled.CustomItems.API.Features.CustomWeapon
     {
 
-        private Exiled.CustomItems.API.Features.CustomGrenade? loadedCustomGrenade = null;
-        private ProjectileType loadedGrenade = ProjectileType.FragGrenade;
-        public override float Damage { get; set; } = 0f;
+        public override float Damage { get; set; } = 40f;
         public override string Name { get; set; } = "MTF-ER16-SR";
         public override uint Id { get; set; } = 5;
         public override float Weight { get; set; } = 1.25f;
@@ -51,18 +49,18 @@ namespace SpireLabs.Items
             {
                 new()
                 {
-                    Chance = 0,
+                    Chance = 50,
                     Location = Exiled.API.Enums.SpawnLocationType.InsideNukeArmory,
                 },
                 new()
                 {
-                    Chance = 0,
+                    Chance = 50,
                     Location = Exiled.API.Enums.SpawnLocationType.InsideHczArmory,
                 },
                 new()
                 {
-                    Chance = 0,
-                    Location = Exiled.API.Enums.SpawnLocationType.Inside049Armory,
+                    Chance = 50,
+                    Location = Exiled.API.Enums.SpawnLocationType.InsideLocker,
                 },
             },
         };
@@ -84,22 +82,37 @@ namespace SpireLabs.Items
             Manager.SendHint(ev.Player, "You equipped the <b>ER16</b> \n <b>This is a burst fire rifle chambered in 5.56x45 ammunition</b>.", 3.0f);
         }
 
-        public static int firedTimesTotal = 0;
-        public static int firedTimes = 0;
+        public static int trueAmmo = 30;
+        public int shotsFired = 0;
         protected override void OnShooting(ShootingEventArgs ev)
         {
             if (ev.Player.CurrentItem is Firearm firearm)
             {
-
-                ev.IsAllowed = false;
-
-                if (ev.IsAllowed == false) { ev.Player.Connection.Send(new RequestMessage(ev.Firearm.Serial, RequestType.Dryfire)); }
+                if (trueAmmo <= 1) { ev.Firearm.Ammo = 0; }
                 else
                 {
-
+                    if (shotsFired == 3) { ev.Firearm.Ammo = 0; shotsFired = 0; }
+                    else
+                    {
+                        ev.Firearm.Ammo = (byte)trueAmmo;
+                        trueAmmo--;
+                        shotsFired++;
+                    }
                 }
-
             }
+        }
+
+        private IEnumerator<float> Burst(ShootingEventArgs ev)
+        {
+            yield return Timing.WaitForOneFrame;
+        }
+
+        protected override void OnReloading(ReloadingWeaponEventArgs ev)
+        {
+            int ammo556 = ev.Player.GetAmmo(AmmoType.Nato556);
+            if (ammo556 < 30) { trueAmmo = ammo556; }
+            else { trueAmmo = 30; }
+            shotsFired = 0;
         }
     }
 }

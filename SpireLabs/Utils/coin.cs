@@ -35,7 +35,7 @@
 
     internal static class coin
     {
-        public static string[] good = { "You gained 20HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!", "You are healed!", "GRENADE FOUNTAIN!", "Ammo pile!!", "FREE CANDY!", "You can't die for the next 3s!", "You bring health to those around you!", "Nice hat..", "You now have intercom for 15 seconds!" };
+        public static string[] good = { "You gained 20HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!", "You are healed!", "GRENADE FOUNTAIN!", "Ammo pile!!", "FREE CANDY!", "You can't die for the next 3s!", "You bring health to those around you!", "Nice hat..", "You have such radiant skin!" };
         public static string[] bad = { "You now have 50HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "Pocket Sand!", "You got lost and found yourself in a random room!", "You flipped the coin so hard your hands fell off!", "Beep!", "Sent To Qatar!!!", "Others percieve you as upside down!", "You caused a blackout in your zone!", "Door stuck! DOOR STUCK!", "Your coin melted :(" };
 
         private static IEnumerator<float> grenadeFountain(Player p)
@@ -396,6 +396,10 @@
                             ev.Player.AddItem(ItemType.SCP268);
                         }
                         break;
+                    case 11:
+                        Timing.RunCoroutine(glow(ev.Player));
+                        break;
+                    
                 }
 
             }
@@ -487,8 +491,15 @@
                         break;
                     case 10:
                         Manager.SendHint(ev.Player, bad[10], 3);
-                        Room rm = ev.Player.CurrentRoom;
-                        rm.LockDown(10);
+                        foreach (Room roomSel in Room.List)
+                        {
+                            if (roomSel.Zone == ev.Player.Zone)
+                            {
+
+                                Timing.RunCoroutine(roomRGB(roomSel));
+
+                            }
+                        }
                         break;
                     case 11:
                         Manager.SendHint(ev.Player, bad[11], 3);
@@ -504,6 +515,35 @@
             }
         }
 
+
+        private static IEnumerator<float> roomRGB(Room roomSel)
+        {
+            roomSel.LockDown(10);
+            Color[] colors = {
+            Color.red, //this is red you fucking twat
+            Color.green,
+            Color.blue,
+            Color.cyan,
+            Color.magenta,
+            Color.yellow,
+            };
+            var rnd = new System.Random();
+            Color color = colors[rnd.Next(0, colors.Count())];
+            roomSel.Color = color * 9;
+            yield return Timing.WaitForSeconds(30);
+            roomSel.ResetColor();
+        }
+        private static IEnumerator<float> glow(Player p)
+        {
+            Exiled.API.Features.Toys.Light li = Exiled.API.Features.Toys.Light.Create(new Vector3(p.Transform.position.x, p.Transform.position.y + 1.2f, p.Transform.position.z), Vector3.zero, Vector3.one, false);
+            li.Range = 45f;
+            li.Intensity = 9999f;
+            li.Color = Color.cyan;
+            li.Spawn();
+            li.Base.gameObject.transform.SetParent(p.GameObject.transform);
+            yield return Timing.WaitForSeconds(30f);
+            li.Destroy();
+        }
         private static IEnumerator<float> beep(Player p)
         {
             p.PlayBeepSound();

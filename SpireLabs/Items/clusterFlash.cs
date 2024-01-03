@@ -69,7 +69,11 @@ namespace SpireLabs.Items
         {
             if (!Check(ev.Item))
                 return;
-
+            else
+            {
+                FlashGrenade origin = ev.Item as FlashGrenade;
+                origin.FuseTime = 1.3f;
+            }
 
         }
 
@@ -86,7 +90,7 @@ namespace SpireLabs.Items
             for (int i = 0; i < 15; i++)
             {
                 FlashGrenade grenade = (FlashGrenade)Item.Create(ItemType.GrenadeFlash);
-                grenade.FuseTime = (float)((float)(rnd.Next(75, 125))/100);
+                grenade.FuseTime = 0.001f;
                 grenade.SpawnActive(ev.Position, ev.Player);
             }
         }

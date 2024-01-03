@@ -129,8 +129,8 @@
     <Compile Include="Items\grenadeLauncher.cs" />
     <Compile Include="Items\clusterHE.cs" />
     <Compile Include="Items\ER16.cs" />
-    <Compile Include="Items\impactGrenades.cs" />
-    <Compile Include="Items\ThePPCube.cs" />
+    <Compile Include="Items\novaGrenade.cs" />
+    <Compile Include="Items\Primitive.cs" />
     <Compile Include="Utils\profiles.cs" />
     <Compile Include="SCPs\boner.cs" />
     <Compile Include="Utils\Custom Roles\customRoles.cs" />

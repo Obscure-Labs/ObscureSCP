@@ -28,6 +28,7 @@ namespace SpireLabs
     using Utf8Json.Resolvers.Internal;
     using SpireLabs.Gamemode_Handler;
     using Exiled.Events.EventArgs.Warhead;
+    using SpireLabs.Items;
 
     public class Plugin : Plugin<config>
     {
@@ -103,6 +104,8 @@ namespace SpireLabs
         public static string spireConfigLoc;
 
         private Harmony _harmony;
+
+        public static List<PlayerPrimitive> OBJLST = new List<PlayerPrimitive>();
 
         public static bool IsActiveEventround = false;
         public override void OnDisabled()

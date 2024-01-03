@@ -39,7 +39,8 @@ namespace SpireLabs
                 customRoleID = UCRAPI.Get(ev.Player).Id;
                 if (customRoleID == 3)
                 {
-                    ev.Player.ChangeAppearance(RoleTypeId.FacilityGuard);
+                    yield return Timing.WaitForSeconds(0.5f);
+                    ev.Player.ChangeAppearance(RoleTypeId.FacilityGuard, false);
                     cantShoot[ev.Player.Id] = true;
                     Timing.RunCoroutine(thing(ev.Player.Id));
                     Plugin.corruptGuards[ev.Player.Id] = true;

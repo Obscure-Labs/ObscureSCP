@@ -37,7 +37,7 @@ namespace SpireLabs.Items
     {
 
         public override float Damage { get; set; } = 0f;
-        public override string Name { get; set; } = "Energy Rifle";
+        public override string Name { get; set; } = "Particle Collapser";
         public override uint Id { get; set; } = 6;
         public override string Description { get; set; } = "\t";
         public override float Weight { get; set; } = 1.25f;
@@ -61,6 +61,16 @@ namespace SpireLabs.Items
                 {
                     Chance = 50,
                     Location = Exiled.API.Enums.SpawnLocationType.InsideNukeArmory,
+                },
+                new()
+                {
+                    Chance = 50,
+                    Location = Exiled.API.Enums.SpawnLocationType.Inside049Armory,
+                },
+                new()
+                {
+                    Chance = 50,
+                    Location = Exiled.API.Enums.SpawnLocationType.InsideHid,
                 },
             },
         };
@@ -120,7 +130,7 @@ namespace SpireLabs.Items
             ExplosiveGrenade grenade = (ExplosiveGrenade)Item.Create(ItemType.GrenadeHE);
             grenade.FuseTime = 0.001f;
             grenade.ScpDamageMultiplier = 2.25f;
-            grenade.MaxRadius = 15;
+            grenade.MaxRadius = 25;
             grenade.DeafenDuration = 15;
             grenade.ConcussDuration = 25;
             grenade.SpawnActive(target, ev.Player);
