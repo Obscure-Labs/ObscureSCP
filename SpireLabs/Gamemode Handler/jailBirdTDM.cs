@@ -35,7 +35,7 @@ namespace SpireLabs.Gamemode_Handler
 
 
         static string mapName = "empty";
-        public static string[] maps = { "pvpA1_2t", "pvpA2_2t", "pvpRA1_2t", "pvpMZA1_2t" };
+        public static string[] maps = { "pvpA1_2t", "pvpA2_2t", "pvpMZA1_2t" };
         static bool gamemodeactive = false;
         static bool team = true;
 

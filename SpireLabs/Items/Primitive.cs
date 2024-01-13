@@ -57,14 +57,14 @@ namespace SpireLabs.Items
             p1.Collidable = false;
             p1.Type = PrimitiveType.Cube;
             p1.Color = new Color(50f, 0f, 50f, 0.45f);
-            p1.MovementSmoothing = 255;
+            p1.MovementSmoothing = 55;
             p1.Scale = new Vector3(0.2f, 0.2f, 0.2f);
 
 
             p.Collidable = false;
             p.Type = PrimitiveType.Cube;
             p.Color = new Color(50f, 25f, 50f, 0.005f);
-            p.MovementSmoothing = 255;
+            p.MovementSmoothing = 55;
             p.Scale = new Vector3(0.2f, 0.2f, 0.2f);
 
 
