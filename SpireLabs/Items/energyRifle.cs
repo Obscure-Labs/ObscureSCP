@@ -30,7 +30,7 @@ using static UnityEngine.GraphicsBuffer;
 using UnityEngine.Rendering;
 using System;
 
-namespace SpireLabs.Items
+namespace ObscureLabs.Items
 {
     [CustomItem(ItemType.ParticleDisruptor)]
     public class energyRifle : Exiled.CustomItems.API.Features.CustomWeapon

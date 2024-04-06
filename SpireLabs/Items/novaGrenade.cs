@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using static HarmonyLib.Code;
 
-namespace SpireLabs.Items
+namespace ObscureLabs.Items
 {
     [CustomItem(ItemType.GrenadeHE)]
     public class novaGrenade : Exiled.CustomItems.API.Features.CustomGrenade

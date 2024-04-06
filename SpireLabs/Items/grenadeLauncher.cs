@@ -25,7 +25,7 @@ using JetBrains.Annotations;
 using System.Reflection;
 using Exiled.API.Features.Components;
 
-namespace SpireLabs.Items
+namespace ObscureLabs.Items
 {
     [CustomItem(ItemType.GunLogicer)]
     public class grenadeLauncher : Exiled.CustomItems.API.Features.CustomWeapon

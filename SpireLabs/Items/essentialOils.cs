@@ -12,7 +12,7 @@ using MEC;
 using UnityEngine;
 using Player = Exiled.Events.Handlers.Player;
 using SpireSCP.GUI.API.Features;
-namespace SpireLabs.Items
+namespace ObscureLabs.Items
 {
     [CustomItem(ItemType.Painkillers)]
     public class esssentialOils : CustomItem

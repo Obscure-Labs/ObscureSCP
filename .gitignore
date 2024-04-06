@@ -9,3 +9,9 @@ SpireLabs/obj/
 .vs/SpireLabs/FileContentIndex/
 
 .vs/SpireLabs/v17/
+
+*.vsidx
+
+.vs/ObscureLabs/v17/
+
+.vs/SpireLabs/DesignTimeBuild/

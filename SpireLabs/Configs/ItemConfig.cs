@@ -1,8 +1,8 @@
 ﻿#pragma warning disable SA1200
 
-using SpireLabs.Items;
+using ObscureLabs.Items;
 
-namespace SpireLabs.ItemConfigs
+namespace ObscureLabs.ItemConfigs
 {
     using System.Collections.Generic;
     using System.ComponentModel;

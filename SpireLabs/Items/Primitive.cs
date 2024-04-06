@@ -28,7 +28,7 @@ using Mirror;
 using UnityEngine;
 using Exiled.API.Features;
 
-namespace SpireLabs.Items
+namespace ObscureLabs.Items
 {
     public class PlayerPrimitive
     {

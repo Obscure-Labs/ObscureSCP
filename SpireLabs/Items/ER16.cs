@@ -20,7 +20,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Firearm = Exiled.API.Features.Items.Firearm;
 
-namespace SpireLabs.Items
+namespace ObscureLabs.Items
 {
     [CustomItem(ItemType.GunE11SR)]
     public class ER16 : Exiled.CustomItems.API.Features.CustomWeapon

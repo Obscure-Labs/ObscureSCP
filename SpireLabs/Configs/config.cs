@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using Exiled.API.Interfaces;
 
-namespace SpireLabs
+namespace ObscureLabs
 {
     public class OverrideData
     {

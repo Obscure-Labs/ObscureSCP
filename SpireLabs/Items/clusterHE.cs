@@ -17,7 +17,7 @@ using Exiled.API.Features.Pickups.Projectiles;
 using InventorySystem.Items.ThrowableProjectiles;
 using Exiled.Events.EventArgs.Map;
 
-namespace SpireLabs.Items
+namespace ObscureLabs.Items
 {
     [CustomItem(ItemType.GrenadeHE)]
     public class clusterHE : Exiled.CustomItems.API.Features.CustomGrenade
