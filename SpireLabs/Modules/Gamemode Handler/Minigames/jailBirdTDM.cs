@@ -32,7 +32,7 @@ namespace ObscureLabs.Gamemode_Handler
 
 
         static string mapName = "empty";
-        public static string[] maps = { "pvpA1_2t", "pvpA2_2t", "pvpMZA1_2t" };
+        public static string[] maps = { "pvpA1_2t", "pvpA2_2t", "pvpMZA1_2t"};
         static bool gamemodeactive = false;
         static bool team = true;
 
@@ -50,30 +50,30 @@ namespace ObscureLabs.Gamemode_Handler
                 while (gamemodeactive = true)
                 {
                     yield return Timing.WaitForSeconds(0.1f);
-                    foreach (Player p in Player.List)
-                {
-
-
-                    if (count >= 0 && count <= 120)
+                    foreach (Player p in Plugin.PlayerList)
                     {
-                        if (p == null)
+
+
+                        if (count >= 0 && count <= 120)
                         {
-                        }
-                        else
-                        {
-                            if (p.Role.Type != RoleTypeId.ChaosConscript && p.Role.Type != RoleTypeId.NtfSergeant && p.Role.Type != RoleTypeId.Spectator && p.Role.Type != RoleTypeId.None)
+                            if (p == null)
                             {
-                                //p.Role.Set(RoleTypeId.Spectator);
-                                Log.Warn($"{p.DisplayNickname} joined late (or was assigned the wrong role somehow) and has been set to spectator");
                             }
+                            else
+                            {
+                                if (p.Role.Type != RoleTypeId.ChaosConscript && p.Role.Type != RoleTypeId.NtfSergeant && p.Role.Type != RoleTypeId.Spectator && p.Role.Type != RoleTypeId.None)
+                                {
+                                    //p.Role.Set(RoleTypeId.Spectator);
+                                    Log.Warn($"{p.DisplayNickname} joined late (or was assigned the wrong role somehow) and has been set to spectator");
+                                }
 
+                            }
+                            yield return Timing.WaitForSeconds(0.25f);
+                            count++;
                         }
-                        yield return Timing.WaitForSeconds(0.25f);
-                        count++;
+
+
                     }
-
-
-                }
                 }
 
             }
@@ -91,13 +91,13 @@ namespace ObscureLabs.Gamemode_Handler
                 {
                     case 0: mapName = maps[0]; spawnCI = new Vector3(8.48f, 1106.5f, 30.46f); spawnNTF = new Vector3(-20.8f, 1107.5f, 51.66f); break;   // pvpA1_2t
                     case 1: mapName = maps[1]; spawnCI = new Vector3(9.7f, 1102f, 52.46f); spawnNTF = new Vector3(-20.20f, 1102f, 35.37f); break;       // pvpA2_2t
-                    case 2:                                                                                                                             // pvpRA1_2t
-                        mapName = maps[2]; 
-                        spawnCI = new Vector3(-53.97f, 1111f, 42.16f); 
-                        spawnNTF = new Vector3(-53.97f, 1107f, 45.16f);
-                        num69 = rnd69.Next(0, 3); // This is to prevent balls and grenades on this map due to it being smaller and easy for players to run out of items before anyone actually dies
-                        break;
-                    case 3:                                                                                                                             // pvpMZA1_2t
+                    //case 2:                                                                                                                             // pvpRA1_2t
+                    //    mapName = maps[2]; 
+                    //    spawnCI = new Vector3(-53.97f, 1111f, 42.16f); 
+                    //    spawnNTF = new Vector3(-53.97f, 1107f, 45.16f);
+                    //    num69 = rnd69.Next(0, 3); // This is to prevent balls and grenades on this map due to it being smaller and easy for players to run out of items before anyone actually dies
+                    //    break;
+                    case 2:                                                                                                                             // pvpMZA1_2t
                         mapName = maps[3];
                         spawnCI = new Vector3(23.96f, 1126f, 29.14f);
                         spawnNTF = new Vector3(-30.74f, 1126f, -16.93f);
@@ -149,7 +149,7 @@ namespace ObscureLabs.Gamemode_Handler
                 }
 
             }
-            foreach (Player p in Player.List)
+            foreach (Player p in Plugin.PlayerList)
                 {
 
                 yield return Timing.WaitForSeconds(0.1f);

@@ -10,7 +10,6 @@ using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Player;
 using MEC;
 using UnityEngine;
-using Player = Exiled.Events.Handlers.Player;
 using SpireSCP.GUI.API.Features;
 using CustomItems.API;
 using Exiled.API.Features.Pickups.Projectiles;
@@ -33,7 +32,7 @@ using System;
 namespace ObscureLabs.Items
 {
     [CustomItem(ItemType.ParticleDisruptor)]
-    public class energyRifle : Exiled.CustomItems.API.Features.CustomWeapon
+    public class ParticleCollapser : Exiled.CustomItems.API.Features.CustomWeapon
     {
 
         public override float Damage { get; set; } = 0f;
@@ -78,7 +77,7 @@ namespace ObscureLabs.Items
         protected override void SubscribeEvents()
         {
 
-            Player.ChangedItem += Equipped;
+            Exiled.Events.Handlers.Player.ChangedItem += Equipped;
             base.SubscribeEvents();
         }
 
@@ -129,12 +128,35 @@ namespace ObscureLabs.Items
             room.TurnOffLights(5f);
             ExplosiveGrenade grenade = (ExplosiveGrenade)Item.Create(ItemType.GrenadeHE);
             grenade.FuseTime = 0.001f;
-            grenade.ScpDamageMultiplier = 2.25f;
-            grenade.MaxRadius = 25;
+            grenade.ScpDamageMultiplier = 0f;
             grenade.DeafenDuration = 15;
             grenade.ConcussDuration = 25;
-            grenade.SpawnActive(target, ev.Player);
-            yield return Timing.WaitForSeconds(0.5f);
+            ExplosionGrenadeProjectile g = grenade.SpawnActive(target, ev.Player);
+
+            Timing.WaitForSeconds(0.05f);
+            #region Raycasting
+            foreach (Player pp in Player.List)
+            {
+                
+                int loopCntr = 0;
+                RaycastHit h;
+                Player ppp;
+                do
+                {
+                    Vector3 dir = pp.Position - new Vector3(g.Position.x, g.Position.y, g.Position.z);
+                    Physics.Raycast(g.Position, dir, out h);
+                    loopCntr++;
+                } while (!Player.TryGet(h.collider, out ppp) && loopCntr != 5);
+                if (ppp == null) continue;
+                if (Math.Sqrt((Math.Pow((g.Position.x - ppp.Position.x), 2)) + (Math.Pow((g.Position.y - ppp.Position.y), 2))) > 3.5f) continue;
+                if (ppp.Role.Team != ev.Player.Role.Team)
+                {
+                    ppp.Hurt(250, DamageType.Explosion);
+                    ppp.EnableEffect(EffectType.Burned, 30, true);
+                }
+            }
+            #endregion
+
             for(int i = 0; i < 250; i++)
             {
                 yield return Timing.WaitForSeconds(0.005f);
@@ -147,10 +169,7 @@ namespace ObscureLabs.Items
         protected override void OnReloading(ReloadingWeaponEventArgs ev)
         {
             ev.IsAllowed = false;
-            //if (!(ev.Player.CurrentItem is Firearm firearm) || firearm.Ammo >= ClipSize) return;
-
         }
-
     }
 }
 

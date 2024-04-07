@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -130,7 +131,7 @@
     <Compile Include="Modules\Gamemode Handler\Minigames\gamemodeHandler.cs" />
     <Compile Include="Modules\Gamemode Handler\Minigames\jailBirdTDM.cs" />
     <Compile Include="Items\clusterFlash.cs" />
-    <Compile Include="Items\energyRifle.cs" />
+    <Compile Include="Items\ParticleCollapser.cs" />
     <Compile Include="Items\grenadeLauncher.cs" />
     <Compile Include="Items\clusterHE.cs" />
     <Compile Include="Items\ER16.cs" />

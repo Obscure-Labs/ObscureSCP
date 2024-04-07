@@ -23,11 +23,17 @@ namespace ObscureLabs
 
         internal static void onLarryAttack(AttackingEventArgs ev)
         {
+            Timing.RunCoroutine(_1hit(ev));
+
+        }
+
+        private static IEnumerator<float> _1hit(AttackingEventArgs ev)
+        {
+            yield return Timing.WaitForSeconds(0.15f);
             ev.Target.EnableEffect(EffectType.PocketCorroding);
             ev.Target.ChangeEffectIntensity(EffectType.PocketCorroding, 1, 0);
             Manager.SendHint(ev.Player, $"You sent {ev.Target.Nickname} to the pocket dimension!", 5);
             Manager.SendHint(ev.Target, $"You were sent to the pocket dimension by: {ev.Player.Nickname} as SCP-106!", 5);
-
         }
     }
 }
