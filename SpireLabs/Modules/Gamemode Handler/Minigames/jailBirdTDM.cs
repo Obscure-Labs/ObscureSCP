@@ -86,17 +86,11 @@ namespace ObscureLabs.Gamemode_Handler
             var rndMap = new System.Random();
             int numMap = rndMap.Next(0, 4);
             var rnd69 = new System.Random();
-            int num69 = rnd69.Next(0, 4);
+            int num69 = rnd69.Next(0, 3);
             switch (rndMap.Next(0, maps.Count()))
                 {
                     case 0: mapName = maps[0]; spawnCI = new Vector3(8.48f, 1106.5f, 30.46f); spawnNTF = new Vector3(-20.8f, 1107.5f, 51.66f); break;   // pvpA1_2t
                     case 1: mapName = maps[1]; spawnCI = new Vector3(9.7f, 1102f, 52.46f); spawnNTF = new Vector3(-20.20f, 1102f, 35.37f); break;       // pvpA2_2t
-                    //case 2:                                                                                                                             // pvpRA1_2t
-                    //    mapName = maps[2]; 
-                    //    spawnCI = new Vector3(-53.97f, 1111f, 42.16f); 
-                    //    spawnNTF = new Vector3(-53.97f, 1107f, 45.16f);
-                    //    num69 = rnd69.Next(0, 3); // This is to prevent balls and grenades on this map due to it being smaller and easy for players to run out of items before anyone actually dies
-                    //    break;
                     case 2:                                                                                                                             // pvpMZA1_2t
                         mapName = maps[3];
                         spawnCI = new Vector3(23.96f, 1126f, 29.14f);
