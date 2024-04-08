@@ -86,12 +86,22 @@ namespace ObscureLabs.Gamemode_Handler
             var rndMap = new System.Random();
             int numMap = rndMap.Next(0, 4);
             var rnd69 = new System.Random();
-            int num69 = rnd69.Next(0, 3);
+            int num69 = 0;
             switch (rndMap.Next(0, maps.Count()))
                 {
-                    case 0: mapName = maps[0]; spawnCI = new Vector3(8.48f, 1106.5f, 30.46f); spawnNTF = new Vector3(-20.8f, 1107.5f, 51.66f); break;   // pvpA1_2t
-                    case 1: mapName = maps[1]; spawnCI = new Vector3(9.7f, 1102f, 52.46f); spawnNTF = new Vector3(-20.20f, 1102f, 35.37f); break;       // pvpA2_2t
-                    case 2:                                                                                                                             // pvpMZA1_2t
+                    case 0:     // pvpA1_2t
+                        mapName = maps[0];
+                        spawnCI = new Vector3(8.48f, 1106.5f, 30.46f);
+                        spawnNTF = new Vector3(-20.8f, 1107.5f, 51.66f);
+                        num69 = rnd69.Next(0, 5);
+                    break;   
+                    case 1:     // pvpA2_2t
+                        mapName = maps[1];
+                        spawnCI = new Vector3(9.7f, 1102f, 52.46f);
+                        spawnNTF = new Vector3(-20.20f, 1102f, 35.37f);
+                        num69 = rnd69.Next(0, 5);
+                        break;       
+                    case 2:     // pvpMZA1_2t
                         mapName = maps[3];
                         spawnCI = new Vector3(23.96f, 1126f, 29.14f);
                         spawnNTF = new Vector3(-30.74f, 1126f, -16.93f);
@@ -148,35 +158,6 @@ namespace ObscureLabs.Gamemode_Handler
 
                 yield return Timing.WaitForSeconds(0.1f);
 
-                /*if (team == true)
-                {
-                    Log.Warn($"{p.DisplayNickname} is CHAOS INSURGENCY TEAM");
-                    team = false;
-                    p.Role.Set(RoleTypeId.ChaosConscript);
-                    p.ClearInventory(true);
-                    p.Teleport(spawnCI);
-                    p.EnableEffect(EffectType.RainbowTaste, 999, false);
-                    p.EnableEffect(EffectType.Ensnared, 10, false);
-                    p.EnableEffect(EffectType.Flashed, 10, false);
-                    p.EnableEffect(EffectType.SoundtrackMute, 999, false);
-                    p.EnableEffect(EffectType.DamageReduction, 10, false);
-                    p.ChangeEffectIntensity(EffectType.DamageReduction, 255, 1f);
-                }
-                else
-                {
-                    Log.Warn($"{p.DisplayNickname} is NTF TEAM");
-                    team = true;
-                    p.Role.Set(RoleTypeId.NtfSergeant);
-                    p.ClearInventory(true);
-                    p.Teleport(spawnNTF);
-                    p.EnableEffect(EffectType.RainbowTaste, 999, false);
-                    p.EnableEffect(EffectType.Ensnared, 10, false);
-                    p.EnableEffect(EffectType.Flashed, 10, false);
-                    p.EnableEffect(EffectType.SoundtrackMute, 999, false);
-                    p.EnableEffect(EffectType.DamageReduction, 10, false);
-                    p.ChangeEffectIntensity(EffectType.DamageReduction, 255, 1f);
-                }*/
-
 
                 p.Broadcast(5, "<color=green><b>MINIGAME ROUND BEGINS IN 10S!");
                 if (num69 == 0)
@@ -200,13 +181,19 @@ namespace ObscureLabs.Gamemode_Handler
                 }
                 if (num69 == 3)
                 {
+                    Log.Warn("Giving ER16's");
+                    Exiled.CustomItems.API.Features.CustomItem.Get((uint)5).Give(p);
+
+                }
+                if (num69 == 4)
+                {
                     Log.Warn("Giving Grenades and Balls");
                     var item = p.AddItem(ItemType.SCP018);
-                    p.AddItem(ItemType.GrenadeHE);
-                    p.AddItem(ItemType.GrenadeHE);
+                    Exiled.CustomItems.API.Features.CustomItem.Get((uint)2).Give(p);
+                    Exiled.CustomItems.API.Features.CustomItem.Get((uint)2).Give(p);
                     p.AddItem(ItemType.SCP018);
                     p.AddItem(ItemType.GrenadeHE);
-                    p.AddItem(ItemType.GrenadeHE);
+                    Exiled.CustomItems.API.Features.CustomItem.Get((uint)4).Give(p);
                     p.AddItem(ItemType.SCP018);
                     p.AddItem(ItemType.GrenadeHE);
                     p.EnableEffect(EffectType.Scp207, 999, false);

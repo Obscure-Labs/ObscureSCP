@@ -94,12 +94,19 @@ namespace ObscureLabs.Items
             }
         }
 
+        public Color[] colors = {
+            new Color(25f, 500f, 5000f, 0.015f)
+            };
+
         public static int trueAmmo = 30;
         public int shotsFired = 0;
         protected override void OnShooting(ShootingEventArgs ev)
         {
             if (ev.Player.CurrentItem is Firearm firearm)
             {
+
+        var rnd = new System.Random();
+                Color color = colors[rnd.Next(0, colors.Count())];
                 ev.IsAllowed = false;
                 firearm.Ammo = firearm.MaxAmmo;
                 var pl = ev.Player;
@@ -107,7 +114,7 @@ namespace ObscureLabs.Items
 
                 Exiled.API.Features.Toys.Primitive projectile = Exiled.API.Features.Toys.Primitive.Create(ev.Player.Position + new Vector3(0f, -5, 0f), (ev.Player.CameraTransform.rotation * Quaternion.Euler(90f, 0f, 0f)).eulerAngles, new Vector3(1f, 0.01f, 1f), false); ;
                 projectile.Type = PrimitiveType.Capsule;
-                projectile.Color = new Color(25f, 2500f, 5000f, 0.015f);
+                projectile.Color = color;
                 projectile.MovementSmoothing = 0;
                 projectile.Scale = new Vector3(0.035f, 0.15f, 0.035f);
                 projectile.Collidable = false;

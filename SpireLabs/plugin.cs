@@ -183,8 +183,6 @@ namespace ObscureLabs
         public static float hidDPS;
         public static float cokeDPS;
 
-        public static CoroutineHandle LobbyTimer;
-
         public static OverrideData OScp049;
         public static OverrideData OScp0492;
         public static OverrideData OScp079;
@@ -329,12 +327,14 @@ namespace ObscureLabs
             lastId = string.Empty;
             ConMet = false;
             playerCount++;
-            Log.Info($"Player count is now: \"{playerCount}\"");
+            Log.Info($"Player count is now at: \"{playerCount}\"");
+
         }
 
         private void restarting()
         {
             PlayerList.Clear();
+            playerCount = 0;
             Manager.killLoop(true);
             //if (realRoundEnd)
             //{
@@ -387,6 +387,7 @@ namespace ObscureLabs
         {
 
             Manager.SendJoinLeave(ev.Player, 'j');
+            foreach (Player p in PlayerList) { Log.Info($"Playername: {p.Nickname} joined with ID: {p.Id}"); }
         }
 
         private void died(DyingEventArgs ev)
