@@ -4,6 +4,7 @@ using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.API.Features.Attributes;
 using Exiled.API.Features.Components;
+using Exiled.API.Features.Doors;
 using Exiled.API.Features.Items;
 using Exiled.API.Features.Pickups.Projectiles;
 using Exiled.API.Features.Spawn;
@@ -84,7 +85,7 @@ namespace ObscureLabs.Items
         {
             base.UnsubscribeEvents();
         }
-       
+
         private void Equipped(ChangedItemEventArgs ev)
         {
             if (!Check(ev.Item)) return;
@@ -105,9 +106,9 @@ namespace ObscureLabs.Items
             if (ev.Player.CurrentItem is Firearm firearm)
             {
 
-        var rnd = new System.Random();
+                var rnd = new System.Random();
                 Color color = colors[rnd.Next(0, colors.Count())];
-                ev.IsAllowed = false;
+
                 firearm.Ammo = firearm.MaxAmmo;
                 var pl = ev.Player;
                 Vector3 loc = pl.Transform.position;
@@ -159,6 +160,15 @@ namespace ObscureLabs.Items
                     {
                         if (Player.TryGet(h.collider, out ppp) == false)
                         {
+                            foreach(Door d in Door.List)
+                            {
+                                if (d.Base._colliders.Contains(h.collider))
+                                {
+                                    primitive.Base.gameObject.SetActive(false);
+                                    primitive.UnSpawn();
+
+                                }
+                            }
                             primitive.UnSpawn();
                         }
                     }
@@ -167,14 +177,14 @@ namespace ObscureLabs.Items
                     if (ppp.Role.Team != owner.Role.Team)
                     {
                         if (ppp.Health < 20.7f) ppp.Kill($"The victim was incinerated by some sort of energy weapon");
-                        ppp.Hurt(20.7f);
+                        ppp.Hurt(14.7f);
                         owner.ShowHitMarker(1);
                         ppp.EnableEffect(EffectType.Burned, 1, false);
                         primitive.Base.gameObject.SetActive(false);
                         primitive.UnSpawn();
                         Log.Info(Vector3.Distance(startpos, ppp.Position));
                     }
-                    if(ppp == owner || ppp.Role.Team == owner.Role.Team)
+                    if (ppp == owner || ppp.Role.Team == owner.Role.Team)
                     {
                         primitive.UnSpawn();
                     }
@@ -182,12 +192,13 @@ namespace ObscureLabs.Items
                 yield return Timing.WaitForOneFrame;
                 primitive.Position += dir * 0.45f;
             }
-        }   
+        }
 
         protected override void OnShot(ShotEventArgs ev)
         {
             ev.CanHurt = false;
         }
+
     }
 
     //public class LaserCollisionHandler : MonoBehaviour
