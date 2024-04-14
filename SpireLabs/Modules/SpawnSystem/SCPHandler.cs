@@ -17,14 +17,17 @@ namespace ObscureLabs.SpawnSystem
         public static List<Player> scPPs = new List<Player>();
         private static IEnumerator<float> SpawnBoner()
         {
-            yield return Timing.WaitForSeconds(0.5f);
-            var rnd = new Random();
-            int dttiffss = rnd.Next(0, 100);
-            Log.Info($"Boner RNG was {dttiffss} (should between 30 and 40)");
-            if (dttiffss > 30 && dttiffss < 40)
+            if (Plugin.IsActiveEventround)
             {
-                int personindex = rnd.Next(0, scPPs.Count());
-                Player.Get(scPPs.ElementAt(personindex).Id).RoleManager.ServerSetRole(RoleTypeId.Scp3114, RoleChangeReason.RemoteAdmin);
+                yield return Timing.WaitForSeconds(0.5f);
+                var rnd = new Random();
+                int dttiffss = rnd.Next(0, 100);
+                Log.Info($"Boner RNG was {dttiffss} (should between 30 and 40)");
+                if (dttiffss > 30 && dttiffss < 40)
+                {
+                    int personindex = rnd.Next(0, scPPs.Count());
+                    Player.Get(scPPs.ElementAt(personindex).Id).RoleManager.ServerSetRole(RoleTypeId.Scp3114, RoleChangeReason.RemoteAdmin);
+                }
             }
         }
 

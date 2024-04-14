@@ -49,18 +49,19 @@ namespace ObscureLabs.Gamemode_Handler
 
         public static void AttemptGMRound(bool force)
         {
+            //await Task.Delay(1);
             var ran = new Random();
             int chance = ran.Next(0, 100);
-            if(chance > 30 && chance < 50 && !ReadLast())
-            {
-                WriteAllGMInfo(ReadLast(), ReadMode(), true);
-            }
-            if (ReadNext() || force)
+                //if (chance > 30 && chance < 50 && !ReadLast())
+                //{
+                //    WriteAllGMInfo(ReadLast(), ReadMode(), true);
+                //}
+            if (ReadNext() || force || chance > 30 && chance < 50 && !ReadLast())
             {
                 Plugin.IsActiveEventround = true;
                 int[] modes =
                 {
-                0, //JBTDM
+                0 //JBTDM
                 //1, //Othermode
                 //2, //OtherOtherMode
                 };

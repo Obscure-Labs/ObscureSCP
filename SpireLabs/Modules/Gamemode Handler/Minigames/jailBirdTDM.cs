@@ -32,14 +32,14 @@ namespace ObscureLabs.Gamemode_Handler
 
 
         static string mapName = "empty";
-        public static string[] maps = { "pvpA1_2t", "pvpA2_2t", "pvpMZA1_2t"};
+        public static string[] maps = { "pvpA1_2t", "pvpA2_2t", "pvpMZA1_2t" };
         static bool gamemodeactive = false;
         static bool team = true;
 
 
 
         public static IEnumerator<float> lateJoin()
-            {
+        {
             var loop = true;
 
 
@@ -47,84 +47,88 @@ namespace ObscureLabs.Gamemode_Handler
 
             yield return Timing.WaitForSeconds(1.25f);
             int? count = 0;
-                while (gamemodeactive = true)
+            while (gamemodeactive = true)
+            {
+                yield return Timing.WaitForSeconds(0.1f);
+                foreach (Player p in Plugin.PlayerList)
                 {
-                    yield return Timing.WaitForSeconds(0.1f);
-                    foreach (Player p in Plugin.PlayerList)
+
+
+                    if (count >= 0 && count <= 120)
                     {
-
-
-                        if (count >= 0 && count <= 120)
+                        if (p == null)
                         {
-                            if (p == null)
-                            {
-                            }
-                            else
-                            {
-                                if (p.Role.Type != RoleTypeId.ChaosConscript && p.Role.Type != RoleTypeId.NtfSergeant && p.Role.Type != RoleTypeId.Spectator && p.Role.Type != RoleTypeId.None)
-                                {
-                                    //p.Role.Set(RoleTypeId.Spectator);
-                                    Log.Warn($"{p.DisplayNickname} joined late (or was assigned the wrong role somehow) and has been set to spectator");
-                                }
-
-                            }
-                            yield return Timing.WaitForSeconds(0.25f);
-                            count++;
                         }
+                        else
+                        {
+                            if (p.Role.Type != RoleTypeId.ChaosConscript && p.Role.Type != RoleTypeId.NtfSergeant && p.Role.Type != RoleTypeId.Spectator && p.Role.Type != RoleTypeId.None)
+                            {
+                                //p.Role.Set(RoleTypeId.Spectator);
+                                Log.Warn($"{p.DisplayNickname} joined late (or was assigned the wrong role somehow) and has been set to spectator");
+                            }
 
-
+                        }
+                        yield return Timing.WaitForSeconds(0.25f);
+                        count++;
                     }
-                }
 
+
+                }
             }
+
+        }
 
         public static IEnumerator<float> runJbTDM()
         {
             Vector3 spawnCI = new Vector3(0f, 1000f, 0f);
             Vector3 spawnNTF = new Vector3(0f, 1000f, 0f);
-            Respawn.TimeUntilNextPhase = 86400;
+            Respawn.TimeUntilNextPhase = 86400f;
             var rndMap = new System.Random();
             int numMap = rndMap.Next(0, 4);
             var rnd69 = new System.Random();
             int num69 = 0;
-            switch (rndMap.Next(0, maps.Count()))
-                {
-                    case 0:     // pvpA1_2t
-                        mapName = maps[0];
-                        spawnCI = new Vector3(8.48f, 1106.5f, 30.46f);
-                        spawnNTF = new Vector3(-20.8f, 1107.5f, 51.66f);
-                        num69 = rnd69.Next(0, 5);
-                    break;   
-                    case 1:     // pvpA2_2t
-                        mapName = maps[1];
-                        spawnCI = new Vector3(9.7f, 1102f, 52.46f);
-                        spawnNTF = new Vector3(-20.20f, 1102f, 35.37f);
-                        num69 = rnd69.Next(0, 5);
-                        break;       
-                    case 2:     // pvpMZA1_2t
-                        mapName = maps[3];
-                        spawnCI = new Vector3(23.96f, 1126f, 29.14f);
-                        spawnNTF = new Vector3(-30.74f, 1126f, -16.93f);
-                        num69 = rnd69.Next(0, 3); // This is to prevent balls and grenades on this map due to it being far too big and easy for players to run out of items before anyone actually dies
+            switch (rndMap.Next(0, 3))
+            {
+                case 0:     // pvpA1_2t
+                    mapName = maps[0];
+                    spawnCI = new Vector3(8.48f, 1106.5f, 30.46f);
+                    spawnNTF = new Vector3(-20.8f, 1107.5f, 51.66f);
+                    num69 = rnd69.Next(0, 4);
+                    break;
+                case 1:     // pvpA2_2t
+                    mapName = maps[1];
+                    spawnCI = new Vector3(9.7f, 1102f, 52.46f);
+                    spawnNTF = new Vector3(-20.20f, 1102f, 35.37f);
+                    num69 = rnd69.Next(0, 4);
+                    break;
+                case 2:     // pvpMZA1_2t
+                    mapName = maps[3];
+                    spawnCI = new Vector3(23.96f, 1126f, 29.14f);
+                    spawnNTF = new Vector3(-30.74f, 1126f, -16.93f);
+                    num69 = rnd69.Next(0, 3); // This is to prevent balls and grenades on this map due to it being far too big and easy for players to run out of items before anyone actually dies
                     break;
             }
 
             gamemodeactive = true;
-                Log.Warn("Unloading all default maps");
-                MapEditorReborn.API.Features.MapUtils.LoadMap("empty");
-                Log.Warn("Loading Map: pvpA1_2t");
-                MapEditorReborn.API.Features.MapUtils.LoadMap($"{mapName}");
-                Log.Warn("Starting checks for players with wrong roles");
-                Timing.WaitForSeconds(0.6f);
-                
+            Log.Warn("Unloading all default maps");
+            MapEditorReborn.API.Features.MapUtils.LoadMap("empty");
+            Log.Warn("Loading Map: pvpA1_2t");
+            MapEditorReborn.API.Features.MapUtils.LoadMap($"{mapName}");
+            Log.Warn("Starting checks for players with wrong roles");
+
 
             Timing.WaitForSeconds(0.1f);
-            for(int i = 0; i < Math.Floor((double)(Plugin.PlayerList.Count() / 2)); i++)
+            List<Player> newSuperDuperGoodPlayerListThatKevinLikesFinallyThisTime = new List<Player>();
+
+            newSuperDuperGoodPlayerListThatKevinLikesFinallyThisTime = Plugin.PlayerList;
+
+            for (int i = 0; i < (Math.Ceiling((double)Plugin.PlayerList.Count) / 2)+1; i++)
             {
                 Log.Info("Setting CHAOS");
                 int playerid = rnd69.Next(0, Plugin.PlayerList.Count());
-                Player p = Plugin.PlayerList.ElementAt(playerid);
-                if(p.Role != RoleTypeId.ChaosConscript)
+                Player p = newSuperDuperGoodPlayerListThatKevinLikesFinallyThisTime.ElementAt(playerid);
+                yield return Timing.WaitForSeconds(0.5f);
+                if (p.Role != RoleTypeId.ChaosConscript)
                 {
                     p.Role.Set(RoleTypeId.ChaosConscript);
                     p.ClearInventory(true);
@@ -135,13 +139,18 @@ namespace ObscureLabs.Gamemode_Handler
                     p.EnableEffect(EffectType.SoundtrackMute, 999, false);
                     p.EnableEffect(EffectType.DamageReduction, 10, false);
                     p.ChangeEffectIntensity(EffectType.DamageReduction, 255, 1f);
+                    yield return Timing.WaitForOneFrame;
+                    p.ChangeAppearance(RoleTypeId.ChaosConscript);
+
                 }
+                newSuperDuperGoodPlayerListThatKevinLikesFinallyThisTime.Remove(p);
             }
-            foreach(Player p in Plugin.PlayerList)
+            foreach (Player p in newSuperDuperGoodPlayerListThatKevinLikesFinallyThisTime)
             {
                 if (p.Role != RoleTypeId.ChaosConscript)
                 {
                     p.Role.Set(RoleTypeId.NtfSergeant);
+
                     p.ClearInventory(true);
                     p.Teleport(spawnNTF);
                     p.EnableEffect(EffectType.RainbowTaste, 999, false);
@@ -150,11 +159,15 @@ namespace ObscureLabs.Gamemode_Handler
                     p.EnableEffect(EffectType.SoundtrackMute, 999, false);
                     p.EnableEffect(EffectType.DamageReduction, 10, false);
                     p.ChangeEffectIntensity(EffectType.DamageReduction, 255, 1f);
+                    yield return Timing.WaitForOneFrame;
+                    p.ChangeAppearance(RoleTypeId.NtfSergeant);
                 }
 
             }
-            foreach (Player p in Plugin.PlayerList)
-                {
+            //Log.Info($"Setting player: {p.Nickname} to team: {team}");
+
+            foreach (Player p in Player.List)
+            {
 
                 yield return Timing.WaitForSeconds(0.1f);
 
