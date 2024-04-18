@@ -84,7 +84,7 @@ namespace ObscureLabs.Gamemode_Handler
             Vector3 spawnNTF = new Vector3(0f, 1000f, 0f);
             Respawn.TimeUntilNextPhase = 86400f;
             var rndMap = new System.Random();
-            int numMap = rndMap.Next(0, 4);
+            int numMap = rndMap.Next(0, maps.Count() + 1);
             var rnd69 = new System.Random();
             int num69 = 0;
             switch (rndMap.Next(0, 3))
@@ -102,7 +102,7 @@ namespace ObscureLabs.Gamemode_Handler
                     num69 = rnd69.Next(0, 4);
                     break;
                 case 2:     // pvpMZA1_2t
-                    mapName = maps[3];
+                    mapName = maps[2];
                     spawnCI = new Vector3(23.96f, 1126f, 29.14f);
                     spawnNTF = new Vector3(-30.74f, 1126f, -16.93f);
                     num69 = rnd69.Next(0, 3); // This is to prevent balls and grenades on this map due to it being far too big and easy for players to run out of items before anyone actually dies

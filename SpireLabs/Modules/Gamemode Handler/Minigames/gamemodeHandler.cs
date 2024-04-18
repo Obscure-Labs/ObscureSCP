@@ -1,4 +1,5 @@
 ﻿using MEC;
+using ObscureLabs.Modules.Gamemode_Handler.Minigames;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -61,8 +62,8 @@ namespace ObscureLabs.Gamemode_Handler
                 Plugin.IsActiveEventround = true;
                 int[] modes =
                 {
-                0 //JBTDM
-                //1, //Othermode
+                0, //JBTDM
+                1 // Chaos
                 //2, //OtherOtherMode
                 };
                 int selectedGM = ran.Next(0, modes.Count());
@@ -70,6 +71,8 @@ namespace ObscureLabs.Gamemode_Handler
                 {
                     case 0:
                         Timing.RunCoroutine(jailBirdTDM.runJbTDM()); break;
+                    case 1:
+                        Timing.RunCoroutine(Chaos.runChaos()); break;
                 }
                 WriteAllGMInfo(true, selectedGM, false);
             }

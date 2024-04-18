@@ -35,9 +35,9 @@
 
     internal static class CoinFlip
     {
-        public static string[] good = { "You gained 20HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!", "You are healed!", "GRENADE FOUNTAIN!", "Ammo pile!!", "FREE CANDY!", "You can't die for the next 3s!", "You bring health to those around you!", "Nice hat..", "You have such radiant skin!" };
-        public static string[] bad = { "You now have 50HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "Pocket Sand!", "You got lost and found yourself in a random room!", "You flipped the coin so hard your hands fell off!", "Beep!", "Sent To Qatar!!!", "Others percieve you as upside down!", "You caused a blackout in your zone!", "Door stuck! DOOR STUCK!", "Your coin melted :(" };
-
+        public static string[] good = { "You gained 20HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!", "You are healed!", "GRENADE FOUNTAIN!", "Ammo pile!!", "FREE CANDY!", "You can't die for the next 25s!", "You bring health to those around you!", "Nice hat..", "You have such radiant skin!", "You got an item!" };
+        public static string[] bad = { "You now have 50HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "Pocket Sand!", "You got lost and found yourself in a random room!", "You flipped the coin so hard your hands fell off!", "Beep!", "Sent To Qatar!!!", "Others percieve you as upside down!", "You caused a blackout in your zone!", "Door stuck! DOOR STUCK!", "Your coin melted :(", "You have been detained!", "You have been brought to a random player!", "The facility is having some technical difficulties" };
+    
         private static IEnumerator<float> grenadeFountain(Player p)
         {
             
@@ -45,16 +45,27 @@
             while (bombs != 5)
             {
                 p.ThrowGrenade(ProjectileType.FragGrenade, false);
+                p.Rotation = new Quaternion(p.Rotation.x, p.Rotation.y + 45, p.Rotation.z, 0);
                 p.ThrowGrenade(ProjectileType.FragGrenade, false);
+                p.Rotation = new Quaternion(p.Rotation.x, p.Rotation.y + 45, p.Rotation.z, 0);
                 p.ThrowGrenade(ProjectileType.FragGrenade, false);
+                p.Rotation = new Quaternion(p.Rotation.x, p.Rotation.y + 45, p.Rotation.z, 0);
                 p.ThrowGrenade(ProjectileType.FragGrenade, false);
+                p.Rotation = new Quaternion(p.Rotation.x, p.Rotation.y + 45, p.Rotation.z, 0);
                 p.ThrowGrenade(ProjectileType.FragGrenade, false);
+                p.Rotation = new Quaternion(p.Rotation.x, p.Rotation.y + 45, p.Rotation.z, 0);
                 p.ThrowGrenade(ProjectileType.FragGrenade, false);
+                p.Rotation = new Quaternion(p.Rotation.x, p.Rotation.y + 45, p.Rotation.z, 0);
                 p.ThrowGrenade(ProjectileType.FragGrenade, false);
+                p.Rotation = new Quaternion(p.Rotation.x, p.Rotation.y + 45, p.Rotation.z, 0);
                 p.ThrowGrenade(ProjectileType.FragGrenade, false);
+                p.Rotation = new Quaternion(p.Rotation.x, p.Rotation.y + 45, p.Rotation.z, 0);
                 p.ThrowGrenade(ProjectileType.FragGrenade, false);
+                p.Rotation = new Quaternion(p.Rotation.x, p.Rotation.y + 45, p.Rotation.z, 0);
                 p.ThrowGrenade(ProjectileType.FragGrenade, false);
+                p.Rotation = new Quaternion(p.Rotation.x, p.Rotation.y + 45, p.Rotation.z, 0);
                 p.ThrowGrenade(ProjectileType.FragGrenade, false);
+                p.Rotation = new Quaternion(p.Rotation.x, p.Rotation.y + 45, p.Rotation.z, 0);
                 p.ThrowGrenade(ProjectileType.FragGrenade, false);
                 yield return Timing.WaitForSeconds(0.1f);
                 bombs++;
@@ -137,7 +148,7 @@
 
         private static IEnumerator<float> scl(Player p)
         {
-            p.Scale = new Vector3(1, -1, 1);
+            p.Scale = new Vector3(-1, -1, 1);
             yield return Timing.WaitForSeconds(30);
             p.Scale = Vector3.one;
 
@@ -274,6 +285,48 @@
 
         internal static void Player_FlippingCoin(FlippingCoinEventArgs ev)
         {
+            var itemList = new List<ItemType> {
+                ItemType.GunA7,
+                ItemType.GunFSP9,
+                ItemType.GunCom45,
+                ItemType.GunE11SR,
+                ItemType.GunRevolver,
+                ItemType.GunLogicer,
+                ItemType.GunFRMG0,
+                ItemType.GunAK,
+                ItemType.Adrenaline,
+                ItemType.Painkillers,
+                ItemType.ArmorLight,
+                ItemType.ArmorHeavy,
+                ItemType.ArmorCombat,
+                ItemType.Medkit,
+                ItemType.MicroHID,
+                ItemType.ParticleDisruptor,
+                ItemType.SCP500,
+                ItemType.Radio,
+                ItemType.Jailbird,
+                ItemType.GunShotgun,
+                ItemType.KeycardZoneManager,
+                ItemType.KeycardScientist,
+                ItemType.KeycardResearchCoordinator,
+                ItemType.KeycardGuard,
+                ItemType.KeycardJanitor,
+                ItemType.KeycardContainmentEngineer,
+                ItemType.KeycardFacilityManager,
+                ItemType.GunCrossvec,
+                ItemType.KeycardMTFCaptain,
+                ItemType.KeycardMTFOperative,
+                ItemType.KeycardMTFPrivate,
+                ItemType.KeycardChaosInsurgency,
+                ItemType.KeycardO5,
+                ItemType.Flashlight,
+                ItemType.SCP1576,
+                ItemType.SCP244b,
+                ItemType.SCP244a,
+                ItemType.SCP207,
+                ItemType.Coin
+            };
+
             //pp(ev.Player);
             var rnd = new System.Random();
             int num = rnd.Next(0, 100);
@@ -375,8 +428,8 @@
                         break;
                     case 8:
                         Manager.SendHint(ev.Player, good[8], 3);
-                        ev.Player.EnableEffect(EffectType.DamageReduction, 3);
-                        ev.Player.ChangeEffectIntensity(EffectType.DamageReduction, 255, 3);
+                        ev.Player.EnableEffect(EffectType.DamageReduction, 25);
+                        ev.Player.ChangeEffectIntensity(EffectType.DamageReduction, 255, 25);
                         break;
                     case 9:
                         Manager.SendHint(ev.Player, good[9], 1.5f);
@@ -397,9 +450,15 @@
                         }
                         break;
                     case 11:
+                        Manager.SendHint(ev.Player, good[11], 3);
                         Timing.RunCoroutine(glow(ev.Player));
                         break;
-                    
+                    case 12:
+                        Manager.SendHint(ev.Player, good[12], 3);
+                        var randomitem = new System.Random();
+                        Pickup.CreateAndSpawn(itemList.ElementAt(randomitem.Next(0, itemList.Count() + 1)), ev.Player.Position, ev.Player.Rotation);
+                        break;
+
                 }
 
             }
@@ -505,6 +564,27 @@
                         Manager.SendHint(ev.Player, bad[11], 3);
                         ev.Player.RemoveHeldItem(true);
                         break;
+                    case 12:
+                        Manager.SendHint(ev.Player, bad[12], 3);
+                        Timing.RunCoroutine(disarm(ev.Player));
+                        break;
+                    case 13:
+                        Manager.SendHint(ev.Player, bad[13], 3);
+                        var random = new System.Random();
+                        var target = random.Next(Plugin.PlayerList.Count);
+                        ev.Player.Teleport(target);
+                        break;
+                    case 14:
+                        Manager.SendHint(ev.Player, bad[14], 3);
+                        foreach (Room _r in Room.List)
+                        {
+                            _r.TurnOffLights(30);
+                            foreach (Door _d in _r.Doors)
+                            {
+                                _d.IsOpen = false;
+                            }
+                        }
+                        break;
                 }
             }
             else
@@ -514,11 +594,16 @@
                 Manager.SendHint(ev.Player, "No consequences, this time...", 5);
             }
         }
-
+        private static IEnumerator<float> disarm(Player ev)
+        {
+            ev.Handcuff();
+            yield return Timing.WaitForSeconds(10);
+            ev.RemoveHandcuffs();
+        }
 
         private static IEnumerator<float> roomRGB(Room roomSel)
         {
-            roomSel.LockDown(10);
+
             Color[] colors = {
             Color.red, //this is red you fucking twat
             Color.green,
@@ -530,6 +615,7 @@
             var rnd = new System.Random();
             Color color = colors[rnd.Next(0, colors.Count())];
             roomSel.Color = color * 9;
+            roomSel.LockDown(10, DoorLockType.AdminCommand);
             yield return Timing.WaitForSeconds(30);
             roomSel.ResetColor();
         }
@@ -538,7 +624,7 @@
             Exiled.API.Features.Toys.Light li = Exiled.API.Features.Toys.Light.Create(new Vector3(p.Transform.position.x, p.Transform.position.y + 1.2f, p.Transform.position.z), Vector3.zero, Vector3.one, false);
             li.Range = 45f;
             li.Intensity = 9999f;
-            li.Color = Color.cyan;
+            li.Color = Color.yellow;
             li.Spawn();
             li.Base.gameObject.transform.SetParent(p.GameObject.transform);
             yield return Timing.WaitForSeconds(30f);
