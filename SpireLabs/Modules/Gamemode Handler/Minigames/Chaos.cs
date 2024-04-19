@@ -42,7 +42,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                     p.AddItem(ItemType.Coin, 2);
                     p.AddItem(ItemType.KeycardScientist, 1);
                     p.AddItem(ItemType.Flashlight, 1);
-                    p.Teleport(RoomType.LczGlassBox);
+                    p.Teleport(RoomType.LczClassDSpawn);
                 }
                 newSuperDuperGoodPlayerListThatKevinLikesFinallyThisTime.Remove(p);
             }
@@ -56,7 +56,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                     p.AddItem(ItemType.Coin, 2);
                     p.AddItem(ItemType.KeycardScientist, 1);
                     p.AddItem(ItemType.Flashlight, 1);
-                    p.Teleport(RoomType.LczGlassBox);
+                    p.Teleport(RoomType.LczClassDSpawn);
                 }
 
             }

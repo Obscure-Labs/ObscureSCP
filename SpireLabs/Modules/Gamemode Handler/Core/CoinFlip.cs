@@ -35,37 +35,24 @@
 
     internal static class CoinFlip
     {
-        public static string[] good = { "You gained 20HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!", "You are healed!", "GRENADE FOUNTAIN!", "Ammo pile!!", "FREE CANDY!", "You can't die for the next 25s!", "You bring health to those around you!", "Nice hat..", "You have such radiant skin!", "You got an item!" };
-        public static string[] bad = { "You now have 50HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "Pocket Sand!", "You got lost and found yourself in a random room!", "You flipped the coin so hard your hands fell off!", "Beep!", "Sent To Qatar!!!", "Others percieve you as upside down!", "You caused a blackout in your zone!", "Door stuck! DOOR STUCK!", "Your coin melted :(", "You have been detained!", "You have been brought to a random player!", "The facility is having some technical difficulties" };
+        public static string[] good = { "You gained 50HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!", "You are healed!", "GRENADE FOUNTAIN!", "Ammo pile!!", "FREE CANDY!", "You can't die for the next 25s!", "You bring health to those around you!", "Nice hat..", "You have such radiant skin!", "You got an item!" };
+        public static string[] bad = { "You now have 50HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "Pocket Sand!", "You got lost and found yourself in a random room!", "Don't gamble kids!", "Beep!", "Portal to hell!!!", "Others percieve you as upside down!", "You caused a blackout in your zone!", "Door stuck! DOOR STUCK!", "Your coin melted :(", "You have been detained!", "You have been brought to a random player!", "The facility is having some technical difficulties" };
     
         private static IEnumerator<float> grenadeFountain(Player p)
         {
             
             int bombs = 0;
-            while (bombs != 5)
+            while (bombs != 2)
             {
                 p.ThrowGrenade(ProjectileType.FragGrenade, false);
-                p.Rotation = new Quaternion(p.Rotation.x, p.Rotation.y + 45, p.Rotation.z, 0);
                 p.ThrowGrenade(ProjectileType.FragGrenade, false);
-                p.Rotation = new Quaternion(p.Rotation.x, p.Rotation.y + 45, p.Rotation.z, 0);
                 p.ThrowGrenade(ProjectileType.FragGrenade, false);
-                p.Rotation = new Quaternion(p.Rotation.x, p.Rotation.y + 45, p.Rotation.z, 0);
                 p.ThrowGrenade(ProjectileType.FragGrenade, false);
-                p.Rotation = new Quaternion(p.Rotation.x, p.Rotation.y + 45, p.Rotation.z, 0);
                 p.ThrowGrenade(ProjectileType.FragGrenade, false);
-                p.Rotation = new Quaternion(p.Rotation.x, p.Rotation.y + 45, p.Rotation.z, 0);
                 p.ThrowGrenade(ProjectileType.FragGrenade, false);
-                p.Rotation = new Quaternion(p.Rotation.x, p.Rotation.y + 45, p.Rotation.z, 0);
                 p.ThrowGrenade(ProjectileType.FragGrenade, false);
-                p.Rotation = new Quaternion(p.Rotation.x, p.Rotation.y + 45, p.Rotation.z, 0);
                 p.ThrowGrenade(ProjectileType.FragGrenade, false);
-                p.Rotation = new Quaternion(p.Rotation.x, p.Rotation.y + 45, p.Rotation.z, 0);
                 p.ThrowGrenade(ProjectileType.FragGrenade, false);
-                p.Rotation = new Quaternion(p.Rotation.x, p.Rotation.y + 45, p.Rotation.z, 0);
-                p.ThrowGrenade(ProjectileType.FragGrenade, false);
-                p.Rotation = new Quaternion(p.Rotation.x, p.Rotation.y + 45, p.Rotation.z, 0);
-                p.ThrowGrenade(ProjectileType.FragGrenade, false);
-                p.Rotation = new Quaternion(p.Rotation.x, p.Rotation.y + 45, p.Rotation.z, 0);
                 p.ThrowGrenade(ProjectileType.FragGrenade, false);
                 yield return Timing.WaitForSeconds(0.1f);
                 bombs++;
@@ -106,7 +93,7 @@
             var rnd = new System.Random();
             Log.Info("Running candy fountain on " + p);
             int items = 0;
-            while (items != 10)
+            while (items != 50)
             {
                 Exiled.API.Features.Pickups.Scp330Pickup Scp330 = (Exiled.API.Features.Pickups.Scp330Pickup)Pickup.Create(ItemType.SCP330);
                 int num = rnd.Next(0, 6);
@@ -341,7 +328,7 @@
                     case 0:
                         //ev.Player.ShowHint(good[0], 3);
                         Manager.SendHint(ev.Player, good[0], 3);
-                        ev.Player.Heal(20, true);
+                        ev.Player.Heal(50, true);
                         if (ev.Player.Role == RoleTypeId.NtfCaptain)
                         {
                             ev.Player.MaxHealth = 150;
@@ -481,7 +468,7 @@
                         ev.Player.ChangeEffectIntensity(EffectType.SinkHole, 1, 5);
                         break;
                     case 3:
-                       Manager.SendHint(ev.Player, bad[3], 3);
+                        Manager.SendHint(ev.Player, bad[3], 3);
                         ev.Player.EnableEffect(EffectType.Flashed, 5, true);
                         ev.Player.ChangeEffectIntensity(EffectType.Flashed, 1, 5);
                         break;
@@ -520,10 +507,19 @@
 
                         break;
                     case 5:
-                        Manager.SendHint(ev.Player, bad[5], 3);
-                        ev.Player.EnableEffect(EffectType.SeveredHands, 999);
-                        ev.Player.EnableEffect(EffectType.CardiacArrest, 60);
-                        ev.Player.ChangeEffectIntensity(EffectType.CardiacArrest, 5);
+
+                        var randomdeath = new System.Random();
+                        int randomdeathpick = randomdeath.Next(0, 4);
+                        if (randomdeathpick == 0)
+                        {
+                            ev.Player.EnableEffect(EffectType.CardiacArrest, 999);
+                            ev.Player.ChangeEffectIntensity(EffectType.CardiacArrest, 25);
+                            ev.Player.EnableEffect(EffectType.SeveredHands, 999);
+                            Manager.SendHint(ev.Player, "Look ma' no hands!", 3);
+                        }
+                        if (randomdeathpick == 1) { ev.Player.Vaporize(ev.Player); Manager.SendHint(ev.Player, "Voop", 3); }
+                        if (randomdeathpick == 2) { ev.Player.Explode(); Manager.SendHint(ev.Player, "Bang!", 3); }
+                        if (randomdeathpick == 3) { Timing.RunCoroutine(shitonthefloor(ev.Player)); Manager.SendHint(ev.Player, "Shidded", 3);  }
                         break;
                     case 6:
                         Timing.RunCoroutine(beep(ev.Player));
@@ -569,16 +565,27 @@
                         Timing.RunCoroutine(disarm(ev.Player));
                         break;
                     case 13:
-                        Manager.SendHint(ev.Player, bad[13], 3);
+
+                        randomplayertp:
                         var random = new System.Random();
-                        var target = random.Next(Plugin.PlayerList.Count);
-                        ev.Player.Teleport(target);
+                        var target = Plugin.PlayerList.ElementAt(random.Next(Plugin.PlayerList.Count));
+                        Log.Info(target.Nickname);
+                        if (Plugin.PlayerList.Count == 1) { ev.Player.Vaporize(ev.Player); Manager.SendHint(ev.Player, "LOL", 5); break; }
+                        else
+                        {
+                            if (!target.IsAlive || target.Role.Type == RoleTypeId.Overwatch || target.Role.Type == RoleTypeId.Spectator || target == ev.Player) { goto randomplayertp; }
+                            else
+                            {
+                                ev.Player.Position = target.Position;
+                            }
+                            Manager.SendHint(ev.Player, bad[13], 3);
+                        }
                         break;
                     case 14:
                         Manager.SendHint(ev.Player, bad[14], 3);
                         foreach (Room _r in Room.List)
                         {
-                            _r.TurnOffLights(30);
+                            _r.TurnOffLights(15);
                             foreach (Door _d in _r.Doors)
                             {
                                 _d.IsOpen = false;
@@ -599,6 +606,16 @@
             ev.Handcuff();
             yield return Timing.WaitForSeconds(10);
             ev.RemoveHandcuffs();
+        }
+
+        private static IEnumerator<float> shitonthefloor(Player ev)
+        {
+            for (int i = 0; i < 30; i++)
+            {
+                yield return Timing.WaitForSeconds(0.5f);
+                ev.PlaceTantrum(true);
+            }
+            ev.Explode();
         }
 
         private static IEnumerator<float> roomRGB(Room roomSel)
