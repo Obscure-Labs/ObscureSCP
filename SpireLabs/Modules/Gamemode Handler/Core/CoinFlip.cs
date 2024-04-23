@@ -35,7 +35,7 @@
 
     internal static class CoinFlip
     {
-        public static string[] good = { "You gained 50HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!", "You are healed!", "GRENADE FOUNTAIN!", "Ammo pile!!", "FREE CANDY!", "You can't die for the next 25s!", "You bring health to those around you!", "Nice hat..", "You have such radiant skin!", "You got an item!" };
+        public static string[] good = { "You gained 50HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!", "You are healed!", "GRENADE FOUNTAIN!", "Ammo pile!!", "FREE CANDY!", "You can't die for the next 25s!", "You bring health to those around you!", "Nice hat..", "You have such radiant skin!", "You got an item!", "Brought a random player to you!" };
         public static string[] bad = { "You now have 50HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "Pocket Sand!", "You got lost and found yourself in a random room!", "Don't gamble kids!", "Beep!", "Portal to hell!!!", "Others percieve you as upside down!", "You caused a blackout in your zone!", "Door stuck! DOOR STUCK!", "Your coin melted :(", "You have been detained!", "You have been brought to a random player!", "The facility is having some technical difficulties" };
     
         private static IEnumerator<float> grenadeFountain(Player p)
@@ -445,6 +445,23 @@
                         var randomitem = new System.Random();
                         Pickup.CreateAndSpawn(itemList.ElementAt(randomitem.Next(0, itemList.Count() + 1)), ev.Player.Position, ev.Player.Rotation);
                         break;
+                    case 13:
+
+                    randomplayertptome:
+                        var random = new System.Random();
+                        var target = Plugin.PlayerList.ElementAt(random.Next(Plugin.PlayerList.Count));
+                        Log.Info(target.Nickname);
+                        if (Plugin.PlayerList.Count == 1) { ev.Player.Vaporize(ev.Player); Manager.SendHint(ev.Player, "LOL", 5); break; }
+                        else
+                        {
+                            if (!target.IsAlive || target.Role.Type == RoleTypeId.Overwatch || target.Role.Type == RoleTypeId.Spectator || target == ev.Player) { goto randomplayertptome; }
+                            else
+                            {
+                                target.Position = ev.Player.Position;
+                                Manager.SendHint(ev.Player, good[13], 3);
+                            }
+                        }
+                        break;
 
                 }
 
@@ -487,7 +504,7 @@
                             int roomNum = roomNd.Next(0, Room.List.Count());
                             if (Map.IsLczDecontaminated)
                             {
-                                if (Room.List.ElementAt(roomNum).Type != RoomType.HczTesla && Room.List.ElementAt(roomNum).Zone != ZoneType.LightContainment)
+                                if (Room.List.ElementAt(roomNum).Type != RoomType.HczTesla && Room.List.ElementAt(roomNum).Zone != ZoneType.LightContainment && Room.List.ElementAt(roomNum).Type != RoomType.HczElevatorA && Room.List.ElementAt(roomNum).Type != RoomType.HczElevatorB)
                                 {
                                     goodRoom = true;
                                     door = Room.List.ElementAt(roomNum).Doors.FirstOrDefault();
@@ -503,7 +520,7 @@
                             }
 
                         }
-                        ev.Player.Teleport(new Vector3(door.Position.x, door.Position.y + 1f, door.Position.z));
+                        ev.Player.Teleport(new Vector3(door.Position.x, door.Position.y + 1.5f, door.Position.z));
 
                         break;
                     case 5:
