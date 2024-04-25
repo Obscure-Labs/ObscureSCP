@@ -269,7 +269,7 @@ namespace ObscureLabs
             foreach (Door d in Door.List)
             {
                 if (d.Zone == ZoneType.Surface)
-                    d.Lock(600, DoorLockType.Regular079);
+                    d.Lock(9999, DoorLockType.Regular079);
                 switch (d.Type)
                 {
                     case DoorType.NukeSurface: d.Unlock(); break;
@@ -324,6 +324,21 @@ namespace ObscureLabs
             else
             {
                 Cassie.Message(@"jam_043_3 Surface armory has been opened for all jam_020_3 pitch_0.8 warhead pitch_1 authorized personnel . . . enter with pitch_0.9 jam_010_1 caution", false, false, true);
+                foreach (Door d in Door.List)
+                {
+                    if (d.Zone == ZoneType.Surface)
+                        d.Unlock();
+                    switch (d.Type)
+                    {
+                        case DoorType.NukeSurface: d.Unlock(); break;
+                        case DoorType.EscapePrimary: d.Unlock(); break;
+                        case DoorType.EscapeSecondary: d.Unlock(); break;
+                        case DoorType.ElevatorGateA: d.Unlock(); break;
+                        case DoorType.ElevatorGateB: d.Unlock(); break;
+                        case DoorType.SurfaceGate: d.Unlock(); break;
+                    }
+
+                }
             }
         }
 

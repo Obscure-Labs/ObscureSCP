@@ -1,4 +1,4 @@
-﻿using AdminToys;
+using AdminToys;
 using AudioPlayer.Commands.SubCommands;
 using Exiled.API.Enums;
 using Exiled.API.Features;
@@ -175,7 +175,7 @@ namespace ObscureLabs.Items
                     if (ppp.Role.Team != owner.Role.Team)
                     {
                         if (ppp.Health < 20.7f) ppp.Kill($"The victim was incinerated by some sort of energy weapon");
-                        ppp.Hurt(14.7f);
+                        ppp.Hurt(7.7f);
                         owner.ShowHitMarker(1);
                         ppp.EnableEffect(EffectType.Burned, 1, false);
                         primitive.Base.gameObject.SetActive(false);

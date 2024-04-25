@@ -55,7 +55,7 @@ namespace ObscureLabs
                 if (UCRID == 4)
                 {
                     yield return Timing.WaitForSeconds(6);
-                    Manager.SendHint(p, $"<b>The currently active SCP subjects are: {scps}", 7);
+                    Manager.SendHint(p, $"<b>The currently active SCP subjects are: {scps}", 15);
                 }
 
                 if (UCRID == 3)

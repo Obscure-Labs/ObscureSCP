@@ -26,11 +26,12 @@ namespace ObscureLabs.Commands.Other
 
             if (((CommandSender)sender).CheckPermission("*"))
             {
-                gamemodeHandler.AttemptGMRound(true);
                 Plugin.IsActiveEventround = true;
                 Round.Start();
+                gamemodeHandler.AttemptGMRound(true);
                 response = "Force Starting Mode";
-                return false;
+                return true;
+
             }
             else response = "lol no";
 
