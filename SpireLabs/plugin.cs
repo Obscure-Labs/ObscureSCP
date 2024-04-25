@@ -14,6 +14,7 @@ using Exiled.API.Features.Doors;
 using Exiled.API.Enums;
 using PlayerRoles;
 using Exiled.Events.EventArgs.Player;
+using ObscureLabs.Modules.Gamemode_Handler.Core;
 using SpireSCP.GUI.API.Features;
 using UCRAPI = UncomplicatedCustomRoles.API.Features.Manager;
 using UnityEngine;
@@ -24,7 +25,7 @@ namespace ObscureLabs
     {
         public override string Name => "Obscure Labs";
         public override string Author => "ImIsaacTbh & ImKevin";
-        public override System.Version Version => new System.Version(2, 0, 0);
+        public override System.Version Version => new System.Version(2, 0, 2);
         public override System.Version RequiredExiledVersion => new System.Version(8, 0, 1);
 
         #region When plugin is disabled
@@ -308,6 +309,11 @@ namespace ObscureLabs
                         break;
                 }
             }
+
+            //foreach (Player p in PlayerList)
+            //{
+            //    Timing.RunCoroutine(antiFall.antiFallRoutine(p));
+            //}
         }
         #endregion
 #region coreFunctionality

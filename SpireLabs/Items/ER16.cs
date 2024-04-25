@@ -160,15 +160,13 @@ namespace ObscureLabs.Items
                     {
                         if (Player.TryGet(h.collider, out ppp) == false)
                         {
-                            foreach(Door d in Door.List)
+                            if (Door.Get(h.transform.root.gameObject) != null)
                             {
-                                if (d.Base._colliders.Contains(h.collider))
-                                {
-                                    primitive.Base.gameObject.SetActive(false);
-                                    primitive.UnSpawn();
+                                primitive.Base.gameObject.SetActive(false);
+                                primitive.UnSpawn();
 
-                                }
                             }
+                            primitive.Base.gameObject.SetActive(false);
                             primitive.UnSpawn();
                         }
                     }

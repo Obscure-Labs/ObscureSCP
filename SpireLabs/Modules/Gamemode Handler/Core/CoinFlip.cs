@@ -178,12 +178,13 @@
                         loopCntr++;
                     } while (!Player.TryGet(h.collider, out ppp) && loopCntr != 5);
                     if (ppp == null) continue;
+                    if(ppp == nP) continue;
                     if (Math.Sqrt((Math.Pow((nP.Position.x - ppp.Position.x), 2)) + (Math.Pow((nP.Position.y - ppp.Position.y), 2))) > 10) continue;
                     if (ppp.IsHuman)
                     {
                         //Log.Info($"{ppp.DisplayNickname} is {ppp.Role.Name} this role is {ppp.IsHuman}");
                         Manager.SendHint(ppp, "Someone's coinflip is giving you health!", 0.75f);
-                        ppp.HumeShield += 4.75f;
+                        ppp.Health += 4.75f;
                     }
                 }
             }
