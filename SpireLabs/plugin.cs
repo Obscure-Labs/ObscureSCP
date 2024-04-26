@@ -18,6 +18,7 @@ using ObscureLabs.Modules.Gamemode_Handler.Core;
 using SpireSCP.GUI.API.Features;
 using UCRAPI = UncomplicatedCustomRoles.API.Features.Manager;
 using UnityEngine;
+using ObscureLabs.Modules.Gamemode_Handler.Minigames;
 
 namespace ObscureLabs
 {
@@ -141,6 +142,7 @@ namespace ObscureLabs
             Exiled.Events.Handlers.Player.Left += left;
             Exiled.Events.Handlers.Player.Verified += joinMsg;
             Exiled.Events.Handlers.Player.Dying += died;
+            Exiled.Events.Handlers.Server.RespawningTeam += chaos.chaosroundRespawnWave;
             #region to split events
             //Exiled.Events.Handlers.Player.Hurting += theThing;
             //Exiled.Events.Handlers.Server.RoundStarted += OnRoundStart;
@@ -247,6 +249,8 @@ namespace ObscureLabs
         public static List<PlayerPrimitive> OBJLST = new List<PlayerPrimitive>();
 
         public static bool IsActiveEventround = false;
+
+        public static string EventRoundType = "";
         #endregion
 
         #region RoundStart
@@ -261,7 +265,7 @@ namespace ObscureLabs
             if (!IsActiveEventround)
             {
                 gamemodeHandler.WriteAllGMInfo(false, -1, gamemodeHandler.ReadNext());
-                gamemodeHandler.AttemptGMRound(false);
+                gamemodeHandler.AttemptGMRound(false, -1);
             }
             Log.Info("Round has started!");
             Timing.RunCoroutine(lockAnounce(), tag: "lockRoutine");

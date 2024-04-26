@@ -9,19 +9,74 @@ using Exiled.API.Features;
 using Exiled.API.Extensions;
 using Exiled.API.Enums;
 using CustomItems.API;
+using Exiled.Events.EventArgs.Server;
+using MapEditorReborn.API.Enums;
+using Respawning;
 namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
 {
-    internal static class Chaos
+    internal static class chaos
     {
         static bool gamemodeactive = false;
 
 
+        public static void chaosroundRespawnWave(RespawningTeamEventArgs ev)
+        {
+            if (Plugin.IsActiveEventround&& Plugin.EventRoundType != "chaos")
+            {
+                return;
+            }
+            if (!Plugin.IsActiveEventround)
+            {
+                return;
+            }
+            else
+            {
+                Log.Info(Plugin.EventRoundType);
+                ev.IsAllowed = false;
+                Log.Info("Run ChaosMode Spawn wave");
+                List<Player> respawningPlayers = new List<Player>();
+                respawningPlayers = ev.Players;
+                var respawningTeam = ev.NextKnownTeam;
+                if (ev.NextKnownTeam == SpawnableTeamType.ChaosInsurgency)
+                {
+                    foreach (Player rP in respawningPlayers)
+                    {
+                        rP.Role.Set(RoleTypeId.ClassD, RoleSpawnFlags.UseSpawnpoint);
+                        rP.ClearInventory();
+                        rP.AddItem(ItemType.Coin, 2);
+                        rP.AddItem(ItemType.KeycardMTFCaptain, 1);
+                        rP.AddItem(ItemType.Flashlight, 1);
+                        rP.Teleport(RoomType.EzDownstairsPcs);
+                        Respawn.NtfTickets = 100;
+                        Respawn.TimeUntilNextPhase = 45;
+                    }
+                }
+                else
+                {
+                    foreach (Player rP in respawningPlayers)
+                    {
+                        rP.Role.Set(RoleTypeId.Scientist, RoleSpawnFlags.UseSpawnpoint);
+                        rP.ClearInventory();
+                        rP.AddItem(ItemType.Coin, 2);
+                        rP.AddItem(ItemType.KeycardMTFCaptain, 1);
+                        rP.AddItem(ItemType.Flashlight, 1);
+                        rP.Teleport(RoomType.EzDownstairsPcs);
+                        Respawn.ChaosTickets = 100;
+                        Respawn.TimeUntilNextPhase = 45;
+                    }
+                }
+            }
+
+
+
+        }
+
         public static IEnumerator<float> runChaos()
         {
-            gamemodeactive = true;
+   
             var rnd69 = new System.Random();
-            Log.Warn("Starting checks for players with wrong roles");
-            Respawn.TimeUntilNextPhase = 300f;
+            Log.Warn("Running Chaos Round");
+
 
             Timing.WaitForSeconds(0.1f);
             List<Player> newSuperDuperGoodPlayerListThatKevinLikesFinallyThisTime = new List<Player>();
@@ -57,10 +112,11 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                     p.AddItem(ItemType.KeycardScientist, 1);
                     p.AddItem(ItemType.Flashlight, 1);
                     p.Teleport(RoomType.LczClassDSpawn);
+
                 }
 
             }
-
+            Respawn.TimeUntilNextPhase = 45;
         }
     }
 }

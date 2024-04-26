@@ -26,10 +26,23 @@ namespace ObscureLabs.Commands.Other
 
             if (((CommandSender)sender).CheckPermission("*"))
             {
-                Plugin.IsActiveEventround = true;
-                Round.Start();
-                gamemodeHandler.AttemptGMRound(true);
-                response = "Force Starting Mode";
+                var arg = int.TryParse(arguments.FirstElement().ToString(), out int args);
+                response = $"ARG WAS {args}";
+                if (args == null || arguments == null)
+                {
+                    Plugin.IsActiveEventround = true;
+                    Round.Start();
+                    gamemodeHandler.AttemptGMRound(true, -1);
+                    response = $"Force Starting Random Mode";
+                }
+                else
+                {
+                    Plugin.IsActiveEventround = true;
+                    Round.Start();
+                    gamemodeHandler.AttemptGMRound(true, args);
+                    response = $"Force Starting Mode {args}";
+                }
+
                 return true;
 
             }

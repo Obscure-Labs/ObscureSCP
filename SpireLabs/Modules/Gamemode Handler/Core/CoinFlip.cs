@@ -314,7 +314,7 @@
                 ItemType.SCP207,
                 ItemType.Coin
             };
-
+            reroll:
             //pp(ev.Player);
             var rnd = new System.Random();
             int num = rnd.Next(0, 100);
@@ -448,14 +448,13 @@
                         break;
                     case 13:
 
-                    randomplayertptome:
                         var random = new System.Random();
                         var target = Plugin.PlayerList.ElementAt(random.Next(Plugin.PlayerList.Count));
                         Log.Info(target.Nickname);
                         if (Plugin.PlayerList.Count == 1) { ev.Player.Vaporize(ev.Player); Manager.SendHint(ev.Player, "LOL", 5); break; }
                         else
                         {
-                            if (!target.IsAlive || target.Role.Type == RoleTypeId.Overwatch || target.Role.Type == RoleTypeId.Spectator || target == ev.Player) { goto randomplayertptome; }
+                            if (!target.IsAlive || target.Role.Type == RoleTypeId.Overwatch || target.Role.Type == RoleTypeId.Spectator || target == ev.Player) { goto reroll; }
                             else
                             {
                                 target.Position = ev.Player.Position;
@@ -583,15 +582,14 @@
                         Timing.RunCoroutine(disarm(ev.Player));
                         break;
                     case 13:
-
-                        randomplayertp:
+                        
                         var random = new System.Random();
                         var target = Plugin.PlayerList.ElementAt(random.Next(Plugin.PlayerList.Count));
                         Log.Info(target.Nickname);
                         if (Plugin.PlayerList.Count == 1) { ev.Player.Vaporize(ev.Player); Manager.SendHint(ev.Player, "LOL", 5); break; }
                         else
                         {
-                            if (!target.IsAlive || target.Role.Type == RoleTypeId.Overwatch || target.Role.Type == RoleTypeId.Spectator || target == ev.Player) { goto randomplayertp; }
+                            if (!target.IsAlive || target.Role.Type == RoleTypeId.Overwatch || target.Role.Type == RoleTypeId.Spectator || target == ev.Player) { goto reroll; }
                             else
                             {
                                 ev.Player.Position = target.Position;

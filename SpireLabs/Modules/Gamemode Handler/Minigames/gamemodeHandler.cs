@@ -48,7 +48,7 @@ namespace ObscureLabs.Gamemode_Handler
             File.WriteAllText((Plugin.spireConfigLoc + "gamemodeInfo.yaml"), Serializer.Serialize(new gamemodeInfo { gamemodeRound = gmR, lastGamemode = Lgm, nextRoundIsGamemode = nGM }));
         }
 
-        public static void AttemptGMRound(bool force)
+        public static void AttemptGMRound(bool force, int args)
         {
             //await Task.Delay(1);
             var ran = new Random();
@@ -63,16 +63,29 @@ namespace ObscureLabs.Gamemode_Handler
                 int[] modes =
                 {
                 0, //JBTDM
-                1 // Chaos
-                //2, //OtherOtherMode
+                1, // Chaos
+                2, //OtherOtherMode
                 };
-                int selectedGM = ran.Next(0, modes.Count());
+                int selectedGM = 0;
+                if (args == null || args > modes.Count() || args == -1)
+                {
+                    selectedGM = ran.Next(0, modes.Count());
+                }
+                else
+                {
+                    selectedGM = args;
+                }
+
+
+
                 switch (selectedGM)
                 {
                     case 0:
-                        Timing.RunCoroutine(jailBirdTDM.runJbTDM()); break;
+                        Timing.RunCoroutine(tdm.runJbTDM()); Plugin.IsActiveEventround = true; Plugin.EventRoundType = "jbtdm"; break;
                     case 1:
-                        Timing.RunCoroutine(Chaos.runChaos()); break;
+                        Timing.RunCoroutine(chaos.runChaos()); Plugin.IsActiveEventround = true; Plugin.EventRoundType = "chaos"; break;
+                    case 2:
+                        Timing.RunCoroutine(juggernaut.runJuggernaut()); Plugin.IsActiveEventround = true; Plugin.EventRoundType = "juggernaut";  break;
                 }
                 WriteAllGMInfo(true, selectedGM, false);
             }

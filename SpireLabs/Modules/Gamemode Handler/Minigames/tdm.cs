@@ -23,66 +23,19 @@ namespace ObscureLabs.Gamemode_Handler
 {
 
 
-    internal static class jailBirdTDM
+    internal static class tdm
     {
 
-
-
-
-
-
-        static string mapName = "empty";
+        static string mapName = string.Empty;
         public static string[] maps = { "pvpA1_2t", "pvpA2_2t", "pvpMZA1_2t" };
         static bool gamemodeactive = false;
         static bool team = true;
-
-
-
-        public static IEnumerator<float> lateJoin()
-        {
-            var loop = true;
-
-
-
-
-            yield return Timing.WaitForSeconds(1.25f);
-            int? count = 0;
-            while (gamemodeactive = true)
-            {
-                yield return Timing.WaitForSeconds(0.1f);
-                foreach (Player p in Plugin.PlayerList)
-                {
-
-
-                    if (count >= 0 && count <= 120)
-                    {
-                        if (p == null)
-                        {
-                        }
-                        else
-                        {
-                            if (p.Role.Type != RoleTypeId.ChaosConscript && p.Role.Type != RoleTypeId.NtfSergeant && p.Role.Type != RoleTypeId.Spectator && p.Role.Type != RoleTypeId.None)
-                            {
-                                //p.Role.Set(RoleTypeId.Spectator);
-                                Log.Warn($"{p.DisplayNickname} joined late (or was assigned the wrong role somehow) and has been set to spectator");
-                            }
-
-                        }
-                        yield return Timing.WaitForSeconds(0.25f);
-                        count++;
-                    }
-
-
-                }
-            }
-
-        }
-
+        static string mapDisplayName = string.Empty;
         public static IEnumerator<float> runJbTDM()
         {
             Vector3 spawnCI = new Vector3(0f, 1000f, 0f);
             Vector3 spawnNTF = new Vector3(0f, 1000f, 0f);
-            Respawn.TimeUntilNextPhase = 86400f;
+
             var rndMap = new System.Random();
             int numMap = rndMap.Next(0, maps.Count() + 1);
             var rnd69 = new System.Random();
@@ -91,25 +44,27 @@ namespace ObscureLabs.Gamemode_Handler
             {
                 case 0:     // pvpA1_2t
                     mapName = maps[0];
+                    mapDisplayName = "\"Low Effort\"";
                     spawnCI = new Vector3(8.48f, 1106.5f, 30.46f);
                     spawnNTF = new Vector3(-20.8f, 1107.5f, 51.66f);
                     num69 = rnd69.Next(0, 4);
                     break;
                 case 1:     // pvpA2_2t
                     mapName = maps[1];
+                    mapDisplayName = "\"Tilted Towers\"";
                     spawnCI = new Vector3(9.7f, 1102f, 52.46f);
                     spawnNTF = new Vector3(-20.20f, 1102f, 35.37f);
                     num69 = rnd69.Next(0, 4);
                     break;
                 case 2:     // pvpMZA1_2t
                     mapName = maps[2];
+                    mapDisplayName = "\"The Maze\"";
                     spawnCI = new Vector3(23.96f, 1126f, 29.14f);
                     spawnNTF = new Vector3(-30.74f, 1126f, -16.93f);
                     num69 = rnd69.Next(0, 3); // This is to prevent balls and grenades on this map due to it being far too big and easy for players to run out of items before anyone actually dies
                     break;
             }
 
-            gamemodeactive = true;
             Log.Warn("Unloading all default maps");
             MapEditorReborn.API.Features.MapUtils.LoadMap("empty");
             Log.Warn("Loading Map: pvpA1_2t");
@@ -124,7 +79,7 @@ namespace ObscureLabs.Gamemode_Handler
 
             for (int i = 0; i < (Math.Ceiling((double)Plugin.PlayerList.Count) / 2)+1; i++)
             {
-                Log.Info("Setting CHAOS");
+
                 int playerid = rnd69.Next(0, Plugin.PlayerList.Count());
                 Player p = newSuperDuperGoodPlayerListThatKevinLikesFinallyThisTime.ElementAt(playerid);
                 yield return Timing.WaitForSeconds(0.5f);
@@ -172,7 +127,7 @@ namespace ObscureLabs.Gamemode_Handler
                 yield return Timing.WaitForSeconds(0.1f);
 
 
-                p.Broadcast(5, "<color=green><b>MINIGAME ROUND BEGINS IN 10S!");
+                p.Broadcast(10, $"<color=green><b>TEAM DEATHMATCH BEGINS IN 10S! \nThe current map is: {mapDisplayName}");
                 if (num69 == 0)
                 {
                     Log.Warn("Giving Snipers");
@@ -213,9 +168,11 @@ namespace ObscureLabs.Gamemode_Handler
                     p.CurrentItem = item;
                 }
                 p.Scale = new Vector3(1, 1, 1);
-                Timing.RunCoroutine(lateJoin());
+                
                 yield return Timing.WaitForOneFrame;
             }
-            }
+
+            Respawn.TimeUntilNextPhase = 3600f;
+        }
         }
     }

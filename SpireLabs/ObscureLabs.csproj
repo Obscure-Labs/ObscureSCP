@@ -128,9 +128,9 @@
     <Compile Include="Modules\Gamemode Handler\Core\ChaosCounter.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\DamageModifiers.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\MapInteractions.cs" />
-    <Compile Include="Modules\Gamemode Handler\Minigames\Chaos.cs" />
+    <Compile Include="Modules\Gamemode Handler\Minigames\chaos.cs" />
     <Compile Include="Modules\Gamemode Handler\Minigames\gamemodeHandler.cs" />
-    <Compile Include="Modules\Gamemode Handler\Minigames\jailBirdTDM.cs" />
+    <Compile Include="Modules\Gamemode Handler\Minigames\tdm.cs" />
     <Compile Include="Items\clusterFlash.cs" />
     <Compile Include="Items\ParticleCollapser.cs" />
     <Compile Include="Items\grenadeLauncher.cs" />
@@ -139,6 +139,7 @@
     <Compile Include="Items\novaGrenade.cs" />
     <Compile Include="Items\Primitive.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\profiles.cs" />
+    <Compile Include="Modules\Gamemode Handler\Minigames\juggernaut.cs" />
     <Compile Include="Modules\SCPs\boner.cs" />
     <Compile Include="Configs\ItemConfig.cs" />
     <Compile Include="Items\sniper.cs" />
