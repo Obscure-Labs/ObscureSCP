@@ -172,7 +172,7 @@ namespace ObscureLabs.Items
                     }
                     if (ppp == null) continue;
                     if (Math.Sqrt((Math.Pow((g.Position.x - ppp.Position.x), 2)) + (Math.Pow((g.Position.y - ppp.Position.y), 2))) > 0.75f) continue;
-                    if (ppp.Role.Team != owner.Role.Team)
+                    if (ppp.Role.Side != owner.Role.Side)
                     {
                         if (ppp.Health < 20.7f) ppp.Kill($"The victim was incinerated by some sort of energy weapon");
                         ppp.Hurt(7.7f);
