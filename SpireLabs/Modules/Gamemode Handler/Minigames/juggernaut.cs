@@ -42,7 +42,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
             Respawn.TimeUntilNextPhase = 120f;
             Respawn.ChaosTickets = 100;
             
-            Timing.RunCoroutine(dWave());
+            Timing.RunCoroutine(dWave(), "juggerwave");
             yield return Timing.WaitForSeconds(0.5f);
             List<Player> newSuperDuperGoodPlayerListThatKevinLikesFinallyThisTime = new List<Player>();
             Log.Warn("Started Juggernaut Round");

@@ -358,6 +358,7 @@ namespace ObscureLabs
 
         private void restarting()
         {
+            Timing.KillCoroutines("juggerwave");
             PlayerList.Clear();
             playerCount = 0;
             Manager.killLoop(true);

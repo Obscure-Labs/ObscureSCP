@@ -17,7 +17,7 @@ namespace ObscureLabs.SpawnSystem
         public static List<Player> scPPs = new List<Player>();
         private static IEnumerator<float> SpawnBoner()
         {
-            if (Plugin.IsActiveEventround)
+            if (!Plugin.IsActiveEventround)
             {
                 yield return Timing.WaitForSeconds(0.5f);
                 var rnd = new Random();
