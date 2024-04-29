@@ -119,6 +119,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Items\CustomItemSpawner.cs" />
     <Compile Include="Items\ItemUtils.cs" />
     <Compile Include="Modules\Commands\Other\gamemode.cs" />
     <Compile Include="Modules\Custom Roles\corruptGuard.cs" />

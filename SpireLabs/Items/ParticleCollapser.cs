@@ -48,27 +48,27 @@ namespace ObscureLabs.Items
             {
                 new()
                 {
-                    Chance = 50,
+                    Chance = 0,
                     Location = Exiled.API.Enums.SpawnLocationType.InsideLocker,
                 },
                 new()
                 {
-                    Chance = 50,
+                    Chance = 0,
                     Location = Exiled.API.Enums.SpawnLocationType.Inside096,
                 },
                 new()
                 {
-                    Chance = 50,
+                    Chance = 0,
                     Location = Exiled.API.Enums.SpawnLocationType.InsideNukeArmory,
                 },
                 new()
                 {
-                    Chance = 50,
+                    Chance = 0,
                     Location = Exiled.API.Enums.SpawnLocationType.Inside049Armory,
                 },
                 new()
                 {
-                    Chance = 50,
+                    Chance = 0,
                     Location = Exiled.API.Enums.SpawnLocationType.InsideHid,
                 },
             },

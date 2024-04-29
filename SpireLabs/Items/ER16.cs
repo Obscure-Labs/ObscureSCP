@@ -59,17 +59,17 @@ namespace ObscureLabs.Items
             {
                 new()
                 {
-                    Chance = 50,
+                    Chance = 0,
                     Location = Exiled.API.Enums.SpawnLocationType.InsideNukeArmory,
                 },
                 new()
                 {
-                    Chance = 50,
+                    Chance = 0,
                     Location = Exiled.API.Enums.SpawnLocationType.InsideHczArmory,
                 },
                 new()
                 {
-                    Chance = 50,
+                    Chance = 0,
                     Location = Exiled.API.Enums.SpawnLocationType.InsideLocker,
                 },
             },
@@ -96,7 +96,10 @@ namespace ObscureLabs.Items
         }
 
         public Color[] colors = {
-            new Color(25f, 500f, 5000f, 0.015f)
+            new Color(25f, 500f, 5000f, 0.015f),
+                new Color(500f, 25f, 5000f, 0.015f),
+                new Color(5000f, 500f, 25f, 0.015f),
+                new Color(25f, 5000f, 5000f, 0.015f)
             };
 
         public static int trueAmmo = 30;
@@ -116,9 +119,10 @@ namespace ObscureLabs.Items
                 Exiled.API.Features.Toys.Primitive projectile = Exiled.API.Features.Toys.Primitive.Create(ev.Player.Position + new Vector3(0f, -5, 0f), (ev.Player.CameraTransform.rotation * Quaternion.Euler(90f, 0f, 0f)).eulerAngles, new Vector3(1f, 0.01f, 1f), false); ;
                 projectile.Type = PrimitiveType.Capsule;
                 projectile.Color = color;
-                projectile.MovementSmoothing = 0;
-                projectile.Scale = new Vector3(0.035f, 0.15f, 0.035f);
+
+                projectile.Scale = new Vector3(0.035f, 0.07f, 0.035f);
                 projectile.Collidable = false;
+
                 projectile.Spawn();
                 Timing.RunCoroutine(er16shoot(projectile, ev));
             }
@@ -127,10 +131,14 @@ namespace ObscureLabs.Items
 
         private IEnumerator<float> er16shoot(Exiled.API.Features.Toys.Primitive projectile, ShootingEventArgs ev)
         {
-            yield return Timing.WaitForSeconds(0.1f);
+            yield return Timing.WaitForOneFrame;
             //projectile.Position = ev.Player.Transform.position + new Vector3(0.45f, 0.7f, 0f);
             projectile.Position = ev.Player.Transform.position + ev.Player.Transform.forward.normalized + (ev.Player.Transform.up.normalized * 0.5f);
+
             Timing.RunCoroutine(projectivemovement(projectile, ev.Player.CameraTransform.forward, ev.Player, projectile.Position));
+            yield return Timing.WaitForSeconds(0.1f);
+            projectile.MovementSmoothing = 60;
+
         }
 
         protected override void OnReloading(ReloadingWeaponEventArgs ev)
@@ -188,7 +196,8 @@ namespace ObscureLabs.Items
                     }
                 }
                 yield return Timing.WaitForOneFrame;
-                primitive.Position += dir * 0.45f;
+                primitive.Position += dir * 0.20f;
+
             }
         }
 
