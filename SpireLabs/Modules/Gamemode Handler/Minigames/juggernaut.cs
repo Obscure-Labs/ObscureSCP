@@ -1,17 +1,13 @@
-﻿using MEC;
+﻿using System;
+using Exiled.API.Enums;
+using Exiled.API.Extensions;
+using Exiled.API.Features;
+using MEC;
 using PlayerRoles;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Exiled.API.Features;
-using Exiled.API.Extensions;
-using Exiled.API.Enums;
-using CustomItems.API;
-using SpireSCP.GUI.API.Features;
-using UnityEngine;
-using CustomPlayerEffects;
+using PlayerRoles.PlayableScps.Scp3114;
+
 namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
 {
     internal static class juggernaut
@@ -21,6 +17,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
 
         public static IEnumerator<float> dWave()
         {
+            DateTime s = Round.StartedTime;
             if (Plugin.IsActiveEventround) { }
             int wavecount = 0;
             while (true)// This is a safe infinite loop 
@@ -31,9 +28,11 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                 yield return Timing.WaitForSeconds(120f);
                 Respawn.ForceWave(Respawning.SpawnableTeamType.ChaosInsurgency, false);
                 wavecount++;
-
+                if(Round.StartedTime != s) break;
             }
         }
+
+
 
         public static IEnumerator<float> runJuggernaut()
         {
@@ -41,7 +40,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
             Log.Warn("Running Juggernaut round!");
             Respawn.TimeUntilNextPhase = 120f;
             Respawn.ChaosTickets = 100;
-            
             Timing.RunCoroutine(dWave(), "juggerwave");
             yield return Timing.WaitForSeconds(0.5f);
             List<Player> newSuperDuperGoodPlayerListThatKevinLikesFinallyThisTime = new List<Player>();
