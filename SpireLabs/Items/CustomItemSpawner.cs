@@ -70,7 +70,13 @@ namespace ObscureLabs.Items
             var clusterFlash_l = 5;
             var clusterHE_l = 3;
             var novaGrenade_l = 10;
-    
+
+            ItemType[] blacklistedItems =
+            [
+                ItemType.Ammo12gauge, ItemType.Ammo44cal, ItemType.Ammo556x45, ItemType.Ammo762x39, ItemType.Ammo9x19,
+                ItemType.Coin
+            ];
+
             yield return Timing.WaitForOneFrame;
             foreach (Room room in Room.List)
             {
@@ -84,7 +90,9 @@ namespace ObscureLabs.Items
                     var spawn = rnd.Next(0, 85);
                     yield return Timing.WaitForOneFrame;
 
-                    if (targetItem == null) { Log.Warn("item was for some reason null!?"); continue; }
+                    if(blacklistedItems.Contains(targetItem.Type)) continue;
+
+                    if (targetItem == null) { Log.Warn("item was for some reason null!?"); }
                     else
                     {
                         if (targetItem.Type.IsWeapon() && spawn > 30 && spawn < 65)
