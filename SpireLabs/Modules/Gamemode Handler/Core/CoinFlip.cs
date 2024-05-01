@@ -32,6 +32,7 @@
     using InventorySystem.Items.Usables.Scp330;
     using Exiled.API.Extensions;
     using SpireSCP.GUI.API.Features;
+    using InventorySystem.Items.Usables.Scp244;
 
     internal static class CoinFlip
     {
@@ -418,6 +419,8 @@
                         Manager.SendHint(ev.Player, good[8], 3);
                         ev.Player.EnableEffect(EffectType.DamageReduction, 25);
                         ev.Player.ChangeEffectIntensity(EffectType.DamageReduction, 255, 25);
+                        ev.Player.GetEffect(EffectType.DamageReduction).Duration.ToString();
+
                         break;
                     case 9:
                         Manager.SendHint(ev.Player, good[9], 1.5f);
@@ -630,6 +633,8 @@
             {
                 yield return Timing.WaitForSeconds(0.5f);
                 ev.PlaceTantrum(true);
+
+                ev.PlaceBlood(ev.Transform.up * -1f);
             }
             ev.Explode();
         }

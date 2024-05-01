@@ -96,10 +96,10 @@ namespace ObscureLabs.Items
         }
 
         public Color[] colors = {
-            new Color(25f, 500f, 5000f, 0.015f),
-                new Color(500f, 25f, 5000f, 0.015f),
+                //new Color(25f, 500f, 5000f, 0.015f),
+                //new Color(500f, 25f, 5000f, 0.015f),
                 new Color(5000f, 500f, 25f, 0.015f),
-                new Color(25f, 5000f, 5000f, 0.015f)
+                //new Color(25f, 5000f, 5000f, 0.015f)
             };
 
         public static int trueAmmo = 30;
