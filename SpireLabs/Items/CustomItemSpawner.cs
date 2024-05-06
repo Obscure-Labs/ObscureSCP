@@ -6,6 +6,7 @@ using Exiled.API.Features;
 using Exiled.API.Features.Items;
 using Exiled.API.Features.Pickups;
 using Exiled.CustomItems.API.Features;
+using HarmonyLib;
 using InventorySystem.Items.MicroHID;
 using MEC;
 using System;
@@ -108,6 +109,7 @@ namespace ObscureLabs.Items
                                     pickup.Rotation = targetItem.Transform.rotation;
                                     sniper++;
                                     Log.Info($"Made new item in {room.Type}");
+                                    yield return Timing.WaitForOneFrame;
                                     targetItem.Destroy();
                                     Log.Warn($"Removed original item in {room.Type}");
                                     break;
@@ -121,6 +123,7 @@ namespace ObscureLabs.Items
                                     pickup.Rotation = targetItem.Transform.rotation;
                                     glLauncher++;
                                     Log.Info($"Made new item in {room.Type}");
+                                    yield return Timing.WaitForOneFrame;
                                     targetItem.Destroy();
                                     Log.Warn($"Removed original item in {room.Type}");
                                     break;
@@ -147,17 +150,19 @@ namespace ObscureLabs.Items
                                     pickup.Rotation = targetItem.Transform.rotation;
                                     particleCollapser++;
                                     Log.Info($"Made new item in {room.Type}");
+                                    yield return Timing.WaitForOneFrame;
                                     targetItem.Destroy();
                                     Log.Warn($"Removed original item in {room.Type}");
                                     break;
                                 }
                             }
 
-
-                            weapontospawn.Spawn(targetItem.Transform.position);
+                            
+                            
                         }
                         if (!targetItem.Type.IsWeapon() && !targetItem.Type.IsKeycard() && spawn > 30 && spawn < 65)
                         {
+
                             var itemToSpawn = itemlist.ElementAt(rnd.Next(0, itemlist.Count()));
                             Pickup pickup = null;
                             if (itemToSpawn == CustomItem.Get((uint)2)) // ClusterHE 
@@ -169,6 +174,7 @@ namespace ObscureLabs.Items
                                     
                                     clusterHE++;
                                     Log.Info($"Made new item in {room.Type}");
+                                    yield return Timing.WaitForOneFrame;
                                     targetItem.Destroy();
                                     Log.Warn($"Removed original item in {room.Type}");
                                     break;
@@ -182,8 +188,11 @@ namespace ObscureLabs.Items
                                     pickup.Rotation = targetItem.Transform.rotation;
                                     clusterFlash++;
                                     Log.Info($"Made new item in {room.Type}");
+                                    yield return Timing.WaitForOneFrame;
                                     targetItem.Destroy();
                                     Log.Warn($"Removed original item in {room.Type}");
+
+
                                     break;
                                 }
                             }
@@ -195,8 +204,10 @@ namespace ObscureLabs.Items
                                     pickup.Rotation = targetItem.Transform.rotation;
                                     essentialOils++;
                                     Log.Info($"Made new item in {room.Type}");
+                                    yield return Timing.WaitForOneFrame;
                                     targetItem.Destroy();
                                     Log.Warn($"Removed original item in {room.Type}");
+
                                     break;
                                 }
                             }
@@ -208,8 +219,10 @@ namespace ObscureLabs.Items
                                     pickup.Rotation = targetItem.Transform.rotation;
                                     novaGrenade++;
                                     Log.Info($"Made new item in {room.Type}");
+                                    yield return Timing.WaitForOneFrame;
                                     targetItem.Destroy();
                                     Log.Warn($"Removed original item in {room.Type}");
+
                                     break;
                                 }
                             }

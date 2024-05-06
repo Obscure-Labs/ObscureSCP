@@ -142,7 +142,7 @@ namespace ObscureLabs
             Exiled.Events.Handlers.Player.Left += left;
             Exiled.Events.Handlers.Player.Verified += joinMsg;
             Exiled.Events.Handlers.Player.Dying += died;
-            Exiled.Events.Handlers.Server.RoundStarted += CustomItemSpawner.roundStartCustomItemHandler;
+            Exiled.Events.Handlers.Map.Generated += CustomItemSpawner.roundStartCustomItemHandler;
             Exiled.Events.Handlers.Server.RespawningTeam += chaos.chaosroundRespawnWave;
             #region to split events
             //Exiled.Events.Handlers.Player.Hurting += theThing;

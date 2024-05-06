@@ -76,48 +76,77 @@ namespace ObscureLabs.Gamemode_Handler
             List<Player> newSuperDuperGoodPlayerListThatKevinLikesFinallyThisTime = new List<Player>();
 
             newSuperDuperGoodPlayerListThatKevinLikesFinallyThisTime = Plugin.PlayerList;
-
-            for (int i = 0; i < (Math.Ceiling((double)Plugin.PlayerList.Count) / 2)+1; i++)
+            if (Plugin.PlayerList.Count == 2)
             {
-
-                int playerid = rnd69.Next(0, Plugin.PlayerList.Count());
-                Player p = newSuperDuperGoodPlayerListThatKevinLikesFinallyThisTime.ElementAt(playerid);
-                yield return Timing.WaitForSeconds(0.5f);
-                if (p.Role != RoleTypeId.ChaosConscript)
-                {
-                    p.Role.Set(RoleTypeId.ChaosConscript);
-                    p.ClearInventory(true);
-                    p.Teleport(spawnCI);
-                    p.EnableEffect(EffectType.RainbowTaste, 999, false);
-                    p.EnableEffect(EffectType.Ensnared, 10, false);
-                    p.EnableEffect(EffectType.Flashed, 10, false);
-                    p.EnableEffect(EffectType.SoundtrackMute, 999, false);
-                    p.EnableEffect(EffectType.DamageReduction, 10, false);
-                    p.ChangeEffectIntensity(EffectType.DamageReduction, 255, 1f);
-                    yield return Timing.WaitForOneFrame;
-                    p.ChangeAppearance(RoleTypeId.ChaosConscript);
-
-                }
-                newSuperDuperGoodPlayerListThatKevinLikesFinallyThisTime.Remove(p);
+                Player p = Plugin.PlayerList.ElementAt(0);
+                p.Role.Set(RoleTypeId.ChaosConscript);
+                p.ClearInventory(true);
+                p.Teleport(spawnCI);
+                p.EnableEffect(EffectType.RainbowTaste, 999, false);
+                p.EnableEffect(EffectType.Ensnared, 10, false);
+                p.EnableEffect(EffectType.Flashed, 10, false);
+                p.EnableEffect(EffectType.SoundtrackMute, 999, false);
+                p.EnableEffect(EffectType.DamageReduction, 10, false);
+                p.ChangeEffectIntensity(EffectType.DamageReduction, 255, 1f);
+                yield return Timing.WaitForOneFrame;
+                p.ChangeAppearance(RoleTypeId.ChaosConscript);
+                Player pp = Plugin.PlayerList.ElementAt(1);
+                pp.Role.Set(RoleTypeId.NtfSergeant);
+                pp.ClearInventory(true);
+                pp.Teleport(spawnNTF);
+                pp.EnableEffect(EffectType.RainbowTaste, 999, false);
+                pp.EnableEffect(EffectType.Ensnared, 10, false);
+                pp.EnableEffect(EffectType.Flashed, 10, false);
+                pp.EnableEffect(EffectType.SoundtrackMute, 999, false);
+                pp.EnableEffect(EffectType.DamageReduction, 10, false);
+                pp.ChangeEffectIntensity(EffectType.DamageReduction, 255, 1f);
+                yield return Timing.WaitForOneFrame;
+                pp.ChangeAppearance(RoleTypeId.NtfSergeant);
             }
-            foreach (Player p in newSuperDuperGoodPlayerListThatKevinLikesFinallyThisTime)
+            else
             {
-                if (p.Role != RoleTypeId.ChaosConscript)
+                for (int i = 0; i < (Math.Ceiling((double)Plugin.PlayerList.Count) / 2) + 1; i++)
                 {
-                    p.Role.Set(RoleTypeId.NtfSergeant);
 
-                    p.ClearInventory(true);
-                    p.Teleport(spawnNTF);
-                    p.EnableEffect(EffectType.RainbowTaste, 999, false);
-                    p.EnableEffect(EffectType.Ensnared, 10, false);
-                    p.EnableEffect(EffectType.Flashed, 10, false);
-                    p.EnableEffect(EffectType.SoundtrackMute, 999, false);
-                    p.EnableEffect(EffectType.DamageReduction, 10, false);
-                    p.ChangeEffectIntensity(EffectType.DamageReduction, 255, 1f);
-                    yield return Timing.WaitForOneFrame;
-                    p.ChangeAppearance(RoleTypeId.NtfSergeant);
+                    int playerid = rnd69.Next(0, Plugin.PlayerList.Count());
+                    Player p = newSuperDuperGoodPlayerListThatKevinLikesFinallyThisTime.ElementAt(playerid);
+                    yield return Timing.WaitForSeconds(0.5f);
+                    if (p.Role != RoleTypeId.ChaosConscript)
+                    {
+                        p.Role.Set(RoleTypeId.ChaosConscript);
+                        p.ClearInventory(true);
+                        p.Teleport(spawnCI);
+                        p.EnableEffect(EffectType.RainbowTaste, 999, false);
+                        p.EnableEffect(EffectType.Ensnared, 10, false);
+                        p.EnableEffect(EffectType.Flashed, 10, false);
+                        p.EnableEffect(EffectType.SoundtrackMute, 999, false);
+                        p.EnableEffect(EffectType.DamageReduction, 10, false);
+                        p.ChangeEffectIntensity(EffectType.DamageReduction, 255, 1f);
+                        yield return Timing.WaitForOneFrame;
+                        p.ChangeAppearance(RoleTypeId.ChaosConscript);
+
+                    }
+                    newSuperDuperGoodPlayerListThatKevinLikesFinallyThisTime.Remove(p);
                 }
+                foreach (Player p in newSuperDuperGoodPlayerListThatKevinLikesFinallyThisTime)
+                {
+                    if (p.Role != RoleTypeId.ChaosConscript)
+                    {
+                        p.Role.Set(RoleTypeId.NtfSergeant);
 
+                        p.ClearInventory(true);
+                        p.Teleport(spawnNTF);
+                        p.EnableEffect(EffectType.RainbowTaste, 999, false);
+                        p.EnableEffect(EffectType.Ensnared, 10, false);
+                        p.EnableEffect(EffectType.Flashed, 10, false);
+                        p.EnableEffect(EffectType.SoundtrackMute, 999, false);
+                        p.EnableEffect(EffectType.DamageReduction, 10, false);
+                        p.ChangeEffectIntensity(EffectType.DamageReduction, 255, 1f);
+                        yield return Timing.WaitForOneFrame;
+                        p.ChangeAppearance(RoleTypeId.NtfSergeant);
+                    }
+
+                }
             }
             //Log.Info($"Setting player: {p.Nickname} to team: {team}");
 

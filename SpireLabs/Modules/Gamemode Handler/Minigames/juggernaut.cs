@@ -47,12 +47,11 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
             newSuperDuperGoodPlayerListThatKevinLikesFinallyThisTime = Plugin.PlayerList;
 
             var juggernautPlayer = Plugin.PlayerList.ElementAt(rnd69.Next(0, Plugin.PlayerList.Count + 1));
-            var maxjhp = 725;
+            var maxjhp = 525;
             juggernautPlayer.Role.Set(RoleTypeId.Scientist, RoleSpawnFlags.UseSpawnpoint);
             juggernautPlayer.Teleport(RoomType.HczArmory);
             juggernautPlayer.AddItem(ItemType.KeycardO5);
             Exiled.CustomItems.API.Features.CustomItem.Get((uint)5).Give(juggernautPlayer); //ER16 laser gun
-            juggernautPlayer.ChangeAppearance(RoleTypeId.Tutorial, false);
             juggernautPlayer.Broadcast(5, "<color=red><b>You are the Juggernaut!</color> \nKill or be killed.");
 
 
@@ -71,7 +70,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                 Log.Warn($"Player: {p.Nickname} got keycard");
                 p.AddItem(ItemType.Ammo9x19, 40);
                 p.AddItem(ItemType.GunCOM15);
-                p.AddItem(ItemType.ArmorHeavy);
+                p.AddItem(ItemType.ArmorCombat);
                 Log.Warn($"Player: {p.Nickname} got gun and ammo and armor");
                 p.AddItem(ItemType.Coin);
                 Log.Warn($"Player: {p.Nickname} got coin");
@@ -83,7 +82,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                 p.Broadcast(5, $"<color=green><b>{juggernautPlayer.Nickname} is the Juggernaut, hunt them down!");
 
             }
-            juggernautPlayer.MaxArtificialHealth = maxjhp;
+            yield return Timing.WaitForSeconds(0.5f);
             juggernautPlayer.MaxHealth = maxjhp;
             juggernautPlayer.Heal(maxjhp, true);
 
