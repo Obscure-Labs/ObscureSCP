@@ -1,5 +1,5 @@
-# SpireSCP
-## Official plugin for the "SpireLabs" SCP:SL Server
+# ObscureSCP
+## Official plugin for the "ObscureLabs" SCP:SL Server
 Features Include:
 
 SCP Health rebalancing
