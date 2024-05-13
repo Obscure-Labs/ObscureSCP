@@ -129,6 +129,7 @@
     <Compile Include="Modules\Gamemode Handler\Core\ChaosCounter.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\DamageModifiers.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\MapInteractions.cs" />
+    <Compile Include="Modules\Gamemode Handler\Core\MvpSystem.cs" />
     <Compile Include="Modules\Gamemode Handler\Minigames\chaos.cs" />
     <Compile Include="Modules\Gamemode Handler\Minigames\gamemodeHandler.cs" />
     <Compile Include="Modules\Gamemode Handler\Minigames\tdm.cs" />

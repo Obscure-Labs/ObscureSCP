@@ -145,20 +145,9 @@ namespace ObscureLabs
             Exiled.Events.Handlers.Map.Generated += CustomItemSpawner.roundStartCustomItemHandler;
             Exiled.Events.Handlers.Server.RespawningTeam += chaos.chaosroundRespawnWave;
             #region to split events
-            //Exiled.Events.Handlers.Player.Hurting += theThing;
-            //Exiled.Events.Handlers.Server.RoundStarted += OnRoundStart;
-            //Exiled.Events.Handlers.Player.Spawned += Player_Spawned;
-            //Exiled.Events.Handlers.Player.Joined += Player_Joined;
-            //Exiled.Events.Handlers.Player.PreAuthenticating += Authing;
-            //Exiled.Events.Handlers.Server.RestartingRound += restarting;
-            //Exiled.Events.Handlers.Player.ChangedItem += item_change;
-            //Exiled.Events.Handlers.Warhead.Detonated += map_nuked;
-            //Exiled.Events.Handlers.Player.UsingItemCompleted += usingItem;
-            //Exiled.Events.Handlers.Player.Left += left;
-            //Exiled.Events.Handlers.Player.Verified += joinMsg;
-            //Exiled.Events.Handlers.Player.Dying += died;
-            #endregion
 
+            #endregion
+            MvpSystem.Init();
 
             CustomItem.RegisterItems();
         }
