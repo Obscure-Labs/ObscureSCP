@@ -14,8 +14,35 @@ using System.Threading.Tasks;
 
 namespace ObscureLabs
 {
-    internal class larry
+    internal class larry : Plugin.Module
     {
+        public override string name { get; set; } = "Larry";
+        public override bool initOnStart { get; set; } = true;
+
+        public override bool Init()
+        {
+            try
+            {
+                Exiled.Events.Handlers.Scp106.Attacking += larry.onLarryAttack;
+                Exiled.Events.Handlers.Scp106.Attacking += larry.pdExits;
+                base.Init();
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public override bool Disable()
+        {
+            try
+            {
+                Exiled.Events.Handlers.Scp106.Attacking -= larry.onLarryAttack;
+                Exiled.Events.Handlers.Scp106.Attacking -= larry.pdExits;
+                base.Disable();
+                return true;
+            }
+            catch { return false; }
+        }
+
         internal static void pdExits(AttackingEventArgs ev)
         {
 

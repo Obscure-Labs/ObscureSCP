@@ -1,4 +1,6 @@
-﻿using MEC;
+﻿using GameCore;
+using MEC;
+using ObscureLabs.Gamemode_Handler;
 using ObscureLabs.Modules.Gamemode_Handler.Minigames;
 using System;
 using System.Collections.Generic;
@@ -11,8 +13,34 @@ using YamlDotNet.Serialization.NamingConventions;
 
 namespace ObscureLabs.Gamemode_Handler
 {
-    public static class gamemodeHandler
+    public class gamemodeHandler : Plugin.Module
     {
+
+        public override string name { get; set; } = "GamemodeHandler";
+        public override bool initOnStart { get; set; } = true;
+
+        public override bool Init()
+        {
+            try
+            {
+                Exiled.Events.Handlers.Server.RoundStarted += roundStarted;
+                base.Init();
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public override bool Disable()
+        {
+            try
+            {
+                Exiled.Events.Handlers.Server.RoundStarted -= roundStarted;
+                base.Disable();
+                return true;
+            }
+            catch { return false; };
+        }
+
         public static IDeserializer Deserializer = new DeserializerBuilder()
             .WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
         public static ISerializer Serializer = new SerializerBuilder()
@@ -48,8 +76,21 @@ namespace ObscureLabs.Gamemode_Handler
             File.WriteAllText((Plugin.spireConfigLoc + "gamemodeInfo.yaml"), Serializer.Serialize(new gamemodeInfo { gamemodeRound = gmR, lastGamemode = Lgm, nextRoundIsGamemode = nGM }));
         }
 
+
+        public static void roundStarted()
+        {
+            if (!Plugin.IsActiveEventround)
+            {
+                gamemodeHandler.WriteAllGMInfo(false, -1, gamemodeHandler.ReadNext());
+                gamemodeHandler.AttemptGMRound(false, -1);
+            }
+        }
+
         public static void AttemptGMRound(bool force, int args)
         {
+
+
+
             //await Task.Delay(1);
             var ran = new Random();
             int chance = ran.Next(0, 100);
@@ -88,6 +129,7 @@ namespace ObscureLabs.Gamemode_Handler
                         Timing.RunCoroutine(juggernaut.runJuggernaut()); Plugin.IsActiveEventround = true; Plugin.EventRoundType = "juggernaut";  break;
                 }
                 WriteAllGMInfo(true, selectedGM, false);
+
             }
             else
             {

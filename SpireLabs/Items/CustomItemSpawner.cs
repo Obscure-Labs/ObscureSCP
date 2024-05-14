@@ -19,10 +19,33 @@ using CustomItem = Exiled.CustomItems.API.Features.CustomItem;
 
 namespace ObscureLabs.Items
 {
-    internal class CustomItemSpawner
+    internal class CustomItemSpawner : Plugin.Module
     {
+        public override string name { get; set; } = "CustomItemSpawner";
+        public override bool initOnStart { get; set; } = false;
 
-        
+        public override bool Init()
+        {
+            try
+            {
+                Exiled.Events.Handlers.Map.Generated += roundStartCustomItemHandler;
+                base.Init();
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public override bool Disable()
+        {
+            try
+            {
+                Exiled.Events.Handlers.Map.Generated -= roundStartCustomItemHandler;
+                base.Disable();
+                return true;
+            }
+            catch { return false; }
+        }
+
 
         public static void roundStartCustomItemHandler()
         {

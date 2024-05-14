@@ -15,8 +15,36 @@ using YamlDotNet.Serialization.NamingConventions;
 
 namespace ObscureLabs
 {
-    internal class profiles
+    internal class profiles : Plugin.Module
     {
+        public override string name { get; set; } = "Profiles";
+        public override bool initOnStart { get; set; } = true;
+
+        public override bool Init()
+        {
+            try
+            {
+                Exiled.Events.Handlers.Player.Verified += profiles.OnPlayerJoined;
+                Exiled.Events.Handlers.Player.Left += profiles.OnPlayerLeave;
+                base.Init();
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public override bool Disable()
+        {
+            try
+            {
+                Profiles.Clear();
+                Exiled.Events.Handlers.Player.Verified -= profiles.OnPlayerJoined;
+                Exiled.Events.Handlers.Player.Left -= profiles.OnPlayerLeave;
+                base.Disable();
+                return true;
+            }
+            catch { return false; }
+        }
+
         public static List<personData> Profiles = new List<personData>();
         public static string folder = Path.GetFullPath(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Spire\\Profiles/");
 

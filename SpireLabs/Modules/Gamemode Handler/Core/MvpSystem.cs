@@ -12,21 +12,50 @@ using System.Threading.Tasks;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
-    internal class MvpSystem
+    internal class MvpSystem : Plugin.Module
     {
+        public override string name { get; set; } = "MVPSystem";
+        public override bool initOnStart { get; set; } = true;
+
+        public override bool Init()
+        {
+            try
+            {
+                Exiled.Events.Handlers.Server.RoundStarted += roundStarted;
+                Exiled.Events.Handlers.Player.Escaping += escaping;
+                Exiled.Events.Handlers.Player.KillingPlayer += killingPlayer;
+                Exiled.Events.Handlers.Player.UnlockingGenerator += unlockingGenerator;
+                Exiled.Events.Handlers.Server.EndingRound += endingRound;
+                base.Init();
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public override bool Disable()
+        {
+            try
+            {
+                _PlayerData.Clear();
+                firstPlace = null;
+                secondPlace = null;
+                thirdPlace = null;
+                Exiled.Events.Handlers.Server.RoundStarted -= roundStarted;
+                Exiled.Events.Handlers.Player.Escaping -= escaping;
+                Exiled.Events.Handlers.Player.KillingPlayer -= killingPlayer;
+                Exiled.Events.Handlers.Player.UnlockingGenerator -= unlockingGenerator;
+                Exiled.Events.Handlers.Server.EndingRound -= endingRound;
+                base.Disable();
+                return true;
+            }
+            catch { return false; };
+        }
+
         public class PlayerDataInstance
         {
             public Player player { get; set; }
             public int xp { get; set; }
 
-        }
-        public static void Init()
-        {
-            Exiled.Events.Handlers.Server.RoundStarted += roundStarted;
-            Exiled.Events.Handlers.Player.Escaping += escaping;
-            Exiled.Events.Handlers.Player.KillingPlayer += killingPlayer;
-            Exiled.Events.Handlers.Player.UnlockingGenerator += unlockingGenerator;
-            Exiled.Events.Handlers.Server.EndingRound += endingRound;
         }
 
         static List<PlayerDataInstance> _PlayerData = new List<PlayerDataInstance>();

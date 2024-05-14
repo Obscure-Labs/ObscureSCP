@@ -34,11 +34,51 @@
     using SpireSCP.GUI.API.Features;
     using InventorySystem.Items.Usables.Scp244;
 
-    internal static class CoinFlip
+    internal class CoinFlip : Plugin.Module 
     {
+
+        public override string name { get; set; } = "Coinflip";
+        public override bool initOnStart { get; set; } = true;
+
+        public override bool Init()
+        {
+            try
+            {
+                Exiled.Events.Handlers.Player.FlippingCoin += Player_FlippingCoin;
+                Exiled.Events.Handlers.Player.ChangedItem += item_change;
+                base.Init();
+                return true;
+            }
+            catch (Exception ex) { return false; }
+        }
+        public override bool Disable()
+        {
+            try
+            {
+                Exiled.Events.Handlers.Player.FlippingCoin -= Player_FlippingCoin;
+                Exiled.Events.Handlers.Player.ChangedItem -= item_change;
+                base.Init();
+                return true;
+            }
+            catch (Exception ex) { return false; }
+        }
+
+
         public static string[] good = { "You gained 50HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!", "You are healed!", "GRENADE FOUNTAIN!", "Ammo pile!!", "FREE CANDY!", "You can't die for the next 25s!", "You bring health to those around you!", "Nice hat..", "You have such radiant skin!", "You got an item!", "Brought a random player to you!" };
         public static string[] bad = { "You now have 50HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "Pocket Sand!", "You got lost and found yourself in a random room!", "Don't gamble kids!", "Beep!", "Portal to hell!!!", "Others percieve you as upside down!", "You caused a blackout in your zone!", "Door stuck! DOOR STUCK!", "Your coin melted :(", "You have been detained!", "You have been brought to a random player!", "The facility is having some technical difficulties" };
-    
+
+        public static void item_change(ChangedItemEventArgs ev)
+        {
+            if (ev.Item == null) return;
+
+            if (ev.Item.Type != ItemType.Coin)
+                return;
+            string hint = string.Empty;
+            hint += "Flipping this coin will cause a random event, use with caution!";
+            Manager.SendHint(ev.Player, hint, 5);
+
+        }
+
         private static IEnumerator<float> grenadeFountain(Player p)
         {
             

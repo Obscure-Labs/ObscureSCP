@@ -125,7 +125,6 @@
     <Compile Include="Modules\Custom Roles\corruptGuard.cs" />
     <Compile Include="Modules\Custom Roles\customRoles.cs" />
     <Compile Include="Modules\Custom Roles\IDThief.cs" />
-    <Compile Include="Modules\Gamemode Handler\Core\914.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\ChaosCounter.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\DamageModifiers.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\MapInteractions.cs" />
@@ -150,7 +149,6 @@
     <Compile Include="Configs\config.cs" />
     <Compile Include="Modules\SCPs\doctor.cs" />
     <Compile Include="Items\essentialOils.cs" />
-    <Compile Include="aplugin.cs" />
     <Compile Include="plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modules\SCPs\theNut.cs" />

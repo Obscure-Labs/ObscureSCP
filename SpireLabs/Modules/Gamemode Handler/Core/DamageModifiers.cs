@@ -8,8 +8,32 @@ using System.Threading.Tasks;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
-    internal class DamageModifiers
+    internal class DamageModifiers : Plugin.Module
     {
+        public override string name { get; set; } = "DamageModifiers";
+        public override bool initOnStart { get; set; } = true;
+
+        public override bool Init()
+        {
+            try
+            {
+                Exiled.Events.Handlers.Player.Hurting += SetDamageModifiers;
+                base.Init();
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public override bool Disable()
+        {
+            try
+            {
+                Exiled.Events.Handlers.Player.Hurting -= SetDamageModifiers;
+                base.Disable();
+                return true;
+            }
+            catch { return false; }
+        }
         public static void SetDamageModifiers(HurtingEventArgs ev)
         {
             if (ev.DamageHandler.Type == DamageType.MicroHid)

@@ -10,8 +10,11 @@ using PlayerRoles.PlayableScps.Scp3114;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
 {
-    internal static class juggernaut
+
+    internal class juggernaut
     {
+
+
         static bool gamemodeactive = false;
 
 
