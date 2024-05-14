@@ -89,10 +89,6 @@
     <Reference Include="PluginAPI, Version=13.1.2.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>..\packages\EXILED.8.8.1\lib\net48\PluginAPI.dll</HintPath>
     </Reference>
-    <Reference Include="SpireSCP.GUI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\refs\SpireSCP.GUI.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
@@ -119,6 +115,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GUI\GUIController.cs" />
+    <Compile Include="GUI\guiHandler.cs" />
+    <Compile Include="GUI\Manager.cs" />
     <Compile Include="Items\CustomItemSpawner.cs" />
     <Compile Include="Modules\Commands\Other\gamemode.cs" />
     <Compile Include="Modules\Custom Roles\corruptGuard.cs" />
@@ -159,5 +158,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
