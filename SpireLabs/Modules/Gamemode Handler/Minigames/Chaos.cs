@@ -18,7 +18,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
 {
     internal class chaos : Plugin.Module
     {
-        static bool gamemodeactive = false;
         public override string name { get; set; } = "ChaosRound";
         public override bool initOnStart { get; set; } = false;
 

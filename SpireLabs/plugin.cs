@@ -47,11 +47,9 @@ namespace ObscureLabs
         #region OnPluginEnabled
         public override void OnEnabled()
         {
-            Log.Warn("fuck you starting maybe");
             PopulateModules();
-            Log.Warn("added the thing fuck you");
             LoadItems();
-            RegisterEvents();
+            
 
 
             Log.SendRaw("[ObscureLabs]\n\r\n .d8888b.           d8b                 .d8888b.   .d8888b.  8888888b.  \r\nd88P  Y88b          Y8P                d88P  Y88b d88P  Y88b 888   Y88b \r\nY88b.                                  Y88b.      888    888 888    888 \r\n \"Y888b.   88888b.  888 888d888 .d88b.  \"Y888b.   888        888   d88P \r\n    \"Y88b. 888 \"88b 888 888P\"  d8P  Y8b    \"Y88b. 888        8888888P\"  \r\n      \"888 888  888 888 888    88888888      \"888 888    888 888        \r\nY88b  d88P 888 d88P 888 888    Y8b.    Y88b  d88P Y88b  d88P 888        \r\n \"Y8888P\"  88888P\"  888 888     \"Y8888  \"Y8888P\"   \"Y8888P\"  888        \r\n           888                                                          \r\n           888                                                          \r\n           888                                                          \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n", color: ConsoleColor.DarkMagenta);
@@ -139,7 +137,7 @@ namespace ObscureLabs
         
         public static ModuleINATOR modules = new ModuleINATOR();
 
-        public static void PopulateModules()
+        public void PopulateModules()
         {
             modules.AddModule(new MvpSystem());
             modules.AddModule(new corruptGuard());
@@ -149,13 +147,13 @@ namespace ObscureLabs
             modules.AddModule(new profiles());
             modules.AddModule(new IDThief());
             modules.AddModule(new larry());
-            modules.AddModule(new CustomItemSpawner());
             modules.AddModule(new gamemodeHandler());
             modules.AddModule(new MapInteractions());
             modules.AddModule(new chaos());
-            
+            modules.AddModule(new CustomItemSpawner());
 
 
+            RegisterEvents();
         }
 
         private void RegisterEvents()
@@ -166,7 +164,30 @@ namespace ObscureLabs
             Exiled.Events.Handlers.Player.Left += left;
             Exiled.Events.Handlers.Player.Verified += joinMsg;
             Exiled.Events.Handlers.Player.Dying += died;
-  
+            modules.GetModule("MvpSystem").Init();
+            modules.GetModule("CorruptGuard").Init();
+            modules.GetModule("DamageModifiers").Init();
+            modules.GetModule("CoinFlip").Init();
+            modules.GetModule("TheNut").Init();
+            modules.GetModule("profiles").Init();
+            modules.GetModule("IDThief").Init();
+            modules.GetModule("larry").Init();
+
+            modules.GetModule("gamemodeHandler").Init();
+            modules.GetModule("MapInteractions").Init();
+            modules.GetModule("ChaosRound").Init();
+
+            modules.GetModule("itemspawner").Init();
+
+            //foreach(Module m in modules.moduleList)
+            //{
+            //    Log.Warn(m.name);
+            //    if(m.initOnStart)
+            //    {
+            //        m.Init();
+            //    }
+            //}
+
             CustomItem.RegisterItems();
         }
 

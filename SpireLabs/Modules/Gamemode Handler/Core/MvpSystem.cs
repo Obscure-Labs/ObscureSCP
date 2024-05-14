@@ -94,7 +94,17 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         public static void endingRound(EndingRoundEventArgs ev)
         {
-
+            _PlayerData.OrderBy(p => p.xp);
+            if (_PlayerData.ElementAt(0) == null) { return; }
+            firstPlace = _PlayerData.ElementAt(0);
+            if (_PlayerData.ElementAt(1) == null) { return; }
+            secondPlace = _PlayerData.ElementAt(1);
+            if (_PlayerData.ElementAt(2) == null) { return; }
+            thirdPlace = _PlayerData.ElementAt(2);
+            foreach (Player p in Plugin.PlayerList)
+            {
+                p.Broadcast(5, $"This round's #1 MVP was: {firstPlace.player.DisplayNickname} with: {firstPlace.xp} points! \n#2 was: {secondPlace.player.DisplayNickname} with: {secondPlace.xp} points!\n#2 was: {thirdPlace.player.DisplayNickname} with: {thirdPlace.xp} points!", shouldClearPrevious: true);
+            }
         }
 
         public static IEnumerator<float> addXPtoPlayer(Mirror.NetworkIdentity p, int xp, string reason)
@@ -102,7 +112,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             yield return Timing.WaitForOneFrame;
                 if (!p == null && !p == null && reason != null)
                 _PlayerData.FirstOrDefault(x => x.player.NetworkIdentity == p).xp += xp;
-                Manager.SendHint(Player.Get(p), $"You Gained {xp}xp for: {reason}", 5);
+                Manager.SendHint(Player.Get(p), $"You Gained {xp} points for: {reason}", 5);
         }
     }
 }

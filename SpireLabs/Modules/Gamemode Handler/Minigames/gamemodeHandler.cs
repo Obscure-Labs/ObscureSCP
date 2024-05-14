@@ -16,7 +16,7 @@ namespace ObscureLabs.Gamemode_Handler
     public class gamemodeHandler : Plugin.Module
     {
 
-        public override string name { get; set; } = "GamemodeHandler";
+        public override string name { get; set; } = "gamemodeHandler";
         public override bool initOnStart { get; set; } = true;
 
         public override bool Init()
@@ -124,7 +124,8 @@ namespace ObscureLabs.Gamemode_Handler
                     case 0:
                         Timing.RunCoroutine(tdm.runJbTDM()); Plugin.IsActiveEventround = true; Plugin.EventRoundType = "jbtdm"; break;
                     case 1:
-                        Timing.RunCoroutine(chaos.runChaos()); Plugin.IsActiveEventround = true; Plugin.EventRoundType = "chaos"; break;
+                        Timing.RunCoroutine(chaos.runChaos()); Plugin.IsActiveEventround = true; Plugin.EventRoundType = "chaos"; // Plugin.modules.GetModule("ChaosRound").Init();
+                                                                                                                                  break;
                     case 2:
                         Timing.RunCoroutine(juggernaut.runJuggernaut()); Plugin.IsActiveEventround = true; Plugin.EventRoundType = "juggernaut";  break;
                 }

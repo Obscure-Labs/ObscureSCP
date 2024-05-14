@@ -47,8 +47,8 @@ namespace ObscureLabs
         {
             try
             {
-                Exiled.Events.Handlers.Player.ChangedItem += IDThief.item_change;
-                Exiled.Events.Handlers.Player.Spawned += IDThief.Player_Spawned;
+                Exiled.Events.Handlers.Player.ChangedItem += item_change;
+                Exiled.Events.Handlers.Player.Spawned += Player_Spawned;
                 base.Init();
                 return true;
             }
@@ -59,8 +59,8 @@ namespace ObscureLabs
         {
             try
             {
-                Exiled.Events.Handlers.Player.ChangedItem -= IDThief.item_change;
-                Exiled.Events.Handlers.Player.Spawned -= IDThief.Player_Spawned;
+                Exiled.Events.Handlers.Player.ChangedItem -= item_change;
+                Exiled.Events.Handlers.Player.Spawned -= Player_Spawned;
                 base.Disable();
                 return true;
             }

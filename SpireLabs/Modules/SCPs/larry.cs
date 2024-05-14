@@ -23,8 +23,8 @@ namespace ObscureLabs
         {
             try
             {
-                Exiled.Events.Handlers.Scp106.Attacking += larry.onLarryAttack;
-                Exiled.Events.Handlers.Scp106.Attacking += larry.pdExits;
+                Exiled.Events.Handlers.Scp106.Attacking += onLarryAttack;
+                Exiled.Events.Handlers.Scp106.Attacking += pdExits;
                 base.Init();
                 return true;
             }
@@ -35,8 +35,8 @@ namespace ObscureLabs
         {
             try
             {
-                Exiled.Events.Handlers.Scp106.Attacking -= larry.onLarryAttack;
-                Exiled.Events.Handlers.Scp106.Attacking -= larry.pdExits;
+                Exiled.Events.Handlers.Scp106.Attacking -= onLarryAttack;
+                Exiled.Events.Handlers.Scp106.Attacking -= pdExits;
                 base.Disable();
                 return true;
             }

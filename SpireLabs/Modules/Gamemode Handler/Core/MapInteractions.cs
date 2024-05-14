@@ -20,8 +20,11 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         {
             try
             {
+                Log.Warn("Broken");
+                Timing.RunCoroutine(randomFlicker());
                 Exiled.Events.Handlers.Warhead.Detonated += map_nuked;
                 base.Init();
+                Log.Warn("Broken 2");
                 return true;
             }
             catch (Exception ex) { return false; }

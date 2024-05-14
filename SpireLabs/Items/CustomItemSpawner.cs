@@ -21,15 +21,17 @@ namespace ObscureLabs.Items
 {
     internal class CustomItemSpawner : Plugin.Module
     {
-        public override string name { get; set; } = "CustomItemSpawner";
+        public override string name { get; set; } = "itemSpawner";
         public override bool initOnStart { get; set; } = false;
 
         public override bool Init()
         {
             try
             {
+                Log.Warn("lol");
                 Exiled.Events.Handlers.Map.Generated += roundStartCustomItemHandler;
                 base.Init();
+                Log.Warn("lol2");
                 return true;
             }
             catch { return false; }
@@ -75,6 +77,7 @@ namespace ObscureLabs.Items
 
         public static IEnumerator<float> gunSpawn() // Simple code to replace pickup item in a room with a custom item pickup
         {
+            yield return Timing.WaitForSeconds(5);
             var ER16 = 0;
             var glLauncher = 0;
             var particleCollapser = 0;
