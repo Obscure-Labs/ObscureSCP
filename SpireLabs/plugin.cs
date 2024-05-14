@@ -154,7 +154,7 @@ namespace ObscureLabs
             modules.AddModule(new MapInteractions());
             modules.AddModule(new chaos());
             modules.AddModule(new GUIController());
-
+            modules.AddModule(new scp3114());
 
             modules.AddModule(new CustomItemSpawner());
 
@@ -275,7 +275,6 @@ namespace ObscureLabs
             Timing.KillCoroutines("flockerRoutine");
             Timing.KillCoroutines("lockRoutine");
             Timing.KillCoroutines("chaosChecker");
-            SCPHandler.doSCPThings();
             Timing.RunCoroutine(ChaosCounter.chaosUpdate(), tag: "chaosChecker");
 
 
