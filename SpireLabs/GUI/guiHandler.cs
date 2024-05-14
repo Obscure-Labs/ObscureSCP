@@ -421,8 +421,8 @@ namespace SpireLabs.GUI
                 s += $"</size><size=32>\t\n"; //26
                 s += $"\t\n"; //27
                 s += $"\t\n"; //28
-                s += $"<size=16><color=#3a5fcf>OBSCURE</color>\n"; //29 (BOTTOM OF SCREEN)
-                s += $"<color=#88d4ff>LABS</color></size>\n";
+                s += $"<size=16><color=#3a5fcf>OBSCURE</color><color=#88d4ff>LABS</color>\n"; //29 (BOTTOM OF SCREEN)
+                s += $"<color=#ffffff>DISCORD.GG/58TaSJbyJm</color></size>\n";
                 s += $"<size=32><color=#ffffff>\t\n"; //30
                 s += $"\t\n"; //31
                 s += $"\t\n"; //32
