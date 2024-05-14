@@ -23,7 +23,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             {
                 Exiled.Events.Handlers.Server.RoundStarted += roundStarted;
                 Exiled.Events.Handlers.Player.Escaping += escaping;
-                Exiled.Events.Handlers.Player.KillingPlayer += killingPlayer;
+                Exiled.Events.Handlers.Player.Hurting += killingPlayer;
                 Exiled.Events.Handlers.Player.UnlockingGenerator += unlockingGenerator;
                 Exiled.Events.Handlers.Server.EndingRound += endingRound;
                 base.Init();
@@ -42,7 +42,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                 thirdPlace = null;
                 Exiled.Events.Handlers.Server.RoundStarted -= roundStarted;
                 Exiled.Events.Handlers.Player.Escaping -= escaping;
-                Exiled.Events.Handlers.Player.KillingPlayer -= killingPlayer;
+                Exiled.Events.Handlers.Player.Hurting -= killingPlayer;
                 Exiled.Events.Handlers.Player.UnlockingGenerator -= unlockingGenerator;
                 Exiled.Events.Handlers.Server.EndingRound -= endingRound;
                 base.Disable();
@@ -78,40 +78,64 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         public static void escaping(EscapingEventArgs ev)
         {
-            Timing.RunCoroutine(addXPtoPlayer(ev.Player.NetworkIdentity, 3, "Escaping Facility"));
+            if (ev.Player.IsCuffed)
+            {
+                Timing.RunCoroutine(addXPtoPlayer(ev.Player.Cuffer.UserId, 5, "Recruiting Another Player"));
+                Timing.RunCoroutine(addXPtoPlayer(ev.Player.UserId, 2, "Escaping as a prisoner"));
+            }
+            else
+            {
+                Timing.RunCoroutine(addXPtoPlayer(ev.Player.UserId, 3, "Escaping Facility"));
+            }
+
 
         }
 
         public static void unlockingGenerator(UnlockingGeneratorEventArgs ev)
         {
-            Timing.RunCoroutine(addXPtoPlayer(ev.Player.NetworkIdentity, 2, "Unlocking Generator"));
+            Timing.RunCoroutine(addXPtoPlayer(ev.Player.UserId, 2, "Unlocking Generator"));
         }
 
-        public static void killingPlayer(KillingPlayerEventArgs ev)
+        public static void killingPlayer(HurtingEventArgs ev)
         {
-            Timing.RunCoroutine(addXPtoPlayer(ev.Player.NetworkIdentity, 5, "Killing Enemy Player"));
+            if (ev.Amount >= ev.Player.Health) { Timing.RunCoroutine(addXPtoPlayer(ev.Attacker.UserId, 5, "Killing Enemy Player")); }
         }
 
         public static void endingRound(EndingRoundEventArgs ev)
         {
-            _PlayerData.OrderBy(p => p.xp);
-            if (_PlayerData.ElementAt(0) == null) { return; }
-            firstPlace = _PlayerData.ElementAt(0);
-            if (_PlayerData.ElementAt(1) == null) { return; }
-            secondPlace = _PlayerData.ElementAt(1);
-            if (_PlayerData.ElementAt(2) == null) { return; }
-            thirdPlace = _PlayerData.ElementAt(2);
-            foreach (Player p in Plugin.PlayerList)
+            _PlayerData = _PlayerData.OrderByDescending(p => p.xp).ToList();
+            //Log.Warn($"{_PlayerData.ToArray()[0].player.DisplayNickname} . {_PlayerData.ToArray()[0].xp}");
+            PlayerDataInstance[] PlayerData = _PlayerData.ToArray();
+            if (PlayerData.Count() == 0) return;
+            if (PlayerData.Count() == 1)
             {
-                p.Broadcast(5, $"This round's #1 MVP was: {firstPlace.player.DisplayNickname} with: {firstPlace.xp} points! \n#2 was: {secondPlace.player.DisplayNickname} with: {secondPlace.xp} points!\n#2 was: {thirdPlace.player.DisplayNickname} with: {thirdPlace.xp} points!", shouldClearPrevious: true);
+                foreach (Player p in Plugin.PlayerList)
+                {
+                    Manager.SendHint(p, $"This rounds MVP was: {PlayerData[0].player.DisplayNickname} with {PlayerData[0].xp} points!", 10);
+                }
             }
+            if (PlayerData.Count() == 2)
+            {
+                foreach (Player p in Plugin.PlayerList)
+                {
+                    Manager.SendHint(p, $"This rounds MVP was: {PlayerData[0].player.DisplayNickname} with {PlayerData[0].xp} points!\n#2 was: {PlayerData[1].player.DisplayNickname} with {PlayerData[1].xp}", 10);
+                }
+            }
+            if (PlayerData.Count() >= 3)
+            {
+                foreach (Player p in Plugin.PlayerList)
+                {
+                    Manager.SendHint(p, $"This rounds MVP was: {PlayerData[0].player.DisplayNickname} with {PlayerData[0].xp} points!\n#2 was: {PlayerData[1].player.DisplayNickname} with {PlayerData[1].xp}\n#3 was: {PlayerData[2].player.DisplayNickname} with {PlayerData[2].xp}", 10);
+                }
+            }
+
         }
 
-        public static IEnumerator<float> addXPtoPlayer(Mirror.NetworkIdentity p, int xp, string reason)
+        public static IEnumerator<float> addXPtoPlayer(string p, int xp, string reason)
         {
             yield return Timing.WaitForOneFrame;
-                if (!p == null && !p == null && reason != null)
-                _PlayerData.FirstOrDefault(x => x.player.NetworkIdentity == p).xp += xp;
+                if (p != null && p != null && reason != null)
+                _PlayerData.FirstOrDefault(x => x.player.UserId == p).xp += xp;
                 Manager.SendHint(Player.Get(p), $"You Gained {xp} points for: {reason}", 5);
         }
     }
