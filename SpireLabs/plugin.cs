@@ -376,6 +376,10 @@ namespace ObscureLabs
 
         private void restarting()
         {
+            foreach (Module m in modules.moduleList)
+            {
+                m.Disable();
+            }
             Timing.KillCoroutines("juggerwave");
             PlayerList.Clear();
             playerCount = 0;
