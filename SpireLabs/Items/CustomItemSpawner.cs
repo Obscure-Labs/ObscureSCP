@@ -12,6 +12,7 @@ using MEC;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Text;
 using System.Threading.Tasks;
 using YamlDotNet.Serialization.TypeResolvers;
@@ -22,7 +23,7 @@ namespace ObscureLabs.Items
     internal class CustomItemSpawner : Plugin.Module
     {
         public override string name { get; set; } = "itemSpawner";
-        public override bool initOnStart { get; set; } = false;
+        public override bool initOnStart { get; set; } = true;
 
         public override bool Init()
         {
@@ -56,8 +57,8 @@ namespace ObscureLabs.Items
             Log.Info("Running custom item spawner for vanilla round");
             Timing.RunCoroutine(gunSpawn());
 
-
         }
+        
 
         public static CustomItem[] weaponlist =
         {
@@ -77,7 +78,6 @@ namespace ObscureLabs.Items
 
         public static IEnumerator<float> gunSpawn() // Simple code to replace pickup item in a room with a custom item pickup
         {
-            yield return Timing.WaitForSeconds(5);
             var ER16 = 0;
             var glLauncher = 0;
             var particleCollapser = 0;

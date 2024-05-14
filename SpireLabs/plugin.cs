@@ -47,8 +47,10 @@ namespace ObscureLabs
         #region OnPluginEnabled
         public override void OnEnabled()
         {
-            PopulateModules();
             LoadItems();
+            CustomItem.RegisterItems();
+            PopulateModules();
+
             
 
 
@@ -150,6 +152,8 @@ namespace ObscureLabs
             modules.AddModule(new gamemodeHandler());
             modules.AddModule(new MapInteractions());
             modules.AddModule(new chaos());
+
+
             modules.AddModule(new CustomItemSpawner());
 
 
@@ -164,31 +168,19 @@ namespace ObscureLabs
             Exiled.Events.Handlers.Player.Left += left;
             Exiled.Events.Handlers.Player.Verified += joinMsg;
             Exiled.Events.Handlers.Player.Dying += died;
-            modules.GetModule("MvpSystem").Init();
-            modules.GetModule("CorruptGuard").Init();
-            modules.GetModule("DamageModifiers").Init();
-            modules.GetModule("CoinFlip").Init();
-            modules.GetModule("TheNut").Init();
-            modules.GetModule("profiles").Init();
-            modules.GetModule("IDThief").Init();
-            modules.GetModule("larry").Init();
 
-            modules.GetModule("gamemodeHandler").Init();
-            modules.GetModule("MapInteractions").Init();
-            modules.GetModule("ChaosRound").Init();
 
-            modules.GetModule("itemspawner").Init();
 
-            //foreach(Module m in modules.moduleList)
-            //{
-            //    Log.Warn(m.name);
-            //    if(m.initOnStart)
-            //    {
-            //        m.Init();
-            //    }
-            //}
+            foreach (Module m in modules.moduleList)
+            {
+                Log.Warn(m.name);
+                if(m.initOnStart)
+                {
+                    m.Init();
+                }
+            }
 
-            CustomItem.RegisterItems();
+
         }
 
         public ItemConfigs.Items ItemConfigs { get; private set; } = null!;
