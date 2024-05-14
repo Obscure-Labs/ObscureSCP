@@ -93,7 +93,11 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         public static void unlockingGenerator(UnlockingGeneratorEventArgs ev)
         {
-            Timing.RunCoroutine(addXPtoPlayer(ev.Player.UserId, 2, "Unlocking Generator"));
+            if (ev.IsAllowed)
+            {
+                Timing.RunCoroutine(addXPtoPlayer(ev.Player.UserId, 2, "Unlocking Generator"));
+            }
+            else { return; }
         }
 
         public static void killingPlayer(HurtingEventArgs ev)

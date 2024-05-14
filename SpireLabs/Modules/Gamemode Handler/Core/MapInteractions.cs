@@ -41,6 +41,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         }
         public static IEnumerator<float> randomFlicker()
         {
+
             while (true)
             {
                 if (Manager.checkLoop()) break;
