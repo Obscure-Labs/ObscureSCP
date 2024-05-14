@@ -17,8 +17,37 @@ using System.Xml.Linq;
 
 namespace ObscureLabs
 {
-    internal class customRoles
+    internal class customRoles : Plugin.Module
     {
+
+        public override string name { get; set; } = "customRoles";
+        public override bool initOnStart { get; set; } = true;
+
+        public override bool Init()
+        {
+            try
+            {
+                Exiled.Events.Handlers.Player.UsingItemCompleted += usingItem;
+                base.Init();
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public override bool Disable()
+        {
+            try
+            {
+                Exiled.Events.Handlers.Player.UsingItemCompleted -= usingItem;
+                base.Disable();
+                return true;
+            }
+            catch { return false; }
+        }
+
+
+
+
         internal class roleData
         {
             public Player player;
@@ -26,6 +55,24 @@ namespace ObscureLabs
         }
 
         internal static List<roleData> rd = new List<roleData>();
+
+
+        private void usingItem(UsingItemCompletedEventArgs ev)
+        {
+            if (ev.Item.Type == ItemType.SCP330)
+            {
+                if (UCRAPI.HasCustomRole(ev.Player))
+                {
+                    if (UCRAPI.Get(ev.Player).Id == 2)
+                    {
+                        ev.Player.EnableEffect(EffectType.MovementBoost);
+                        ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 80, 10);
+                    }
+                }
+            }
+        }
+
+
 
         internal static IEnumerator<float> CheckRoles(Player p)
         {
@@ -66,50 +113,3 @@ namespace ObscureLabs
         }
     }
 }
-//        internal static void spawnWave(RespawningTeamEventArgs ev)
-//        {
-//            var random = new Random();
-
-//            SpawnableTeamType team = ev.NextKnownTeam;
-//            try
-//            {
-//                if (team == SpawnableTeamType.ChaosInsurgency)
-//                {
-//                    Player pl = ev.Players[random.Next(0, ev.Players.Count())];
-//                    var chance = random.Next(0, 100);
-//                    if (chance > 60)
-//                    {
-//                        Log.Info(chance);
-//                        UncomplicatedCustomRoles.Manager.SpawnManager.SummonCustomSubclass(pl, 9, true);
-//                        Timing.RunCoroutine(SpawnCustom(pl, 9));
-//                    }
-//                }
-//                if(team == SpawnableTeamType.NineTailedFox)
-//                {
-//                    Player pl = ev.Players[random.Next(0, ev.Players.Count())];
-//                    int chance = random.Next(0, 100);
-//                    if (chance > 85)
-//                    {
-//                        Log.Info(chance);
-//                        Timing.RunCoroutine(SpawnCustom(pl, 8));
-//                    }
-//                }
-//            }
-//            catch { }
-//        }
-
-//        private static IEnumerator<float> SpawnCustom(Player p, int role)
-//        {
-//            yield return Timing.WaitForSeconds(0.1f);
-//            if(role == 8)
-//            {
-//                UncomplicatedCustomRoles.Manager.SpawnManager.SummonCustomSubclass(p, 8, true);
-//            }
-//            else if(role==9)
-//            {
-//                UncomplicatedCustomRoles.Manager.SpawnManager.SummonCustomSubclass(p, 9, true);
-//            }
-
-//        }
-//    }
-//}

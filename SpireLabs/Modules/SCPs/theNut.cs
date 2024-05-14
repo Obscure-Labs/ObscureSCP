@@ -24,8 +24,37 @@ using SpireSCP.GUI.API.Features;
 
 namespace ObscureLabs
 {
-    internal class theNut
+    internal class theNut : Plugin.Module
     {
+        public override string name { get; set; } = "TheNut";
+        public override bool initOnStart { get; set; } = true;
+
+        public override bool Init()
+        {
+            try
+            {
+                Exiled.Events.Handlers.Player.Hurting += theNut.scp173DMG;
+                Exiled.Events.Handlers.Scp173.Blinking += theNut.scp173TP;
+                Exiled.Events.Handlers.Scp173.UsingBreakneckSpeeds += theNut.scp173ZOOM;
+                base.Init();
+                return true;
+            }
+            catch {  return false; }
+        }
+
+        public override bool Disable()
+        {
+            try
+            {
+                Exiled.Events.Handlers.Player.Hurting -= theNut.scp173DMG;
+                Exiled.Events.Handlers.Scp173.Blinking -= theNut.scp173TP;
+                Exiled.Events.Handlers.Scp173.UsingBreakneckSpeeds -= theNut.scp173ZOOM;
+                base.Disable();
+                return true;
+            }
+            catch { return false; }
+        }
+
         internal static void scp173DMG(HurtingEventArgs ev)
         {
             if(ev.Player.Role == RoleTypeId.Scp173)

@@ -38,8 +38,35 @@ using SpireSCP.GUI.API.Features;
 
 namespace ObscureLabs
 {
-    internal static class IDThief
+    internal class IDThief : Plugin.Module
     {
+        public override string name { get; set; } = "IDThief";
+        public override bool initOnStart { get; set; } = true;
+
+        public override bool Init()
+        {
+            try
+            {
+                Exiled.Events.Handlers.Player.ChangedItem += item_change;
+                Exiled.Events.Handlers.Player.Spawned += Player_Spawned;
+                base.Init();
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public override bool Disable()
+        {
+            try
+            {
+                Exiled.Events.Handlers.Player.ChangedItem -= item_change;
+                Exiled.Events.Handlers.Player.Spawned -= Player_Spawned;
+                base.Disable();
+                return true;
+            }
+            catch { return false; }
+        }
+
         private static IEnumerator<float> wait()
         {
             yield return Timing.WaitForSeconds(1);

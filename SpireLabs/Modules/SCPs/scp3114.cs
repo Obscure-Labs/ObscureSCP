@@ -10,8 +10,37 @@ using UnityEngine;
 
 namespace ObscureLabs
 {
-    internal class boner
+    internal class scp3114 : Plugin.Module
     {
+        public override string name { get; set; } = "SCP3114";
+        public override bool initOnStart { get; set; } = true;
+
+        public override bool Init()
+        {
+            try
+            {
+                Exiled.Events.Handlers.Scp3114.Disguised += OnDisguise;
+                Exiled.Events.Handlers.Scp3114.Revealed += OnReveal;
+                base.Init();
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public override bool Disable()
+        {
+            try
+            {
+                Exiled.Events.Handlers.Scp3114.Disguised -= OnDisguise;
+                Exiled.Events.Handlers.Scp3114.Revealed -= OnReveal;
+                base.Disable();
+                return true;
+            }
+            catch { return false; }
+        }
+
+
+
         internal static void OnDisguise(DisguisedEventArgs ev)
         {
             customRoles.roleData plData = null;

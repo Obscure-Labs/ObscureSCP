@@ -12,6 +12,7 @@ using MEC;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Text;
 using System.Threading.Tasks;
 using YamlDotNet.Serialization.TypeResolvers;
@@ -19,10 +20,35 @@ using CustomItem = Exiled.CustomItems.API.Features.CustomItem;
 
 namespace ObscureLabs.Items
 {
-    internal class CustomItemSpawner
+    internal class CustomItemSpawner : Plugin.Module
     {
+        public override string name { get; set; } = "itemSpawner";
+        public override bool initOnStart { get; set; } = true;
 
-        
+        public override bool Init()
+        {
+            try
+            {
+                Log.Warn("lol");
+                Exiled.Events.Handlers.Map.Generated += roundStartCustomItemHandler;
+                base.Init();
+                Log.Warn("lol2");
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public override bool Disable()
+        {
+            try
+            {
+                Exiled.Events.Handlers.Map.Generated -= roundStartCustomItemHandler;
+                base.Disable();
+                return true;
+            }
+            catch { return false; }
+        }
+
 
         public static void roundStartCustomItemHandler()
         {
@@ -31,8 +57,8 @@ namespace ObscureLabs.Items
             Log.Info("Running custom item spawner for vanilla round");
             Timing.RunCoroutine(gunSpawn());
 
-
         }
+        
 
         public static CustomItem[] weaponlist =
         {

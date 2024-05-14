@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Exiled.API.Features;
 using MEC;
 using ObscureLabs.Items;
@@ -47,10 +48,11 @@ namespace ObscureLabs
         public override void OnEnabled()
         {
             LoadItems();
-            Timing.RunCoroutine(checkPlayer());
-            RegisterEvents();
-            _harmony = new("DevDummies-Rotation-Patch");
-            _harmony.PatchAll();
+            CustomItem.RegisterItems();
+            PopulateModules();
+
+            
+
 
             Log.SendRaw("[ObscureLabs]\n\r\n .d8888b.           d8b                 .d8888b.   .d8888b.  8888888b.  \r\nd88P  Y88b          Y8P                d88P  Y88b d88P  Y88b 888   Y88b \r\nY88b.                                  Y88b.      888    888 888    888 \r\n \"Y888b.   88888b.  888 888d888 .d88b.  \"Y888b.   888        888   d88P \r\n    \"Y88b. 888 \"88b 888 888P\"  d8P  Y8b    \"Y88b. 888        8888888P\"  \r\n      \"888 888  888 888 888    88888888      \"888 888    888 888        \r\nY88b  d88P 888 d88P 888 888    Y8b.    Y88b  d88P Y88b  d88P 888        \r\n \"Y8888P\"  88888P\"  888 888     \"Y8888  \"Y8888P\"   \"Y8888P\"  888        \r\n           888                                                          \r\n           888                                                          \r\n           888                                                          \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n", color: ConsoleColor.DarkMagenta);
             if (Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Spire/"))
@@ -100,56 +102,77 @@ namespace ObscureLabs
             Scp3114DMG = Config.Scp3114Damage;
         }
 
-        private IEnumerator<float> checkPlayer()
+
+        
+        public class Module
         {
-            while (true)
+            public virtual string name { get; set; }
+            public virtual bool initOnStart { get; set; } = false;
+            public virtual bool Init()
             {
-                if (Player.List.Count() == 0)
-                {
-                    Round.Restart();
-                }
-                yield return Timing.WaitForSeconds(10);
+                Log.Warn($"Module {name} Initialized successfully");
+                return true;
             }
+            public virtual bool Disable()
+            {
+                Log.Warn($"Module {name} Disabled successfully");
+                return true;
+            }
+
+        }
+
+
+        public class ModuleINATOR
+        {
+            public List<Module> moduleList = new List<Module>();
+
+            public virtual Module GetModule(string name)
+            {
+                return moduleList.FirstOrDefault(x => x.name.ToLower() == name.ToLower());
+            }
+
+            public virtual void AddModule(Module module)
+            {
+                moduleList.Add(module);
+            }
+        }
+        
+        public static ModuleINATOR modules = new ModuleINATOR();
+
+        public void PopulateModules()
+        {
+            modules.AddModule(new MvpSystem());
+            modules.AddModule(new corruptGuard());
+            modules.AddModule(new DamageModifiers());
+            modules.AddModule(new CoinFlip());
+            modules.AddModule(new theNut());
+            modules.AddModule(new profiles());
+            modules.AddModule(new IDThief());
+            modules.AddModule(new larry());
+            modules.AddModule(new gamemodeHandler());
+            modules.AddModule(new MapInteractions());
+            modules.AddModule(new chaos());
+
+
+            modules.AddModule(new CustomItemSpawner());
+
+
+            RegisterEvents();
         }
 
         private void RegisterEvents()
         {
-            Exiled.Events.Handlers.Scp106.Attacking += larry.onLarryAttack;
-            Exiled.Events.Handlers.Player.ChangedItem += IDThief.item_change;
-            Exiled.Events.Handlers.Player.Verified += profiles.OnPlayerJoined;
-            Exiled.Events.Handlers.Player.Left += profiles.OnPlayerLeave;
-            Exiled.Events.Handlers.Player.Spawned += IDThief.Player_Spawned;
-            Exiled.Events.Handlers.Player.FlippingCoin += CoinFlip.Player_FlippingCoin;
-            Exiled.Events.Handlers.Player.Hurting += theNut.scp173DMG;
-            Exiled.Events.Handlers.Scp173.Blinking += theNut.scp173TP;
-            Exiled.Events.Handlers.Scp173.UsingBreakneckSpeeds += theNut.scp173ZOOM;
-            Exiled.Events.Handlers.Scp106.Attacking += larry.pdExits;
-            Exiled.Events.Handlers.Scp049.ActivatingSense += doctor.doctorBoost;
-            Exiled.Events.Handlers.Scp049.SendingCall += doctor.call;
-            Exiled.Events.Handlers.Scp3114.Disguised += boner.OnDisguise;
-            Exiled.Events.Handlers.Scp3114.Revealed += boner.OnReveal;
-            Exiled.Events.Handlers.Player.Spawned += corruptGuard.spawned;
-            Exiled.Events.Handlers.Player.Shot += corruptGuard.shot;
-            Exiled.Events.Handlers.Scp914.UpgradingPickup += Modules.Gamemode_Handler.Core._914.OnItem914;
-            Exiled.Events.Handlers.Player.Hurting += Modules.Gamemode_Handler.Core.DamageModifiers.SetDamageModifiers;
             Exiled.Events.Handlers.Server.RoundStarted += OnRoundStart;
-            Exiled.Events.Handlers.Player.Spawned += doctor.Player_Spawned;
             Exiled.Events.Handlers.Player.Joined += Player_Joined;
             Exiled.Events.Handlers.Server.RestartingRound += restarting;
-            Exiled.Events.Handlers.Player.ChangedItem += Items.ItemUtils.item_change;
-            Exiled.Events.Handlers.Warhead.Detonated += Modules.Gamemode_Handler.Core.MapInteractions.map_nuked;
-            Exiled.Events.Handlers.Player.UsingItemCompleted += usingItem;
             Exiled.Events.Handlers.Player.Left += left;
             Exiled.Events.Handlers.Player.Verified += joinMsg;
             Exiled.Events.Handlers.Player.Dying += died;
-            Exiled.Events.Handlers.Map.Generated += CustomItemSpawner.roundStartCustomItemHandler;
-            Exiled.Events.Handlers.Server.RespawningTeam += chaos.chaosroundRespawnWave;
-            #region to split events
 
-            #endregion
-            MvpSystem.Init();
-
-            CustomItem.RegisterItems();
+            foreach (Module m in modules.moduleList)
+            {
+                m.Init();
+            }
         }
 
         public ItemConfigs.Items ItemConfigs { get; private set; } = null!;
@@ -169,6 +192,7 @@ namespace ObscureLabs
                 ItemConfigs = Loader.Deserializer.Deserialize<ItemConfigs.Items>(File.ReadAllText(filePath));
                 File.WriteAllText(filePath, Loader.Serializer.Serialize(ItemConfigs));
             }
+
         }
         #endregion
 
@@ -250,16 +274,12 @@ namespace ObscureLabs
             Timing.KillCoroutines("lockRoutine");
             Timing.KillCoroutines("chaosChecker");
             SCPHandler.doSCPThings();
-            Timing.RunCoroutine(Modules.Gamemode_Handler.Core.ChaosCounter.chaosUpdate(), tag: "chaosChecker");
-            Timing.RunCoroutine(Modules.Gamemode_Handler.Core.MapInteractions.randomFlicker(), tag: "flickerRoutine");
-            if (!IsActiveEventround)
-            {
-                gamemodeHandler.WriteAllGMInfo(false, -1, gamemodeHandler.ReadNext());
-                gamemodeHandler.AttemptGMRound(false, -1);
-            }
+            Timing.RunCoroutine(ChaosCounter.chaosUpdate(), tag: "chaosChecker");
+
+
             Log.Info("Round has started!");
             Timing.RunCoroutine(lockAnounce(), tag: "lockRoutine");
-            Timing.RunCoroutine(corruptGuard.initcantShoot());
+
             foreach (Door d in Door.List)
             {
                 if (d.Zone == ZoneType.Surface)
@@ -348,24 +368,18 @@ namespace ObscureLabs
 
         private void restarting()
         {
+            foreach (Module m in modules.moduleList)
+            {
+                m.Disable();
+            }
             Timing.KillCoroutines("juggerwave");
             PlayerList.Clear();
             playerCount = 0;
             Manager.killLoop(true);
-            //if (realRoundEnd)
-            //{
-            //    Exiled.API.Features.Log.Info("Restarting the round (real restart)");
-            //    hasRestarted = false;
-            //    first = false;
-            //    inLobby = false;
-            //    allowStart = false;
-            //    realRoundEnd = false;
-            //    playerCount = 0;
-            //    ConMet = false;
-            //    startingRound = false;
-            //    initing = false;
-            //    Exiled.Events.Handlers.Player.Left -= Player_Leave;
-            //}
+            foreach (Module m in modules.moduleList)
+            {
+                m.Init();
+            }
         }
 
         private void Player_Leave(LeftEventArgs ev)
@@ -379,20 +393,7 @@ namespace ObscureLabs
             lastId = ev.Player.UserId;
         }
 
-        private void usingItem(UsingItemCompletedEventArgs ev)
-        {
-            if (ev.Item.Type == ItemType.SCP330)
-            {
-                if (UCRAPI.HasCustomRole(ev.Player))
-                {
-                    if (UCRAPI.Get(ev.Player).Id == 2)
-                    {
-                        ev.Player.EnableEffect(EffectType.MovementBoost);
-                        ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 80, 10);
-                    }
-                }
-            }
-        }
+
 
         private void left(LeftEventArgs ev)
         {

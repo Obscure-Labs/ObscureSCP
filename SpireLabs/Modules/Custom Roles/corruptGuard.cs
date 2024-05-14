@@ -12,8 +12,37 @@ using UCRAPI = UncomplicatedCustomRoles.API.Features.Manager;
 
 namespace ObscureLabs
 {
-    internal class corruptGuard
+    internal class corruptGuard : Plugin.Module
     {
+        public override string name { get; set; } = "CorruptGuard";
+        public override bool initOnStart { get; set; } = true;
+
+        public override bool Init()
+        {
+            try
+            {
+                Exiled.Events.Handlers.Player.Spawned += corruptGuard.spawned;
+                Exiled.Events.Handlers.Player.Shot += corruptGuard.shot;
+                Timing.RunCoroutine(initcantShoot());
+                base.Init();
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public override bool Disable()
+        {
+            try
+            {
+                cantShoot = new bool[60];
+                Exiled.Events.Handlers.Player.Spawned -= corruptGuard.spawned;
+                Exiled.Events.Handlers.Player.Shot -= corruptGuard.shot;
+                base.Disable();
+                return true;
+            }
+            catch { return false; }
+        }
+
         private static bool[] cantShoot = new bool[60];
 
         internal static IEnumerator<float> initcantShoot()

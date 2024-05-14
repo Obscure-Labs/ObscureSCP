@@ -12,11 +12,36 @@ using CustomItems.API;
 using Exiled.Events.EventArgs.Server;
 using MapEditorReborn.API.Enums;
 using Respawning;
+using GameCore;
+using Log = Exiled.API.Features.Log;
 namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
 {
-    internal static class chaos
+    internal class chaos : Plugin.Module
     {
-        static bool gamemodeactive = false;
+        public override string name { get; set; } = "ChaosRound";
+        public override bool initOnStart { get; set; } = false;
+
+        public override bool Init()
+        {
+            try
+            {
+                Exiled.Events.Handlers.Server.RespawningTeam += chaosroundRespawnWave;
+                base.Init();
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public override bool Disable()
+        {
+            try
+            {
+                Exiled.Events.Handlers.Server.RespawningTeam -= chaosroundRespawnWave;
+                base.Disable();
+                return true;
+            }
+            catch { return false; };
+        }
 
 
         public static void chaosroundRespawnWave(RespawningTeamEventArgs ev)
