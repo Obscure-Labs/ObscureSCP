@@ -404,7 +404,7 @@ namespace ObscureLabs
 
         private void joinMsg(VerifiedEventArgs ev)
         {
-
+            Manager.SendHint(ev.Player, $"{ev.Player.DisplayNickname}", 3);
             Manager.SendJoinLeave(ev.Player, 'j');
             foreach (Player p in PlayerList) { Log.Info($"Playername: {p.Nickname} joined with ID: {p.Id}"); }
         }
