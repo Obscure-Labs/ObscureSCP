@@ -25,7 +25,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                 Exiled.Events.Handlers.Player.Escaping += escaping;
                 Exiled.Events.Handlers.Player.Hurting += killingPlayer;
                 Exiled.Events.Handlers.Player.UnlockingGenerator += unlockingGenerator;
-                Exiled.Events.Handlers.Server.EndingRound += endingRound;
+                Exiled.Events.Handlers.Server.RoundEnded += endingRound;
                 base.Init();
                 return true;
             }
@@ -44,7 +44,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                 Exiled.Events.Handlers.Player.Escaping -= escaping;
                 Exiled.Events.Handlers.Player.Hurting -= killingPlayer;
                 Exiled.Events.Handlers.Player.UnlockingGenerator -= unlockingGenerator;
-                Exiled.Events.Handlers.Server.EndingRound -= endingRound;
+                Exiled.Events.Handlers.Server.RoundEnded -= endingRound;
                 base.Disable();
                 return true;
             }
@@ -101,33 +101,68 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             if (ev.Amount >= ev.Player.Health) { Timing.RunCoroutine(addXPtoPlayer(ev.Attacker.UserId, 5, "Killing Enemy Player")); }
         }
 
-        public static void endingRound(EndingRoundEventArgs ev)
+        public static void endingRound(RoundEndedEventArgs ev)
         {
+            Log.Warn("ROUND ENDED");
             _PlayerData = _PlayerData.OrderByDescending(p => p.xp).ToList();
             //Log.Warn($"{_PlayerData.ToArray()[0].player.DisplayNickname} . {_PlayerData.ToArray()[0].xp}");
             PlayerDataInstance[] PlayerData = _PlayerData.ToArray();
-            if (PlayerData.Count() == 0) return;
+            string h = string.Empty;
+            if(PlayerData.Count() == 0)
+            {
+                h = "There was no MVP this round :(";
+            }
             if (PlayerData.Count() == 1)
             {
-                foreach (Player p in Plugin.PlayerList)
+                if (PlayerData[0].xp > 0)
                 {
-                    Manager.SendHint(p, $"This rounds MVP was: {PlayerData[0].player.DisplayNickname} with {PlayerData[0].xp} points!", 10);
+                    h += $"This rounds MVP was: {PlayerData[0].player.DisplayNickname} with {PlayerData[0].xp} points!";
+                }
+                else
+                {
+                    h = "There was no MVP this round :(";
                 }
             }
             if (PlayerData.Count() == 2)
             {
-                foreach (Player p in Plugin.PlayerList)
+                if (PlayerData[0].xp > 0)
                 {
-                    Manager.SendHint(p, $"This rounds MVP was: {PlayerData[0].player.DisplayNickname} with {PlayerData[0].xp} points!\n#2 was: {PlayerData[1].player.DisplayNickname} with {PlayerData[1].xp}", 10);
+                    h += $"This rounds MVP was: {PlayerData[0].player.DisplayNickname} with {PlayerData[0].xp} points!";
+                }
+                else
+                {
+                    h = "There was no MVP this round :(";
+                }
+                if (PlayerData[1].xp > 0)
+                {
+                    h += $"#2 was: {PlayerData[1].player.DisplayNickname} with {PlayerData[1].xp} points!";
                 }
             }
             if (PlayerData.Count() >= 3)
             {
-                foreach (Player p in Plugin.PlayerList)
+                if (PlayerData[0].xp > 0)
                 {
-                    Manager.SendHint(p, $"This rounds MVP was: {PlayerData[0].player.DisplayNickname} with {PlayerData[0].xp} points!\n#2 was: {PlayerData[1].player.DisplayNickname} with {PlayerData[1].xp}\n#3 was: {PlayerData[2].player.DisplayNickname} with {PlayerData[2].xp}", 10);
+                    h += $"This rounds MVP was: {PlayerData[0].player.DisplayNickname} with {PlayerData[0].xp} points!";
+                }
+                else
+                {
+                    h = "There was no MVP this round :(";
+                }
+                if (PlayerData[1].xp > 0)
+                {
+                    h += $"#2 was: {PlayerData[1].player.DisplayNickname} with {PlayerData[1].xp} points!";
+                }
+                if (PlayerData[2].xp > 0)
+                {
+                    h += $"#3 was: {PlayerData[2].player.DisplayNickname} with {PlayerData[2].xp} points!";
                 }
             }
+
+            foreach (Player p in Plugin.PlayerList)
+            {
+                Manager.SendHint(p, h, 10);
+            }
+
 
         }
 
