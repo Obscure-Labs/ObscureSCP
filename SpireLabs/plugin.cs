@@ -20,6 +20,7 @@ using SpireSCP.GUI.API.Features;
 using UCRAPI = UncomplicatedCustomRoles.API.Features.Manager;
 using UnityEngine;
 using ObscureLabs.Modules.Gamemode_Handler.Minigames;
+using SpireLabs.GUI;
 
 namespace ObscureLabs
 {
@@ -152,6 +153,7 @@ namespace ObscureLabs
             modules.AddModule(new gamemodeHandler());
             modules.AddModule(new MapInteractions());
             modules.AddModule(new chaos());
+            modules.AddModule(new GUIController());
 
 
             modules.AddModule(new CustomItemSpawner());
