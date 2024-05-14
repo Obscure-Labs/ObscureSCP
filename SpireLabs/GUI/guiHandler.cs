@@ -341,83 +341,97 @@ namespace SpireLabs.GUI
                 s += $"\t\n"; //17
                 s += $"\t\n</size><size=16>"; //18
                 Log.Debug("Got to effects");
-                if (effects[0] == null || (int)effects[0].time <= 0)
+                effectThing[] effectsSorted = effects.OrderBy(x => x.time).ToArray();
+                foreach (effectThing fx in effectsSorted)
                 {
-                    s += $"<align=left>\t</align>\n"; //19
-                    s += $"<align=left>\t</align>\n"; //19
+                    if (fx == null || (int)fx.time <= 0)
+                    {
+                        s += $"<align=left>\t</align>\n"; //19
+                        s += $"<align=left>\t</align>\n"; //19
+                    }
+                    else
+                    {
+                        s += $"<align=left>{fx.name} - {(int)fx.time}s</align>\n"; //19
+                        s += $"<align=left>\t</align>\n"; //19
+                    }
                 }
-                else
-                {
-                    s += $"<align=left>{effects[0].name} - {(int)effects[0].time}s</align>\n"; //19
-                    s += $"<align=left>\t</align>\n"; //19
-                }
-                Log.Debug("Did effect 1");
-                if (effects[1] == null || (int)effects[1].time <= 0)
-                {
-                    s += $"<align=left>\t</align>\n"; //20
-                    s += $"<align=left>\t</align>\n"; //19
-                }
-                else
-                {
-                    s += $"<align=left>{effects[1].name} - {(int)effects[1].time}s</align>\n"; //20
-                    s += $"<align=left>\t</align>\n"; //19
-                }
-                Log.Debug("Did effect 1");
-                if (effects[2] == null || (int)effects[2].time <= 0)
-                {
-                    s += $"<align=left>\t</align>\n"; //21
-                    s += $"<align=left>\t</align>\n"; //19
-                }
-                else
-                {
-                    s += $"<align=left>{effects[2].name} - {(int)effects[2].time}s</align>\n"; //21
-                    s += $"<align=left>\t</align>\n"; //19
-                }
-                Log.Debug("Did effect 2");
-                if (effects[3] == null || (int)effects[3].time <= 0)
-                {
-                    s += $"<align=left>\t</align>\n"; //22
-                    s += $"<align=left>\t</align>\n"; //19
-                }
-                else
-                {
-                    s += $"<align=left>{effects[3].name} - {(int)effects[3].time}s</align>\n"; //22
-                    s += $"<align=left>\t</align>\n"; //19
-                }
-                Log.Debug("Did effect 3");
-                if (effects[4] == null || (int)effects[4].time <= 0)
-                {
-                    s += $"<align=left>\t</align>\n"; //23
-                    s += $"<align=left>\t</align>\n"; //19
-                }
-                else
-                {
-                    s += $"<align=left>{effects[4].name} - {(int)effects[4].time}s</align>\n"; //23
-                    s += $"<align=left>\t</align>\n"; //19
-                }
-                Log.Debug("Did effect 4");
-                if (effects[5] == null || (int)effects[5].time <= 0)
-                {
-                    s += $"<align=left>\t</align>\n"; //24
-                    s += $"<align=left>\t</align>\n"; //19
-                }
-                else
-                {
-                    s += $"<align=left>{effects[5].name} - {(int)effects[5].time}s</align>\n"; //24
-                    s += $"<align=left>\t</align>\n"; //19
-                }
-                Log.Debug("Did effect 5");
-                if (effects[6] == null || (int)effects[6].time <= 0)
-                {
-                    s += $"<align=left>\t</align>\n"; //25
-                    s += $"<align=left>\t</align>\n"; //19
-                }
-                else
-                {
-                    s += $"<align=left>{effects[6].name} - {(int)effects[6].time}s</align>\n"; //25
-                    s += $"<align=left>\t</align>\n"; //19
-                }
-                Log.Debug("Did effects");
+                //if (effects[0] == null || (int)effects[0].time <= 0)
+                //{
+                //    s += $"<align=left>\t</align>\n"; //19
+                //    s += $"<align=left>\t</align>\n"; //19
+                //}
+                //else
+                //{
+                //    s += $"<align=left>{effects[0].name} - {(int)effects[0].time}s</align>\n"; //19
+                //    s += $"<align=left>\t</align>\n"; //19
+                //}
+                //Log.Debug("Did effect 1");
+                //if (effects[1] == null || (int)effects[1].time <= 0)
+                //{
+                //    s += $"<align=left>\t</align>\n"; //20
+                //    s += $"<align=left>\t</align>\n"; //19
+                //}
+                //else
+                //{
+                //    s += $"<align=left>{effects[1].name} - {(int)effects[1].time}s</align>\n"; //20
+                //    s += $"<align=left>\t</align>\n"; //19
+                //}
+                //Log.Debug("Did effect 1");
+                //if (effects[2] == null || (int)effects[2].time <= 0)
+                //{
+                //    s += $"<align=left>\t</align>\n"; //21
+                //    s += $"<align=left>\t</align>\n"; //19
+                //}
+                //else
+                //{
+                //    s += $"<align=left>{effects[2].name} - {(int)effects[2].time}s</align>\n"; //21
+                //    s += $"<align=left>\t</align>\n"; //19
+                //}
+                //Log.Debug("Did effect 2");
+                //if (effects[3] == null || (int)effects[3].time <= 0)
+                //{
+                //    s += $"<align=left>\t</align>\n"; //22
+                //    s += $"<align=left>\t</align>\n"; //19
+                //}
+                //else
+                //{
+                //    s += $"<align=left>{effects[3].name} - {(int)effects[3].time}s</align>\n"; //22
+                //    s += $"<align=left>\t</align>\n"; //19
+                //}
+                //Log.Debug("Did effect 3");
+                //if (effects[4] == null || (int)effects[4].time <= 0)
+                //{
+                //    s += $"<align=left>\t</align>\n"; //23
+                //    s += $"<align=left>\t</align>\n"; //19
+                //}
+                //else
+                //{
+                //    s += $"<align=left>{effects[4].name} - {(int)effects[4].time}s</align>\n"; //23
+                //    s += $"<align=left>\t</align>\n"; //19
+                //}
+                //Log.Debug("Did effect 4");
+                //if (effects[5] == null || (int)effects[5].time <= 0)
+                //{
+                //    s += $"<align=left>\t</align>\n"; //24
+                //    s += $"<align=left>\t</align>\n"; //19
+                //}
+                //else
+                //{
+                //    s += $"<align=left>{effects[5].name} - {(int)effects[5].time}s</align>\n"; //24
+                //    s += $"<align=left>\t</align>\n"; //19
+                //}
+                //Log.Debug("Did effect 5");
+                //if (effects[6] == null || (int)effects[6].time <= 0)
+                //{
+                //    s += $"<align=left>\t</align>\n"; //25
+                //    s += $"<align=left>\t</align>\n"; //19
+                //}
+                //else
+                //{
+                //    s += $"<align=left>{effects[6].name} - {(int)effects[6].time}s</align>\n"; //25
+                //    s += $"<align=left>\t</align>\n"; //19
+                //}
+                //Log.Debug("Did effects");
                 s += $"</size><size=32>\t\n"; //26
                 s += $"\t\n"; //27
                 s += $"\t\n"; //28
