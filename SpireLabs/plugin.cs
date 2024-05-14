@@ -169,18 +169,10 @@ namespace ObscureLabs
             Exiled.Events.Handlers.Player.Verified += joinMsg;
             Exiled.Events.Handlers.Player.Dying += died;
 
-
-
             foreach (Module m in modules.moduleList)
             {
-                Log.Warn(m.name);
-                if(m.initOnStart)
-                {
-                    m.Init();
-                }
+                m.Init();
             }
-
-
         }
 
         public ItemConfigs.Items ItemConfigs { get; private set; } = null!;
@@ -384,6 +376,10 @@ namespace ObscureLabs
             PlayerList.Clear();
             playerCount = 0;
             Manager.killLoop(true);
+            foreach (Module m in modules.moduleList)
+            {
+                m.Init();
+            }
         }
 
         private void Player_Leave(LeftEventArgs ev)
