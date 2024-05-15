@@ -10,10 +10,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Exiled.API.Features;
-using Exiled.Events.EventArgs.Player;
 using Interactables.Interobjects.DoorUtils;
-using Players = Exiled.Events.Handlers.Player;
+using Players = Exiled.Events.Handlers;
 using Exiled.API.Features.Items;
+using AdminToys;
+using Exiled.Events.Handlers;
+using Exiled.Events.EventArgs.Scp096;
+using Player = Exiled.API.Features.Player;
 
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
@@ -32,6 +35,9 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                 Exiled.Events.Handlers.Player.Died += killingPlayer;
                 Exiled.Events.Handlers.Player.UnlockingGenerator += unlockingGenerator;
                 Exiled.Events.Handlers.Server.RoundEnded += endingRound;
+                Exiled.Events.Handlers.Player.EscapingPocketDimension += escapingPD;
+                Exiled.Events.Handlers.Player.ActivatingWarheadPanel += warheadOpen;
+                Exiled.Events.Handlers.Scp096.AddingTarget += shyguySeen;
                 base.Init();
                 return true;
             }
@@ -51,6 +57,9 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                 Exiled.Events.Handlers.Player.Died -= killingPlayer;
                 Exiled.Events.Handlers.Player.UnlockingGenerator -= unlockingGenerator;
                 Exiled.Events.Handlers.Server.RoundEnded -= endingRound;
+                Exiled.Events.Handlers.Player.EscapingPocketDimension -= escapingPD;
+                Exiled.Events.Handlers.Player.ActivatingWarheadPanel -= warheadOpen;
+                Exiled.Events.Handlers.Scp096.AddingTarget -= shyguySeen;
                 base.Disable();
                 return true;
             }
@@ -59,7 +68,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         public class PlayerDataInstance
         {
-            public Player player { get; set; }
+            public Exiled.API.Features.Player player { get; set; }
             public int xp { get; set; }
 
         }
@@ -80,8 +89,24 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             }
         }
 
+        public static void shyguySeen(AddingTargetEventArgs ev)
+        {
+            if (ev.IsLooking)
+            {
+                Timing.RunCoroutine(addXPtoPlayer(ev.Player.UserId, 1, "Had a player look at your face..."));
+            }
+        }
+        public static void warheadOpen(ActivatingWarheadPanelEventArgs ev)
+        {
+            Timing.RunCoroutine(addXPtoPlayer(ev.Player.UserId, 7, "Opening The Warhead Panel"));
+        }
 
 
+        public static void escapingPD(EscapingPocketDimensionEventArgs ev)
+        {
+            Timing.RunCoroutine(addXPtoPlayer(ev.Player.UserId, 3, "Escaping The Pocket Dimension"));
+        }
+            
         public static void escaping(EscapingEventArgs ev)
         {
             if (!ev.IsAllowed) { return; }
