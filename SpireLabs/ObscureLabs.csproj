@@ -118,6 +118,7 @@
     <Compile Include="GUI\GUIController.cs" />
     <Compile Include="GUI\guiHandler.cs" />
     <Compile Include="GUI\Manager.cs" />
+    <Compile Include="Items\AttachmentFix.cs" />
     <Compile Include="Items\CustomItemSpawner.cs" />
     <Compile Include="Modules\Commands\Other\gamemode.cs" />
     <Compile Include="Modules\Custom Roles\corruptGuard.cs" />
