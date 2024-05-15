@@ -39,6 +39,10 @@ namespace SpireLabs.GUI
 
         public override bool Disable()
         {
+            guiHandler.peenNutMSG = new string[60];
+            guiHandler.killLoop = false;
+            guiHandler.joinLeave = string.Empty;
+            guiHandler.hint = new string[60];
             Exiled.Events.Handlers.Player.Joined -= OnPlayerJoined;
             Exiled.Events.Handlers.Player.Verified -= JoinMSG;
             Exiled.Events.Handlers.Player.Left -= LeaveMSG;
