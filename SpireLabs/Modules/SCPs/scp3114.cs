@@ -13,7 +13,7 @@ namespace ObscureLabs
     internal class scp3114 : Plugin.Module
     {
         public override string name { get; set; } = "SCP3114";
-        public override bool initOnStart { get; set; } = true;
+        public override bool initOnStart { get; set; } = false;
 
         public override bool Init()
         {

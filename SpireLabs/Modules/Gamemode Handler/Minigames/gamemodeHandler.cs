@@ -1,7 +1,8 @@
-﻿using GameCore;
+using GameCore;
 using MEC;
 using ObscureLabs.Gamemode_Handler;
 using ObscureLabs.Modules.Gamemode_Handler.Minigames;
+using ObscureLabs.SpawnSystem;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -134,9 +135,11 @@ namespace ObscureLabs.Gamemode_Handler
             }
             else
             {
+                Plugin.modules.GetModule("SCP3114").Init();
                 Plugin.modules.GetModule("ChaosRound").Disable();
                 Plugin.modules.GetModule("gamemodeHandler").Disable();
                 Plugin.IsActiveEventround = false;
+                SCPHandler.doSCPThings();
                 WriteAllGMInfo(false, -1, ReadNext());
             }
         }
