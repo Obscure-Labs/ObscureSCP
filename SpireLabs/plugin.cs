@@ -158,6 +158,7 @@ namespace ObscureLabs
             modules.AddModule(new doctor());
             modules.AddModule(new CustomItemSpawner());
             modules.AddModule(new HealthOverride());
+            modules.AddModule(new Scp1162());
 
             RegisterEvents();
         }

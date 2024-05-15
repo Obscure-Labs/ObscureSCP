@@ -9,6 +9,12 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Exiled.API.Features;
+using Exiled.Events.EventArgs.Player;
+using Interactables.Interobjects.DoorUtils;
+using Players = Exiled.Events.Handlers.Player;
+using Exiled.API.Features.Items;
+
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
@@ -23,7 +29,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             {
                 Exiled.Events.Handlers.Server.RoundStarted += roundStarted;
                 Exiled.Events.Handlers.Player.Escaping += escaping;
-                Exiled.Events.Handlers.Player.Hurting += killingPlayer;
+                Exiled.Events.Handlers.Player.Died += killingPlayer;
                 Exiled.Events.Handlers.Player.UnlockingGenerator += unlockingGenerator;
                 Exiled.Events.Handlers.Server.RoundEnded += endingRound;
                 base.Init();
@@ -42,7 +48,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                 thirdPlace = null;
                 Exiled.Events.Handlers.Server.RoundStarted -= roundStarted;
                 Exiled.Events.Handlers.Player.Escaping -= escaping;
-                Exiled.Events.Handlers.Player.Hurting -= killingPlayer;
+                Exiled.Events.Handlers.Player.Died -= killingPlayer;
                 Exiled.Events.Handlers.Player.UnlockingGenerator -= unlockingGenerator;
                 Exiled.Events.Handlers.Server.RoundEnded -= endingRound;
                 base.Disable();
@@ -78,6 +84,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         public static void escaping(EscapingEventArgs ev)
         {
+            if (!ev.IsAllowed) { return; }
             if (ev.Player.IsCuffed)
             {
                 Timing.RunCoroutine(addXPtoPlayer(ev.Player.Cuffer.UserId, 5, "Recruiting Another Player"));
@@ -93,16 +100,25 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         public static void unlockingGenerator(UnlockingGeneratorEventArgs ev)
         {
-            if (ev.IsAllowed)
+            
+            List<ItemType> keycards = new List<ItemType>
+            {
+                ItemType.KeycardChaosInsurgency,
+            };
+
+            if (ev.Player.Items.Any(item => item is Keycard keycard && keycard.Base.Permissions.HasFlag(KeycardPermissions.ArmoryLevelTwo)))
             {
                 Timing.RunCoroutine(addXPtoPlayer(ev.Player.UserId, 2, "Unlocking Generator"));
             }
             else { return; }
         }
 
-        public static void killingPlayer(HurtingEventArgs ev)
+        public static void killingPlayer(DiedEventArgs ev)
         {
-            if (ev.Amount >= ev.Player.Health) { Timing.RunCoroutine(addXPtoPlayer(ev.Attacker.UserId, 5, "Killing Enemy Player")); }
+            if (ev.Attacker != null)
+            {
+                Timing.RunCoroutine(addXPtoPlayer(ev.Attacker.UserId, 5, $"Killing Player: {ev.Player}"));
+            }
         }
 
         public static void endingRound(RoundEndedEventArgs ev)
