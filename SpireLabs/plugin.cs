@@ -335,7 +335,7 @@ namespace ObscureLabs
 #region coreFunctionality
         private IEnumerator<float> lockAnounce()
         {
-            yield return Timing.WaitForSeconds(420);
+            yield return Timing.WaitForSeconds(600);
                 Cassie.Message(@"jam_043_3 Surface armory has been opened for all jam_020_3 pitch_0.8 warhead pitch_1 authorized personnel . . . enter with pitch_0.9 jam_010_1 caution", false, false, true);
                 foreach (Door d in Door.List)
                 {

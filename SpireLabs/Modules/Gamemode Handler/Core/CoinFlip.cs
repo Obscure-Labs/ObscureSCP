@@ -65,7 +65,7 @@
 
 
         public static string[] good = { "You gained 50HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!", "You are healed!", "GRENADE FOUNTAIN!", "Ammo pile!!", "FREE CANDY!", "You can't die for the next 25s!", "You bring health to those around you!", "Nice hat..", "You have such radiant skin!", "You got an item!", "Brought a random player to you!" };
-        public static string[] bad = { "You now have 50HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "Pocket Sand!", "You got lost and found yourself in a random room!", "Don't gamble kids!", "Beep!", "Portal to hell!!!", "Others percieve you as upside down!", "You caused a blackout in your zone!", "Door stuck! DOOR STUCK!", "Your coin melted :(", "You have been detained!", "You have been brought to a random player!", "The facility is having some technical difficulties" };
+        public static string[] bad = { "You now have 50HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "Pocket Sand!", "You got lost and found yourself in a random room!", "Don't gamble kids!", "You hear the sound of an alarm!", "Portal to hell!!!", "Others percieve you as upside down!", "You caused a blackout in your zone!", "Door stuck! DOOR STUCK!", "Your coin melted :(", "You have been detained!", "You have been brought to a random player!", "The facility is having some technical difficulties" };
 
         public static void item_change(ChangedItemEventArgs ev)
         {
@@ -602,7 +602,7 @@
                     case 9:
                         Manager.SendHint(ev.Player, bad[9], 3);
                         var zone = ev.Player.CurrentRoom.Zone;
-                        Map.TurnOffAllLights(30f, zone);
+                        Map.TurnOffAllLights(15f, zone);
                         break;
                     case 10:
                         Manager.SendHint(ev.Player, bad[10], 3);
@@ -693,7 +693,7 @@
             var rnd = new System.Random();
             Color color = colors[rnd.Next(0, colors.Count())];
             roomSel.Color = color * 9;
-            roomSel.LockDown(10, DoorLockType.AdminCommand);
+            roomSel.LockDown(10, DoorLockType.Warhead);
             yield return Timing.WaitForSeconds(30);
             roomSel.ResetColor();
         }
@@ -710,18 +710,9 @@
         }
         private static IEnumerator<float> beep(Player p)
         {
-            p.PlayBeepSound();
-            p.PlayShieldBreakSound();
-            yield return Timing.WaitForSeconds(0.5f);
-            p.PlayBeepSound();
-            p.PlayShieldBreakSound();
-            yield return Timing.WaitForSeconds(0.5f);
-            p.PlayBeepSound();
-            p.PlayShieldBreakSound();
-            yield return Timing.WaitForSeconds(0.5f);
-            p.PlayBeepSound();
-            p.PlayShieldBreakSound();
-            yield return Timing.WaitForSeconds(0.1f);
+            Warhead.DetonationTimer = 120f;
+            Warhead.Start();
+            yield break;
         }
         private static IEnumerator<float> enterPD(Player p, ZoneType zt)
         {

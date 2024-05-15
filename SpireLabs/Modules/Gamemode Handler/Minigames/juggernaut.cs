@@ -7,6 +7,7 @@ using PlayerRoles;
 using System.Collections.Generic;
 using System.Linq;
 using PlayerRoles.PlayableScps.Scp3114;
+using MapEditorReborn.API.Extensions;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
 {
@@ -26,7 +27,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
             while (true)// This is a safe infinite loop 
             {
                 Log.Info($"Running Juggernaut Round Respawn Wave Handler for count: {wavecount}");
-                Respawn.ChaosTickets = 100;
+                Respawn.ChaosTickets = Respawn.ChaosTickets + 100;
                 Respawn.TimeUntilNextPhase = 120f;
                 yield return Timing.WaitForSeconds(120f);
                 Respawn.ForceWave(Respawning.SpawnableTeamType.ChaosInsurgency, false);
@@ -86,9 +87,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
 
             }
             yield return Timing.WaitForSeconds(0.5f);
-            juggernautPlayer.MaxHealth = maxjhp;
-            juggernautPlayer.Heal(maxjhp, true);
-
+            juggernautPlayer.Health = maxjhp;
+            juggernautPlayer.MaxHealth = maxjhp / 2.7f;
 
         }
     }
