@@ -39,6 +39,11 @@ namespace SpireLabs.GUI
             }
         }
 
+        internal static IEnumerator<float> sendDead(Player deadPlayer, Player SpectatingPlayer)
+        {
+
+        }
+
         internal static IEnumerator<float> sendJoinLeave(Player p, char jl)
         {
             string usr = p.DisplayNickname;

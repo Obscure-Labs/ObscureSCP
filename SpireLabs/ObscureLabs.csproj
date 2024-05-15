@@ -127,6 +127,7 @@
     <Compile Include="Modules\Gamemode Handler\Core\DamageModifiers.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\MapInteractions.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\MvpSystem.cs" />
+    <Compile Include="Modules\Gamemode Handler\Core\Scp1162.cs" />
     <Compile Include="Modules\Gamemode Handler\Minigames\chaos.cs" />
     <Compile Include="Modules\Gamemode Handler\Minigames\gamemodeHandler.cs" />
     <Compile Include="Modules\Gamemode Handler\Minigames\tdm.cs" />
@@ -158,6 +159,5 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
