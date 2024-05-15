@@ -46,7 +46,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             try
             {
                 Exiled.Events.Handlers.Player.DroppedItem -= droppedItem;
-                Timing.KillCoroutines(playerposroutine);
+                //Timing.KillCoroutines(playerposroutine);
                 base.Disable();
                 return true;
             }
