@@ -93,18 +93,18 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         {
             if (ev.IsLooking)
             {
-                Timing.RunCoroutine(addXPtoPlayer(ev.Player.UserId, 1, "Had a player look at your face..."));
+                Timing.RunCoroutine(addXPtoPlayer(ev.Player, 1, "Had a player look at your face..."));
             }
         }
         public static void warheadOpen(ActivatingWarheadPanelEventArgs ev)
         {
-            Timing.RunCoroutine(addXPtoPlayer(ev.Player.UserId, 7, "Opening The Warhead Panel"));
+            Timing.RunCoroutine(addXPtoPlayer(ev.Player, 7, "Opening The Warhead Panel"));
         }
 
 
         public static void escapingPD(EscapingPocketDimensionEventArgs ev)
         {
-            Timing.RunCoroutine(addXPtoPlayer(ev.Player.UserId, 3, "Escaping The Pocket Dimension"));
+            Timing.RunCoroutine(addXPtoPlayer(ev.Player, 3, "Escaping The Pocket Dimension"));
         }
             
         public static void escaping(EscapingEventArgs ev)
@@ -112,12 +112,12 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             if (!ev.IsAllowed) { return; }
             if (ev.Player.IsCuffed)
             {
-                Timing.RunCoroutine(addXPtoPlayer(ev.Player.Cuffer.UserId, 5, "Recruiting Another Player"));
-                Timing.RunCoroutine(addXPtoPlayer(ev.Player.UserId, 2, "Escaping as a prisoner"));
+                Timing.RunCoroutine(addXPtoPlayer(ev.Player.Cuffer, 5, "Recruiting Another Player"));
+                Timing.RunCoroutine(addXPtoPlayer(ev.Player, 2, "Escaping as a prisoner"));
             }
             else
             {
-                Timing.RunCoroutine(addXPtoPlayer(ev.Player.UserId, 3, "Escaping Facility"));
+                Timing.RunCoroutine(addXPtoPlayer(ev.Player, 3, "Escaping Facility"));
             }
 
 
@@ -133,7 +133,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
             if (ev.Player.Items.Any(item => item is Keycard keycard && keycard.Base.Permissions.HasFlag(KeycardPermissions.ArmoryLevelTwo)))
             {
-                Timing.RunCoroutine(addXPtoPlayer(ev.Player.UserId, 2, "Unlocking Generator"));
+                Timing.RunCoroutine(addXPtoPlayer(ev.Player, 2, "Unlocking Generator"));
             }
             else { return; }
         }
@@ -142,7 +142,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         {
             if (ev.Attacker != null)
             {
-                Timing.RunCoroutine(addXPtoPlayer(ev.Attacker.UserId, 5, $"Killing Player: {ev.Player}"));
+                Timing.RunCoroutine(addXPtoPlayer(ev.Attacker, 5, $"Killing Player: {ev.Player.DisplayNickname}"));
             }
         }
 
@@ -211,12 +211,12 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         }
 
-        public static IEnumerator<float> addXPtoPlayer(string p, int xp, string reason)
+        public static IEnumerator<float> addXPtoPlayer(Player p, int xp, string reason)
         {
             yield return Timing.WaitForOneFrame;
-                if (p != null && p != null && reason != null)
-                _PlayerData.FirstOrDefault(x => x.player.UserId == p).xp += xp;
-                Manager.SendHint(Player.Get(p), $"You Gained {xp} points for: {reason}", 5);
+                if (p != null && reason != null)
+                _PlayerData.FirstOrDefault(x => x.player.Id == p.Id).xp += xp;
+                Manager.SendHint(p, $"You Gained {xp} points for: {reason}", 5);
         }
     }
 }
