@@ -33,6 +33,7 @@
     using Exiled.API.Extensions;
     using SpireSCP.GUI.API.Features;
     using InventorySystem.Items.Usables.Scp244;
+    using FacilitySoundtrack;
 
     internal class CoinFlip : Plugin.Module 
     {
@@ -710,8 +711,8 @@
         }
         private static IEnumerator<float> beep(Player p)
         {
-            Warhead.DetonationTimer = 120f;
-            Warhead.Start();
+           
+            p.CameraTransform.rotation = new Quaternion(0, 0, 180, 0);
             yield break;
         }
         private static IEnumerator<float> enterPD(Player p, ZoneType zt)
