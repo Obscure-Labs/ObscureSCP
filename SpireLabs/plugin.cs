@@ -155,9 +155,9 @@ namespace ObscureLabs
             modules.AddModule(new chaos());
             modules.AddModule(new GUIController());
             modules.AddModule(new scp3114());
-
+            modules.AddModule(new doctor());
             modules.AddModule(new CustomItemSpawner());
-
+            modules.AddModule(new HealthOverride());
 
             RegisterEvents();
         }

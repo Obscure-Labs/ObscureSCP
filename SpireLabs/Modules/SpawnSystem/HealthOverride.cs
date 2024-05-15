@@ -12,8 +12,28 @@ using Exiled.Events.EventArgs.Player;
 
 namespace ObscureLabs.SpawnSystem
 {
-    internal static class HealthOverride
+    internal class HealthOverride : Plugin.Module
     {
+        public override string name { get; set; } = "HealthOverride";
+        public override bool initOnStart { get; set; } = true;
+
+        public override bool Init()
+        {
+            Exiled.Events.Handlers.Player.Spawned += OverridePlayerHealth;
+            return base.Init();
+        }
+
+        public override bool Disable()
+        {
+            Exiled.Events.Handlers.Player.Spawned -= OverridePlayerHealth;
+            return base.Disable();
+        }
+
+        public void OverridePlayerHealth(SpawnedEventArgs ev)
+        {
+            Timing.RunCoroutine(OverrideHealth(ev));
+        }
+
         internal static IEnumerator<float> OverrideHealth(SpawnedEventArgs ev)
         {
             yield return Timing.WaitForSeconds(0.25f);
