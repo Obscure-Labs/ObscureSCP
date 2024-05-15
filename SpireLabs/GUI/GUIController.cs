@@ -89,7 +89,7 @@ namespace SpireLabs.GUI
 
         private void OnPlayerJoined(JoinedEventArgs ev)
         {
-            Debug.Log("GUI HANDLER SAYS: Player joined");
+            //Debug.Log("GUI HANDLER SAYS: Player joined");
             Timing.RunCoroutine(guiHandler.displayGUI(ev.Player), "guiRoutine");
         }
 
