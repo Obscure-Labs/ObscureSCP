@@ -100,19 +100,19 @@ namespace SpireLabs.GUI
             s+= $"<align=right><size=16>Round Time: {Round.ElapsedTime.Minutes}:{Round.ElapsedTime.Seconds}\n"; //7
             if (Warhead.IsDetonated)
             {
-                s += $"<align=right><size=16>Warhead Status: <color=#c00>Detonated<color=#fff>\n"; //7.5
+                s += $"<align=right><size=16>Warhead Status: <color=#c00>Detonated<color=#fff>\n</size><size=32>"; //7.5
             }
             else if (Warhead.IsInProgress)
             {
-                s += $"<align=right><size=16>Warhead Status: <color=#b45f06>In Progress<color=#fff>\n"; //7.5
+                s += $"<align=right><size=16>Warhead Status: <color=#b45f06>In Progress<color=#fff>\n</size><size=32>"; //7.5
             }
             else if (Warhead.LeverStatus)
             {
-                s += $"<align=right><size=16>Warhead Status: <color=#090>Armed<color=#fff>\n"; //7.5
+                s += $"<align=right><size=16>Warhead Status: <color=#090>Armed<color=#fff>\n</size><size=32>"; //7.5
             }
             else
             {
-                s += $"<align=right><size=16>Warhead Status: <color=#2986cc>Disarmed<color=#fff>\n"; //7.5
+                s += $"<align=right><size=16>Warhead Status: <color=#2986cc>Disarmed<color=#fff>\n</size><size=32>"; //7.5
             }
             s+= $"\t\n"; //8
             s+= $"\t\n"; //9
