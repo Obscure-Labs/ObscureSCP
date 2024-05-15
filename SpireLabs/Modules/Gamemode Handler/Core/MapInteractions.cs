@@ -44,7 +44,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
             while (true)
             {
-                if (Manager.checkLoop()) break;
                 var roomFlicker = Room.Random(ZoneType.LightContainment);
                 roomFlicker.TurnOffLights(0.15f);
                 yield return Timing.WaitForSeconds(1);
@@ -63,9 +62,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         private IEnumerator<float> lockAnounce()
         {
             yield return Timing.WaitForSeconds(420);
-            if (Manager.checkLoop()) { }
-            else
-            {
                 Cassie.Message(@"jam_043_3 Surface armory has been opened for all jam_020_3 pitch_0.8 warhead pitch_1 authorized personnel . . . enter with pitch_0.9 jam_010_1 caution", false, false, true);
                 foreach (Door d in Door.List)
                 {
@@ -82,7 +78,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                     }
 
                 }
-            }
         }
 
 

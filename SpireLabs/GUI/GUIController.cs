@@ -7,7 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Exiled.API.Features;
 using ObscureLabs;
+using UnityEngine;
 
 namespace SpireLabs.GUI
 {
@@ -39,18 +41,29 @@ namespace SpireLabs.GUI
 
         public override bool Disable()
         {
-            guiHandler.peenNutMSG = new string[60];
-            guiHandler.killLoop = false;
-            guiHandler.joinLeave = string.Empty;
-            guiHandler.hint = new string[60];
-            Exiled.Events.Handlers.Player.Joined -= OnPlayerJoined;
-            Exiled.Events.Handlers.Player.Verified -= JoinMSG;
-            Exiled.Events.Handlers.Player.Left -= LeaveMSG;
-            Exiled.Events.Handlers.Server.RoundStarted -= OnRoundStart;
-            Exiled.Events.Handlers.Player.Hurt -= playerShot;
-            Exiled.Events.Handlers.Player.Spawning -= spawning;
-            base.Disable();
-            return true;
+            try
+            {
+                Timing.KillCoroutines("guiRoutine");
+                guiHandler.peenNutMSG = new string[60];
+                guiHandler.killLoop = false;
+                guiHandler.joinLeave = string.Empty;
+                guiHandler.hint = new string[60];
+                Exiled.Events.Handlers.Server.WaitingForPlayers -= restarting;
+                Exiled.Events.Handlers.Player.Joined -= OnPlayerJoined;
+                Exiled.Events.Handlers.Player.Verified -= JoinMSG;
+                Exiled.Events.Handlers.Player.Left -= LeaveMSG;
+                Exiled.Events.Handlers.Server.RoundStarted -= OnRoundStart;
+                Exiled.Events.Handlers.Player.Hurt -= playerShot;
+                Exiled.Events.Handlers.Player.Spawning -= spawning;
+                Exiled.Events.Handlers.Server.RestartingRound -= restarting;
+                base.Disable();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Oop : {ex}");
+                return false;
+            }
         }
 
         private void restarting()
@@ -76,7 +89,8 @@ namespace SpireLabs.GUI
 
         private void OnPlayerJoined(JoinedEventArgs ev)
         {
-            Timing.RunCoroutine(guiHandler.displayGUI(ev.Player));
+            Debug.Log("GUI HANDLER SAYS: Player joined");
+            Timing.RunCoroutine(guiHandler.displayGUI(ev.Player), "guiRoutine");
         }
 
         private void JoinMSG(VerifiedEventArgs ev)

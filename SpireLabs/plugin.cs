@@ -142,6 +142,7 @@ namespace ObscureLabs
 
         public void PopulateModules()
         {
+            modules.AddModule(new GUIController());
             modules.AddModule(new MvpSystem());
             modules.AddModule(new corruptGuard());
             modules.AddModule(new DamageModifiers());
@@ -153,7 +154,6 @@ namespace ObscureLabs
             modules.AddModule(new gamemodeHandler());
             modules.AddModule(new MapInteractions());
             modules.AddModule(new chaos());
-            modules.AddModule(new GUIController());
             modules.AddModule(new scp3114());
             modules.AddModule(new doctor());
             modules.AddModule(new CustomItemSpawner());
@@ -336,9 +336,6 @@ namespace ObscureLabs
         private IEnumerator<float> lockAnounce()
         {
             yield return Timing.WaitForSeconds(420);
-            if (Manager.checkLoop()) { }
-            else
-            {
                 Cassie.Message(@"jam_043_3 Surface armory has been opened for all jam_020_3 pitch_0.8 warhead pitch_1 authorized personnel . . . enter with pitch_0.9 jam_010_1 caution", false, false, true);
                 foreach (Door d in Door.List)
                 {
@@ -355,7 +352,6 @@ namespace ObscureLabs
                     }
 
                 }
-            }
         }
 
         private void Player_Joined(JoinedEventArgs ev)
@@ -378,7 +374,6 @@ namespace ObscureLabs
             Timing.KillCoroutines("juggerwave");
             PlayerList.Clear();
             playerCount = 0;
-            Manager.killLoop(true);
             foreach (Module m in modules.moduleList)
             {
                 m.Init();

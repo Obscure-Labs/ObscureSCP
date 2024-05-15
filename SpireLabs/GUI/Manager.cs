@@ -48,15 +48,5 @@ namespace SpireSCP.GUI.API.Features
         {
             guiHandler.modifiers[pos] = text;
         }
-
-        public static void killLoop(bool pos)
-        {
-            guiHandler.killLoop = pos;
-        }
-
-        public static bool checkLoop()
-        {
-            return guiHandler.killLoop;
-        }
     }
 }
