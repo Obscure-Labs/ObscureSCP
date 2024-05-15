@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using Exiled.API.Features;
 using MEC;
 using ObscureLabs.Items;
@@ -51,7 +52,6 @@ namespace ObscureLabs
             LoadItems();
             CustomItem.RegisterItems();
             PopulateModules();
-
             
 
 
@@ -370,6 +370,7 @@ namespace ObscureLabs
 
         private void restarting()
         {
+            Thread.Sleep(500);
             foreach (Module m in modules.moduleList)
             {
                 m.Disable();

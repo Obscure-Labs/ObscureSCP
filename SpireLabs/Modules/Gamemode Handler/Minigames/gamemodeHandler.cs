@@ -134,7 +134,8 @@ namespace ObscureLabs.Gamemode_Handler
             }
             else
             {
-
+                Plugin.modules.GetModule("ChaosRound").Disable();
+                Plugin.modules.GetModule("gamemodeHandler").Disable();
                 Plugin.IsActiveEventround = false;
                 WriteAllGMInfo(false, -1, ReadNext());
             }
