@@ -1,4 +1,4 @@
-﻿using MEC;
+using MEC;
 using PlayerRoles;
 using System;
 using System.Collections.Generic;
@@ -189,7 +189,6 @@ namespace SpireLabs.GUI
             string localHint = h;
             yield return Timing.WaitForSeconds(t);
             if (p.CurrentHint.Content.Contains(localHint)) hint[p.Id] = string.Empty;
-            if (p.Role == RoleTypeId.Spectator) hint[p.Id] = string.Empty;
         }
 
         internal static string[] hint = new string[60];
@@ -610,16 +609,12 @@ namespace SpireLabs.GUI
                     }
 
                     Log.Debug("Shown Hint");
-                    if (!killLoop)
-                        pp = true;
-                    else
-                        break;
                 }
                 else if (!Round.IsLobby && !p.IsAlive)
                 {
                     yield return Timing.WaitForSeconds(0.5f);
-                    Log.Debug($"Sending Dead Message to : {p.DisplayNickname}");
                     sendDead(p);
+                    Log.Debug($"Sending Dead Message to : {p.DisplayNickname}");
                 }
                 else
                 {
