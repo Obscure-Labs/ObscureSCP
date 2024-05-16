@@ -44,7 +44,7 @@ namespace ObscureLabs.Items
             },
         };
         public override bool ExplodeOnCollision { get; set; } = false;
-        public override float FuseTime { get; set; } = 3.8f;
+        public override float FuseTime { get; set; } = 2.8f;
 
         protected override void SubscribeEvents()
         {
@@ -70,19 +70,22 @@ namespace ObscureLabs.Items
 
         protected override void OnExploding(ExplodingGrenadeEventArgs ev)
         {
-            base.OnExploding(ev);
             Timing.RunCoroutine(boomb(ev));
+            base.OnExploding(ev);
+
         }
 
         private IEnumerator<float> boomb(ExplodingGrenadeEventArgs ev)
         {
             var rnd = new System.Random();
-            yield return Timing.WaitForOneFrame;
-            for (int i = 0; i < 15; i++)
+            yield return Timing.WaitForSeconds(0.35f);
+            for (int i = 0; i < 7; i++)
             {
+
                 ExplosiveGrenade grenade = (ExplosiveGrenade)Item.Create(ItemType.GrenadeHE);
-                grenade.FuseTime = (float)((float)(rnd.Next(75, 125))/100);
+                grenade.FuseTime = rnd.Next(0, 101) / 100f * 1.5f;
                 grenade.ScpDamageMultiplier = 0.25f;
+                grenade.SpawnActive(ev.Position, ev.Player);
                 grenade.SpawnActive(ev.Position, ev.Player);
             }
         }

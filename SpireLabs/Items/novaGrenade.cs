@@ -78,7 +78,7 @@ namespace ObscureLabs.Items
         private IEnumerator<float> grenadeLight(ThrownProjectileEventArgs ev)
         {
             ExplosionGrenadeProjectile g = ev.Projectile as ExplosionGrenadeProjectile;
-            yield return Timing.WaitForSeconds(1f);
+            yield return Timing.WaitForSeconds(0.65f);
 
             var rnd = new System.Random();
             Color color = colors[rnd.Next(0, colors.Count())];
@@ -86,26 +86,50 @@ namespace ObscureLabs.Items
             var target = ev.Projectile.Position;
             g.Destroy();
             var light = Exiled.API.Features.Toys.Light.Create(target, null, Vector3.one, true, color);
-            light.Intensity = 1000000;
-            light.Range = 25;
+            light.Intensity = 0;
+            light.Range = 0;
             light.ShadowEmission = true;
+            light.MovementSmoothing = 60;
             light.Spawn();
             Room room = Room.Get(target);
-            room.TurnOffLights(5f);
-            yield return Timing.WaitForSeconds(0.5f);
-            for (int i = 0; i < 250; i++)
+            room.TurnOffLights(9999f);
+
+            for (int i = 0; i < 20; i++)
             {
-                yield return Timing.WaitForSeconds(0.005f);
-                light.Range -= 0.10f;
-                light.Intensity -= 4000f;
+                yield return Timing.WaitForOneFrame;
+                light.Range += 6.5f;
+                light.Intensity += 400f;
             }
+  
+            yield return Timing.WaitForSeconds(0.5f);
+
+            for (int i = 0; i < 20; i++)
+            {
+                yield return Timing.WaitForOneFrame;
+                light.Range -= 6.5f;
+                light.Intensity -= 400f;
+            }
+
+
+
+
             ExplosiveGrenade grenade = (ExplosiveGrenade)Item.Create(ItemType.GrenadeHE);
             grenade.FuseTime = 0;
             grenade.ScpDamageMultiplier = 2.25f;
             grenade.MaxRadius = 50;
-            light.Destroy();
-            grenade.SpawnActive(target, ev.Player);
 
+            grenade.SpawnActive(new Vector3(target.x + 1, target.y, target.z), ev.Player);
+            grenade.SpawnActive(new Vector3(target.x, target.y, target.z + 1), ev.Player);
+            grenade.SpawnActive(new Vector3(target.x - 1, target.y, target.z), ev.Player);
+            grenade.SpawnActive(new Vector3(target.x, target.y, target.z - 1), ev.Player);
+
+            grenade.SpawnActive(new Vector3(target.x + 1, target.y, target.z + 1), ev.Player);
+            grenade.SpawnActive(new Vector3(target.x - 1, target.y, target.z - 1), ev.Player);
+            grenade.SpawnActive(new Vector3(target.x - 1, target.y, target.z + 1), ev.Player);
+            grenade.SpawnActive(new Vector3(target.x + 1, target.y, target.z - 1), ev.Player);
+
+            room.TurnOffLights(0.5f);
+            light.Destroy();
         }
     }
 }
