@@ -72,7 +72,7 @@ namespace ObscureLabs.Items
             else
             {
                 FlashGrenade origin = ev.Item as FlashGrenade;
-                origin.FuseTime = 1.3f;
+                origin.FuseTime = 0.5f;
             }
 
         }
@@ -87,12 +87,18 @@ namespace ObscureLabs.Items
         {
             var rnd = new System.Random();
             yield return Timing.WaitForOneFrame;
-            for (int i = 0; i < 15; i++)
+
+
+            for (int i = 0; i < 4; i++)
             {
+                yield return Timing.WaitForOneFrame;
                 FlashGrenade grenade = (FlashGrenade)Item.Create(ItemType.GrenadeFlash);
-                grenade.FuseTime = 0.001f;
+                grenade.FuseTime = 0.0f;
+                
                 grenade.SpawnActive(ev.Position, ev.Player);
+
             }
+
         }
 
         private void changedToItem(ChangedItemEventArgs ev)
