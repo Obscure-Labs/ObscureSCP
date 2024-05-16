@@ -1,4 +1,4 @@
-﻿using CustomItems.API;
+using CustomItems.API;
 using Exiled.API.Features;
 using Exiled.API.Features.Attributes;
 using Exiled.API.Features.Components;
