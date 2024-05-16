@@ -123,10 +123,10 @@ namespace ObscureLabs.Items
             grenade.SpawnActive(new Vector3(target.x - 1, target.y, target.z), ev.Player);
             grenade.SpawnActive(new Vector3(target.x, target.y, target.z - 1), ev.Player);
 
-            grenade.SpawnActive(new Vector3(target.x + 1, target.y, target.z + 1), ev.Player);
-            grenade.SpawnActive(new Vector3(target.x - 1, target.y, target.z - 1), ev.Player);
-            grenade.SpawnActive(new Vector3(target.x - 1, target.y, target.z + 1), ev.Player);
-            grenade.SpawnActive(new Vector3(target.x + 1, target.y, target.z - 1), ev.Player);
+            //grenade.SpawnActive(new Vector3(target.x + 1, target.y, target.z + 1), ev.Player);
+            //grenade.SpawnActive(new Vector3(target.x - 1, target.y, target.z - 1), ev.Player);
+            //grenade.SpawnActive(new Vector3(target.x - 1, target.y, target.z + 1), ev.Player);
+            //grenade.SpawnActive(new Vector3(target.x + 1, target.y, target.z - 1), ev.Player);
 
             room.TurnOffLights(0.5f);
             light.Destroy();
