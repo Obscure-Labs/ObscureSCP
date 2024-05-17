@@ -73,7 +73,8 @@ namespace ObscureLabs.Items
 
             p.Spawn();
             p.Range = 25;
-            p.Intensity = 15f;
+            p.MovementSmoothing = 60;
+            p.Intensity = 25f;
             p.Base.gameObject.transform.SetParent(pl.GameObject.transform);
             //p1.Base.gameObject.transform.SetParent(pl.GameObject.transform);
 
