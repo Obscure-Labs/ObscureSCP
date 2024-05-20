@@ -115,13 +115,17 @@ namespace ObscureLabs.Items
 
             ExplosiveGrenade grenade = (ExplosiveGrenade)Item.Create(ItemType.GrenadeHE);
             grenade.FuseTime = 0;
-            grenade.ScpDamageMultiplier = 2.25f;
+            grenade.ScpDamageMultiplier = 1.25f;
             grenade.MaxRadius = 50;
 
-            grenade.SpawnActive(new Vector3(target.x + 1, target.y, target.z), ev.Player);
-            grenade.SpawnActive(new Vector3(target.x, target.y, target.z + 1), ev.Player);
-            grenade.SpawnActive(new Vector3(target.x - 1, target.y, target.z), ev.Player);
-            grenade.SpawnActive(new Vector3(target.x, target.y, target.z - 1), ev.Player);
+            grenade.SpawnActive(new Vector3(target.x + 0.5f, target.y, target.z));
+            grenade.SpawnActive(new Vector3(target.x + 0.25f, target.y, target.z + 0.5f));
+            grenade.SpawnActive(new Vector3(target.x + 0.25f, target.y, target.z - 0.5f));
+
+            //grenade.SpawnActive(new Vector3(target.x + 1, target.y, target.z), ev.Player);
+            //grenade.SpawnActive(new Vector3(target.x, target.y, target.z + 1), ev.Player);
+            //grenade.SpawnActive(new Vector3(target.x - 1, target.y, target.z), ev.Player);
+            //grenade.SpawnActive(new Vector3(target.x, target.y, target.z - 1), ev.Player);
 
             //grenade.SpawnActive(new Vector3(target.x + 1, target.y, target.z + 1), ev.Player);
             //grenade.SpawnActive(new Vector3(target.x - 1, target.y, target.z - 1), ev.Player);

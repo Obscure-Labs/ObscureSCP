@@ -151,6 +151,7 @@ namespace ObscureLabs.Items
                 if (Math.Sqrt((Math.Pow((g.Position.x - ppp.Position.x), 2)) + (Math.Pow((g.Position.y - ppp.Position.y), 2))) > 3.5f) continue;
                 if (ppp.Role.Team != ev.Player.Role.Team)
                 {
+                    ev.Player.ShowHitMarker();
                     ppp.Hurt(250, DamageType.Explosion);
                     ppp.EnableEffect(EffectType.Burned, 30, true);
                 }
