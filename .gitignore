@@ -12,6 +12,8 @@ SpireLabs/obj/
 
 *.vsidx
 
+.idea/
+
 .vs/ObscureLabs/v17/
 
 .vs/SpireLabs/DesignTimeBuild/
