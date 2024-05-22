@@ -177,4 +177,7 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy /Y "$(TargetPath)" "%25APPDATA%25\EXILED\Plugins/"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

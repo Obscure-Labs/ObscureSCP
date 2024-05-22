@@ -30,9 +30,9 @@ namespace ObscureLabs
             { 0, CandyKindID.Red },
             { 1, CandyKindID.Blue },
             { 2, CandyKindID.Yellow },
-            { 2, CandyKindID.Purple },
-            { 2, CandyKindID.Rainbow },
-            { 2, CandyKindID.Pink },
+            { 3, CandyKindID.Purple },
+            { 4, CandyKindID.Rainbow },
+            { 5, CandyKindID.Pink },
 
         };
 

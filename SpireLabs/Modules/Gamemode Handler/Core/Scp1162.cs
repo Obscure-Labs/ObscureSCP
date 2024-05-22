@@ -57,7 +57,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             var customItemChance = UnityEngine.Random.Range(0, 101);
             var isCustomItem = customItemChance >= 50 && customItemChance <= 55;
 
-            var isIn1162 = Vector3.Distance(ev.Pickup.Position, RoleTypeId.Scp173.GetRandomSpawnLocation().Position) > 8.2f;
+            var isIn1162 = Vector3.Distance(ev.Pickup.Position, RoleTypeId.Scp173.GetRandomSpawnLocation().Position) <= 8.2f;
 
             if (isCustomItem && isIn1162)
             {
@@ -82,7 +82,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             while (!Round.IsEnded)
             {
                 yield return Timing.WaitForSeconds(1f);
-
+                Log.Info("CHECKING RN");
                 foreach (var player in Player.List)
                 {
                     var player_in1162 = Vector3.Distance(player.Transform.position, RoleTypeId.Scp173.GetRandomSpawnLocation().Position) > 8.2f;
