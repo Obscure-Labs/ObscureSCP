@@ -1,17 +1,13 @@
 ﻿using Exiled.API.Features;
-using Exiled.API.Features.Roles;
-using Exiled.Events.EventArgs.Player;
 using MEC;
 using PlayerRoles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ObscureLabs.SpawnSystem
 {
-    
+
     internal class SCPHandler
     {
         public static List<Player> scPPs = new List<Player>();
@@ -38,7 +34,7 @@ namespace ObscureLabs.SpawnSystem
 
         internal static void doSCPThings()
         {
-            foreach(Player iP in Player.List)
+            foreach (Player iP in Player.List)
             {
                 if (iP.IsScp)
                 {

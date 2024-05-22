@@ -1,222 +1,204 @@
 ﻿using Exiled.API.Features;
-using Exiled.Events.EventArgs.Player;
-using Exiled.Events.EventArgs.Server;
-using MEC;
-using SpireSCP.GUI.API.Features;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Exiled.API.Features;
-using Interactables.Interobjects.DoorUtils;
-using Players = Exiled.Events.Handlers;
 using Exiled.API.Features.Items;
-using AdminToys;
-using Exiled.Events.Handlers;
+using Exiled.Events.EventArgs.Player;
 using Exiled.Events.EventArgs.Scp096;
+using Exiled.Events.EventArgs.Server;
+using Interactables.Interobjects.DoorUtils;
+using MEC;
+using ObscureLabs.API.Data;
+using ObscureLabs.API.Features;
+using SpireSCP.GUI.API.Features;
+using System.Collections.Generic;
+using System.Linq;
 using Player = Exiled.API.Features.Player;
-
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
-    internal class MvpSystem : Plugin.Module
+    public class MvpSystem : Module
     {
-        public override string name { get; set; } = "MVPSystem";
-        public override bool initOnStart { get; set; } = true;
+        private static List<PlayerData> _playerData = new();
+        private static PlayerData _firstPlace;
+        private static PlayerData _secondPlace;
+        private static PlayerData _thirdPlace;
 
-        public override bool Init()
+        public override string Name => "MVPSystem";
+
+        public override bool IsInitializeOnStart => true;
+
+        public override bool Enable()
         {
-            try
-            {
-                Exiled.Events.Handlers.Server.RoundStarted += roundStarted;
-                Exiled.Events.Handlers.Player.Escaping += escaping;
-                Exiled.Events.Handlers.Player.Died += killingPlayer;
-                Exiled.Events.Handlers.Player.UnlockingGenerator += unlockingGenerator;
-                Exiled.Events.Handlers.Server.RoundEnded += endingRound;
-                Exiled.Events.Handlers.Player.EscapingPocketDimension += escapingPD;
-                Exiled.Events.Handlers.Player.ActivatingWarheadPanel += warheadOpen;
-                Exiled.Events.Handlers.Scp096.AddingTarget += shyguySeen;
-                base.Init();
-                return true;
-            }
-            catch { return false; }
+            Exiled.Events.Handlers.Server.RoundStarted += OnRoundStarted;
+            Exiled.Events.Handlers.Player.Escaping += OnEscaping;
+            Exiled.Events.Handlers.Player.Died += OnKillingPlayer;
+            Exiled.Events.Handlers.Player.UnlockingGenerator += OnUnlockingGenerator;
+            Exiled.Events.Handlers.Server.RoundEnded += OnEndingRound;
+            Exiled.Events.Handlers.Player.EscapingPocketDimension += OnEscapingPocketDimension;
+            Exiled.Events.Handlers.Player.ActivatingWarheadPanel += OnActivatingWarheadPanel;
+            Exiled.Events.Handlers.Scp096.AddingTarget += OnAddingTarget;
+
+            return base.Enable();
         }
 
         public override bool Disable()
         {
-            try
-            {
-                _PlayerData.Clear();
-                firstPlace = null;
-                secondPlace = null;
-                thirdPlace = null;
-                Exiled.Events.Handlers.Server.RoundStarted -= roundStarted;
-                Exiled.Events.Handlers.Player.Escaping -= escaping;
-                Exiled.Events.Handlers.Player.Died -= killingPlayer;
-                Exiled.Events.Handlers.Player.UnlockingGenerator -= unlockingGenerator;
-                Exiled.Events.Handlers.Server.RoundEnded -= endingRound;
-                Exiled.Events.Handlers.Player.EscapingPocketDimension -= escapingPD;
-                Exiled.Events.Handlers.Player.ActivatingWarheadPanel -= warheadOpen;
-                Exiled.Events.Handlers.Scp096.AddingTarget -= shyguySeen;
-                base.Disable();
-                return true;
-            }
-            catch { return false; };
+            _playerData.Clear();
+            _firstPlace = null;
+            _secondPlace = null;
+            _thirdPlace = null;
+            Exiled.Events.Handlers.Server.RoundStarted -= OnRoundStarted;
+            Exiled.Events.Handlers.Player.Escaping -= OnEscaping;
+            Exiled.Events.Handlers.Player.Died -= OnKillingPlayer;
+            Exiled.Events.Handlers.Player.UnlockingGenerator -= OnUnlockingGenerator;
+            Exiled.Events.Handlers.Server.RoundEnded -= OnEndingRound;
+            Exiled.Events.Handlers.Player.EscapingPocketDimension -= OnEscapingPocketDimension;
+            Exiled.Events.Handlers.Player.ActivatingWarheadPanel -= OnActivatingWarheadPanel;
+            Exiled.Events.Handlers.Scp096.AddingTarget -= OnAddingTarget;
+
+            return base.Disable();
         }
 
-        public class PlayerDataInstance
+        private void OnRoundStarted()
         {
-            public Exiled.API.Features.Player player { get; set; }
-            public int xp { get; set; }
-
-        }
-
-        static List<PlayerDataInstance> _PlayerData = new List<PlayerDataInstance>();
-        static PlayerDataInstance firstPlace;
-        static PlayerDataInstance secondPlace;
-        static PlayerDataInstance thirdPlace;
-        public static void roundStarted()
-        {
-            foreach (Player p in Plugin.PlayerList)
+            foreach (var player in Player.List)
             {
-                _PlayerData.Add(new PlayerDataInstance
-                {
-                    player = p,
-                    xp = 0
-                });
+                _playerData.Add(new PlayerData(player, 0));
             }
         }
 
-        public static void shyguySeen(AddingTargetEventArgs ev)
+        private void OnAddingTarget(AddingTargetEventArgs ev)
         {
-            if (ev.IsLooking)
+            if (!ev.IsLooking)
             {
-                Timing.RunCoroutine(addXPtoPlayer(ev.Player, 1, "Had a player look at your face..."));
+                return;
             }
-        }
-        public static void warheadOpen(ActivatingWarheadPanelEventArgs ev)
-        {
-            Timing.RunCoroutine(addXPtoPlayer(ev.Player, 7, "Opening The Warhead Panel"));
+
+            Timing.RunCoroutine(AddXpToPlayer(ev.Player, 1, "Had a player look at your face..."));
         }
 
-
-        public static void escapingPD(EscapingPocketDimensionEventArgs ev)
+        private void OnActivatingWarheadPanel(ActivatingWarheadPanelEventArgs ev)
         {
-            Timing.RunCoroutine(addXPtoPlayer(ev.Player, 3, "Escaping The Pocket Dimension"));
+            Timing.RunCoroutine(AddXpToPlayer(ev.Player, 7, "Opening The Warhead Panel"));
         }
-            
-        public static void escaping(EscapingEventArgs ev)
+
+        private void OnEscapingPocketDimension(EscapingPocketDimensionEventArgs ev)
         {
-            if (!ev.IsAllowed) { return; }
+            Timing.RunCoroutine(AddXpToPlayer(ev.Player, 3, "Escaping The Pocket Dimension"));
+        }
+
+        private void OnEscaping(EscapingEventArgs ev)
+        {
+            if (!ev.IsAllowed)
+            {
+                return;
+            }
+
             if (ev.Player.IsCuffed)
             {
-                Timing.RunCoroutine(addXPtoPlayer(ev.Player.Cuffer, 5, "Recruiting Another Player"));
-                Timing.RunCoroutine(addXPtoPlayer(ev.Player, 2, "Escaping as a prisoner"));
+                Timing.RunCoroutine(AddXpToPlayer(ev.Player.Cuffer, 5, "Recruiting Another Player"));
+                Timing.RunCoroutine(AddXpToPlayer(ev.Player, 2, "Escaping as a prisoner"));
             }
             else
             {
-                Timing.RunCoroutine(addXPtoPlayer(ev.Player, 3, "Escaping Facility"));
+                Timing.RunCoroutine(AddXpToPlayer(ev.Player, 3, "Escaping Facility"));
             }
-
-
         }
 
-        public static void unlockingGenerator(UnlockingGeneratorEventArgs ev)
+        private void OnUnlockingGenerator(UnlockingGeneratorEventArgs ev)
         {
-            
-            List<ItemType> keycards = new List<ItemType>
-            {
-                ItemType.KeycardChaosInsurgency,
-            };
-
             if (ev.Player.Items.Any(item => item is Keycard keycard && keycard.Base.Permissions.HasFlag(KeycardPermissions.ArmoryLevelTwo)))
             {
-                Timing.RunCoroutine(addXPtoPlayer(ev.Player, 2, "Unlocking Generator"));
+                Timing.RunCoroutine(AddXpToPlayer(ev.Player, 2, "Unlocking Generator"));
             }
-            else { return; }
-        }
-
-        public static void killingPlayer(DiedEventArgs ev)
-        {
-            if (ev.Attacker != null)
+            else
             {
-                Timing.RunCoroutine(addXPtoPlayer(ev.Attacker, 5, $"Killing Player: {ev.Player.DisplayNickname}"));
+                return;
             }
         }
 
-        public static void endingRound(RoundEndedEventArgs ev)
+        private void OnKillingPlayer(DiedEventArgs ev)
+        {
+            if (ev.Attacker is null)
+            {
+                return;
+            }
+
+            Timing.RunCoroutine(AddXpToPlayer(ev.Attacker, 5, $"Killing Player: {ev.Player.DisplayNickname}"));
+        }
+
+        private void OnEndingRound(RoundEndedEventArgs ev)
         {
             Log.Warn("ROUND ENDED");
-            _PlayerData = _PlayerData.OrderByDescending(p => p.xp).ToList();
-            //Log.Warn($"{_PlayerData.ToArray()[0].player.DisplayNickname} . {_PlayerData.ToArray()[0].xp}");
-            PlayerDataInstance[] PlayerData = _PlayerData.ToArray();
-            string h = string.Empty;
-            if(PlayerData.Count() == 0)
+            _playerData = _playerData.OrderByDescending(p => p.Xp).ToList();
+            var playerData = _playerData.ToArray();
+            var message = string.Empty;
+
+            if (playerData.Count() == 0)
             {
-                h = "There was no MVP this round :(";
+                message = "There was no MVP this round :(";
             }
-            if (PlayerData.Count() == 1)
+
+            if (playerData.Count() == 1)
             {
-                if (PlayerData[0].xp > 0)
+                if (playerData[0].Xp > 0)
                 {
-                    h += $"This rounds MVP was: {PlayerData[0].player.DisplayNickname} with {PlayerData[0].xp} points!";
+                    message += $"This rounds MVP was: {playerData[0].Player.DisplayNickname} with {playerData[0].Xp} points!";
                 }
                 else
                 {
-                    h = "There was no MVP this round :(";
+                    message = "There was no MVP this round :(";
                 }
             }
-            if (PlayerData.Count() == 2)
+            if (playerData.Count() == 2)
             {
-                if (PlayerData[0].xp > 0)
+                if (playerData[0].Xp > 0)
                 {
-                    h += $"This rounds MVP was: {PlayerData[0].player.DisplayNickname} with {PlayerData[0].xp} points!";
+                    message += $"This rounds MVP was: {playerData[0].Player.DisplayNickname} with {playerData[0].Xp} points!";
                 }
                 else
                 {
-                    h = "There was no MVP this round :(";
+                    message = "There was no MVP this round :(";
                 }
-                if (PlayerData[1].xp > 0)
+                if (playerData[1].Xp > 0)
                 {
-                    h += $"#2 was: {PlayerData[1].player.DisplayNickname} with {PlayerData[1].xp} points!";
+                    message += $"#2 was: {playerData[1].Player.DisplayNickname} with {playerData[1].Xp} points!";
                 }
             }
-            if (PlayerData.Count() >= 3)
+            if (playerData.Count() >= 3)
             {
-                if (PlayerData[0].xp > 0)
+                if (playerData[0].Xp > 0)
                 {
-                    h += $"This rounds MVP was: {PlayerData[0].player.DisplayNickname} with {PlayerData[0].xp} points!";
+                    message += $"This rounds MVP was: {playerData[0].Player.DisplayNickname} with {playerData[0].Xp} points!";
                 }
                 else
                 {
-                    h = "There was no MVP this round :(";
+                    message = "There was no MVP this round :(";
                 }
-                if (PlayerData[1].xp > 0)
+                if (playerData[1].Xp > 0)
                 {
-                    h += $"#2 was: {PlayerData[1].player.DisplayNickname} with {PlayerData[1].xp} points!";
+                    message += $"#2 was: {playerData[1].Player.DisplayNickname} with {playerData[1].Xp} points!";
                 }
-                if (PlayerData[2].xp > 0)
+                if (playerData[2].Xp > 0)
                 {
-                    h += $"#3 was: {PlayerData[2].player.DisplayNickname} with {PlayerData[2].xp} points!";
+                    message += $"#3 was: {playerData[2].Player.DisplayNickname} with {playerData[2].Xp} points!";
                 }
             }
 
-            foreach (Player p in Plugin.PlayerList)
+            foreach (Player p in Player.List)
             {
-                Manager.SendHint(p, h, 10);
+                Manager.SendHint(p, message, 10);
             }
-
-
         }
 
-        public static IEnumerator<float> addXPtoPlayer(Player p, int xp, string reason)
+        private IEnumerator<float> AddXpToPlayer(Player player, int xp, string reason)
         {
             yield return Timing.WaitForOneFrame;
-                if (p != null && reason != null)
-                _PlayerData.FirstOrDefault(x => x.player.Id == p.Id).xp += xp;
-                Manager.SendHint(p, $"You Gained {xp} points for: {reason}", 5);
+            if (player is null || reason is null)
+            {
+                yield break;
+            }
+
+            _playerData.FirstOrDefault(x => x.Player.Id == player.Id).Xp += xp;
+            Manager.SendHint(player, $"You Gained {xp} points for: {reason}", 5);
         }
     }
 }

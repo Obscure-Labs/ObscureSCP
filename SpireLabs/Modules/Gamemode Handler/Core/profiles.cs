@@ -1,121 +1,108 @@
 ﻿using Exiled.API.Features;
+using Exiled.Events.EventArgs.Player;
+using MEC;
+using ObscureLabs.API.Data;
+using ObscureLabs.API.Features;
+using ObscureLabs.API.Serializable;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Exiled.Events.EventArgs.Player;
-using UnityEngine.WSA;
-using System.Runtime.InteropServices;
-using MEC;
-using Utf8Json;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
 namespace ObscureLabs
 {
-    internal class profiles : Plugin.Module
+    public class Profiles : Module
     {
-        public override string name { get; set; } = "Profiles";
-        public override bool initOnStart { get; set; } = true;
+        public override string Name => "Profiles";
 
-        public override bool Init()
+        public override bool IsInitializeOnStart => true;
+
+        private static readonly string folder = Path.GetFullPath(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Spire\\Profiles/");
+
+        public static List<ProfileData> _profilesData = new();
+
+        private ISerializer _serializer;
+
+        private IDeserializer _deserializer;
+
+        public override bool Enable()
         {
-            try
-            {
-                Exiled.Events.Handlers.Player.Verified += profiles.OnPlayerJoined;
-                Exiled.Events.Handlers.Player.Left += profiles.OnPlayerLeave;
-                base.Init();
-                return true;
-            }
-            catch { return false; }
+            Exiled.Events.Handlers.Player.Verified += OnPlayerJoined;
+            Exiled.Events.Handlers.Player.Left += OnPlayerLeave;
+
+            _deserializer = new DeserializerBuilder()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
+
+            _serializer = new SerializerBuilder()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
+
+            return base.Enable();
         }
 
         public override bool Disable()
         {
-            try
+            _profilesData.Clear();
+            Exiled.Events.Handlers.Player.Verified -= OnPlayerJoined;
+            Exiled.Events.Handlers.Player.Left -= OnPlayerLeave;
+
+            return base.Disable();
+        }
+
+        private void OnPlayerLeave(LeftEventArgs ev)
+        {
+            _profilesData.Remove(_profilesData.FirstOrDefault(x => x.Steam64 == ev.Player.UserId));
+        }
+
+        private void OnPlayerJoined(VerifiedEventArgs ev)
+        {
+            Timing.RunCoroutine(DeserializeProfilesCoroutine(ev));
+        }
+
+        public void ToggleAudio(Player player)
+        {
+            var nD = _serializer.Serialize(new SerializableProfileData(player));
+
+            var profile = _profilesData.FirstOrDefault(x => x.Steam64 == player.UserId);
+
+            if (profile.AudioToggle == true)
             {
-                Profiles.Clear();
-                Exiled.Events.Handlers.Player.Verified -= profiles.OnPlayerJoined;
-                Exiled.Events.Handlers.Player.Left -= profiles.OnPlayerLeave;
-                base.Disable();
-                return true;
-            }
-            catch { return false; }
-        }
-
-        public static List<personData> Profiles = new List<personData>();
-        public static string folder = Path.GetFullPath(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Spire\\Profiles/");
-
-        public class profile
-        {
-            public string steam64;
-            public bool audioToggle;
-        }
-        public class personData
-        {
-            public string steam64;
-            public bool audioToggle;
-            public int uid;
-        }
-
-        internal static void toggleAudio(Player p)
-        {
-            var serializer = new SerializerBuilder()
-                .WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
-            var nD = serializer.Serialize(new profile { steam64 = p.UserId, audioToggle = false} );
-            if (Profiles.FirstOrDefault(x => x.steam64 == p.UserId).audioToggle == true)
-            {
-                Profiles.FirstOrDefault(x => x.steam64 == p.UserId).audioToggle = false;
+                profile.AudioToggle = false;
             }
             else
             {
-                Profiles.FirstOrDefault(x => x.steam64 == p.UserId).audioToggle = true;
-                nD = serializer.Serialize(new profile { steam64 = p.UserId, audioToggle = true });
+                profile.AudioToggle = true;
+                nD = _serializer.Serialize(new SerializableProfileData(player) { AudioToggle = true });
             }
-            File.WriteAllText($"{folder}{p.UserId}.yaml", nD);
+
+            File.WriteAllText($"{folder}{player.UserId}.yaml", nD);
         }
 
-        internal static void OnPlayerJoined(VerifiedEventArgs ev)
-        {
-            Timing.RunCoroutine(otherthreadfuckyou(ev));
-        }
-
-        private static IEnumerator<float> otherthreadfuckyou(VerifiedEventArgs ev)
+        private IEnumerator<float> DeserializeProfilesCoroutine(VerifiedEventArgs ev)
         {
             yield return Timing.WaitForSeconds(0.25f);
-            IEnumerable<string> profiles = Directory.GetFiles(folder);
+            var profiles = Directory.GetFiles(folder);
+            var player = ev.Player;
 
-            var deserializer = new DeserializerBuilder()
-                .WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
-            var serializer = new SerializerBuilder()
-                .WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
-
-            Player p = ev.Player;
-            if (profiles.Contains($"{folder}{p.UserId}.yaml"))
+            if (profiles.Contains($"{folder}{player.UserId}.yaml"))
             {
-                var raw = File.ReadAllText(profiles.FirstOrDefault(x => x == $"{folder}{p.UserId}.yaml"));
+                var raw = File.ReadAllText(profiles.FirstOrDefault(x => x == $"{folder}{player.UserId}.yaml"));
                 Log.Warn(raw);
-                var person = deserializer.Deserialize<profile>(raw);
-                Log.Warn(person.steam64 + person.audioToggle);
-                Profiles.Add(new personData { steam64 = p.UserId, audioToggle = person.audioToggle, uid = p.Id });
-            }
-            else 
-            { 
-                Profiles.Add(new personData { steam64 = p.UserId, audioToggle = false, uid = p.Id });
-                Log.Warn($"steam64 = {p.UserId}, audioToggle = false");
-                //var raw = JsonSerializer.Serialize(new profile { steam64 = p.UserId, audioToggle = false });
-                profile baseProfile = new profile { steam64 = p.UserId, audioToggle = false };
-                var raw = serializer.Serialize(baseProfile);
-                Log.Warn(raw);
-                File.WriteAllText($"{folder}{p.UserId}.yaml", raw);
-            }
-        }
+                var profile = _deserializer.Deserialize<SerializableProfileData>(raw);
+                Log.Warn(profile.Steam64 + profile.AudioToggle);
 
-        internal static void OnPlayerLeave(LeftEventArgs ev)
-        {
-            Profiles.Remove(Profiles.FirstOrDefault(x => x.steam64 == ev.Player.UserId));
+                _profilesData.Add(profile.ToNonSerializable());
+            }
+            else
+            {
+                _profilesData.Add(new ProfileData(player));
+                Log.Warn($"steam64 = {player.UserId}, audioToggle = false");
+                var serializableProfile = new SerializableProfileData(player);
+                var raw = _serializer.Serialize(serializableProfile);
+                Log.Warn(raw);
+                File.WriteAllText($"{folder}{player.UserId}.yaml", raw);
+            }
         }
     }
 }

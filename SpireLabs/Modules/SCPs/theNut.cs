@@ -1,111 +1,101 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Features;
-using Exiled.Events.EventArgs.Item;
 using Exiled.Events.EventArgs.Player;
-using MEC;
-using PlayerRoles;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using UnityEngine;
-using System.IO;
-using Exiled.CustomItems.API.Features;
-using Exiled.API.Features.Spawn;
-using Exiled.API.Features.Pickups;
-using Exiled.API.Features.Doors;
-using System;
-using PlayerRoles.FirstPersonControl;
-using HarmonyLib;
-using System.Reflection.Emit;
-using NorthwoodLib.Pools;
-using Exiled.API.Features.Roles;
 using Exiled.Events.EventArgs.Scp173;
+using MEC;
+using ObscureLabs.API.Features;
+using PlayerRoles;
 using SpireSCP.GUI.API.Features;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace ObscureLabs
 {
-    internal class theNut : Plugin.Module
+    public class TheNut : Module
     {
-        public override string name { get; set; } = "TheNut";
-        public override bool initOnStart { get; set; } = true;
+        public override string Name => "TheNut";
 
-        public override bool Init()
+        public override bool IsInitializeOnStart => true;
+
+        public override bool Enable()
         {
-            try
-            {
-                Exiled.Events.Handlers.Player.Hurting += theNut.scp173DMG;
-                Exiled.Events.Handlers.Scp173.Blinking += theNut.scp173TP;
-                Exiled.Events.Handlers.Scp173.UsingBreakneckSpeeds += theNut.scp173ZOOM;
-                base.Init();
-                return true;
-            }
-            catch {  return false; }
+            Exiled.Events.Handlers.Player.Hurting += OnHurting;
+            Exiled.Events.Handlers.Scp173.Blinking += OnBlinking;
+
+            return base.Enable();
         }
 
         public override bool Disable()
         {
-            try
-            {
-                Exiled.Events.Handlers.Player.Hurting -= theNut.scp173DMG;
-                Exiled.Events.Handlers.Scp173.Blinking -= theNut.scp173TP;
-                Exiled.Events.Handlers.Scp173.UsingBreakneckSpeeds -= theNut.scp173ZOOM;
-                base.Disable();
-                return true;
-            }
-            catch { return false; }
+            Exiled.Events.Handlers.Player.Hurting -= OnHurting;
+            Exiled.Events.Handlers.Scp173.Blinking -= OnBlinking;
+
+            return base.Disable();
         }
 
-        internal static void scp173DMG(HurtingEventArgs ev)
+        private void OnHurting(HurtingEventArgs ev)
         {
-            if(ev.Player.Role == RoleTypeId.Scp173)
+            if (ev.Player.Role.Type is not RoleTypeId.Scp173)
             {
-                var rnd = new System.Random();
-                int num = rnd.Next(1, 100);
-                if(num < 20 && num > 13)
-                {
-                    ev.Amount = 0;
-                    Manager.SendHint(ev.Player, "You just ignored some damage!", 5);
-                }
+                return;
+            }
+
+            int num = UnityEngine.Random.Range(1, 100);
+
+            if (num < 20 && num > 13)
+            {
+                ev.Amount = 0;
+                Manager.SendHint(ev.Player, "You just ignored some damage!", 5);
             }
         }
 
-        internal static void scp173TP(BlinkingEventArgs ev)
+        private void OnBlinking(BlinkingEventArgs ev)
         {
-            Timing.RunCoroutine(killThing(ev.Player, ev.Scp173.BreakneckActive));
+            Timing.RunCoroutine(KillCoroutine(ev.Player, ev.Scp173.BreakneckActive));
         }
 
-        private static IEnumerator<float> killThing(Player p, bool isBreakneck)
+        private static IEnumerator<float> KillCoroutine(Player player, bool isBreakneck)
         {
             yield return Timing.WaitForOneFrame;
-            if (isBreakneck && p.Health < 1000)
+
+            if (isBreakneck && player.Health < 1000)
             {
-                foreach (Player pp in Player.List)
+                foreach (Player player1 in Player.List)
                 {
-                    if (pp == p) continue;
-                    Player nP = Player.Get(p.Id);
-                    int loopCntr = 0;
-                    RaycastHit h = new RaycastHit();
-                    Player ppp = null;
+                    if (player1 == player)
+                    {
+                        continue;
+                    }
+
+                    var playerId = Player.Get(player.Id);
+                    var loopCntr = 0;
+                    var raycastHit = new RaycastHit();
+                    Player player2 = null;
+
                     do
                     {
-                        Vector3 dir = pp.Position - new Vector3(nP.Position.x, nP.Position.y + 0.1f, nP.Position.z);
-                        Physics.Raycast(nP.Position, dir, out h);
+                        var direction = player1.Position - new Vector3(playerId.Position.x, playerId.Position.y + 0.1f, playerId.Position.z);
+                        Physics.Raycast(playerId.Position, direction, out raycastHit);
                         loopCntr++;
-                    } while (!Player.TryGet(h.collider, out ppp) && loopCntr != 5);
-                    if (ppp == null) continue;
-                    if (Math.Sqrt((Math.Pow((nP.Position.x - ppp.Position.x), 2)) + (Math.Pow((nP.Position.y - ppp.Position.y), 2))) > 1.5) continue;
-                    if (ppp.IsHuman)
+                    } while (!Player.TryGet(raycastHit.collider, out player2) && loopCntr != 5);
+
+                    if (player2 is null)
                     {
-                        ppp.Hurt(200, DamageType.Crushed);
+                        continue;
+                    }
+
+                    if (Math.Sqrt(Math.Pow(playerId.Position.x - player2.Position.x, 2) + Math.Pow(playerId.Position.y - player2.Position.y, 2)) > 1.5)
+                    {
+                        continue;
+                    }
+
+                    if (player2.IsHuman)
+                    {
+                        player2.Hurt(200, DamageType.Crushed);
                     }
                 }
             }
-        }
-
-
-            internal static void scp173ZOOM(UsingBreakneckSpeedsEventArgs ev)
-        {
-            //ev.Scp173.
         }
     }
 }

@@ -1,60 +1,58 @@
 ﻿
-using System.ComponentModel;
 using Exiled.API.Interfaces;
+using ObscureLabs.API.Data;
+using ObscureLabs.Configs;
+using PlayerRoles;
+using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace ObscureLabs
 {
-    public class OverrideData
-    {
-        public bool enabled { get; set; }
-        public int healthOverride { get; set; }
-    }
-
-    public class ScalingData
-    {
-        public bool enabled { get; set; }
-        public int healthIncrease { get; set; }
-    }
-    public class config : IConfig
+    public class Config : IConfig
     {
         [Description("Plugin toggle.")]
         public bool IsEnabled { get; set; }
         [Description("Plugin console output.")]
         public bool Debug { get; set; }
+
         [Description("Sets Various Items' DPS.")]
-        public int hidDPS { get; set; } = 100;
-        public int cokeDPS { get; set; } = 100;
-        [Description("Health Override")]
-        public OverrideData Scp049Override { get; set; } = new OverrideData { enabled = false, healthOverride = 0 };
-        public OverrideData Scp0492Override { get; set; } = new OverrideData { enabled = false, healthOverride = 0 };
-        public OverrideData Scp079Override { get; set; } = new OverrideData { enabled = false, healthOverride = 0 };
-        public OverrideData Scp096Override { get; set; } = new OverrideData { enabled = false, healthOverride = 0 };
-        public OverrideData Scp106Override { get; set; } = new OverrideData { enabled = false, healthOverride = 0 };
-        public OverrideData Scp173Override { get; set; } = new OverrideData { enabled = false, healthOverride = 0 };
-        public OverrideData Scp939Override { get; set; } = new OverrideData { enabled = false, healthOverride = 0 };
-        public OverrideData Scp3114Override { get; set; } = new OverrideData { enabled = false, healthOverride = 0 };
-        public OverrideData CaptainOverride { get; set; } = new OverrideData { enabled = false, healthOverride = 0 };
-        [Description("Amount of health per player to add:")]
-        public ScalingData Scp049 { get; set; } = new ScalingData { enabled = true, healthIncrease = 0 };
-        public ScalingData Scp0492 { get; set; } = new ScalingData { enabled = true, healthIncrease = 0 };
-        public ScalingData Scp079 { get; set; } = new ScalingData { enabled = true, healthIncrease = 0 };
-        public ScalingData Scp096 { get; set; } = new ScalingData { enabled = true, healthIncrease = 0 };
-        public ScalingData Scp106 { get; set; } = new ScalingData { enabled = true, healthIncrease = 0 };
-        public ScalingData Scp173 { get; set; } = new ScalingData { enabled = true, healthIncrease = 0 };
-        public ScalingData Scp939 { get; set; } = new ScalingData { enabled = true, healthIncrease = 0 };
-        public ScalingData Scp3114 { get; set; } = new ScalingData { enabled = true, healthIncrease = 0 };
+        public int HidDPS { get; set; } = 100;
+
+        [Description("Dps.")]
+        public int CokeDPS { get; set; } = 100;
+
+        [Description("Health override")]
+        public Dictionary<RoleTypeId, HealthData> HealthOverrides { get; set; } = new()
+        {
+            { RoleTypeId.Scp049, new HealthData() },
+            { RoleTypeId.Scp0492, new HealthData() },
+            { RoleTypeId.Scp079, new HealthData() },
+            { RoleTypeId.Scp096, new HealthData() },
+            { RoleTypeId.Scp106, new HealthData() },
+            { RoleTypeId.Scp173, new HealthData() },
+            { RoleTypeId.Scp939, new HealthData() },
+            { RoleTypeId.Scp3114, new HealthData(true, 10, 0) },
+            { RoleTypeId.NtfCaptain, new HealthData() }
+        };
+
         [Description("Roles to consider:")]
-        public bool classd { get; set; }
-        public bool scientist { get; set; }
-        public bool guard { get; set; }
-        [Description("Hint Config:")]
-        public int hintHeight { get; set; } = -4;
-        public int timeBetweenHints { get; set; } = 120;
-        [Description("Lobby Data")]
-        public UnityEngine.Vector3 spawnRoomVector3 { get; set; } = new UnityEngine.Vector3((float)-9.94, 1005, (float)82.37);
-        [Description("Use Lobby Function?")]
-        public bool lobbyEnabled { get; set; } = false;
-        [Description("SCP3114 Damage Override")]
-        public int Scp3114Damage { get; set; } = 10;
+        public Dictionary<RoleTypeId, bool> RolesToConsider { get; set; } = new()
+        {
+            { RoleTypeId.ClassD, false },
+            { RoleTypeId.Scientist, false },
+            { RoleTypeId.FacilityGuard, false }
+        };
+
+        [Description("Roles damage:")]
+        public Dictionary<RoleTypeId, int> RolesDamage { get; set; } = new()
+        {
+            { RoleTypeId.Scp3114, 10 }
+        };
+
+        [Description("Hint config")]
+        public HintConfig HintConfig { get; set; }
+
+        [Description("Lobby config")]
+        public LobbyConfig LobbyConfig { get; set; }
     }
 }
