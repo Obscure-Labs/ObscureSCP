@@ -37,7 +37,10 @@ namespace ObscureLabs.Gamemode_Handler
         {
             Exiled.Events.Handlers.Server.RoundStarted += OnRoundStarted;
 
-            _serializableGameMode = ReadGameMode();
+            Timing.CallDelayed(Timing.WaitForOneFrame, () =>
+            {
+                _serializableGameMode = ReadGameMode();
+            });
 
             return base.Enable();
         }
