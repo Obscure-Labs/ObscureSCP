@@ -4,6 +4,7 @@ using ObscureLabs.API.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Exiled.API.Extensions;
 
 namespace SpireLabs.GUI
 {
@@ -172,33 +173,14 @@ namespace SpireLabs.GUI
                 if (p.IsAlive)
                 {
                     var effects = new EffectData[7];
-                    try
-                    {
-                        //if(!p.IsAlive || p.Role == RoleTypeId.Spectator || !Round.InProgress)
-                        //{}
-                        //else
-                        //{
-                        for (int i = 0; i < p.ActiveEffects.Count(); i++)
-                        {
-                            if (i > 6) break;
-                            try
-                            {
-                                Log.Debug("Checking Effect Type");
 
-                                //Log.Debug($"{p.DisplayNickname} has effect {effects[i]} as player id {i}");
-                            }
-                            catch (Exception e)
-                            {
-                                Log.Warn($"Error: {e}");
-                            }
-                        }
-                        //}
-                    }
-                    catch (Exception e)
+                    for (int i = 0; i < p.ActiveEffects.Count(); i++)
                     {
-                        Log.Warn($"Error: {e}");
+                        if (i >= 8) break;
+                        effects[i] = new EffectData(p.ActiveEffects.ElementAt(i).GetEffectType(),
+                            p.ActiveEffects.ElementAt(i).TimeLeft);
                     }
-
+                    
                     Log.Debug("Got past effects");
                     string s = "<align=center><size=32>";
 
