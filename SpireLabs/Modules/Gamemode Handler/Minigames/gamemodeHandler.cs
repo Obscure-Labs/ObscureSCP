@@ -69,7 +69,7 @@ namespace ObscureLabs.Gamemode_Handler
         {
             if (!Plugin.IsActiveEventround)
             {
-                WriteAllGameModeData(false, -1, _serializableGameMode.IsNextRoundGameMode);
+                WriteAllGameModeData(false, -1, _serializableGameMode.IsNextRoundGameMode ?? false);
                 AttemptGameModeRound(false, -1);
             }
         }
@@ -79,7 +79,7 @@ namespace ObscureLabs.Gamemode_Handler
             var ran = new Random();
             int chance = ran.Next(0, 100);
 
-            if (_serializableGameMode.IsNextRoundGameMode || force || chance > 30 && chance < 50 && _serializableGameMode.IsGameModeRound)
+            if (_serializableGameMode.IsNextRoundGameMode ?? false || force || chance > 30 && chance < 50 && _serializableGameMode.IsGameModeRound)
             {
                 Plugin.IsActiveEventround = true;
                 int selectedGM;
@@ -117,10 +117,10 @@ namespace ObscureLabs.Gamemode_Handler
             {
                 ModulesManager.GetModule("SCP3114").Enable();
                 ModulesManager.GetModule("ChaosRound").Enable();
-                ModulesManager.GetModule("GamemodeHandler").Enable();
+                ModulesManager.GetModule("GamemodeHandler").Disable();
                 Plugin.IsActiveEventround = false;
                 SCPHandler.doSCPThings();
-                WriteAllGameModeData(false, -1, _serializableGameMode.IsNextRoundGameMode);
+                WriteAllGameModeData(false, -1, _serializableGameMode.IsNextRoundGameMode ?? false);
             }
         }
     }
