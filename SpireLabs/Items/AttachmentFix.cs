@@ -1,50 +1,31 @@
-﻿using Exiled.CustomItems.API.Features;
-using Exiled.Events.EventArgs.Item;
-using MEC;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CustomItems;
+﻿using Exiled.Events.EventArgs.Item;
+using ObscureLabs.API.Features;
+
 namespace ObscureLabs.Items
 {
-    internal class Attachment_Fix : Plugin.Module
+    internal class AttachmentFix : Module
     {
-        public override string name { get; set; } = "AttachmentFix";
-        public override bool initOnStart { get; set; } = true;
+        public override string Name => "AttachmentFix";
 
+        public override bool IsInitializeOnStart => true;
 
-        public override bool Init()
+        public override bool Enable()
         {
-            try
-            {
-                Exiled.Events.Handlers.Item.ChangingAttachments += changedAttachment;
-                base.Init();
-                return true;
-            }
-            catch { return false; }
+            Exiled.Events.Handlers.Item.ChangingAttachments += OnChangingAttachments;
+
+            return base.Enable();
         }
 
         public override bool Disable()
         {
-            try
-            {
-                Exiled.Events.Handlers.Item.ChangingAttachments -= changedAttachment;
-                base.Disable();
-                return true;
-            }
-            catch { return false; }
+            Exiled.Events.Handlers.Item.ChangingAttachments -= OnChangingAttachments;
+
+            return base.Disable();
         }
 
-
-        private static void changedAttachment(ChangingAttachmentsEventArgs ev)
+        private void OnChangingAttachments(ChangingAttachmentsEventArgs ev)
         {
-            if (CustomItems.API.API.HasCustomItemInHand(ev.Player, out CustomItems.API.CustomItem i))
-            {
-                ev.IsAllowed = false;
-            }
-
+            ev.IsAllowed = !CustomItems.API.API.HasCustomItemInHand(ev.Player, out _);
         }
     }
 }

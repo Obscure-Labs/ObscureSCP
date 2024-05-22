@@ -1,66 +1,18 @@
-﻿using CommandSystem.Commands.Console;
-using CustomItems.API;
-using Exiled.API.Enums;
+﻿using Exiled.API.Enums;
 using Exiled.API.Extensions;
 using Exiled.API.Features;
-using Exiled.API.Features.Items;
 using Exiled.API.Features.Pickups;
-using Exiled.CustomItems.API.Features;
-using HarmonyLib;
-using InventorySystem.Items.MicroHID;
 using MEC;
-using System;
+using ObscureLabs.API.Features;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Text;
-using System.Threading.Tasks;
-using YamlDotNet.Serialization.TypeResolvers;
 using CustomItem = Exiled.CustomItems.API.Features.CustomItem;
 
 namespace ObscureLabs.Items
 {
-    internal class CustomItemSpawner : Plugin.Module
+    public class CustomItemSpawner : Module
     {
-        public override string name { get; set; } = "itemSpawner";
-        public override bool initOnStart { get; set; } = true;
-
-        public override bool Init()
-        {
-            try
-            {
-                Log.Warn("lol");
-                Exiled.Events.Handlers.Map.Generated += roundStartCustomItemHandler;
-                base.Init();
-                Log.Warn("lol2");
-                return true;
-            }
-            catch { return false; }
-        }
-
-        public override bool Disable()
-        {
-            try
-            {
-                Exiled.Events.Handlers.Map.Generated -= roundStartCustomItemHandler;
-                base.Disable();
-                return true;
-            }
-            catch { return false; }
-        }
-
-
-        public static void roundStartCustomItemHandler()
-        {
-
-
-            Log.Info("Running custom item spawner for vanilla round");
-            Timing.RunCoroutine(gunSpawn());
-
-        }
-        
-
-        public static CustomItem[] weaponlist =
+        public static CustomItem[] WeaponList { get; } =
         {
             CustomItem.Get((uint)1), // sniper
             CustomItem.Get((uint)3), // grenade launcher
@@ -68,7 +20,7 @@ namespace ObscureLabs.Items
             CustomItem.Get((uint)6), // Particle Collapser
         };
 
-        public static CustomItem[] itemlist =
+        public static CustomItem[] ItemList { get; } =
         {
             CustomItem.Get((uint)2), // ClusterHE
             CustomItem.Get((uint)7), // ClusterFlash
@@ -76,7 +28,36 @@ namespace ObscureLabs.Items
             CustomItem.Get((uint)4), // NovaGrenade
         };
 
-        public static IEnumerator<float> gunSpawn() // Simple code to replace pickup item in a room with a custom item pickup
+        private static readonly ItemType[] _blacklistedItems = new[]
+        {
+            ItemType.Ammo12gauge, ItemType.Ammo44cal, ItemType.Ammo556x45, ItemType.Ammo762x39, ItemType.Ammo9x19, ItemType.Coin
+        };
+
+        public override string Name => "itemSpawner";
+
+        public override bool IsInitializeOnStart => true;
+
+        public override bool Enable()
+        {
+            Exiled.Events.Handlers.Map.Generated += OnMapGenerated;
+
+            return base.Enable();
+        }
+
+        public override bool Disable()
+        {
+            Exiled.Events.Handlers.Map.Generated -= OnMapGenerated;
+
+            return base.Disable();
+        }
+
+        public static void OnMapGenerated()
+        {
+            Log.Info("Running custom item spawner for vanilla round");
+            Timing.RunCoroutine(GunSpawnCoroutine());
+        }
+
+        public static IEnumerator<float> GunSpawnCoroutine() // Simple code to replace pickup item in a room with a custom item pickup
         {
             var ER16 = 0;
             var glLauncher = 0;
@@ -98,40 +79,49 @@ namespace ObscureLabs.Items
             var clusterHE_l = 3;
             var novaGrenade_l = 10;
 
-            ItemType[] blacklistedItems =
-            [
-                ItemType.Ammo12gauge, ItemType.Ammo44cal, ItemType.Ammo556x45, ItemType.Ammo762x39, ItemType.Ammo9x19,
-                ItemType.Coin
-            ];
-
             yield return Timing.WaitForOneFrame;
-            foreach (Room room in Room.List)
+
+            foreach (var room in Room.List)
             {
                 yield return Timing.WaitForOneFrame;
-                if (Room.Get(room.Type).Pickups.Count() == 0) { continue; }
-                if (room.Zone == ZoneType.Surface) { continue; }
 
-                foreach (Pickup targetItem in room.Pickups.ToList())
+                if (Room.Get(room.Type).Pickups.Count() == 0)
                 {
-                    var rnd = new Random();
-                    var spawn = rnd.Next(0, 85);
+                    continue;
+                }
+
+                if (room.Zone is ZoneType.Surface)
+                {
+                    continue;
+                }
+
+                foreach (var targetItem in room.Pickups.ToList())
+                {
+                    var spawn = UnityEngine.Random.Range(0, 85);
+
                     yield return Timing.WaitForOneFrame;
 
-                    if(blacklistedItems.Contains(targetItem.Type)) continue;
+                    if (_blacklistedItems.Contains(targetItem.Type))
+                    {
+                        continue;
+                    }
 
-                    if (targetItem == null) { Log.Warn("item was for some reason null!?"); }
+                    if (targetItem is null)
+                    {
+                        Log.Warn("item was for some reason null!?");
+                    }
                     else
                     {
                         if (targetItem.Type.IsWeapon() && spawn > 30 && spawn < 65)
                         {
-
-                            var weapontospawn = weaponlist.ElementAt(rnd.Next(0, weaponlist.Count()));
+                            var weaponToSpawn = WeaponList.ElementAt(UnityEngine.Random.Range(0, WeaponList.Count()));
                             Pickup pickup = null;
-                            if (weapontospawn == CustomItem.Get((uint)1)) // Sniper 
+
+                            if (weaponToSpawn == CustomItem.Get((uint)1)) // Sniper 
                             {
                                 if (sniper < sniper_l)
                                 {
-                                    pickup = weapontospawn.Spawn(targetItem.Transform.position);
+                                    pickup = weaponToSpawn.Spawn(targetItem.Transform.position);
                                     pickup.Rotation = targetItem.Transform.rotation;
                                     sniper++;
                                     Log.Info($"Made new item in {room.Type}");
@@ -141,11 +131,11 @@ namespace ObscureLabs.Items
                                     break;
                                 }
                             }
-                            if (weapontospawn == CustomItem.Get((uint)3)) // Grenade Launcher
+                            else if (weaponToSpawn == CustomItem.Get((uint)3)) // Grenade Launcher
                             {
                                 if (glLauncher < glLauncher_l)
                                 {
-                                    pickup = weapontospawn.Spawn(targetItem.Transform.position);
+                                    pickup = weaponToSpawn.Spawn(targetItem.Transform.position);
                                     pickup.Rotation = targetItem.Transform.rotation;
                                     glLauncher++;
                                     Log.Info($"Made new item in {room.Type}");
@@ -155,11 +145,11 @@ namespace ObscureLabs.Items
                                     break;
                                 }
                             }
-                            if (weapontospawn == CustomItem.Get((uint)5)) // ER16
+                            else if (weaponToSpawn == CustomItem.Get((uint)5)) // ER16
                             {
                                 if (ER16 < ER16_l)
                                 {
-                                    pickup = weapontospawn.Spawn(targetItem.Transform.position);
+                                    pickup = weaponToSpawn.Spawn(targetItem.Transform.position);
                                     pickup.Rotation = targetItem.Transform.rotation;
                                     ER16++;
                                     Log.Info($"Made new item in {room.Type}");
@@ -168,11 +158,11 @@ namespace ObscureLabs.Items
                                     break;
                                 }
                             }
-                            if (weapontospawn == CustomItem.Get((uint)6)) // Particle Collapser
+                            else if (weaponToSpawn == CustomItem.Get((uint)6)) // Particle Collapser
                             {
                                 if (particleCollapser < particleCollapser_l)
                                 {
-                                    pickup = weapontospawn.Spawn(targetItem.Transform.position);
+                                    pickup = weaponToSpawn.Spawn(targetItem.Transform.position);
                                     pickup.Rotation = targetItem.Transform.rotation;
                                     particleCollapser++;
                                     Log.Info($"Made new item in {room.Type}");
@@ -182,14 +172,11 @@ namespace ObscureLabs.Items
                                     break;
                                 }
                             }
-
-                            
-                            
                         }
+
                         if (!targetItem.Type.IsWeapon() && !targetItem.Type.IsKeycard() && spawn > 30 && spawn < 65)
                         {
-
-                            var itemToSpawn = itemlist.ElementAt(rnd.Next(0, itemlist.Count()));
+                            var itemToSpawn = ItemList.ElementAt(UnityEngine.Random.Range(0, ItemList.Count()));
                             Pickup pickup = null;
                             if (itemToSpawn == CustomItem.Get((uint)2)) // ClusterHE 
                             {
@@ -197,7 +184,7 @@ namespace ObscureLabs.Items
                                 {
                                     pickup = itemToSpawn.Spawn(targetItem.Transform.position);
                                     pickup.Rotation = targetItem.Transform.rotation;
-                                    
+
                                     clusterHE++;
                                     Log.Info($"Made new item in {room.Type}");
                                     yield return Timing.WaitForOneFrame;
@@ -206,7 +193,7 @@ namespace ObscureLabs.Items
                                     break;
                                 }
                             }
-                            if (itemToSpawn == CustomItem.Get((uint)7)) // ClusterFlash
+                            else if (itemToSpawn == CustomItem.Get((uint)7)) // ClusterFlash
                             {
                                 if (clusterFlash < clusterFlash_l)
                                 {
@@ -222,7 +209,7 @@ namespace ObscureLabs.Items
                                     break;
                                 }
                             }
-                            if (itemToSpawn == CustomItem.Get((uint)5)) // EsssentialOils
+                            else if (itemToSpawn == CustomItem.Get((uint)5)) // EsssentialOils
                             {
                                 if (essentialOils < essentialOils_l)
                                 {
@@ -237,7 +224,7 @@ namespace ObscureLabs.Items
                                     break;
                                 }
                             }
-                            if (itemToSpawn == CustomItem.Get((uint)6)) // NovaGrenade
+                            else if (itemToSpawn == CustomItem.Get((uint)6)) // NovaGrenade
                             {
                                 if (novaGrenade < novaGrenade_l)
                                 {
@@ -253,18 +240,10 @@ namespace ObscureLabs.Items
                                 }
                             }
                         }
-
-
                     }
                 }
-
-               
-
             }
-
         }
     }
-
-
 }
 

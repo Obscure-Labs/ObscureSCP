@@ -1,34 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Exiled.API.Features;
+﻿using Exiled.API.Features;
 using MEC;
-
+using System.Collections.Generic;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
-    internal class ChaosCounter
+    public class ChaosCounter
     {
-        public static IEnumerator<float> chaosUpdate()
+        public static IEnumerator<float> ChaosUpdateCoroutine()
         {
             yield return Timing.WaitForSeconds(1f);
-            while (true)
+
+            while (!Round.IsEnded)
             {
                 yield return Timing.WaitForSeconds(1f);
-                int chaos = 0;
-                foreach (Player p in Player.List)
+
+                var chaos = 0;
+
+                foreach (var p in Player.List)
                 {
                     if (p.IsCHI)
                     {
                         chaos++;
                     }
                 }
+
                 if (chaos != 0)
                 {
                     Round.ChaosTargetCount = chaos;
                 }
+
                 yield return Timing.WaitForSeconds(2f);
             }
         }

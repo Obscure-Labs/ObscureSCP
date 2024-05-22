@@ -1,115 +1,103 @@
-﻿using Exiled.API.Extensions;
+﻿using Exiled.API.Enums;
+using Exiled.API.Extensions;
 using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
-using Exiled.Events.EventArgs.Server;
 using MEC;
+using ObscureLabs.API.Data;
+using ObscureLabs.API.Features;
 using PlayerRoles;
-using Respawning;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UCRAPI = UncomplicatedCustomRoles.API.Features.Manager;
 using SpireSCP.GUI.API.Features;
-using Exiled.API.Enums;
-using System.Xml.Linq;
+using System.Collections.Generic;
+using UCRAPI = UncomplicatedCustomRoles.API.Features.Manager;
+
+//isaac furry, ehehehehehhehehehehe *cough*
 
 namespace ObscureLabs
 {
-    internal class customRoles : Plugin.Module
+    public class CustomRoles : Module
     {
+        public static List<RoleData> RolesData { get; } = new();
 
-        public override string name { get; set; } = "customRoles";
-        public override bool initOnStart { get; set; } = true;
-
-        public override bool Init()
+        public static IEnumerator<float> CheckRoles(Player player)
         {
-            try
+            var scps = string.Empty;
+            var counter = 0;
+
+            foreach (var player1 in Player.List)
             {
-                Exiled.Events.Handlers.Player.UsingItemCompleted += usingItem;
-                base.Init();
-                return true;
-            }
-            catch { return false; }
-        }
-
-        public override bool Disable()
-        {
-            try
-            {
-                Exiled.Events.Handlers.Player.UsingItemCompleted -= usingItem;
-                base.Disable();
-                return true;
-            }
-            catch { return false; }
-        }
-
-
-
-
-        internal class roleData
-        {
-            public Player player;
-            public int? UCRID;
-        }
-
-        internal static List<roleData> rd = new List<roleData>();
-
-
-        private void usingItem(UsingItemCompletedEventArgs ev)
-        {
-            if (ev.Item.Type == ItemType.SCP330)
-            {
-                if (UCRAPI.HasCustomRole(ev.Player))
-                {
-                    if (UCRAPI.Get(ev.Player).Id == 2)
-                    {
-                        ev.Player.EnableEffect(EffectType.MovementBoost);
-                        ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 80, 10);
-                    }
-                }
-            }
-        }
-
-
-
-        internal static IEnumerator<float> CheckRoles(Player p)
-        {
-            string scps = string.Empty;
-            int counter = 0;
-            foreach (Player pp in Player.List)
-            {
-                if (pp.Role.Team == Team.SCPs)
+                if (player1.Role.Team is Team.SCPs)
                 {
                     if (counter != 0)
                     {
-                        scps += $"<color=white>, <color=red>{pp.Role.Name}";
+                        scps += $"<color=white>, <color=red>{player1.Role.Name}";
                     }
                     else
                     {
-                        scps += $"<color=red>{pp.Role.Name}";
+                        scps += $"<color=red>{player1.Role.Name}";
                     }
+
                     counter++;
                 }
             }
+
             int? UCRID = null;
+
             yield return Timing.WaitForSeconds(0.5f);
-            if (UCRAPI.HasCustomRole(p))
+
+            if (UCRAPI.HasCustomRole(player))
             {
-                UCRID = UCRAPI.Get(p).Id;
+                UCRID = UCRAPI.Get(player).Id;
 
                 if (UCRID == 4)
                 {
                     yield return Timing.WaitForSeconds(6);
-                    Manager.SendHint(p, $"<b>The currently active SCP subjects are: {scps}", 15);
+                    Manager.SendHint(player, $"<b>The currently active SCP subjects are: {scps}", 15);
                 }
 
                 if (UCRID == 3)
                 {
-                    p.ChangeAppearance(RoleTypeId.FacilityGuard);
+                    player.ChangeAppearance(RoleTypeId.FacilityGuard);
                 }
             }
+        }
+
+        public override string Name => "CustomRoles";
+
+        public override bool IsInitializeOnStart => true;
+
+        public override bool Enable()
+        {
+            Exiled.Events.Handlers.Player.UsingItemCompleted += OnUsingItem;
+            base.Enable();
+            return true;
+        }
+
+        public override bool Disable()
+        {
+            Exiled.Events.Handlers.Player.UsingItemCompleted -= OnUsingItem;
+            base.Disable();
+            return true;
+        }
+
+        private void OnUsingItem(UsingItemCompletedEventArgs ev)
+        {
+            if (ev.Item.Type is not ItemType.SCP330)
+            {
+                return;
+            }
+
+            if (!UCRAPI.HasCustomRole(ev.Player))
+            {
+                return;
+            }
+
+            if (UCRAPI.Get(ev.Player).Id != 2)
+            {
+                return;
+            }
+
+            ev.Player.EnableEffect(EffectType.MovementBoost);
+            ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 80, 10);
         }
     }
 }

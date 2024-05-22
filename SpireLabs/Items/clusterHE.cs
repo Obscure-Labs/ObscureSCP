@@ -1,31 +1,28 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using Exiled.API.Enums;
-using Exiled.API.Features;
+﻿using CustomItems.API;
 using Exiled.API.Features.Attributes;
 using Exiled.API.Features.Items;
-using Exiled.API.Features.Pickups;
 using Exiled.API.Features.Spawn;
 using Exiled.CustomItems.API.Features;
+using Exiled.Events.EventArgs.Map;
 using Exiled.Events.EventArgs.Player;
 using MEC;
-using UnityEngine;
-using Player = Exiled.Events.Handlers.Player;
 using SpireSCP.GUI.API.Features;
-using CustomItems.API;
-using Exiled.API.Features.Pickups.Projectiles;
-using InventorySystem.Items.ThrowableProjectiles;
-using Exiled.Events.EventArgs.Map;
+using System.Collections.Generic;
+using Player = Exiled.Events.Handlers.Player;
 
 namespace ObscureLabs.Items
 {
     [CustomItem(ItemType.GrenadeHE)]
-    public class clusterHE : Exiled.CustomItems.API.Features.CustomGrenade
+    public class ClusterHE : Exiled.CustomItems.API.Features.CustomGrenade
     {
         public override string Name { get; set; } = "Cluster Grenade";
+
         public override uint Id { get; set; } = 2;
+
         public override string Description { get; set; } = "\t";
+
         public override float Weight { get; set; } = 0.25f;
+
         public override SpawnProperties SpawnProperties { get; set; } = new()
         {
             Limit = 2,
@@ -44,38 +41,29 @@ namespace ObscureLabs.Items
             },
         };
         public override bool ExplodeOnCollision { get; set; } = false;
+
         public override float FuseTime { get; set; } = 2.8f;
 
         protected override void SubscribeEvents()
         {
-            Player.ChangedItem += changedToItem;
-            Player.ThrownProjectile += Thrown;
+            Player.ChangedItem += OnChangedItem;
+            Player.ThrownProjectile += OnThrownProjectile;
             base.SubscribeEvents();
         }
         protected override void UnsubscribeEvents()
         {
-                Player.ChangedItem -= changedToItem;
-                Player.ThrownProjectile -= Thrown;
-                base.UnsubscribeEvents();
-            
-        }
-
-        private void Thrown(ThrownProjectileEventArgs ev)
-        {
-            if (!Check(ev.Item))
-                return;
-
-
+            Player.ChangedItem -= OnChangedItem;
+            Player.ThrownProjectile -= OnThrownProjectile;
+            base.UnsubscribeEvents();
         }
 
         protected override void OnExploding(ExplodingGrenadeEventArgs ev)
         {
-            Timing.RunCoroutine(boomb(ev));
+            Timing.RunCoroutine(OnExplodingGrenadeCoroutine(ev));
             base.OnExploding(ev);
-
         }
 
-        private IEnumerator<float> boomb(ExplodingGrenadeEventArgs ev)
+        private IEnumerator<float> OnExplodingGrenadeCoroutine(ExplodingGrenadeEventArgs ev)
         {
             var rnd = new System.Random();
             yield return Timing.WaitForSeconds(0.35f);
@@ -90,9 +78,9 @@ namespace ObscureLabs.Items
             }
         }
 
-        private void changedToItem(ChangedItemEventArgs ev)
+        private void OnChangedItem(ChangedItemEventArgs ev)
         {
-            if(!Check(ev.Item)) return;
+            if (!Check(ev.Item)) return;
             Manager.SendHint(ev.Player, "You equipped the <b>Cluster Grenade</b> \n <b>This will explode into multiple smaller grenades</b>.", 3.0f);
         }
     }

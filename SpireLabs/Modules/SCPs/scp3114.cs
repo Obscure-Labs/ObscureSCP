@@ -1,68 +1,58 @@
 ﻿using Exiled.API.Features;
 using Exiled.Events.EventArgs.Scp3114;
-using PlayerRoles;
+using ObscureLabs.API.Data;
+using ObscureLabs.API.Features;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace ObscureLabs
 {
-    internal class scp3114 : Plugin.Module
+    public class Scp3114 : Module
     {
-        public override string name { get; set; } = "SCP3114";
-        public override bool initOnStart { get; set; } = false;
+        public override string Name => "SCP3114";
 
-        public override bool Init()
+        public override bool IsInitializeOnStart => false;
+
+        public override bool Enable()
         {
-            try
-            {
-                Exiled.Events.Handlers.Scp3114.Disguised += OnDisguise;
-                Exiled.Events.Handlers.Scp3114.Revealed += OnReveal;
-                base.Init();
-                return true;
-            }
-            catch { return false; }
+            Exiled.Events.Handlers.Scp3114.Disguised += OnDisguised;
+            Exiled.Events.Handlers.Scp3114.Revealed += OnRevealed;
+
+            return base.Enable();
         }
 
         public override bool Disable()
         {
-            try
-            {
-                Exiled.Events.Handlers.Scp3114.Disguised -= OnDisguise;
-                Exiled.Events.Handlers.Scp3114.Revealed -= OnReveal;
-                base.Disable();
-                return true;
-            }
-            catch { return false; }
+            Exiled.Events.Handlers.Scp3114.Disguised -= OnDisguised;
+            Exiled.Events.Handlers.Scp3114.Revealed -= OnRevealed;
+
+            return base.Disable();
         }
 
-
-
-        internal static void OnDisguise(DisguisedEventArgs ev)
+        private void OnDisguised(DisguisedEventArgs ev)
         {
-            customRoles.roleData plData = null;
+            RoleData plData = null;
             try
             {
-                plData = customRoles.rd.SingleOrDefault(x => x.player.NetId == (ev.Ragdoll.Owner.NetId)) ?? null;
-                Log.Warn($"Found {plData.player}");
+                plData = CustomRoles.RolesData.SingleOrDefault(x => x.Player.NetId == (ev.Ragdoll.Owner.NetId)) ?? null;
+                Log.Warn($"Found {plData.Player}");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Log.Warn(ex);
             }
-            if (plData != null)
+
+            if (plData is not null)
             {
-                switch (plData.UCRID)
+                switch (plData.UcrId)
                 {
                     case 2: ev.Player.Scale = Vector3.one * 0.7f; break;
                 }
             }
         }
 
-        internal static void OnReveal(RevealedEventArgs ev)
+        private void OnRevealed(RevealedEventArgs ev)
         {
             ev.Player.Scale = Vector3.one;
         }

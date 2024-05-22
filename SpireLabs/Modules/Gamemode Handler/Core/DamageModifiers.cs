@@ -1,53 +1,44 @@
 ﻿using Exiled.API.Enums;
 using Exiled.Events.EventArgs.Player;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ObscureLabs.API.Features;
+using PlayerRoles;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
-    internal class DamageModifiers : Plugin.Module
+    internal class DamageModifiers : Module
     {
-        public override string name { get; set; } = "DamageModifiers";
-        public override bool initOnStart { get; set; } = true;
+        public override string Name => "DamageModifiers";
 
-        public override bool Init()
+        public override bool IsInitializeOnStart => true;
+
+        public override bool Enable()
         {
-            try
-            {
-                Exiled.Events.Handlers.Player.Hurting += SetDamageModifiers;
-                base.Init();
-                return true;
-            }
-            catch { return false; }
+            Exiled.Events.Handlers.Player.Hurting += SetDamageModifiers;
+
+            return base.Enable();
         }
 
         public override bool Disable()
         {
-            try
-            {
-                Exiled.Events.Handlers.Player.Hurting -= SetDamageModifiers;
-                base.Disable();
-                return true;
-            }
-            catch { return false; }
+            Exiled.Events.Handlers.Player.Hurting -= SetDamageModifiers;
+
+            return base.Disable();
         }
-        public static void SetDamageModifiers(HurtingEventArgs ev)
+
+        private void SetDamageModifiers(HurtingEventArgs ev)
         {
-            if (ev.DamageHandler.Type == DamageType.MicroHid)
+            if (ev.DamageHandler.Type is DamageType.MicroHid)
             {
-                ev.Amount *= (Plugin.hidDPS / 100);
+                ev.Amount *= Plugin.Instance.Config.HidDPS / 100;
             }
-            if (ev.DamageHandler.Type == DamageType.Scp207)
+            if (ev.DamageHandler.Type is DamageType.Scp207)
             {
                 //Log.Info($"Conk hit {ev.Player.DisplayNickname}");
-                ev.Amount *= (Plugin.cokeDPS / 100);
+                ev.Amount *= Plugin.Instance.Config.CokeDPS / 100;
             }
-            if (ev.DamageHandler.Type == DamageType.Scp3114)
+            if (ev.DamageHandler.Type is DamageType.Scp3114 && Plugin.Instance.Config.RolesDamage.TryGetValue(RoleTypeId.Scp3114, out var value))
             {
-                ev.Amount = Plugin.Scp3114DMG;
+                ev.Amount = value;
             }
         }
     }
