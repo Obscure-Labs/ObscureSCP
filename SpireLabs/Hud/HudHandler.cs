@@ -112,7 +112,7 @@ namespace SpireLabs.GUI
                     }
                 }
 
-                deadPlayer.ShowHint(s, 0.8f);
+                deadPlayer.ShowHint(s, 0.85f);
             }
             catch (Exception e)
             {
@@ -414,7 +414,7 @@ namespace SpireLabs.GUI
                     Log.Debug("Completed Message");
                     if (p.IsAlive)
                     {
-                        p.ShowHint(s, 0.8f);
+                        p.ShowHint(s, 0.85f);
                     }
 
                     Log.Debug("Shown Hint");

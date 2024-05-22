@@ -13,6 +13,6 @@
 
         public int LastGameMode { get; set; }
 
-        public bool IsNextRoundGameMode { get; set; }
+        public bool? IsNextRoundGameMode { get; set; }
     }
 }
