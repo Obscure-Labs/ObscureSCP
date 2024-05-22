@@ -1,5 +1,4 @@
-﻿#pragma warning disable SA1200
-
+﻿
 using ObscureLabs.Items;
 
 namespace ObscureLabs.ItemConfigs
@@ -7,15 +6,18 @@ namespace ObscureLabs.ItemConfigs
     using System.Collections.Generic;
     using System.ComponentModel;
 
-    public class Items
+    public class ItemConfig
     {
-        public List<esssentialOils> essentialOils { get; private set; } = new()
+        [Description("Essentials oils")]
+        public List<EsssentialOils> EssentialOils { get; private set; } = new()
         {
-            new esssentialOils(),
+            new EsssentialOils(),
         };
-        public List<sniper> sniper { get; private set; } = new()
+
+        [Description("Sniper")]
+        public List<Sniper> Sniper { get; private set; } = new()
         {
-            new sniper(),
+            new Sniper(),
         };
     }
 }

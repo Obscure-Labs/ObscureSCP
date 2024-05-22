@@ -1,146 +1,123 @@
-using GameCore;
 using MEC;
-using ObscureLabs.Gamemode_Handler;
+using ObscureLabs.API.Data;
+using ObscureLabs.API.Enums;
+using ObscureLabs.API.Features;
 using ObscureLabs.Modules.Gamemode_Handler.Minigames;
 using ObscureLabs.SpawnSystem;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
 namespace ObscureLabs.Gamemode_Handler
 {
-    public class gamemodeHandler : Plugin.Module
+    public class GamemodeHandler : Module
     {
+        public override string Name => "GamemodeHandler";
 
-        public override string name { get; set; } = "gamemodeHandler";
-        public override bool initOnStart { get; set; } = true;
+        public override bool IsInitializeOnStart => true;
 
-        public override bool Init()
+        private static readonly IDeserializer _deserializer = new DeserializerBuilder()
+    .WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
+
+        private static readonly ISerializer _serializer = new SerializerBuilder()
+            .WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
+
+        private static SerializableGameModeData _serializableGameMode;
+
+        private static readonly int[] _gameModes = new[]
         {
-            try
-            {
-                Exiled.Events.Handlers.Server.RoundStarted += roundStarted;
-                base.Init();
-                return true;
-            }
-            catch { return false; }
+            0, //JBTDM
+            1, // Chaos
+            2, //OtherOtherMode
+        };
+
+        public override bool Enable()
+        {
+            Exiled.Events.Handlers.Server.RoundStarted += OnRoundStarted;
+
+            _serializableGameMode = ReadGameMode();
+
+            return base.Enable();
         }
 
         public override bool Disable()
         {
-            try
-            {
-                Exiled.Events.Handlers.Server.RoundStarted -= roundStarted;
-                base.Disable();
-                return true;
-            }
-            catch { return false; };
+            Exiled.Events.Handlers.Server.RoundStarted -= OnRoundStarted;
+
+            return base.Disable();
         }
 
-        public static IDeserializer Deserializer = new DeserializerBuilder()
-            .WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
-        public static ISerializer Serializer = new SerializerBuilder()
-            .WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
-
-        public class gamemodeInfo
+        public static SerializableGameModeData ReadGameMode()
         {
-            public bool gamemodeRound { get; set; }
-            public int lastGamemode { get; set; }
-            public bool nextRoundIsGamemode { get; set; }
+            return _deserializer.Deserialize<SerializableGameModeData>(File.ReadAllText(Plugin.SpireConfigLocation + "gamemodeInfo.yaml"));
         }
 
-        public static bool ReadLast()
+        public static void WriteAllGameModeData(bool isGameModeRound, int lastGameMode, bool isNextRoundGameMode)
         {
-            gamemodeInfo data = Deserializer.Deserialize<gamemodeInfo>(File.ReadAllText((Plugin.spireConfigLoc + "gamemodeInfo.yaml")));
-            return data.gamemodeRound;
-        }
-
-        public static int ReadMode()
-        {
-            gamemodeInfo data = Deserializer.Deserialize<gamemodeInfo>(File.ReadAllText((Plugin.spireConfigLoc + "gamemodeInfo.yaml")));
-            return data.lastGamemode;
-        }
-
-        public static bool ReadNext()
-        {
-            gamemodeInfo data = Deserializer.Deserialize<gamemodeInfo>(File.ReadAllText((Plugin.spireConfigLoc + "gamemodeInfo.yaml")));
-            return data.nextRoundIsGamemode;
-        }
-
-        public static void WriteAllGMInfo(bool gmR, int Lgm, bool nGM)
-        {
-            File.WriteAllText((Plugin.spireConfigLoc + "gamemodeInfo.yaml"), Serializer.Serialize(new gamemodeInfo { gamemodeRound = gmR, lastGamemode = Lgm, nextRoundIsGamemode = nGM }));
+            File.WriteAllText(
+                Plugin.SpireConfigLocation + "gamemodeInfo.yaml",
+                _serializer.Serialize(new SerializableGameModeData(isGameModeRound, lastGameMode, isNextRoundGameMode)));
         }
 
 
-        public static void roundStarted()
+        public void OnRoundStarted()
         {
             if (!Plugin.IsActiveEventround)
             {
-                gamemodeHandler.WriteAllGMInfo(false, -1, gamemodeHandler.ReadNext());
-                gamemodeHandler.AttemptGMRound(false, -1);
+                WriteAllGameModeData(false, -1, _serializableGameMode.IsNextRoundGameMode);
+                AttemptGameModeRound(false, -1);
             }
         }
 
-        public static void AttemptGMRound(bool force, int args)
+        public static void AttemptGameModeRound(bool force, int args)
         {
-
-
-
-            //await Task.Delay(1);
             var ran = new Random();
             int chance = ran.Next(0, 100);
-                //if (chance > 30 && chance < 50 && !ReadLast())
-                //{
-                //    WriteAllGMInfo(ReadLast(), ReadMode(), true);
-                //}
-            if (ReadNext() || force || chance > 30 && chance < 50 && !ReadLast())
+
+            if (_serializableGameMode.IsNextRoundGameMode || force || chance > 30 && chance < 50 && _serializableGameMode.IsGameModeRound)
             {
                 Plugin.IsActiveEventround = true;
-                int[] modes =
+                int selectedGM;
+                if (args > _gameModes.Count() || args == -1)
                 {
-                0, //JBTDM
-                1, // Chaos
-                2, //OtherOtherMode
-                };
-                int selectedGM = 0;
-                if (args == null || args > modes.Count() || args == -1)
-                {
-                    selectedGM = ran.Next(0, modes.Count());
+                    selectedGM = ran.Next(0, _gameModes.Count());
                 }
                 else
                 {
                     selectedGM = args;
                 }
 
-
-
                 switch (selectedGM)
                 {
                     case 0:
-                        Timing.RunCoroutine(tdm.runJbTDM()); Plugin.IsActiveEventround = true; Plugin.EventRoundType = "jbtdm"; break;
+                        Timing.RunCoroutine(TeamDeathMatch.runJbTDM());
+                        Plugin.IsActiveEventround = true;
+                        Plugin.EventRoundType = EventRoundType.JailbirdsDeatchMatch;
+                        break;
                     case 1:
-                        Timing.RunCoroutine(chaos.runChaos()); Plugin.IsActiveEventround = true; Plugin.EventRoundType = "chaos"; // Plugin.modules.GetModule("ChaosRound").Init();
-                                                                                                                                  break;
+                        Timing.RunCoroutine(Chaos.RunChaosCoroutine());
+                        Plugin.IsActiveEventround = true;
+                        Plugin.EventRoundType = EventRoundType.Chaos;
+                        break;
                     case 2:
-                        Timing.RunCoroutine(juggernaut.runJuggernaut()); Plugin.IsActiveEventround = true; Plugin.EventRoundType = "juggernaut";  break;
+                        Timing.RunCoroutine(Juggernaut.RunJuggernautCoroutine());
+                        Plugin.IsActiveEventround = true;
+                        Plugin.EventRoundType = EventRoundType.Juggernaut;
+                        break;
                 }
-                WriteAllGMInfo(true, selectedGM, false);
 
+                WriteAllGameModeData(true, selectedGM, false);
             }
             else
             {
-                Plugin.modules.GetModule("SCP3114").Init();
-                Plugin.modules.GetModule("ChaosRound").Disable();
-                Plugin.modules.GetModule("gamemodeHandler").Disable();
+                ModulesManager.GetModule("SCP3114").Enable();
+                ModulesManager.GetModule("ChaosRound").Enable();
+                ModulesManager.GetModule("GamemodeHandler").Enable();
                 Plugin.IsActiveEventround = false;
                 SCPHandler.doSCPThings();
-                WriteAllGMInfo(false, -1, ReadNext());
+                WriteAllGameModeData(false, -1, _serializableGameMode.IsNextRoundGameMode);
             }
         }
     }

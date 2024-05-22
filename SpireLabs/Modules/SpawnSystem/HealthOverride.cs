@@ -1,26 +1,20 @@
-﻿using MEC;
-using PlayerRoles;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Exiled.API.Enums;
-using Exiled.API.Features;
-using Exiled.Events.EventArgs.Item;
+﻿using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
+using MEC;
+using ObscureLabs.API.Features;
+using System.Collections.Generic;
 
 namespace ObscureLabs.SpawnSystem
 {
-    internal class HealthOverride : Plugin.Module
+    internal class HealthOverride : Module
     {
-        public override string name { get; set; } = "HealthOverride";
-        public override bool initOnStart { get; set; } = true;
+        public override string Name => "HealthOverride";
+        public override bool IsInitializeOnStart => true;
 
-        public override bool Init()
+        public override bool Enable()
         {
             Exiled.Events.Handlers.Player.Spawned += OverridePlayerHealth;
-            return base.Init();
+            return base.Enable();
         }
 
         public override bool Disable()
@@ -34,113 +28,32 @@ namespace ObscureLabs.SpawnSystem
             Timing.RunCoroutine(OverrideHealth(ev));
         }
 
-        internal static IEnumerator<float> OverrideHealth(SpawnedEventArgs ev)
+        public static IEnumerator<float> OverrideHealth(SpawnedEventArgs ev)
         {
-            yield return Timing.WaitForSeconds(0.25f);
-            if (Plugin.OCaptain.enabled)
+            yield return Timing.WaitForSeconds(Timing.WaitForOneFrame);
+
+            if (!Plugin.Instance.Config.HealthOverrides.TryGetValue(ev.Player.Role.Type, out var healthData))
             {
-                if (ev.Player.RoleManager.CurrentRole.RoleTypeId == RoleTypeId.NtfCaptain)
-                {
-                    ev.Player.MaxHealth = Plugin.OCaptain.healthOverride;
-                    ev.Player.Heal(Plugin.OCaptain.healthOverride, false);
-                }
+                yield break;
             }
-            Player p = ev.Player;
-            int humanPlayers = 0;
-            foreach (Player rP in Player.List)
+
+            if (!healthData.IsEnabled)
             {
-                if (rP.IsHuman)
+                yield break;
+            }
+
+            var humanPlayers = 0;
+
+            foreach (var player in Player.List)
+            {
+                if (player.IsHuman)
                 {
                     humanPlayers++;
                 }
             }
-            switch (p.RoleManager.CurrentRole.RoleTypeId)
-            {
-                case RoleTypeId.Scp049:
-                    if (Plugin.OScp049.enabled)
-                    {
-                        p.MaxHealth = Plugin.OScp049.healthOverride;
-                    }
-                    Task.Delay(50);
-                    if (Plugin.Scp049.enabled)
-                    {
-                        p.MaxHealth += (Plugin.Scp049.healthIncrease * humanPlayers);
-                        p.Heal(p.MaxHealth);
-                    }
-                    break;
-                case RoleTypeId.Scp079:
-                    if (Plugin.OScp079.enabled)
-                    {
-                        p.MaxHealth = Plugin.OScp079.healthOverride;
-                    }
-                    Task.Delay(50);
-                    if (Plugin.Scp079.enabled)
-                    {
-                        p.MaxHealth += (Plugin.Scp079.healthIncrease * humanPlayers);
-                        p.Heal(p.MaxHealth);
-                    }
-                    break;
-                case RoleTypeId.Scp096:
-                    if (Plugin.OScp096.enabled)
-                    {
-                        p.MaxHealth = Plugin.OScp096.healthOverride;
-                    }
-                    Task.Delay(50);
-                    if (Plugin.Scp096.enabled)
-                    {
-                        p.MaxHealth += (Plugin.Scp096.healthIncrease * humanPlayers);
-                        p.Heal(p.MaxHealth);
-                    }
-                    break;
-                case RoleTypeId.Scp106:
-                    if (Plugin.OScp106.enabled)
-                    {
-                        p.MaxHealth = Plugin.OScp106.healthOverride;
-                    }
-                    Task.Delay(50);
-                    if (Plugin.Scp106.enabled)
-                    {
-                        p.MaxHealth += (Plugin.Scp106.healthIncrease * humanPlayers);
-                        p.Heal(p.MaxHealth);
-                    }
-                    break;
-                case RoleTypeId.Scp173:
-                    if (Plugin.OScp173.enabled)
-                    {
-                        p.MaxHealth = Plugin.OScp173.healthOverride;
-                    }
-                    Task.Delay(50);
-                    if (Plugin.Scp173.enabled)
-                    {
-                        p.MaxHealth += (Plugin.Scp173.healthIncrease * humanPlayers);
-                        p.Heal(p.MaxHealth);
-                    }
-                    break;
-                case RoleTypeId.Scp939:
-                    if (Plugin.OScp939.enabled)
-                    {
-                        p.MaxHealth = Plugin.OScp939.healthOverride;
-                    }
-                    Task.Delay(50);
-                    if (Plugin.Scp939.enabled)
-                    {
-                        p.MaxHealth += (Plugin.Scp939.healthIncrease * humanPlayers);
-                        p.Heal(p.MaxHealth);
-                    }
-                    break;
-                case RoleTypeId.Scp3114:
-                    if (Plugin.OScp3114.enabled)
-                    {
-                        p.MaxHealth = Plugin.OScp3114.healthOverride;
-                    }
-                    Task.Delay(50);
-                    if (Plugin.Scp939.enabled)
-                    {
-                        p.MaxHealth += (Plugin.Scp3114.healthIncrease * humanPlayers);
-                        p.Heal(p.MaxHealth);
-                    }
-                    break;
-            }
+
+            ev.Player.MaxHealth += healthData.Increase * humanPlayers;
+            ev.Player.Heal(ev.Player.MaxHealth);
         }
     }
 }

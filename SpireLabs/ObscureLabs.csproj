@@ -115,44 +115,59 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GUI\GUIController.cs" />
-    <Compile Include="GUI\guiHandler.cs" />
-    <Compile Include="GUI\Manager.cs" />
+    <Compile Include="API\Data\EffectData.cs" />
+    <Compile Include="API\Data\MapData.cs" />
+    <Compile Include="API\Data\PlayerPrimitiveData.cs" />
+    <Compile Include="API\Serializable\SerializableGameModeData.cs" />
+    <Compile Include="API\Data\HealthData.cs" />
+    <Compile Include="API\Data\PlayerData.cs" />
+    <Compile Include="API\Data\ProfileData.cs" />
+    <Compile Include="API\Data\RoleData.cs" />
+    <Compile Include="API\Enums\EventRoundType.cs" />
+    <Compile Include="API\Features\Module.cs" />
+    <Compile Include="API\Features\ModulesManager.cs" />
+    <Compile Include="API\Serializable\SerializableProfileData.cs" />
+    <Compile Include="Commands\Admins\Other\SetNext.cs" />
+    <Compile Include="Commands\User\Primitive.cs" />
+    <Compile Include="Commands\User\UnPrimitive.cs" />
+    <Compile Include="Configs\HintConfig.cs" />
+    <Compile Include="Configs\LobbyConfig.cs" />
+    <Compile Include="Hud\HudController.cs" />
+    <Compile Include="Hud\HudHandler.cs" />
+    <Compile Include="Hud\Manager.cs" />
     <Compile Include="Items\AttachmentFix.cs" />
     <Compile Include="Items\CustomItemSpawner.cs" />
-    <Compile Include="Modules\Commands\Other\gamemode.cs" />
-    <Compile Include="Modules\Custom Roles\corruptGuard.cs" />
-    <Compile Include="Modules\Custom Roles\customRoles.cs" />
+    <Compile Include="Commands\Admins\Other\GameMode.cs" />
+    <Compile Include="Modules\Custom Roles\CorruptGuard.cs" />
+    <Compile Include="Modules\Custom Roles\CustomRoles.cs" />
     <Compile Include="Modules\Custom Roles\IDThief.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\ChaosCounter.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\DamageModifiers.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\MapInteractions.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\MvpSystem.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\Scp1162.cs" />
-    <Compile Include="Modules\Gamemode Handler\Minigames\chaos.cs" />
-    <Compile Include="Modules\Gamemode Handler\Minigames\gamemodeHandler.cs" />
-    <Compile Include="Modules\Gamemode Handler\Minigames\tdm.cs" />
-    <Compile Include="Items\clusterFlash.cs" />
+    <Compile Include="Modules\Gamemode Handler\Minigames\Сhaos.cs" />
+    <Compile Include="Modules\Gamemode Handler\Minigames\GamemodeHandler.cs" />
+    <Compile Include="Modules\Gamemode Handler\Minigames\TeamDeathMatch.cs" />
+    <Compile Include="Items\СlusterFlash.cs" />
     <Compile Include="Items\ParticleCollapser.cs" />
-    <Compile Include="Items\grenadeLauncher.cs" />
-    <Compile Include="Items\clusterHE.cs" />
+    <Compile Include="Items\GrenadeLauncher.cs" />
+    <Compile Include="Items\ClusterHE.cs" />
     <Compile Include="Items\ER16.cs" />
-    <Compile Include="Items\novaGrenade.cs" />
-    <Compile Include="Items\Primitive.cs" />
-    <Compile Include="Modules\Gamemode Handler\Core\profiles.cs" />
-    <Compile Include="Modules\Gamemode Handler\Minigames\juggernaut.cs" />
-    <Compile Include="Modules\SCPs\scp3114.cs" />
+    <Compile Include="Items\NovaGrenade.cs" />
+    <Compile Include="Modules\Gamemode Handler\Core\Profiles.cs" />
+    <Compile Include="Modules\Gamemode Handler\Minigames\Juggernaut.cs" />
+    <Compile Include="Modules\SCPs\Scp3114.cs" />
     <Compile Include="Configs\ItemConfig.cs" />
-    <Compile Include="Items\sniper.cs" />
-    <Compile Include="Modules\SCPs\larry.cs" />
+    <Compile Include="Items\Sniper.cs" />
+    <Compile Include="Modules\SCPs\Larry.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\CoinFlip.cs" />
-    <Compile Include="Configs\config.cs" />
-    <Compile Include="Modules\SCPs\doctor.cs" />
-    <Compile Include="Items\essentialOils.cs" />
-    <Compile Include="plugin.cs" />
+    <Compile Include="Configs\Config.cs" />
+    <Compile Include="Modules\SCPs\Doctor.cs" />
+    <Compile Include="Items\EssentialOils.cs" />
+    <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Modules\SCPs\theNut.cs" />
-    <Compile Include="Modules\SCPs\zombieHandler.cs" />
+    <Compile Include="Modules\SCPs\TheNut.cs" />
     <Compile Include="Modules\SpawnSystem\HealthOverride.cs" />
     <Compile Include="Modules\SpawnSystem\SCPHandler.cs" />
   </ItemGroup>
@@ -160,5 +175,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

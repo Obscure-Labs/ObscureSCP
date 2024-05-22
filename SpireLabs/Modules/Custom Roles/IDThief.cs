@@ -1,94 +1,53 @@
-﻿using Exiled.API.Enums;
+﻿using Exiled.API.Extensions;
 using Exiled.API.Features;
-using Exiled.Events.EventArgs.Item;
 using Exiled.Events.EventArgs.Player;
 using MEC;
+using ObscureLabs.API.Features;
 using PlayerRoles;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using UnityEngine;
-using System.IO;
-using Exiled.CustomItems.API.Features;
-using Exiled.API.Features.Spawn;
-using Exiled.API.Features.Pickups;
-using Exiled.API.Features.Doors;
-using System;
-using PlayerRoles.FirstPersonControl;
-using HarmonyLib;
-using System.Reflection.Emit;
-using NorthwoodLib.Pools;
-using Mirror;
-using Exiled.API.Features.Roles;
-using static UnityEngine.GraphicsBuffer;
-using InventorySystem.Items.ThrowableProjectiles;
-using Exiled.API.Features.Items;
-using Hazards;
-using Exiled.API.Features.Hazards;
-using Utf8Json.Resolvers.Internal;
-using Exiled.API.Features.Toys;
-using InventorySystem.Items.Usables.Scp330;
-using Exiled.CustomRoles.API;
-using Exiled.CustomRoles.API.Features;
-using System.Diagnostics.Eventing.Reader;
-using Exiled.API.Extensions;
-using JetBrains.Annotations;
-using UCRAPI = UncomplicatedCustomRoles.API.Features.Manager;
 using SpireSCP.GUI.API.Features;
+using System.Collections.Generic;
+using UCRAPI = UncomplicatedCustomRoles.API.Features.Manager;
 
 namespace ObscureLabs
 {
-    internal class IDThief : Plugin.Module
+    public class IDThief : Module
     {
-        public override string name { get; set; } = "IDThief";
-        public override bool initOnStart { get; set; } = true;
+        public static bool Disguised = false;
 
-        public override bool Init()
+        public override string Name => "IDThief";
+
+        public override bool IsInitializeOnStart => true;
+
+        public override bool Enable()
         {
-            try
-            {
-                Exiled.Events.Handlers.Player.ChangedItem += item_change;
-                Exiled.Events.Handlers.Player.Spawned += Player_Spawned;
-                base.Init();
-                return true;
-            }
-            catch { return false; }
+            Exiled.Events.Handlers.Player.ChangedItem += OnItemChanged;
+            Exiled.Events.Handlers.Player.Spawned += PlayerSpawned;
+            base.Enable();
+            return true;
         }
 
         public override bool Disable()
         {
-            try
-            {
-                Exiled.Events.Handlers.Player.ChangedItem -= item_change;
-                Exiled.Events.Handlers.Player.Spawned -= Player_Spawned;
-                base.Disable();
-                return true;
-            }
-            catch { return false; }
+            Exiled.Events.Handlers.Player.ChangedItem -= OnItemChanged;
+            Exiled.Events.Handlers.Player.Spawned -= PlayerSpawned;
+            base.Disable();
+            return true;
         }
 
-        private static IEnumerator<float> wait()
+        private static void PlayerSpawned(SpawnedEventArgs ev)
         {
-            yield return Timing.WaitForSeconds(1);
-        }
-        internal static void Player_Spawned(SpawnedEventArgs ev)
-        {
-            CoroutineHandle pp = Timing.RunCoroutine(wait());
-
+            //:skull:
+            CoroutineHandle pp = Timing.RunCoroutine(WaitCoroutine());
         }
 
-
-        public static bool Disguised = false;
-        internal static void item_change(ChangedItemEventArgs ev)
+        private static void OnItemChanged(ChangedItemEventArgs ev)
         {
-            int? customRoleID = -1;
+            var customRoleID = -1;
 
-
-            if (ev.Item == null)
+            if (ev.Item is null)
             {
                 return;
             }
-
 
             if (UncomplicatedCustomRoles.API.Features.Manager.HasCustomRole(ev.Player))
             {
@@ -98,7 +57,9 @@ namespace ObscureLabs
             {
                 return;
             }
-; Log.Debug($"{ev.Player.DisplayNickname} is custom role ID: {customRoleID}");
+
+            Log.Debug($"{ev.Player.DisplayNickname} is custom role ID: {customRoleID}");
+
             if (customRoleID == -1)
             {
                 return;
@@ -106,104 +67,84 @@ namespace ObscureLabs
             else if (customRoleID == 1)
             {
                 var ToRole = ev.Player.Role.Type;
-                bool IsCard = false;
-                bool IsGun = false;
-
-
-
+                var IsKeyCard = ev.Item.Type.IsKeycard();
+                var IsWeapon = ev.Item.Type.IsWeapon(true);
 
                 if (ev.Item.Type == ItemType.KeycardScientist || ev.Item.Type == ItemType.KeycardContainmentEngineer || ev.Item.Type == ItemType.KeycardResearchCoordinator) // scientist
                 {
                     ToRole = RoleTypeId.Scientist;
-                    IsCard = true;
                 }
                 else if (ev.Item.Type == ItemType.KeycardGuard) // guard
                 {
                     ToRole = RoleTypeId.FacilityGuard;
-                    IsCard = true;
-
                 }
                 else if (ev.Item.Type == ItemType.KeycardMTFCaptain || ev.Item.Type == ItemType.KeycardMTFOperative || ev.Item.Type == ItemType.KeycardMTFPrivate) // MTF 
                 {
                     ToRole = RoleTypeId.NtfSergeant;
-                    IsCard = true;
-
                 }
                 else if (ev.Item.Type == ItemType.KeycardChaosInsurgency) // CHAOS
                 {
                     ToRole = RoleTypeId.ChaosRifleman;
-                    IsCard = true;
 
                 }
-                else if (ev.Item.Type == ItemType.GunShotgun || ev.Item.Type == ItemType.GunRevolver || ev.Item.Type == ItemType.GunAK || ev.Item.Type == ItemType.GunA7 || ev.Item.Type == ItemType.GunCOM15 || ev.Item.Type == ItemType.GunCOM18 || ev.Item.Type == ItemType.GunCom45 || ev.Item.Type == ItemType.GunCrossvec || ev.Item.Type == ItemType.GunE11SR || ev.Item.Type == ItemType.GunFRMG0 || ev.Item.Type == ItemType.GunFSP9 || ev.Item.Type == ItemType.GunLogicer || ev.Item.Type == ItemType.Jailbird || ev.Item.Type == ItemType.MicroHID)
-                {
-                    Log.Debug("Gun");
-                    IsCard = false;
-                    IsGun = true;
 
-                }
-                else
-                {
+                var team = RoleExtensions.GetTeam(ToRole);
+                var teamColor = "white";
 
-                    IsCard = false;
-                    IsGun = false;
-                }
-
-                var Team = RoleExtensions.GetTeam(ToRole);
-                var TeamColor = "white";
-                if (Team == Team.FoundationForces)
+                if (team is Team.FoundationForces)
                 {
-                    TeamColor = "blue";
+                    teamColor = "blue";
                 }
-                else if (Team == Team.ChaosInsurgency)
+                else if (team is Team.ChaosInsurgency)
                 {
-                    TeamColor = "green";
+                    teamColor = "green";
                 }
-                else if (Team == Team.Scientists)
+                else if (team is Team.Scientists)
                 {
-                    TeamColor = "yellow";
+                    teamColor = "yellow";
                 }
 
                 if (Disguised)
                 {
-                    if (IsGun)
+                    if (IsWeapon)
                     {
                         ev.Player.ChangeAppearance(ToRole, true);
                         //ev.Player.ShowHint($"<Color=Red>You are no longer Disguised!</color>");
                         Manager.SendHint(ev.Player, $"<Color=Red>You are no longer Disguised!</color>", 3);
                         Disguised = false;
                     }
-                    else if (IsCard)
+                    else if (IsKeyCard)
                     {
                         ev.Player.ChangeAppearance(ToRole, true);
                         //ev.Player.ShowHint($"You are now disguised as: <Color={TeamColor}>{ToRole.GetFullName()}</color>! \n<color=red>If you take out a weapon your cover will be blown!</color>");
-                        Manager.SendHint(ev.Player, $"You are now disguised as: <Color={TeamColor}>{ToRole.GetFullName()}</color>! \n<color=red>If you take out a weapon your cover will be blown!</color>", 3);
+                        Manager.SendHint(ev.Player, $"You are now disguised as: <Color={teamColor}>{ToRole.GetFullName()}</color>! \n<color=red>If you take out a weapon your cover will be blown!</color>", 3);
                         Disguised = true;
                     }
-                    else if (!IsGun | !IsCard)
+                    else if (!IsWeapon | !IsKeyCard)
                     {
                         Disguised = true;
                     }
                 }
                 else if (!Disguised)
                 {
-                    if (!IsCard)
+                    if (!IsKeyCard)
                     {
                         Disguised = false;
                     }
-                    else if (IsCard)
+                    else if (IsKeyCard)
                     {
                         ev.Player.ChangeAppearance(ToRole, true);
                         //ev.Player.ShowHint($"You are now disguised as: <Color={TeamColor}>{ToRole.GetFullName()}</color>! \n<color=red>If you take out a weapon your cover will be blown!</color>");
-                        Manager.SendHint(ev.Player, $"You are now disguised as: <Color={TeamColor}>{ToRole.GetFullName()}</color>! \n<color=red>If you take out a weapon your cover will be blown!</color>", 3);
+                        Manager.SendHint(ev.Player, $"You are now disguised as: <Color={teamColor}>{ToRole.GetFullName()}</color>! \n<color=red>If you take out a weapon your cover will be blown!</color>", 3);
                         Disguised = true;
                     }
                 }
-
             }
-
-
         }
 
+        private static IEnumerator<float> WaitCoroutine()
+        {
+            yield return Timing.WaitForSeconds(1);
+        }
     }
 }

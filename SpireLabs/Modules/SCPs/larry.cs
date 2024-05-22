@@ -1,66 +1,47 @@
-using CustomPlayerEffects;
 using Exiled.API.Enums;
-using Exiled.API.Features;
-using Exiled.Events.EventArgs.Scp0492;
 using Exiled.Events.EventArgs.Scp106;
 using MEC;
-using PluginAPI.Core.Zones.Pocket;
+using ObscureLabs.API.Features;
 using SpireSCP.GUI.API.Features;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ObscureLabs
 {
-    internal class larry : Plugin.Module
+    public class Larry : Module
     {
-        public override string name { get; set; } = "Larry";
-        public override bool initOnStart { get; set; } = true;
+        public override string Name { get; } = "Larry";
 
-        public override bool Init()
+        public override bool IsInitializeOnStart { get; } = true;
+
+        public override bool Enable()
         {
-            try
-            {
-                Exiled.Events.Handlers.Scp106.Attacking += onLarryAttack;
-                Exiled.Events.Handlers.Scp106.Attacking += pdExits;
-                base.Init();
-                return true;
-            }
-            catch { return false; }
+            Exiled.Events.Handlers.Scp106.Attacking += OnAttacking;
+
+            return base.Enable();
         }
 
         public override bool Disable()
         {
-            try
-            {
-                Exiled.Events.Handlers.Scp106.Attacking -= onLarryAttack;
-                Exiled.Events.Handlers.Scp106.Attacking -= pdExits;
-                base.Disable();
-                return true;
-            }
-            catch { return false; }
+            Exiled.Events.Handlers.Scp106.Attacking -= OnAttacking;
+
+            return base.Disable();
         }
 
-        internal static void pdExits(AttackingEventArgs ev)
+        private void OnAttacking(AttackingEventArgs ev)
         {
-
+            Timing.RunCoroutine(HitCoroutine(ev));
         }
 
-        internal static void onLarryAttack(AttackingEventArgs ev)
+        private IEnumerator<float> HitCoroutine(AttackingEventArgs ev)
         {
-            Timing.RunCoroutine(_1hit(ev));
+            var player = ev.Player;
+            var target = ev.Target;
 
-        }
-
-        private static IEnumerator<float> _1hit(AttackingEventArgs ev)
-        {
             yield return Timing.WaitForSeconds(0.15f);
-            ev.Target.EnableEffect(EffectType.PocketCorroding);
-            ev.Target.ChangeEffectIntensity(EffectType.PocketCorroding, 1, 0);
-            Manager.SendHint(ev.Player, $"You sent {ev.Target.Nickname} to the pocket dimension!", 5);
-            Manager.SendHint(ev.Target, $"You were sent to the pocket dimension by: {ev.Player.Nickname} as SCP-106!", 5);
+            target.EnableEffect(EffectType.PocketCorroding);
+            target.ChangeEffectIntensity(EffectType.PocketCorroding, 1, 0);
+            Manager.SendHint(player, $"You sent {target.Nickname} to the pocket dimension!", 5);
+            Manager.SendHint(target, $"You were sent to the pocket dimension by: {player.Nickname} as SCP-106!", 5);
         }
     }
 }
