@@ -63,23 +63,23 @@ namespace ObscureLabs.Gamemode_Handler
                 Plugin.SpireConfigLocation + "gamemodeInfo.yaml",
                 _serializer.Serialize(new SerializableGameModeData(isGameModeRound, lastGameMode, isNextRoundGameMode)));
         }
-
-
+        
         public void OnRoundStarted()
         {
             if (!Plugin.IsActiveEventround)
             {
-                WriteAllGameModeData(false, -1, _serializableGameMode.IsNextRoundGameMode ?? false);
+                WriteAllGameModeData(false, -1, _serializableGameMode.IsNextRoundGameMode);
                 AttemptGameModeRound(false, -1);
             }
         }
 
         public static void AttemptGameModeRound(bool force, int args)
         {
+            _serializableGameMode = new SerializableGameModeData(false, 0, false);
             var ran = new Random();
             int chance = ran.Next(0, 100);
 
-            if (_serializableGameMode.IsNextRoundGameMode ?? false || force || chance > 30 && chance < 50 && _serializableGameMode.IsGameModeRound)
+            if (_serializableGameMode.IsNextRoundGameMode || force || chance > 30 && chance < 50)
             {
                 Plugin.IsActiveEventround = true;
                 int selectedGM;
@@ -120,7 +120,7 @@ namespace ObscureLabs.Gamemode_Handler
                 ModulesManager.GetModule("GamemodeHandler").Disable();
                 Plugin.IsActiveEventround = false;
                 SCPHandler.doSCPThings();
-                WriteAllGameModeData(false, -1, _serializableGameMode.IsNextRoundGameMode ?? false);
+                WriteAllGameModeData(false, -1, _serializableGameMode.IsNextRoundGameMode);
             }
         }
     }

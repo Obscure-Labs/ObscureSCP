@@ -28,11 +28,12 @@ namespace ObscureLabs.Gamemode_Handler
 
         public static IEnumerator<float> runJbTDM()
         {
-            var spawnCI = new Vector3(0f, 1000f, 0f);
-            var spawnNTF = new Vector3(0f, 1000f, 0f);
+            
             var range = Random.Range(0, 3);
             _map = _maps[range];
-
+            var spawnCI = _map.SpawnCi;
+            var spawnNTF = _map.SpawnNtf;
+            
             int number;
             if (range == 2)
             {

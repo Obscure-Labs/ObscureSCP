@@ -33,7 +33,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         private CoroutineHandle _playerPositionCoroutine;
 
         private const string _hintText = "You are currently in a room occupied by SCP1162! \nDrop an item on the ground to have it transformed into another\nat the cost of 10HP...";
-        private const string _hintTextUsedScp1162 = "You just used Scp1162 to transform an item into another at the cost of 10HP...";
+        private const string _hintTextUsedScp1162 = "You just used SCP1162 to transform one item into another\nThis has costed you 10HP";
 
         public override bool Enable()
         {
@@ -64,16 +64,19 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                 player.Hurt(10);
                 pickup.Destroy();
                 _customitemlist.RandomItem().Spawn(pickup.Position);
-                Manager.SendHint(player, _hintTextUsedScp1162, 5f);
+                Manager.SendHint(player, _hintTextUsedScp1162, 2f);
             }
             else if (!isCustomItem && isIn1162)
             {
+                Manager.SendHint(player, _hintTextUsedScp1162, 2f);
+                
                 player.Hurt(10);
                 pickup.Destroy();
 
                 var randomItemType = Enum.GetValues(typeof(ItemType)).ToArray<ItemType>().GetRandomValue();
 
                 Pickup.CreateAndSpawn(randomItemType, pickup.Position, pickup.Rotation);
+                
             }
         }
 
@@ -82,10 +85,9 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             while (!Round.IsEnded)
             {
                 yield return Timing.WaitForSeconds(1f);
-                Log.Info("CHECKING RN");
                 foreach (var player in Player.List)
                 {
-                    var player_in1162 = Vector3.Distance(player.Transform.position, RoleTypeId.Scp173.GetRandomSpawnLocation().Position) > 8.2f;
+                    var player_in1162 = Vector3.Distance(player.Transform.position, RoleTypeId.Scp173.GetRandomSpawnLocation().Position) <= 8.2f;
 
                     if (player_in1162)
                     {

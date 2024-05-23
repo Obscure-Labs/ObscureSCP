@@ -22,7 +22,7 @@ namespace ObscureLabs.Commands.Admin.Other
                 return false;
             }
 
-            if (!int.TryParse(arguments.Array[0], out var result))
+            if (!int.TryParse(arguments.FirstElement(), out var result))
             {
                 Force(-1);
             }
