@@ -52,7 +52,7 @@ namespace ObscureLabs
 
             if (ev.Player.HasCustomRole())
             {
-                customRoleID = UCRAPI.Get(ev.Player.Id).Id;
+                customRoleID = ev.Player.GetCustomRole().Id;
             }
             else
             {

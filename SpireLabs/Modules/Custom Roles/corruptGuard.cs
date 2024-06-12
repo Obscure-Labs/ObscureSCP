@@ -67,7 +67,7 @@ namespace ObscureLabs
                 yield break;
             }
 
-            var customRoleID = UCRAPI.Get(ev.Player.Id).Id;
+            var customRoleID = ev.Player.GetCustomRole().Id;
 
             if (customRoleID != 3)
             {

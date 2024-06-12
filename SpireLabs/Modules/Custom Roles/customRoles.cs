@@ -45,7 +45,7 @@ namespace ObscureLabs
 
             if (player.HasCustomRole())
             {
-                UCRID = UCRAPI.Get(player.Id).Id;
+                UCRID = player.GetCustomRole().Id;
 
                 if (UCRID == 4)
                 {
@@ -90,7 +90,7 @@ namespace ObscureLabs
                 return;
             }
 
-            if (UCRAPI.Get(ev.Player.Id).Id != 2)
+            if (ev.Player.GetCustomRole().Id != 2)
             {
                 return;
             }
