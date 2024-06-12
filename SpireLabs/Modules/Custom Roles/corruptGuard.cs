@@ -4,7 +4,8 @@ using MEC;
 using ObscureLabs.API.Features;
 using PlayerRoles;
 using System.Collections.Generic;
-using UCRAPI = UncomplicatedCustomRoles.API.Features.Manager;
+using UncomplicatedCustomRoles.Extensions;
+using UCRAPI = UncomplicatedCustomRoles.API.Features.CustomRole;
 
 namespace ObscureLabs
 {
@@ -61,12 +62,12 @@ namespace ObscureLabs
         private static IEnumerator<float> SpawnThingCoroutine(SpawnedEventArgs ev)
         {
             yield return Timing.WaitForSeconds(0.25f);
-            if (!UCRAPI.HasCustomRole(ev.Player))
+            if (!ev.Player.HasCustomRole())
             {
                 yield break;
             }
 
-            var customRoleID = UCRAPI.Get(ev.Player).Id;
+            var customRoleID = UCRAPI.Get(ev.Player.Id).Id;
 
             if (customRoleID != 3)
             {

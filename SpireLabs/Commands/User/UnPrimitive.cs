@@ -8,15 +8,13 @@ namespace ObscureLabs.Commands.User
     [CommandHandler(typeof(ClientCommandHandler))]
     public class UnPrimitive : ICommand
     {
-        public UnPrimitive() => LoadGeneratedCommands();
+        public bool SanitizeResponse { get; }
 
         public string Command { get; set; } = "unglow";
 
         public string[] Aliases { get; set; } = new string[] { };
 
         public string Description { get; set; } = "Cube";
-
-        public void LoadGeneratedCommands() { }
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {

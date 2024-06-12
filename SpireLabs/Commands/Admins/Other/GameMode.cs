@@ -8,6 +8,7 @@ namespace ObscureLabs.Commands.Admin.Other
     [CommandHandler(typeof(RemoteAdminCommandHandler))]
     public class GameMode : ICommand
     {
+        public bool SanitizeResponse { get; }
         public string Command { get; set; } = "gamemode";
 
         public string[] Aliases { get; set; } = new string[] { };

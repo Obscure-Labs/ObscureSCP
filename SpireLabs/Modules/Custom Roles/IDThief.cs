@@ -6,7 +6,8 @@ using ObscureLabs.API.Features;
 using PlayerRoles;
 using SpireSCP.GUI.API.Features;
 using System.Collections.Generic;
-using UCRAPI = UncomplicatedCustomRoles.API.Features.Manager;
+using UncomplicatedCustomRoles.Extensions;
+using UCRAPI = UncomplicatedCustomRoles.API.Features.CustomRole;
 
 namespace ObscureLabs
 {
@@ -49,9 +50,9 @@ namespace ObscureLabs
                 return;
             }
 
-            if (UncomplicatedCustomRoles.API.Features.Manager.HasCustomRole(ev.Player))
+            if (ev.Player.HasCustomRole())
             {
-                customRoleID = UCRAPI.Get(ev.Player).Id;
+                customRoleID = UCRAPI.Get(ev.Player.Id).Id;
             }
             else
             {

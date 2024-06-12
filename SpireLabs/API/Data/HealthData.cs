@@ -4,9 +4,9 @@
     {
         public HealthData(bool isEnabled, int health, int increase)
         {
-            IsEnabled = isEnabled;
-            Health = health;
-            Increase = increase;
+            IsEnabled = isEnabled = false;
+            Health = health = 0;
+            Increase = increase = 0;
         }
 
         public HealthData() { }

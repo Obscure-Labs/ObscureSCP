@@ -8,9 +8,8 @@ using ObscureLabs.API.Features;
 using PlayerRoles;
 using SpireSCP.GUI.API.Features;
 using System.Collections.Generic;
-using UCRAPI = UncomplicatedCustomRoles.API.Features.Manager;
-
-//isaac furry, ehehehehehhehehehehe *cough*
+using UncomplicatedCustomRoles.Extensions;
+using UCRAPI = UncomplicatedCustomRoles.API.Features.CustomRole;
 
 namespace ObscureLabs
 {
@@ -44,9 +43,9 @@ namespace ObscureLabs
 
             yield return Timing.WaitForSeconds(0.5f);
 
-            if (UCRAPI.HasCustomRole(player))
+            if (player.HasCustomRole())
             {
-                UCRID = UCRAPI.Get(player).Id;
+                UCRID = UCRAPI.Get(player.Id).Id;
 
                 if (UCRID == 4)
                 {
@@ -86,12 +85,12 @@ namespace ObscureLabs
                 return;
             }
 
-            if (!UCRAPI.HasCustomRole(ev.Player))
+            if (!ev.Player.HasCustomRole())
             {
                 return;
             }
 
-            if (UCRAPI.Get(ev.Player).Id != 2)
+            if (UCRAPI.Get(ev.Player.Id).Id != 2)
             {
                 return;
             }

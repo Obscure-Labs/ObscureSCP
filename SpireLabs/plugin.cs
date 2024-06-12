@@ -20,7 +20,9 @@ using SpireSCP.GUI.API.Features;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using ObscureLabs.Configs;
 using UnityEngine;
+using YamlDotNet.Serialization;
 
 namespace ObscureLabs
 {
@@ -50,6 +52,8 @@ namespace ObscureLabs
 
         public ItemConfigs.ItemConfig ItemConfigs { get; private set; } = null!;
 
+        public OverrideConfig overrideConfigs { get; set; }
+
         private Harmony _harmony;
 
         public override void OnEnabled()
@@ -60,19 +64,20 @@ namespace ObscureLabs
             CustomItem.RegisterItems();
             PopulateModules();
 
+
             Log.SendRaw("[ObscureLabs]\n\r\n .d8888b.           d8b                 .d8888b.   .d8888b.  8888888b.  \r\nd88P  Y88b          Y8P                d88P  Y88b d88P  Y88b 888   Y88b \r\nY88b.                                  Y88b.      888    888 888    888 \r\n \"Y888b.   88888b.  888 888d888 .d88b.  \"Y888b.   888        888   d88P \r\n    \"Y88b. 888 \"88b 888 888P\"  d8P  Y8b    \"Y88b. 888        8888888P\"  \r\n      \"888 888  888 888 888    88888888      \"888 888    888 888        \r\nY88b  d88P 888 d88P 888 888    Y8b.    Y88b  d88P Y88b  d88P 888        \r\n \"Y8888P\"  88888P\"  888 888     \"Y8888  \"Y8888P\"   \"Y8888P\"  888        \r\n           888                                                          \r\n           888                                                          \r\n           888                                                          \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n", color: ConsoleColor.DarkMagenta);
-            if (Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Spire/"))
+            if (Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Obscure/"))
             {
-                SpireConfigLocation = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Spire/";
+                SpireConfigLocation = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Obscure/";
             }
             else
             {
                 Log.Info("Making Spire Config Folder");
-                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Spire/");
-                SpireConfigLocation = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Spire/";
-                File.WriteAllText(SpireConfigLocation + "lines.txt", "CHANGE ME IN :  [EXILEDCONIG]\\Spire/lines.txt");
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Obscure/");
+                SpireConfigLocation = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Obscure/";
+                File.WriteAllText(SpireConfigLocation + "lines.txt", "CHANGE ME IN :  [EXILEDCONIG]\\Obscure/lines.txt");
             }
-
+            FetchOverrides();
             Log.Info($"Found Spire Config Folder : \"{SpireConfigLocation}\"");
         }
 
@@ -105,6 +110,21 @@ namespace ObscureLabs
             ModulesManager.AddModule(new Scp1162());
 
             RegisterEvents();
+        }
+
+        public void FetchOverrides()
+        {
+            if (!File.Exists(SpireConfigLocation + "PlayerOverrides.yaml"))
+            {
+                Log.Error("No override files exists");
+                File.WriteAllText(SpireConfigLocation + "PlayerOverrides.yaml", Loader.Serializer.Serialize(new OverrideConfig()));
+                overrideConfigs = new OverrideConfig();
+            }
+            else
+            {
+                overrideConfigs = Loader.Deserializer.Deserialize<OverrideConfig>(File.ReadAllText(SpireConfigLocation + "PlayerOverrides.yaml"));
+                File.WriteAllText(SpireConfigLocation + "PlayerOverrides.yaml", Loader.Serializer.Serialize(overrideConfigs));
+            }
         }
 
         private void RegisterEvents()
@@ -191,7 +211,7 @@ namespace ObscureLabs
                     case RoleTypeId.Scp173: SCPS.Add(p); break;
                     case RoleTypeId.Scp939: SCPS.Add(p); break;
                     case RoleTypeId.NtfCaptain:
-                        p.MaxHealth = Config.HealthOverrides[RoleTypeId.NtfCaptain].Health;
+                        p.MaxHealth = overrideConfigs.HealthOverrides[RoleTypeId.NtfCaptain].Health;
                         p.Heal(150, false);
                         break;
                 }

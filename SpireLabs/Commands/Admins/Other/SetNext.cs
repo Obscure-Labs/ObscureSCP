@@ -10,6 +10,7 @@ namespace ObscureLabs.Commands.Other
     [CommandHandler(typeof(RemoteAdminCommandHandler))]
     public class setNext : ICommand
     {
+        public bool SanitizeResponse { get; }
         public string Command { get; set; } = "nextMode";
 
         public string[] Aliases { get; set; } = new string[] { };

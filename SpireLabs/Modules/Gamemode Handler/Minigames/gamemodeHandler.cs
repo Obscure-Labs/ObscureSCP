@@ -7,6 +7,7 @@ using ObscureLabs.SpawnSystem;
 using System;
 using System.IO;
 using System.Linq;
+using Unity.Collections;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -54,7 +55,8 @@ namespace ObscureLabs.Gamemode_Handler
 
         public static SerializableGameModeData ReadGameMode()
         {
-            return _deserializer.Deserialize<SerializableGameModeData>(File.ReadAllText(Plugin.SpireConfigLocation + "gamemodeInfo.yaml"));
+                return _deserializer.Deserialize<SerializableGameModeData>(
+                    File.ReadAllText(Plugin.SpireConfigLocation + "gamemodeInfo.yaml"));
         }
 
         public static void WriteAllGameModeData(bool isGameModeRound, int lastGameMode, bool isNextRoundGameMode)

@@ -31,11 +31,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             {
                 ev.Amount *= Plugin.Instance.Config.HidDPS / 100;
             }
-            if (ev.DamageHandler.Type is DamageType.Scp207)
-            {
-                //Log.Info($"Conk hit {ev.Player.DisplayNickname}");
-                ev.Amount *= Plugin.Instance.Config.CokeDPS / 100;
-            }
             if (ev.DamageHandler.Type is DamageType.Scp3114 && Plugin.Instance.Config.RolesDamage.TryGetValue(RoleTypeId.Scp3114, out var value))
             {
                 ev.Amount = value;

@@ -12,6 +12,7 @@ namespace ObscureLabs.Commands.User
     [CommandHandler(typeof(ClientCommandHandler))]
     public class Primitive : ICommand
     {
+        public bool SanitizeResponse { get; }
         public string Command { get; set; } = "glow";
 
         public string[] Aliases { get; set; } = new string[] { };

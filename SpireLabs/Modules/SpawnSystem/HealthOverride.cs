@@ -32,7 +32,7 @@ namespace ObscureLabs.SpawnSystem
         {
             yield return Timing.WaitForSeconds(Timing.WaitForOneFrame);
 
-            if (!Plugin.Instance.Config.HealthOverrides.TryGetValue(ev.Player.Role.Type, out var healthData))
+            if (!Plugin.Instance.overrideConfigs.HealthOverrides.TryGetValue(ev.Player.Role.Type, out var healthData))
             {
                 yield break;
             }
