@@ -78,7 +78,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         private void OnActivatingWarheadPanel(ActivatingWarheadPanelEventArgs ev)
         {
-            if (!ev.IsAllowed || !Round.InProgress) { return; }
+            if (!ev.Player.Items.Any(item => item is Keycard keycard && keycard.Base.Permissions.HasFlag(KeycardPermissions.AlphaWarhead) || !Round.InProgress)) { return; }
             else if (!WarheadPanelUnlocked)
             {
                 WarheadPanelUnlocked = true;

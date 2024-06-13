@@ -9,6 +9,7 @@ using Exiled.API.Features.Items;
 using Exiled.Events.EventArgs.Player;
 using InventorySystem;
 using InventorySystem.Items.Keycards;
+using KeycardPermissions = Interactables.Interobjects.DoorUtils.KeycardPermissions;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
@@ -47,7 +48,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                 DoorType.Scp939Cryo,
             };
 
-            if (ev.Player.Items.Any(i => i is Keycard k && k.Base.Permissions.HasFlag(ev.Door.RequiredPermissions.RequiredPermissions)) && !illegalDoors.Contains(ev.Door.Type) && !ev.Door.IsLocked)
+            if (ev.Player.Items.Any(i => i is Keycard k && k.Base.Permissions.HasFlag(ev.Door.RequiredPermissions.RequiredPermissions)) && !illegalDoors.Contains(ev.Door.Type) && !ev.Door.IsLocked || ev.Door.IsCheckpoint && ev.Player.Items.Any(i => i is Keycard k && k.Base.Permissions.HasFlag(KeycardPermissions.Checkpoints)))
             {
                 ev.IsAllowed = true;
             }
