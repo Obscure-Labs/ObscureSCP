@@ -109,6 +109,7 @@ namespace ObscureLabs
             ModulesManager.AddModule(new HealthOverride());
             ModulesManager.AddModule(new Scp1162());
             ModulesManager.AddModule(new RemoteKeycard());
+            ModulesManager.AddModule(new Scp914Handler());
             RegisterEvents();
         }
 

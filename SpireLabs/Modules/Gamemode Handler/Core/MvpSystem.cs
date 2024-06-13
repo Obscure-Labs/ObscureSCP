@@ -77,7 +77,15 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         private void OnActivatingWarheadPanel(ActivatingWarheadPanelEventArgs ev)
         {
-            Timing.RunCoroutine(AddXpToPlayer(ev.Player, 7, "Opening The Warhead Panel"));
+            if (ev.Player.Items.Any(item => item is Keycard keycard && keycard.Base.Permissions.HasFlag(KeycardPermissions.ArmoryLevelTwo)))
+            {
+                Timing.RunCoroutine(AddXpToPlayer(ev.Player, 7, "Opening The Warhead Panel"));
+            }
+            else
+            {
+                return;
+            }
+
         }
 
         private void OnEscapingPocketDimension(EscapingPocketDimensionEventArgs ev)
@@ -117,7 +125,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         private void OnKillingPlayer(DiedEventArgs ev)
         {
-            if (ev.Attacker is null)
+            if (ev.Attacker is null || ev.Attacker == ev.Player)
             {
                 return;
             }
