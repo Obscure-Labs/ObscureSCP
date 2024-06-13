@@ -110,6 +110,7 @@ namespace ObscureLabs
             ModulesManager.AddModule(new Scp1162());
             ModulesManager.AddModule(new RemoteKeycard());
             ModulesManager.AddModule(new Scp914Handler());
+            ModulesManager.AddModule(new ReconnectRecovery());
             RegisterEvents();
         }
 
