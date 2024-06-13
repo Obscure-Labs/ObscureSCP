@@ -46,11 +46,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                 DoorType.Scp079Second,
                 DoorType.Scp939Cryo,
             };
-            if(!ev.Door.IsLocked) { ev.IsAllowed = true;}
 
-            if (!illegalDoors.Contains(ev.Door.Type)) { ev.IsAllowed = true;}
-
-            if (ev.Player.Items.Any(i => i is Keycard k && k.Base.Permissions.HasFlag(ev.Door.RequiredPermissions.RequiredPermissions)))
+            if (ev.Player.Items.Any(i => i is Keycard k && k.Base.Permissions.HasFlag(ev.Door.RequiredPermissions.RequiredPermissions)) && !illegalDoors.Contains(ev.Door.Type) && !ev.Door.IsLocked)
             {
                 ev.IsAllowed = true;
             }
