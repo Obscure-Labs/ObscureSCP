@@ -48,7 +48,7 @@
             ev.Player.EnableEffect(EffectType.MovementBoost, 10);
             ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 10, 10);
 
-            Manager.SendHint(ev.Player, "You provide speed to all SCP entities nearby!", 7);
+            Manager.SendHint(ev.Player, "You provide a <color=lightblue><u>Speed Boost</u></color> to all nearby <color=red><u>SCP Entities</u></color>!", 7);
             Timing.RunCoroutine(FixedScpBoostCoroutine(ev.Player));
         }
 
@@ -59,7 +59,7 @@
                 return;
             }
 
-            Manager.SendHint(ev.Player, "You are giving HS to all SCP entities nearby \n(this can overflow past natural max)", 7);
+            Manager.SendHint(ev.Player, "You are giving <color=lightblue><u>HS points</u></color> to all nearby <color=red><u>SCP Entities</u></color>\n<color=yellow>(this can overflow past natural max)</color>", 7);
             Timing.RunCoroutine(FixedScpShieldCoroutine(ev.Player));
         }
 
@@ -71,7 +71,7 @@
             Log.Info("Running fixedScpBoost");
             for (int i = 0; i < 60; i++)
             {
-                Manager.SendHint(player, "You provide speed to all SCP entities nearby!", 0.75f);
+                Manager.SendHint(player, "You provide a<color=lightblue><u>Speed Boost</u></color> to all nearby <color=red><u>SCP Entities</u></color>!", 0.75f);
                 foreach (var player1 in Player.List)
                 {
                     if (player1 == player)
@@ -103,7 +103,7 @@
 
                     if (!player2.IsHuman && player2 != player)
                     {
-                        Manager.SendHint(player2, "You are recieving a speed boost from a nearby doctor!", 0.75f);
+                        Manager.SendHint(player2, "You are recieving a <color=lightblue><u>Speed Boost</u></color> from a nearby <color=red><u>SCP 049</u></color>!", 0.75f);
                         player2.EnableEffect(EffectType.MovementBoost, 1.5f);
                         player2.ChangeEffectIntensity(EffectType.MovementBoost, 30, 1.5f);
                     }
@@ -120,7 +120,7 @@
             Log.Info("Running fixedScpShield");
             for (int j = 0; j < 120; j++)
             {
-                Manager.SendHint(player, "You provide protection to all SCP entities nearby!", 0.75f);
+                Manager.SendHint(player, "You provide <color=lightblue><u>HS points</u></color> to all nearby <color=red><u>SCP Entities</u></color>!", 0.75f);
                 foreach (var player1 in Player.List)
                 {
                     if (player1 == player)
@@ -152,7 +152,7 @@
 
                     if (!player2.IsHuman && player2 != player)
                     {
-                        Manager.SendHint(player2, "You are recieving HS points from a nearby doctor!", 0.75f);
+                        Manager.SendHint(player2, "You are recieving <color=lightblue><u>HS points</u></color> from a nearby <color=red><u>SCP 049</u></color>!", 0.75f);
                         player2.HumeShield += 2.7f;
                     }
                 }
