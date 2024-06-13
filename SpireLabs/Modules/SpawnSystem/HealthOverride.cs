@@ -52,6 +52,7 @@ namespace ObscureLabs.SpawnSystem
                 }
             }
 
+            ev.Player.MaxHealth = healthData.Health;
             ev.Player.MaxHealth += healthData.Increase * humanPlayers;
             ev.Player.Heal(ev.Player.MaxHealth);
         }

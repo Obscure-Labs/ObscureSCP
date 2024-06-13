@@ -35,36 +35,42 @@ namespace SpireLabs.GUI
                 string s = string.Empty;
                 s += $"<align=center><size=32>\t\n"; //0
                 s += $"\t\n"; //1 (TOP SCREEN)
-                if (hint[deadPlayer.Id] == string.Empty)
-                {
-                    s += $"\t\n"; //2
-                    s += $"\t\n"; //3
-                    s += $"\t\n"; //4
-                }
-                else
-                {
-                    if (hint[deadPlayer.Id].Split(char.Parse("\n")).Length == 0 || hint[deadPlayer.Id].Length < 70)
+                try { 
+                    if (hint[deadPlayer.Id] == string.Empty)
                     {
-                        s += $"{hint[deadPlayer.Id]}\n"; //2
+                        s += $"\t\n"; //2
                         s += $"\t\n"; //3
                         s += $"\t\n"; //4
                     }
-                    else if (hint[deadPlayer.Id].Split(char.Parse("\n")).Length == 1 ||
-                             hint[deadPlayer.Id].Length > 70 && hint[deadPlayer.Id].Length < 140)
+                    else
                     {
-                        string[] split = hint[deadPlayer.Id].Split(char.Parse("\n"));
-                        s += $"{split[0]}\n"; //2
-                        s += $"{split[1]}\n"; //3
-                        s += $"\t\n"; //4
+                        if (hint[deadPlayer.Id].Split(char.Parse("\n")).Length == 0 || hint[deadPlayer.Id].Length < 70)
+                        {
+                            s += $"{hint[deadPlayer.Id]}\n"; //2
+                            s += $"\t\n"; //3
+                            s += $"\t\n"; //4
+                        }
+                        else if (hint[deadPlayer.Id].Split(char.Parse("\n")).Length == 1 ||
+                                 hint[deadPlayer.Id].Length > 70 && hint[deadPlayer.Id].Length < 140)
+                        {
+                            string[] split = hint[deadPlayer.Id].Split(char.Parse("\n"));
+                            s += $"{split[0]}\n"; //2
+                            s += $"{split[1]}\n"; //3
+                            s += $"\t\n"; //4
+                        }
+                        else if (hint[deadPlayer.Id].Split(char.Parse("\n")).Length == 2 ||
+                                 hint[deadPlayer.Id].Length > 140)
+                        {
+                            string[] split = hint[deadPlayer.Id].Split(char.Parse("\n"));
+                            s += $"{split[0]}\n"; //2
+                            s += $"{split[1]}\n"; //3
+                            s += $"{split[2]}\n"; //4
+                        }
                     }
-                    else if (hint[deadPlayer.Id].Split(char.Parse("\n")).Length == 2 ||
-                             hint[deadPlayer.Id].Length > 140)
-                    {
-                        string[] split = hint[deadPlayer.Id].Split(char.Parse("\n"));
-                        s += $"{split[0]}\n"; //2
-                        s += $"{split[1]}\n"; //3
-                        s += $"{split[2]}\n"; //4
-                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Error($"Error: {ex}");
                 }
 
                 s += $"\t\n"; //5
@@ -188,37 +194,43 @@ namespace SpireLabs.GUI
 
                     s += $"\t\n"; //0
                     s += $"\t\n"; //1 (TOP OF SCREEN)
-                    if (hint[p.Id] == string.Empty)
+                    try
                     {
-                        s += $"\t\n"; //2
-                        s += $"\t\n"; //3
-                        s += $"\t\n"; //4
-                    }
-                    else
-                    {
-                        if (hint[p.Id].Split(char.Parse("\n")).Length == 0 || hint[p.Id].Length < 70)
+                        if (hint[p.Id] == string.Empty)
                         {
-                            s += $"{hint[p.Id]}\n"; //2
+                            s += $"\t\n"; //2
                             s += $"\t\n"; //3
                             s += $"\t\n"; //4
                         }
-                        else if (hint[p.Id].Split(char.Parse("\n")).Length == 1 ||
-                                 hint[p.Id].Length > 70 && hint[p.Id].Length < 140)
+                        else
                         {
-                            string[] split = hint[p.Id].Split(char.Parse("\n"));
-                            s += $"{split[0]}\n"; //2
-                            s += $"{split[1]}\n"; //3
-                            s += $"\t\n"; //4
-                        }
-                        else if (hint[p.Id].Split(char.Parse("\n")).Length == 2 || hint[p.Id].Length > 140)
-                        {
-                            string[] split = hint[p.Id].Split(char.Parse("\n"));
-                            s += $"{split[0]}\n"; //2
-                            s += $"{split[1]}\n"; //3
-                            s += $"{split[2]}\n"; //4
+                            if (hint[p.Id].Split(char.Parse("\n")).Length == 0 || hint[p.Id].Length < 70)
+                            {
+                                s += $"{hint[p.Id]}\n"; //2
+                                s += $"\t\n"; //3
+                                s += $"\t\n"; //4
+                            }
+                            else if (hint[p.Id].Split(char.Parse("\n")).Length == 1 ||
+                                     hint[p.Id].Length > 70 && hint[p.Id].Length < 140)
+                            {
+                                string[] split = hint[p.Id].Split(char.Parse("\n"));
+                                s += $"{split[0]}\n"; //2
+                                s += $"{split[1]}\n"; //3
+                                s += $"\t\n"; //4
+                            }
+                            else if (hint[p.Id].Split(char.Parse("\n")).Length == 2 || hint[p.Id].Length > 140)
+                            {
+                                string[] split = hint[p.Id].Split(char.Parse("\n"));
+                                s += $"{split[0]}\n"; //2
+                                s += $"{split[1]}\n"; //3
+                                s += $"{split[2]}\n"; //4
+                            }
                         }
                     }
-
+                    catch(Exception ex)
+                    {
+                        Log.Error($"Error: {ex}");
+                    }
                     Log.Debug("Got past hints");
                     s += $"\t\n"; //5
                     if (modifiers[0] is null)

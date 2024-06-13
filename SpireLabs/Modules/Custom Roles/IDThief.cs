@@ -118,7 +118,7 @@ namespace ObscureLabs
                     {
                         ev.Player.ChangeAppearance(ToRole, true);
                         //ev.Player.ShowHint($"You are now disguised as: <Color={TeamColor}>{ToRole.GetFullName()}</color>! \n<color=red>If you take out a weapon your cover will be blown!</color>");
-                        Manager.SendHint(ev.Player, $"You are now disguised as: <Color={teamColor}>{ToRole.GetFullName()}</color>! \n<color=red>If you take out a weapon your cover will be blown!</color>", 3);
+                        Manager.SendHint(ev.Player, $"You're disguised as: <Color={teamColor}>{ToRole.GetFullName()}</color>! \n<color=red>If you take out a weapon your cover will be blown!</color>", 3);
                         Disguised = true;
                     }
                     else if (!IsWeapon | !IsKeyCard)
@@ -136,7 +136,7 @@ namespace ObscureLabs
                     {
                         ev.Player.ChangeAppearance(ToRole, true);
                         //ev.Player.ShowHint($"You are now disguised as: <Color={TeamColor}>{ToRole.GetFullName()}</color>! \n<color=red>If you take out a weapon your cover will be blown!</color>");
-                        Manager.SendHint(ev.Player, $"You are now disguised as: <Color={teamColor}>{ToRole.GetFullName()}</color>! \n<color=red>If you take out a weapon your cover will be blown!</color>", 3);
+                        Manager.SendHint(ev.Player, $"You're disguised as: <Color={teamColor}>{ToRole.GetFullName()}</color>! \n<color=red>If you take out a weapon your cover will be blown!</color>", 3);
                         Disguised = true;
                     }
                 }
