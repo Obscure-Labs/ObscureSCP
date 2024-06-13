@@ -22,8 +22,8 @@ namespace ObscureLabs
 
         public override bool IsInitializeOnStart => true;
 
-        private readonly string[] _good = { "You gained 50HP!", "You gained a 5 second speed boost!", "You found a keycard!", "You are invisible for 5 seconds!", "You are healed!", "GRENADE FOUNTAIN!", "Ammo pile!!", "FREE CANDY!", "You can't die for the next 25s!", "You bring health to those around you!", "Nice hat..", "You have such radiant skin!", "You got an item!", "Brought a random player to you!" };
-        private readonly string[] _bad = { "You now have 50HP!", "You dropped all of your items, How clumsy...", "You have heavy feet for 5 seconds...", "Pocket Sand!", "You got lost and found yourself in a random room!", "Don't gamble kids!", "You hear the sound of an alarm!", "Portal to hell!!!", "Others percieve you as upside down!", "You caused a blackout in your zone!", "Door stuck! DOOR STUCK!", "Your coin melted :(", "You have been detained!", "You have been brought to a random player!", "The facility is having some technical difficulties" };
+        private readonly string[] _good = { "You gained <color=green><u>50HP!</u></color>", "You gained a <color=blue><u>5 second speed boost!</u></color>", "You found a <color=yellow><u>keycard!</u></color>", "You are <color=magenta><u>invisible for 5 seconds!</u></color>", "You are <color=red><u>healed!</u></color>", "<color=red>GRENADE FOUNTAIN!</color>", "<color=green>Ammo pile!!</color>", "<color=green>FREE CANDY!</color>", "You can't die for the next <color=green><u>25s!</u></color>", "<color=red>You bring health to those around you!</color>", "<color=purple>Nice hat..</color>", "<color=yellow>You have such radiant skin!</color>", "<color=lightblue>You got an item!</color>", "<color=green>Brought a random player to you!</color>" };
+        private readonly string[] _bad = { "You now have <color=red><u>50HP!</u></color>", "<color=red>You dropped all of your items, How clumsy...</color>", "<color=red>You have heavy feet for 5 seconds...</color>", "<color=red>Pocket Sand!</color>", "<color=red>You got lost and found yourself in a random room!</color>", "<color=red>Don't gamble kids!</color>", "You hear the sound of an alarm!", "<color=#008000ff>Portal to hell!!!</color>", "Others percieve you as upside down!", "You caused a blackout in your zone!", "Door stuck! DOOR STUCK!", "Your coin melted :(", "You have been detained!", "You have been brought to a random player!", "The facility is having some technical difficulties" };
 
         private Dictionary<int, CandyKindID> _candies = new(6)
         {
@@ -314,23 +314,23 @@ namespace ObscureLabs
                             ev.Player.EnableEffect(EffectType.CardiacArrest, 999);
                             ev.Player.ChangeEffectIntensity(EffectType.CardiacArrest, 25);
                             ev.Player.EnableEffect(EffectType.SeveredHands, 999);
-                            Manager.SendHint(ev.Player, "Look ma' no hands!", 3);
+                            Manager.SendHint(ev.Player, "<color=red>Look ma' no hands!</color>", 3);
                         }
 
                         if (randomdeathpick == 1)
                         {
                             ev.Player.Vaporize(ev.Player);
-                            Manager.SendHint(ev.Player, "Voop", 3);
+                            Manager.SendHint(ev.Player, "<color=red>Voop</color>", 3);
                         }
                         else if (randomdeathpick == 2)
                         {
                             ev.Player.Explode();
-                            Manager.SendHint(ev.Player, "Bang!", 3);
+                            Manager.SendHint(ev.Player, "<color=red>Bang!</color>", 3);
                         }
                         else if (randomdeathpick == 3)
                         {
                             Timing.RunCoroutine(ShitOnTheFloorCoroutine(ev.Player));
-                            Manager.SendHint(ev.Player, "Shidded", 3);
+                            Manager.SendHint(ev.Player, "<color=red>Shidded</color>", 3);
                         }
                         break;
                     case 6:

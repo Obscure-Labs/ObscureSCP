@@ -16,10 +16,11 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
     public class MvpSystem : Module
     {
-        private static List<PlayerData> _playerData = new();
-        private static PlayerData _firstPlace;
-        private static PlayerData _secondPlace;
-        private static PlayerData _thirdPlace;
+        private List<PlayerData> _playerData = new();
+        private PlayerData _firstPlace;
+        private PlayerData _secondPlace;
+        private PlayerData _thirdPlace;
+        private static bool WarheadPanelUnlocked = false;
 
         public override string Name => "MVPSystem";
 
@@ -77,14 +78,13 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         private void OnActivatingWarheadPanel(ActivatingWarheadPanelEventArgs ev)
         {
-            if (ev.Player.Items.Any(item => item is Keycard keycard && keycard.Base.Permissions.HasFlag(KeycardPermissions.ArmoryLevelTwo)))
+            if (!ev.IsAllowed || !Round.InProgress) { return; }
+            else if (!WarheadPanelUnlocked)
             {
+                WarheadPanelUnlocked = true;
                 Timing.RunCoroutine(AddXpToPlayer(ev.Player, 7, "Opening The Warhead Panel"));
             }
-            else
-            {
-                return;
-            }
+            else { return; }
 
         }
 
@@ -130,7 +130,15 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                 return;
             }
 
-            Timing.RunCoroutine(AddXpToPlayer(ev.Attacker, 5, $"Killing Player: {ev.Player.DisplayNickname}"));
+            if (ev.Player.IsScp)
+            {
+                Timing.RunCoroutine(AddXpToPlayer(ev.Attacker, 12, $"Killing SCP Player: {ev.Player.DisplayNickname}"));
+            }
+            else
+            {
+                Timing.RunCoroutine(AddXpToPlayer(ev.Attacker, 5, $"Killing Player: {ev.Player.DisplayNickname}"));
+            }
+
         }
 
         private void OnEndingRound(RoundEndedEventArgs ev)
@@ -206,7 +214,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             }
 
             _playerData.FirstOrDefault(x => x.Player.Id == player.Id).Xp += xp;
-            Manager.SendHint(player, $"You Gained {xp} points for: {reason}", 5);
+            Manager.SendHint(player, $"You Gained <color=green><u>{xp} points</u></color> for: <color=yellow>{reason}</color>\nYou currently have: <color=green><u>{_playerData.FirstOrDefault(x => x.Player.Id == player.Id).Xp} points</u></color>", 5);
         }
     }
 }
