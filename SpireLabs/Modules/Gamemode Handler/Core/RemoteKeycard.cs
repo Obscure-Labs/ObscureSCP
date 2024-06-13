@@ -23,6 +23,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             Exiled.Events.Handlers.Player.InteractingDoor += OnInteractingDoor;
             Exiled.Events.Handlers.Player.InteractingLocker += OnInteractinglocker;
             Exiled.Events.Handlers.Player.ActivatingWarheadPanel += OnInteractingWarhead;
+            Exiled.Events.Handlers.Player.UnlockingGenerator += OnInteractGenerator;
             base.Enable();
             return true;
         }
@@ -32,6 +33,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             Exiled.Events.Handlers.Player.InteractingDoor -= OnInteractingDoor;
             Exiled.Events.Handlers.Player.InteractingLocker -= OnInteractinglocker;
             Exiled.Events.Handlers.Player.ActivatingWarheadPanel -= OnInteractingWarhead;
+            Exiled.Events.Handlers.Player.UnlockingGenerator -= OnInteractGenerator;
             base.Disable();
             return true;
         }
@@ -44,13 +46,13 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                 DoorType.Scp079Second,
                 DoorType.Scp939Cryo,
             };
-            if(ev.Door.IsLocked) { ev.IsAllowed = false;}
+            if(!ev.Door.IsLocked) { ev.IsAllowed = true;}
 
-            if (illegalDoors.Contains(ev.Door.Type)) { ev.IsAllowed = false;}
+            if (!illegalDoors.Contains(ev.Door.Type)) { ev.IsAllowed = true;}
 
-            if (!ev.Player.Items.Any(i => i is Keycard k && k.Base.Permissions.HasFlag(ev.Door.KeycardPermissions)))
+            if (ev.Player.Items.Any(i => i is Keycard k && k.Base.Permissions.HasFlag(ev.Door.RequiredPermissions.RequiredPermissions)))
             {
-                ev.IsAllowed = false;
+                ev.IsAllowed = true;
             }
         }
 
@@ -68,9 +70,19 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         private void OnInteractingWarhead(ActivatingWarheadPanelEventArgs ev)
         {
-            if (!ev.Player.Items.Any(i => i is Keycard k && k.Base.Permissions.HasFlag(KeycardPermissions.AlphaWarhead)))
+            if (ev.Player.Items.Any(i => i is Keycard k && k.Base.Permissions.HasFlag(Interactables.Interobjects.DoorUtils.KeycardPermissions.AlphaWarhead)))
             {
-                ev.IsAllowed = false;
+                ev.IsAllowed = true;
+            }
+        }
+
+        private void OnInteractGenerator(UnlockingGeneratorEventArgs ev)
+        {
+            if (ev.Player.Items.Any(i =>
+                    i is Keycard k &&
+                    k.Base.Permissions.HasFlag(Interactables.Interobjects.DoorUtils.KeycardPermissions.ArmoryLevelTwo)))
+            {
+                ev.IsAllowed = true;
             }
         }
     }

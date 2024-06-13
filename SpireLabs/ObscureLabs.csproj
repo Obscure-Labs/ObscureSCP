@@ -37,8 +37,7 @@
       <HintPath>..\refs\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\packages\EXILED.8.9.5\lib\net48\Assembly-CSharp-Publicized.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\refs\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
       <HintPath>..\refs\Assembly-CSharp-firstpass.dll</HintPath>
@@ -147,6 +146,7 @@
     <Compile Include="Modules\Gamemode Handler\Core\DamageModifiers.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\MapInteractions.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\MvpSystem.cs" />
+    <Compile Include="Modules\Gamemode Handler\Core\ReconnectRecovery.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\RemoteKeycard.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\Scp1162.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\Scp914Handler.cs" />
