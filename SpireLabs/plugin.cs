@@ -108,6 +108,7 @@ namespace ObscureLabs
             ModulesManager.AddModule(new CustomItemSpawner());
             ModulesManager.AddModule(new HealthOverride());
             ModulesManager.AddModule(new Scp1162());
+            ModulesManager.AddModule(new Scp914Handler());
 
             RegisterEvents();
         }
