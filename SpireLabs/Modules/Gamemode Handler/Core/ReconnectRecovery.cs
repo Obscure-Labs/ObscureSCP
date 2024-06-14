@@ -55,6 +55,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                     HP = ev.Player.Health,
                     Position = ev.Player.Position,
                     LastSeen = DateTime.UtcNow,
+                    Items = new HashSet<Item>()
                 };
                 if (ev.Player.HasCustomRole())
                 {
