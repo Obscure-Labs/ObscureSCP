@@ -10,7 +10,7 @@ namespace ObscureLabs.API.Features
 
         public virtual bool Enable()
         {
-            Log.Info($"Module {Name} Initializeialized successfully");
+            Log.Info($"Module {Name} Initialised successfully");
             return true;
         }
 

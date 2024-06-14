@@ -63,7 +63,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             try
             {
                 if (ev.Player.HasKeycardPermission(ev.Door.RequiredPermissions.RequiredPermissions) &&
-                    !ev.Door.IsLocked) ;
+                    !ev.Door.IsLocked) 
                 {
                     ev.IsAllowed = true;
                 }
@@ -76,13 +76,9 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         private void OnInteractinglocker(InteractingLockerEventArgs ev)
         {
-            if (ev.Player.Items.Any(i => i is Keycard k && k.Base.Permissions.HasFlag(ev.Chamber.RequiredPermissions)))
+            if (ev.Player.HasKeycardPermission(ev.Chamber.RequiredPermissions))
             {
                 ev.IsAllowed = true;
-            }
-            else
-            {
-                ev.IsAllowed = false;
             }
         }
 

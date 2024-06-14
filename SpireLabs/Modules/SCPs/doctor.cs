@@ -120,7 +120,7 @@
             Log.Info("Running fixedScpShield");
             for (int j = 0; j < 120; j++)
             {
-                Manager.SendHint(player, "You provide <color=#add8e6ff><u>HS points</u></color> to all nearby <color=red><u>SCP Entities</u></color>!", 0.75f);
+                Manager.SendHint(player, "You provide <color=#add8e6ff><u>HS points</u></color> to all nearby <color=red><u>SCP Entities</u></color>!\n\t", 0.75f);
                 foreach (var player1 in Player.List)
                 {
                     if (player1 == player)
@@ -152,7 +152,7 @@
 
                     if (!player2.IsHuman && player2 != player)
                     {
-                        Manager.SendHint(player2, "You are recieving <color=#add8e6ff><u>HS points</u></color> from a nearby <color=red><u>SCP 049</u></color>!", 0.75f);
+                        Manager.SendHint(player2, "You are recieving <color=#add8e6ff><u>HS points</u></color> from a nearby <color=red><u>SCP 049</u></color>!\n\t", 0.75f);
                         player2.HumeShield += 2.7f;
                     }
                 }

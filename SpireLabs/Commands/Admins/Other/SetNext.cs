@@ -19,15 +19,15 @@ namespace ObscureLabs.Commands.Other
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            var gameMode = GamemodeHandler.ReadGameMode();
+            //var gameMode = GamemodeHandler.ReadGameMode();
 
-            if (gameMode.IsGameModeRound)
-            {
-                response = "Forcing next round to minigame";
-                return false;
-            }
+            //if (gameMode.IsGameModeRound)
+            //{
+            //    response = "Forcing next round to minigame";
+            //    return false;
+            //}
 
-            GamemodeHandler.WriteAllGameModeData(gameMode.IsGameModeRound, gameMode.LastGameMode, true);
+            //GamemodeHandler.WriteAllGameModeData(gameMode.IsGameModeRound, gameMode.LastGameMode, true);
 
             foreach (var p in Player.List)
             {

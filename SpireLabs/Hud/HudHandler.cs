@@ -70,7 +70,7 @@ namespace SpireLabs.GUI
                 }
                 catch (Exception ex)
                 {
-                    Log.Error($"Error: {ex}");
+                    //Log.Error($"Error: {ex}");
                 }
 
                 s += $"\t\n"; //5
@@ -122,7 +122,7 @@ namespace SpireLabs.GUI
             }
             catch (Exception e)
             {
-                Log.Warn($"Error: {e}");
+                //Log.Warn($"Error: {e}");
             }
         }
 
@@ -229,7 +229,7 @@ namespace SpireLabs.GUI
                     }
                     catch(Exception ex)
                     {
-                        Log.Error($"Error: {ex}");
+                        //Log.Error($"Error: {ex}");
                     }
                     Log.Debug("Got past hints");
                     s += $"\t\n"; //5
