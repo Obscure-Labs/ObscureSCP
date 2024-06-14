@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CustomPlayerEffects;
 using Exiled.API.Enums;
+using Exiled.API.Features;
 using Exiled.API.Features.Items;
 using Exiled.Events.EventArgs.Player;
 using InventorySystem;
@@ -13,6 +15,23 @@ using KeycardPermissions = Interactables.Interobjects.DoorUtils.KeycardPermissio
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
+    public static class Extensions
+    {
+
+        public static bool HasKeycardPermission(
+            this Player player,
+            KeycardPermissions permissions,
+            bool requiresAllPermissions = false)
+        {
+            if (player.IsEffectActive<AmnesiaVision>())
+                return false;
+
+            return requiresAllPermissions
+                ? player.Items.Any(item => item is Keycard keycard && keycard.Base.Permissions.HasFlag(permissions))
+                : player.Items.Any(item => item is Keycard keycard && (keycard.Base.Permissions & permissions) != 0);
+        }
+    }
+
     public class RemoteKeycard : Module
     {
         public override string Name => "RemoteKeycard";
@@ -41,16 +60,17 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         private void OnInteractingDoor(InteractingDoorEventArgs ev)
         {
-            List<DoorType> illegalDoors = new List<DoorType>
+            try
             {
-                DoorType.Scp079First,
-                DoorType.Scp079Second,
-                DoorType.Scp939Cryo,
-            };
-
-            if (ev.Player.Items.Any(i => i is Keycard k && k.Base.Permissions.HasFlag(ev.Door.RequiredPermissions.RequiredPermissions)) && !illegalDoors.Contains(ev.Door.Type) && !ev.Door.IsLocked || ev.Door.IsCheckpoint && ev.Player.Items.Any(i => i is Keycard k && k.Base.Permissions.HasFlag(KeycardPermissions.Checkpoints)))
+                if (ev.Player.HasKeycardPermission(ev.Door.RequiredPermissions.RequiredPermissions) &&
+                    !ev.Door.IsLocked) ;
+                {
+                    ev.IsAllowed = true;
+                }
+            }
+            catch (Exception e)
             {
-                ev.IsAllowed = true;
+                Log.Error($"Error in {nameof(OnInteractingDoor)}: {e}");
             }
         }
 
@@ -83,5 +103,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                 ev.IsAllowed = true;
             }
         }
+
+
     }
 }
