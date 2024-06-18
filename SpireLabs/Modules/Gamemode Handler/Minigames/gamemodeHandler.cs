@@ -95,10 +95,12 @@ namespace ObscureLabs.Gamemode_Handler
                 int selectedGM;
                 if (args > _gameModes.Count() || args == -1)
                 {
+                    ModulesManager.GetModule("TeamHandler").Enable();
                     selectedGM = ran.Next(0, _gameModes.Count());
                 }
                 else
                 {
+                    ModulesManager.GetModule("TeamHandler").Enable();
                     selectedGM = args;
                 }
 
