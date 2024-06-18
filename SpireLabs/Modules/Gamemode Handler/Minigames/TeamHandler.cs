@@ -1,4 +1,4 @@
-﻿using MEC;
+using MEC;
 using ObscureLabs.API.Data;
 using ObscureLabs.API.Enums;
 using ObscureLabs.API.Features;
