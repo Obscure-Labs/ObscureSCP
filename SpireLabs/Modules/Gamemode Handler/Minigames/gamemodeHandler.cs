@@ -107,9 +107,9 @@ namespace ObscureLabs.Gamemode_Handler
                 switch (selectedGM)
                 {
                     case 0:
-                        Timing.RunCoroutine(TeamDeathMatch.runJbTDM());
+                        ModulesManager.GetModule("TDM").Enable();
                         Plugin.IsActiveEventround = true;
-                        Plugin.EventRoundType = EventRoundType.JailbirdsDeatchMatch;
+                        Plugin.EventRoundType = EventRoundType.TeamDeathMatch;
                         break;
                     case 1:
                         Timing.RunCoroutine(Chaos.RunChaosCoroutine());

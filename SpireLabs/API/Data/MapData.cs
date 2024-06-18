@@ -8,8 +8,8 @@ namespace ObscureLabs.API.Data
         {
             Name = name;
             DisplayName = displayName;
-            SpawnCi = spawnCi;
-            SpawnNtf = spawnNtf;
+            SpawnCi = new Vector3(spawnCi.x, spawnCi.y + 1.0f, spawnCi.z);
+            SpawnNtf = new Vector3(spawnNtf.x, spawnNtf.y + 1.0f, spawnNtf.z);
         }
 
         public string Name { get; }

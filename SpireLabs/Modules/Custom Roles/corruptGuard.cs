@@ -15,7 +15,7 @@ namespace ObscureLabs
 
         public override string Name => "CorruptGuard";
 
-        public override bool IsInitializeOnStart => true;
+        public override bool IsInitializeOnStart => false;
 
         private static bool[] cantShoot = new bool[60];
 

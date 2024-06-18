@@ -214,7 +214,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             }
 
             _playerData.FirstOrDefault(x => x.Player.Id == player.Id).Xp += xp;
-            Manager.SendHint(player, $"You Gained <color=green><u>{xp} points</u></color> for: <color=yellow>{reason}</color>\nYou currently have: <color=green><u>{_playerData.FirstOrDefault(x => x.Player.Id == player.Id).Xp} points</u></color>", 5);
+            Manager.SendHint(player, $"You Gained <color=green><u>{xp} MVP points</u></color> for: <color=yellow>{reason}</color>\nYou currently have: <color=green><u>{_playerData.FirstOrDefault(x => x.Player.Id == player.Id).Xp} MVP points</u></color>", 5);
         }
     }
 }

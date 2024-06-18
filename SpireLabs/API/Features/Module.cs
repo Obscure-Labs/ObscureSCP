@@ -16,7 +16,7 @@ namespace ObscureLabs.API.Features
 
         public virtual bool Disable()
         {
-            Log.Info($"Module {Name} Disabled successfully");
+            Log.Warn($"Module {Name} Disabled successfully");
             return true;
         }
     }

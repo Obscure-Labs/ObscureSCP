@@ -17,6 +17,7 @@ using YamlDotNet.Serialization.NamingConventions;
 using System.Collections.Generic;
 using PlayerRoles;
 using UnityEngine;
+using static ObscureLabs.Modules.Gamemode_Handler.Minigames.TeamHandler;
 
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
@@ -38,6 +39,18 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
             public int Id { get; set; }
         }
 
+        public class SerializableAmmoData
+        {
+            public SerializableAmmoData(Exiled.API.Enums.AmmoType ammoType, int quantity)
+            {
+                ammoType = ammoType;
+                Quantity = quantity;
+            }
+
+            public Exiled.API.Enums.AmmoType ItemType { get; set; }
+            public int Quantity { get; set; }
+        }
+
         public class SerializableTeamData
         {
             public int Id { get; set; }
@@ -48,10 +61,11 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
             public List<Player> DeadPlayers { get; set; } = new List<Player>();
             public RoleTypeId RoleType { get; set; }
             public List<SerializableItemData> LoadOut { get; set; } = new List<SerializableItemData>();
+            public List<SerializableAmmoData> Ammo { get; set; } = new List<SerializableAmmoData>();
             public Vector3 SpawnLocation { get; set; }
         }
 
-        public static List<SerializableTeamData> Teams = new List<SerializableTeamData>();
+        public static List<SerializableTeamData> Teams { get; set; } = new List<SerializableTeamData>();
 
         public override bool Enable()
         {
@@ -74,5 +88,51 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
         {
             return base.Disable();
         }
+
+        public static IEnumerator<float> SpawnTeams()
+        {
+            Log.Info("Running SpawnTeams");
+            Timing.WaitForSeconds(1);
+            foreach(SerializableTeamData team in Teams)
+            {
+                foreach (Player p in team.Players)
+                {
+                    if (p.Role.Type == team.RoleType && team.Players.Contains(p))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+
+                        Log.Info("Player");
+                        p.RoleManager.ServerSetRole(team.RoleType, RoleChangeReason.RoundStart, RoleSpawnFlags.None);
+                        p.EnableEffect(Exiled.API.Enums.EffectType.DamageReduction, 5f, false);
+                        p.ChangeEffectIntensity(Exiled.API.Enums.EffectType.DamageReduction, 255, 5f);
+                        p.ClearInventory();
+                        Log.Info("Set Player Role");
+                        foreach (SerializableItemData i in team.LoadOut)
+                        {
+                            Log.Info("Giving Item");
+                            if (!i.IsCustomItem)
+                            {
+                                Exiled.API.Features.Items.Item.Create((ItemType)i.Id).Give(p);
+                            }
+                            else
+                            {
+                                Exiled.CustomItems.API.Features.CustomItem.Get((uint)i.Id).Give(p);
+                            }
+                        }
+                        foreach (SerializableAmmoData ammo in team.Ammo)
+                        {
+                            p.SetAmmo(ammo.ItemType, (ushort)ammo.Quantity);
+                        }
+                        yield return Timing.WaitForSeconds(0.1f);
+                        p.Teleport(team.SpawnLocation);
+                        Log.Info("Spawned Teams");
+
+                    }
+                }
+                }
+            }
     }
 }
