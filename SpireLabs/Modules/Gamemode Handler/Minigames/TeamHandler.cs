@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using PlayerRoles;
 using UnityEngine;
 using static ObscureLabs.Modules.Gamemode_Handler.Minigames.TeamHandler;
+using PluginAPI.Events;
 
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
@@ -41,14 +42,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
 
         public class SerializableAmmoData
         {
-            public SerializableAmmoData(Exiled.API.Enums.AmmoType ammoType, int quantity)
-            {
-                ammoType = ammoType;
-                Quantity = quantity;
-            }
-
             public Exiled.API.Enums.AmmoType ItemType { get; set; }
-            public int Quantity { get; set; }
+            public ushort Quantity { get; set; }
         }
 
         public class SerializableTeamData
@@ -122,11 +117,15 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                                 Exiled.CustomItems.API.Features.CustomItem.Get((uint)i.Id).Give(p);
                             }
                         }
+                        yield return Timing.WaitForSeconds(0.2f);
                         foreach (SerializableAmmoData ammo in team.Ammo)
                         {
-                            p.SetAmmo(ammo.ItemType, (ushort)ammo.Quantity);
+                            //p.Ammo.Add(ammo.ItemType, (ushort)ammo.Quantity);
+                            //p.SetAmmo(ammo.ItemType, (ushort)ammo.Quantity);
+                            //p.AddAmmo(ammo.ItemType, (ushort)ammo.Quantity);
+                            p.AddAmmo(ammo.ItemType, ammo.Quantity);
                         }
-                        yield return Timing.WaitForSeconds(0.1f);
+                        yield return Timing.WaitForSeconds(0.2f);
                         p.Teleport(team.SpawnLocation);
                         Log.Info("Spawned Teams");
 

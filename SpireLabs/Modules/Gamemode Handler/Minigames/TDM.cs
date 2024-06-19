@@ -102,7 +102,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                 },
                 Ammo = new List<SerializableAmmoData>
                 {
-                    new SerializableAmmoData(AmmoType.Nato556, 250)
+                    new SerializableAmmoData{ItemType = Exiled.API.Enums.AmmoType.Nato556, Quantity = 250}
                 },
                 SpawnLocation = _map.SpawnCi
             });
@@ -125,7 +125,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                 },
                 Ammo = new List<SerializableAmmoData>
                 {
-                    new SerializableAmmoData(AmmoType.Nato556, 250)
+                    new SerializableAmmoData{ItemType = Exiled.API.Enums.AmmoType.Nato556, Quantity = 250}
                 },
                 SpawnLocation = _map.SpawnNtf
             });
