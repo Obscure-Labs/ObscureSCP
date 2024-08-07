@@ -182,7 +182,7 @@ namespace ObscureLabs.Items
                         continue;
                     }
 
-                    if (player2.Role.Side != owner.Role.Side)
+                    if (player2.Role.Side != owner.Role.Side || Server.FriendlyFire == true)
                     {
                         if (player2.Health < 20.7f)
                         {

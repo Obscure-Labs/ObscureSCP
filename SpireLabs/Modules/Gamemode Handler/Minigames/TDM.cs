@@ -1,28 +1,19 @@
-﻿using Exiled.API.Enums;
-using Exiled.API.Extensions;
-using Exiled.API.Features;
-using Exiled.API.Features.Items;
-using Exiled.Loader.Models;
-using InventorySystem.Items.Usables.Scp330;
+﻿using Exiled.API.Features;
+using Exiled.API.Features.Pickups;
+using Exiled.Events.EventArgs.Player;
+using Exiled.Events.EventArgs.Server;
 using MEC;
 using ObscureLabs.API.Data;
 using ObscureLabs.API.Features;
 using PlayerRoles;
+using SpireSCP.GUI.API.Features;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Random = UnityEngine.Random;
-using static ObscureLabs.Modules.Gamemode_Handler.Minigames.TeamHandler;
-using Exiled.API.Features.Roles;
-using PluginAPI.Roles;
 using Utils.NonAllocLINQ;
-using InventorySystem.Items.Usables.Scp244.Hypothermia;
-using Exiled.Events.EventArgs.Player;
-using SpireSCP.GUI.API.Features;
-using Exiled.Events.EventArgs.Server;
-using Exiled.API.Features.Pickups;
-using PluginAPI.Core.Zones;
+using static ObscureLabs.Modules.Gamemode_Handler.Minigames.TeamHandler;
+using Random = UnityEngine.Random;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
 {
@@ -39,7 +30,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
 
         private readonly Dictionary<int, MapData> _maps = new()
         {
-            { 0, new MapData("pvpA1_2t", "\"Low Effort\"", new Vector3(8.48f, 1106.5f, 30.46f), new Vector3(-20.8f, 1107.5f, 51.66f)) },
+            { 0, new MapData("pvpA1_2t", "\"Low Effort\"", new Vector3(7.531f, 1108.563f, 32.980f), new Vector3(-19.887f, 1107.903f, 52.691f)) },
             { 1, new MapData("pvpA2_2t", "\"Tilted Towers\"",new Vector3(9.7f, 1102f, 52.46f), new Vector3(-20.20f, 1102f, 35.37f)) },
             { 2, new MapData("pvpMZA1_2t", "\"The Maze\"", new Vector3(23.96f, 1126f, 29.14f), new Vector3(-30.74f, 1126f, -16.93f)) },
         };
@@ -49,20 +40,18 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
 
         private MapData _map;
 
+        private bool die;
+
+        private bool running = false;
 
         public override bool Enable()
         {
-            Round.IsLocked = true;
-            var range = Random.Range(0, 3);
-            _map = _maps[range];
-
-
+            die = false;
+            if (!running)
+            {
+                running = true;
             _coroutines.Add(Timing.RunCoroutine(RoundSetup()));
-            Log.Warn("Unloading all default maps");
-            MapEditorReborn.API.Features.MapUtils.LoadMap("empty");
-            Log.Warn($"Loading Map: {_map.DisplayName}");
-            MapEditorReborn.API.Features.MapUtils.LoadMap($"{_map.Name}");
-
+            }
 
             Exiled.Events.Handlers.Server.RoundStarted += RoundStarted;
             Exiled.Events.Handlers.Server.RespawningTeam += RespawnWave;
@@ -71,10 +60,12 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
         }
         public override bool Disable()
         {
-            foreach (CoroutineHandle h in _coroutines)
-            {
-                Timing.KillCoroutines(h);
-            }
+            //foreach (CoroutineHandle h in _coroutines)
+            //{
+            //    Timing.KillCoroutines(h);
+            //}
+            running = false;
+            die = true;
             Exiled.Events.Handlers.Server.RoundStarted -= RoundStarted;
             Exiled.Events.Handlers.Server.RespawningTeam -= RespawnWave;
             Exiled.Events.Handlers.Player.Died -= Died;
@@ -84,6 +75,17 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
 
         private IEnumerator<float> RoundSetup()
         {
+            die = false;
+            Round.IsLocked = true;
+            var range = Random.Range(0, 3);
+            _map = _maps[range];
+
+            Log.Warn("Unloading all default maps");
+            MapEditorReborn.API.Features.MapUtils.LoadMap("empty");
+            Log.Warn($"Loading Map: {_map.DisplayName}");
+            MapEditorReborn.API.Features.MapUtils.LoadMap($"{_map.Name}");
+            Log.Warn($"Loaded map: {_map.DisplayName}");
+
             Teams.Add(new SerializableTeamData
             {
                 Id = 0,
@@ -106,6 +108,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                 },
                 SpawnLocation = _map.SpawnCi
             });
+            Log.Info($"{Teams.FirstOrDefault(x => x.Id == 0).Name} WAS ADDED");
 
             Teams.Add(new SerializableTeamData
             {
@@ -129,6 +132,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                 },
                 SpawnLocation = _map.SpawnNtf
             });
+            Log.Info($"{Teams.FirstOrDefault(x => x.Id == 1).Name} WAS ADDED");
             yield break;
         }
 
@@ -138,6 +142,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
             Log.Warn("Running TeamAssignment");
             if (Player.List.Count == 2) 
             {
+                Log.Info("Only 2 players, assigning to teams");
                 ScoreLimit = 10;
                 var p0 = Player.List.ElementAt(0);
                 Teams.FirstOrDefault(x => x.Id == 0).Players.Add(p0);
@@ -147,14 +152,18 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
             }
             else
             {
+                Log.Info("Assigning players to teams");
                 for (int i = 0; i < (Math.Ceiling((double)Player.List.Count) / 2) + 1; i++)
                 {
+                    Log.Info($"Pointer is at player id {i}");
                     int playerid = Random.Range(0, Player.List.Count());
                     Player player = Player.List.ElementAt(playerid);
-                    yield return Timing.WaitForSeconds(0.35f);
-                    if (Teams.FirstOrDefault(x => x.Id == 0).Players.Contains(player) || Teams.FirstOrDefault(x => x.Id == 1).Players.Contains(player)) { continue; }
+                    Log.Info($"Player ({player.DisplayNickname}) has been retrieved from server");
+                    yield return Timing.WaitForSeconds(0.1f);
+                    if (Teams.FirstOrDefault(x => x.Id == 0).Players.Contains(player) || Teams.FirstOrDefault(x => x.Id == 1).Players.Contains(player)) { Log.Info($"Player assignment cancelled due to player already being in a team"); continue; }
                     else
                     {
+                        Log.Info($"{player.DisplayNickname} is being set to Team {Teams.FirstOrDefault(x => x.Id == 0).Name}");
                         Teams.FirstOrDefault(x => x.Id == 0).Players.Add(player);
                         Log.Warn($"{player.DisplayNickname}, set to team 0");
                     }
@@ -163,7 +172,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
 
                 foreach (Player player in Player.List)
                 {
-                    yield return Timing.WaitForSeconds(0.35f);
+                    yield return Timing.WaitForSeconds(0.1f);
                     if (Teams.FirstOrDefault(x => x.Id == 0).Players.Contains(player) || Teams.FirstOrDefault(x => x.Id == 1).Players.Contains(player)) { continue; }
                     else
                     {
@@ -175,7 +184,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
 
             }
 
-            _coroutines.Add(SpawnTeams().RunCoroutine());
+            _coroutines.Add(Timing.RunCoroutine(SpawnTeams()));
             Manager.setModifier(0, $"<color=#A3334D>{Teams.FirstOrDefault(x => x.Id == 0).Name}:</color> {Teams.FirstOrDefault(x => x.Id == 0).Score} points");
             Manager.setModifier(1, $"<color=#292F9F>{Teams.FirstOrDefault(x => x.Id == 1).Name}:</color> {Teams.FirstOrDefault(x => x.Id == 1).Score} points");
             foreach (SerializableTeamData team in Teams)
@@ -199,16 +208,18 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                 {
                     Respawn.TimeUntilNextPhase = 5f;
                 }
+                if (die)
+                {
+                    yield break;
+                    break;
+                }
             }
 
         }
         private void RespawnWave(RespawningTeamEventArgs ev)
         {
-
-
-
             ev.IsAllowed = false;
-            _coroutines.Add(SpawnTeams().RunCoroutine());
+            _coroutines.Add(Timing.RunCoroutine(SpawnTeams()));
             Log.Info("Respawning Teams");
 
         }

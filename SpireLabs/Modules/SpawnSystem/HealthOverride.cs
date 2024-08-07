@@ -30,7 +30,7 @@ namespace ObscureLabs.SpawnSystem
 
         public static IEnumerator<float> OverrideHealth(SpawnedEventArgs ev)
         {
-            yield return Timing.WaitForSeconds(Timing.WaitForOneFrame);
+            yield return Timing.WaitForSeconds(0.1f);
 
             if (!Plugin.Instance.overrideConfigs.HealthOverrides.TryGetValue(ev.Player.Role.Type, out var healthData))
             {

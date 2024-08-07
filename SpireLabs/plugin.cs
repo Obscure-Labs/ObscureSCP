@@ -265,7 +265,10 @@ namespace ObscureLabs
 
             foreach (Module m in ModulesManager.Modules)
             {
-                m.Enable();
+                if (m.IsInitializeOnStart == true)
+                {
+                    m.Enable();
+                }
             }
         }
 

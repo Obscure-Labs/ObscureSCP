@@ -87,10 +87,12 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
 
             Timing.WaitForSeconds(0.1f);
 
-            for (int i = 0; i < (Math.Ceiling((double)Player.List.Count) / 2) + 1; i++)
+            List<Player> PList = Player.List.ToList();
+
+            for (int i = 0; i < (Math.Ceiling((double)PList.Count) / 2) + 1; i++)
             {
-                var playerid = UnityEngine.Random.Range(0, Player.List.Count());
-                var player = Player.List.ElementAt(playerid);
+                var playerid = UnityEngine.Random.Range(0, PList.Count());
+                var player = PList.ElementAt(playerid);
 
                 yield return Timing.WaitForSeconds(0.5f);
 
@@ -104,10 +106,11 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                     player.AddItem(ItemType.Flashlight, 1);
                     player.Teleport(RoomType.LczClassDSpawn);
                 }
+                PList.Remove(player);
                 //Player.List.Remove(p);
             }
 
-            foreach (var player in Player.List)
+            foreach (var player in PList)
             {
                 if (player.Role != RoleTypeId.Overwatch)
                 {

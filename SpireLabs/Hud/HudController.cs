@@ -32,6 +32,7 @@ namespace SpireLabs.GUI
             HudHandler.killLoop = false;
             HudHandler.joinLeave = string.Empty;
             HudHandler.hint = new string[60];
+            HudHandler.modifiers = new string[7];
             Exiled.Events.Handlers.Server.WaitingForPlayers -= OnRestarting;
             Exiled.Events.Handlers.Player.Joined -= OnJoined;
             Exiled.Events.Handlers.Player.Verified -= OnVerified;

@@ -1,24 +1,9 @@
-using MEC;
-using ObscureLabs.API.Data;
-using ObscureLabs.API.Enums;
-using ObscureLabs.API.Features;
-using ObscureLabs.Modules.Gamemode_Handler.Minigames;
-using ObscureLabs.SpawnSystem;
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using Exiled.API.Features;
-using Exiled.Loader;
-using Unity.Collections;
-using YamlDotNet.Core;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
-using System.Collections.Generic;
+using MEC;
+using ObscureLabs.API.Features;
 using PlayerRoles;
+using System.Collections.Generic;
 using UnityEngine;
-using static ObscureLabs.Modules.Gamemode_Handler.Minigames.TeamHandler;
-using PluginAPI.Events;
 
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
@@ -48,46 +33,36 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
 
         public class SerializableTeamData
         {
-            public int Id { get; set; }
-            public string Name { get; set; }
+            public int Id { get; set; } = 0;
+            public string Name { get; set; } = "PLACEHOLDER";
             public int Score { get; set; } = 0;
-            public int Lives { get; set; }
+            public int Lives { get; set; } = 1;
             public List<Player> Players { get; set; } = new List<Player>();
             public List<Player> DeadPlayers { get; set; } = new List<Player>();
-            public RoleTypeId RoleType { get; set; }
+            public RoleTypeId RoleType { get; set; } = RoleTypeId.Tutorial;
             public List<SerializableItemData> LoadOut { get; set; } = new List<SerializableItemData>();
             public List<SerializableAmmoData> Ammo { get; set; } = new List<SerializableAmmoData>();
-            public Vector3 SpawnLocation { get; set; }
+            public Vector3 SpawnLocation { get; set; } = new Vector3(0,0,0);
         }
 
         public static List<SerializableTeamData> Teams { get; set; } = new List<SerializableTeamData>();
 
         public override bool Enable()
         {
-            //Teams.Add(new SerializableTeamData
-            //{
-            //    id = 0,
-            //    name = "kevins balls",
-            //    RoleType = RoleTypeId.Scp049,
-            //    loadOut = new List<SerializableItemData> { new SerializableItemData(true, 3), new SerializableItemData(false, 69) },
-            //    spawnLocation = new Vector3 { x = 0, y = 0, z = 0 }
-            //});
-
-            ////How to get things from an enumerable list
-            //Teams.Any(x => x.id == 0);
-            //Teams.Any(x => x.name == "kevins balls").players.Add(ev.Player);
+            Teams = new List<SerializableTeamData>();
             return base.Enable();
         }
 
         public override bool Disable()
         {
+            Teams = new List<SerializableTeamData>();
             return base.Disable();
         }
 
         public static IEnumerator<float> SpawnTeams()
         {
             Log.Info("Running SpawnTeams");
-            Timing.WaitForSeconds(1);
+            yield return Timing.WaitForSeconds(1);
             foreach(SerializableTeamData team in Teams)
             {
                 foreach (Player p in team.Players)
@@ -117,7 +92,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                                 Exiled.CustomItems.API.Features.CustomItem.Get((uint)i.Id).Give(p);
                             }
                         }
-                        yield return Timing.WaitForSeconds(0.2f);
                         foreach (SerializableAmmoData ammo in team.Ammo)
                         {
                             //p.Ammo.Add(ammo.ItemType, (ushort)ammo.Quantity);
@@ -125,7 +99,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                             //p.AddAmmo(ammo.ItemType, (ushort)ammo.Quantity);
                             p.AddAmmo(ammo.ItemType, ammo.Quantity);
                         }
-                        yield return Timing.WaitForSeconds(0.2f);
+                        yield return Timing.WaitForSeconds(0.1f);
                         p.Teleport(team.SpawnLocation);
                         Log.Info("Spawned Teams");
 

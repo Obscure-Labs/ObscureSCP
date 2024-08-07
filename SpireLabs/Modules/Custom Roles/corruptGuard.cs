@@ -1,11 +1,12 @@
 ﻿using Exiled.API.Extensions;
 using Exiled.Events.EventArgs.Player;
+using Exiled.Events.Handlers;
 using MEC;
 using ObscureLabs.API.Features;
 using PlayerRoles;
 using System.Collections.Generic;
+using System.Linq;
 using UncomplicatedCustomRoles.Extensions;
-using UCRAPI = UncomplicatedCustomRoles.API.Features.CustomRole;
 
 namespace ObscureLabs
 {
@@ -23,14 +24,12 @@ namespace ObscureLabs
         {
             Exiled.Events.Handlers.Player.Spawned += Spawned;
             Exiled.Events.Handlers.Player.Shot += Shot;
+            Player.Hurting += Hurt;
 
-            Timing.CallDelayed(Timing.WaitForOneFrame, () =>
+            for (int i = 0; i < cantShoot.Length; i++)
             {
-                for (int i = 0; i < cantShoot.Length; i++)
-                {
-                    cantShoot[i] = false;
-                }
-            });
+                cantShoot[i] = false;
+            }
 
             return base.Enable();
         }
@@ -51,14 +50,27 @@ namespace ObscureLabs
 
         private static void Shot(ShotEventArgs ev)
         {
-            if (!cantShoot.TryGet(ev.Player.Id, out var element))
+            if (CustomRoles.RolesData.FirstOrDefault(x => x.Player == ev.Target).UcrId == 3)
             {
-                return;
+                if (cantShoot[ev.Target.Id] == true)
+                {
+                    ev.CanHurt = false;
+                }
             }
-
-            ev.CanHurt = element is true && ev.Player.Role == RoleTypeId.FacilityGuard;
+            //ev.CanHurt = element is true && ev.Player.Role == RoleTypeId.FacilityGuard;
         }
 
+        private static void Hurt(HurtingEventArgs ev)
+        {
+            if(CustomRoles.RolesData.FirstOrDefault(x => x.Player == ev.Attacker).UcrId == 3)
+            {
+                if (cantShoot[ev.Player.Id] == true)
+                {
+                    ev.IsAllowed = false;
+                }
+            }
+        }
+        
         private static IEnumerator<float> SpawnThingCoroutine(SpawnedEventArgs ev)
         {
             yield return Timing.WaitForSeconds(0.25f);
