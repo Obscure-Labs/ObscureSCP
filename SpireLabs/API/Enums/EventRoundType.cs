@@ -5,6 +5,6 @@
         None = 0,
         Chaos = 1,
         Juggernaut = 2,
-        JailbirdsDeatchMatch = 3
+        TeamDeathMatch = 3
     }
 }

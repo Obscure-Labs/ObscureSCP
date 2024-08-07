@@ -44,6 +44,7 @@ namespace ObscureLabs.Gamemode_Handler
             public bool nextRoundIsGamemode { get; set; }
         }
 
+        public static bool runningChecks = false;
 
         public override bool Enable()
         {
@@ -77,7 +78,7 @@ namespace ObscureLabs.Gamemode_Handler
         
         public void OnRoundStarted()
         {
-            if (!Plugin.IsActiveEventround)
+            if (!Plugin.IsActiveEventround || runningChecks)
             {
                 WriteAllGameModeData(false, 0, _serializableGameMode.nextRoundIsGamemode);
                 AttemptGameModeRound(false, 0);
@@ -86,10 +87,11 @@ namespace ObscureLabs.Gamemode_Handler
 
         public static void AttemptGameModeRound(bool force, int args)
         {
+            runningChecks = true;
             var ran = new Random();
             int chance = ran.Next(0, 100);
 
-            if (_serializableGameMode.nextRoundIsGamemode || force || chance > 30 && chance < 50)
+            if (_serializableGameMode.nextRoundIsGamemode || force || chance > 30 && chance < 50 && Plugin.IsActiveEventround == false)
             {
                 Plugin.IsActiveEventround = true;
                 int selectedGM;
@@ -105,16 +107,19 @@ namespace ObscureLabs.Gamemode_Handler
                 switch (selectedGM)
                 {
                     case 0:
-                        Timing.RunCoroutine(TeamDeathMatch.runJbTDM());
+                        ModulesManager.GetModule("TeamHandler").Enable();
+                        ModulesManager.GetModule("TDM").Enable();
                         Plugin.IsActiveEventround = true;
-                        Plugin.EventRoundType = EventRoundType.JailbirdsDeatchMatch;
+                        Plugin.EventRoundType = EventRoundType.TeamDeathMatch;
                         break;
                     case 1:
+                        ModulesManager.GetModule("TeamHandler").Enable();
                         Timing.RunCoroutine(Chaos.RunChaosCoroutine());
                         Plugin.IsActiveEventround = true;
                         Plugin.EventRoundType = EventRoundType.Chaos;
                         break;
                     case 2:
+                        ModulesManager.GetModule("TeamHandler").Enable();
                         Timing.RunCoroutine(Juggernaut.RunJuggernautCoroutine());
                         Plugin.IsActiveEventround = true;
                         Plugin.EventRoundType = EventRoundType.Juggernaut;
@@ -125,11 +130,12 @@ namespace ObscureLabs.Gamemode_Handler
             }
             else
             {
+                runningChecks = false;
                 WriteAllGameModeData(false, -1, _serializableGameMode.nextRoundIsGamemode);
                 Plugin.IsActiveEventround = false;
                 SCPHandler.doSCPThings();
                 ModulesManager.GetModule("SCP3114").Enable();
-                ModulesManager.GetModule("ChaosRound").Enable();
+                ModulesManager.GetModule("ChaosRound").Disable();
                 ModulesManager.GetModule("GamemodeHandler").Disable();
             }
         }

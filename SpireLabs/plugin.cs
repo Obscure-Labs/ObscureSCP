@@ -110,6 +110,8 @@ namespace ObscureLabs
             ModulesManager.AddModule(new RemoteKeycard());
             ModulesManager.AddModule(new Scp914Handler());
             ModulesManager.AddModule(new ReconnectRecovery());
+            ModulesManager.AddModule(new TeamHandler());
+            ModulesManager.AddModule(new TDM());
             RegisterEvents();
         }
 
@@ -139,7 +141,15 @@ namespace ObscureLabs
 
             foreach (Module m in ModulesManager.Modules)
             {
-                m.Enable();
+                if (m.IsInitializeOnStart == true)
+                {
+                    m.Enable();
+                }
+                else
+                {
+                    continue;
+                }
+
             }
         }
 
@@ -255,7 +265,10 @@ namespace ObscureLabs
 
             foreach (Module m in ModulesManager.Modules)
             {
-                m.Enable();
+                if (m.IsInitializeOnStart == true)
+                {
+                    m.Enable();
+                }
             }
         }
 
