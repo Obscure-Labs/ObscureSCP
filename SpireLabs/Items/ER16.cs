@@ -184,18 +184,27 @@ namespace ObscureLabs.Items
 
                     if (player2.Role.Side != owner.Role.Side || Server.FriendlyFire == true)
                     {
-                        if (player2.Health < 20.7f)
+                        if(player2 == owner)
                         {
-                            player2.Kill($"The victim was incinerated by some sort of energy weapon");
+                            continue;
+                        }
+                        else
+                        {
+                            if (player2.Health < 20.7f)
+                            {
+                                player2.Kill($"The victim was incinerated by some sort of energy weapon");
+                            }
+                            player2.Hurt(7.7f);
+                            owner.ShowHitMarker(1);
+                            player2.EnableEffect(EffectType.Burned, 1, false);
+
+                            primitive.Base.gameObject.SetActive(false);
+                            primitive.UnSpawn();
+                            Log.Info(Vector3.Distance(startPosition, player2.Position));
                         }
 
-                        player2.Hurt(7.7f);
-                        owner.ShowHitMarker(1);
-                        player2.EnableEffect(EffectType.Burned, 1, false);
 
-                        primitive.Base.gameObject.SetActive(false);
-                        primitive.UnSpawn();
-                        Log.Info(Vector3.Distance(startPosition, player2.Position));
+
                     }
 
                     if (player2 == owner || player2.Role.Team == owner.Role.Team)

@@ -91,11 +91,12 @@ namespace ObscureLabs.Gamemode_Handler
             var ran = new Random();
             int chance = ran.Next(0, 100);
 
-            if (_serializableGameMode.nextRoundIsGamemode || force || chance > 30 && chance < 50 && Plugin.IsActiveEventround == false)
+            //if (_serializableGameMode.nextRoundIsGamemode || force || chance > 30 && chance < 50 && Plugin.IsActiveEventround == false)
+            if (force)
             {
                 Plugin.IsActiveEventround = true;
                 int selectedGM;
-                if (args > _gameModes.Count() || args == -1)
+                if (args == -1)
                 {
                     selectedGM = ran.Next(0, _gameModes.Count());
                 }
@@ -131,7 +132,7 @@ namespace ObscureLabs.Gamemode_Handler
             else
             {
                 runningChecks = false;
-                WriteAllGameModeData(false, -1, _serializableGameMode.nextRoundIsGamemode);
+                //WriteAllGameModeData(false, -1, _serializableGameMode.nextRoundIsGamemode);
                 Plugin.IsActiveEventround = false;
                 SCPHandler.doSCPThings();
                 ModulesManager.GetModule("SCP3114").Enable();

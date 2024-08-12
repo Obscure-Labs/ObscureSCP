@@ -109,7 +109,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                 PList.Remove(player);
                 //Player.List.Remove(p);
             }
-
             foreach (var player in PList)
             {
                 if (player.Role != RoleTypeId.Overwatch)
