@@ -136,8 +136,6 @@
     <Compile Include="API\Features\Module.cs" />
     <Compile Include="API\Features\ModulesManager.cs" />
     <Compile Include="API\Serializable\SerializableProfileData.cs" />
-    <Compile Include="Commands\Admins\Other\Restart.cs" />
-    <Compile Include="Commands\Admins\Other\restartModule.cs" />
     <Compile Include="Commands\Admins\Other\SetNext.cs" />
     <Compile Include="Commands\User\Primitive.cs" />
     <Compile Include="Commands\User\UnPrimitive.cs" />
@@ -165,7 +163,6 @@
     <Compile Include="Modules\Gamemode Handler\Minigames\TeamHandler.cs" />
     <Compile Include="Modules\Gamemode Handler\Minigames\Сhaos.cs" />
     <Compile Include="Modules\Gamemode Handler\Minigames\GamemodeHandler.cs" />
-    <Compile Include="Modules\Gamemode Handler\Minigames\TeamDeathMatch.cs" />
     <Compile Include="Items\СlusterFlash.cs" />
     <Compile Include="Items\ParticleCollapser.cs" />
     <Compile Include="Items\GrenadeLauncher.cs" />

@@ -115,6 +115,7 @@ namespace ObscureLabs.Gamemode_Handler
                         break;
                     case 1:
                         ModulesManager.GetModule("TeamHandler").Enable();
+                        ModulesManager.GetModule("ChaosRound").Enable();
                         Timing.RunCoroutine(Chaos.RunChaosCoroutine());
                         Plugin.IsActiveEventround = true;
                         Plugin.EventRoundType = EventRoundType.Chaos;

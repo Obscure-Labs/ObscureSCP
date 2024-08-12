@@ -54,10 +54,6 @@ namespace ObscureLabs
                 {
                     ev.IsAllowed = false;
                 }
-                else if(CustomRoles.RolesData.FirstOrDefault(x => x.Player == ev.Player).UcrId == 3 && ev.Attacker.Role.Type == RoleTypeId.FacilityGuard && Round.ElapsedTime.TotalMinutes < 2)
-                {
-                    ev.IsAllowed = false;
-                }
                 else{ return; }
             }
             else if (CustomRoles.RolesData.FirstOrDefault(x => x.Player == ev.Attacker).UcrId != 3)
