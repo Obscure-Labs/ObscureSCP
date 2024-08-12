@@ -212,7 +212,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                 if (die)
                 {
                     yield break;
-                    break;
+
                 }
             }
 
