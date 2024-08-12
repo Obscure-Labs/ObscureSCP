@@ -6,6 +6,7 @@ using MEC;
 using ObscureLabs.API.Features;
 using PlayerRoles;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using UncomplicatedCustomRoles.Extensions;
 
@@ -53,7 +54,11 @@ namespace ObscureLabs
                 {
                     ev.IsAllowed = false;
                 }
-                else { return; }
+                else if(CustomRoles.RolesData.FirstOrDefault(x => x.Player == ev.Player).UcrId == 3 && ev.Attacker.Role.Type == RoleTypeId.FacilityGuard && Round.ElapsedTime.TotalMinutes < 2)
+                {
+                    ev.IsAllowed = false;
+                }
+                else{ return; }
             }
             else if (CustomRoles.RolesData.FirstOrDefault(x => x.Player == ev.Attacker).UcrId != 3)
             {
