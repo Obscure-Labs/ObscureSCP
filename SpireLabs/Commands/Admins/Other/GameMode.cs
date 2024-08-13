@@ -41,7 +41,6 @@ namespace ObscureLabs.Commands.Admin.Other
         private void Force(int arguments)
         {
             Plugin.IsActiveEventround = true;
-            Round.Start();
             GamemodeHandler.AttemptGameModeRound(true, arguments);
         }
     }
