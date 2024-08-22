@@ -7,6 +7,7 @@ using Exiled.Events.EventArgs.Player;
 using InventorySystem.Items.Firearms.Attachments;
 using InventorySystem.Items.Firearms.BasicMessages;
 using PlayerRoles;
+using PlayerStatsSystem;
 using SpireSCP.GUI.API.Features;
 using System.Collections.Generic;
 using Player = Exiled.Events.Handlers.Player;
@@ -58,8 +59,8 @@ namespace ObscureLabs.Items
         protected override void SubscribeEvents()
         {
             Player.ChangedItem += OnChangedItem;
-            Player.Hurting += OnNewHurting;
             Player.ReloadingWeapon += OnReloadinWeapon;
+            Player.Shot += OnShot;
 
             base.SubscribeEvents();
         }
@@ -67,7 +68,8 @@ namespace ObscureLabs.Items
         protected override void UnsubscribeEvents()
         {
             Player.ChangedItem -= OnChangedItem;
-            Player.Hurting -= OnNewHurting;
+            Player.ReloadingWeapon -= OnReloadinWeapon;
+            Player.Shot -= OnShot;
 
             base.UnsubscribeEvents();
         }
@@ -98,24 +100,30 @@ namespace ObscureLabs.Items
             Manager.SendHint(ev.Player, "You equipped the <b>MTF-E14-HSR</b> \nThis is a long range rifle chambered in .44 magnum rounds \nand can only hold 1 round in the magazine at any given time.", 3);
         }
 
-        private void OnNewHurting(HurtingEventArgs ev)
+        private void OnShot(ShotEventArgs ev)
         {
-            if (ev.Attacker == null || ev.Attacker.CurrentItem == null)
+            if (ev.Player == null || ev.Player.CurrentItem == null)
+                return;
+
+            if(!Check(ev.Player.CurrentItem))
             {
                 return;
             }
 
-            if (!Check(ev.Attacker.CurrentItem))
+            if (ev.Target.Role.Type.IsHuman())
             {
-                Log.Debug($"Item {ev.Attacker.CurrentItem} was deemed to be NOT a custom item");
-                return;
+                if(ev.Hitbox.HitboxType == HitboxType.Headshot)
+                {
+                    ev.Target.Hurt(ev.Player, 150f, DamageType.Revolver, null);
+                }
+                else
+                {
+                    ev.Target.Hurt(ev.Player, 75f, DamageType.Revolver, null);
+                }
             }
-
-            Log.Debug($"Item {ev.Attacker.CurrentItem} was deemed to be a custom item");
-            if (ev.Player.Role.Type is RoleTypeId.Scp173 or RoleTypeId.Scp049 or RoleTypeId.Scp0492 or RoleTypeId.Scp096 or RoleTypeId.Scp106)
+            else
             {
-                ev.Player.Hurt(ev.Attacker, 200f, DamageType.Revolver, null);
-                Log.Debug("should have taken 400 damage");
+                ev.Target.Hurt(ev.Player, 200f, DamageType.Revolver, null);
             }
         }
     }
