@@ -27,7 +27,6 @@ namespace ObscureLabs
             Exiled.Events.Handlers.Player.Spawned += Spawned;
             Exiled.Events.Handlers.Player.Hurting += Hurt;
 
-
             return base.Enable();
         }
 
@@ -66,6 +65,17 @@ namespace ObscureLabs
             }
         }
 
+        private static void Hurt(HurtingEventArgs ev)
+        {
+            if(CustomRoles.RolesData.FirstOrDefault(x => x.Player == ev.Attacker).UcrId == 3)
+            {
+                if (cantShoot[ev.Player.Id] == true)
+                {
+                    ev.IsAllowed = false;
+                }
+            }
+        }
+        
         private static IEnumerator<float> SpawnThingCoroutine(SpawnedEventArgs ev)
         {
             yield return Timing.WaitForSeconds(0.25f);
