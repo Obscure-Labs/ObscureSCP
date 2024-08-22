@@ -14,6 +14,7 @@ using Exiled.API.Features.Pickups;
 using Exiled.API.Extensions;
 using SpireSCP.GUI.API.Features;
 using CustomItem = Exiled.CustomItems.API.Features.CustomItem;
+using System.Security.Policy;
 namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
 {
     public class Chaos : Module
@@ -58,7 +59,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
             Log.Info("Running custom item spawner for vanilla round");
             foreach (Room room in Room.List.ToList())
             {
-                yield return Timing.WaitForSeconds(0.1f);
+                yield return Timing.WaitForOneFrame;
 
                 foreach (Pickup pickup in room.Pickups.ToList())
                 {
@@ -69,7 +70,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                     var customItemChance = UnityEngine.Random.Range(0, 101);
                     var isCustomItem = customItemChance >= 50 && customItemChance <= 55;
 
-                    yield return Timing.WaitForSeconds(0.1f);
+                    yield return Timing.WaitForOneFrame;
 
                     if (isCustomItem)
                     {
@@ -92,8 +93,12 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                     {
                         try
                         {
+                            item:
                             var randomItemType = Enum.GetValues(typeof(ItemType)).ToArray<ItemType>().GetRandomValue();
-
+                            if (randomItemType == ItemType.SCP244a || randomItemType == ItemType.SCP244b)
+                            {
+                                goto item;
+                            }
                             Pickup.CreateAndSpawn(randomItemType, pickup.Position, pickup.Rotation);
                             Log.Info($"CHAOS: Made new item in {room.Type}");
 
@@ -121,12 +126,13 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                 {
                     foreach (Player player in ev.Players)
                     {
-                        player.Role.Set(RoleTypeId.ClassD, RoleSpawnFlags.UseSpawnpoint);
+                        player.Role.Set(RoleTypeId.ChaosRepressor, RoleSpawnFlags.UseSpawnpoint);
                         player.ClearInventory();
-                        player.AddItem(ItemType.Coin, 2);
+                        player.AddItem(ItemType.Coin, 1);
                         player.AddItem(ItemType.KeycardMTFCaptain, 1);
-                        player.AddItem(ItemType.Flashlight, 1);
-                    RandomSpawn(player);
+                    player.AddItem(ItemType.Flashlight, 1);
+                    player.AddItem(ItemType.Radio, 1);
+                    RandomSpawn(player, ZoneType.HeavyContainment);
                     Respawn.NtfTickets = 100;
                         Respawn.TimeUntilNextPhase = 45;
                     }
@@ -135,23 +141,24 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                 {
                     foreach (Player player in ev.Players)
                     {
-                        player.Role.Set(RoleTypeId.Scientist, RoleSpawnFlags.UseSpawnpoint);
+                        player.Role.Set(RoleTypeId.NtfCaptain, RoleSpawnFlags.UseSpawnpoint);
                         player.ClearInventory();
-                        player.AddItem(ItemType.Coin, 2);
+                        player.AddItem(ItemType.Coin, 1);
                         player.AddItem(ItemType.KeycardMTFCaptain, 1);
-                        player.AddItem(ItemType.Flashlight, 1);
-                    RandomSpawn(player);
+                    player.AddItem(ItemType.Flashlight, 1);
+                    player.AddItem(ItemType.Radio, 1);
+                    RandomSpawn(player, ZoneType.HeavyContainment);
                     Respawn.ChaosTickets = 100;
                         Respawn.TimeUntilNextPhase = 45;
                     }
                 }
             }
 
-        public static void RandomSpawn(Player player)
+        public static void RandomSpawn(Player player, ZoneType zone)
         {
             var number = UnityEngine.Random.Range(0, 2);
             var goodRoom = false;
-
+            zone = zone;
             //what the magic number
             var room = Room.List.ElementAt(4);
             var door = Room.List.ElementAt(4).Doors.FirstOrDefault();
@@ -165,7 +172,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
 
                 if (Map.IsLczDecontaminated)
                 {
-                    if (room2.Type is not RoomType.HczTesla or RoomType.HczElevatorA or RoomType.HczElevatorB && Room.List.ElementAt(roomNum).Zone is not ZoneType.LightContainment)
+                    if (room2.Type is not RoomType.HczTesla or RoomType.HczElevatorA or RoomType.HczElevatorB && Room.List.ElementAt(roomNum).Zone == zone)
                     {
                         goodRoom = true;
                         door = Room.List.ElementAt(roomNum).Doors.FirstOrDefault();
@@ -173,17 +180,17 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                 }
                 else
                 {
-                    if (room2.Type != RoomType.HczTesla)
+                    if (room2.Type != RoomType.HczTesla && Room.List.ElementAt(roomNum).Zone == zone)
                     {
                         goodRoom = true;
 
-                        door = Room.List.ElementAt(roomNum).Doors.FirstOrDefault() ;
+                        door = Room.List.ElementAt(roomNum).Doors.FirstOrDefault();
                     }
                 }
 
             }
 
-            player.Teleport(new Vector3(door.Position.x, door.Position.y + 1.5f, door.Position.z));
+            player.Teleport(new UnityEngine.Vector3(door.Position.x, door.Position.y + 1.5f, door.Position.z));
         }
 
         public static IEnumerator<float> RunChaosCoroutine()
@@ -206,10 +213,11 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                     player.Broadcast(5, "<color=green><b>CHAOS ROUND!");
                     player.Role.Set(RoleTypeId.ClassD, RoleSpawnFlags.UseSpawnpoint);
                     player.ClearInventory();
-                    player.AddItem(ItemType.Coin, 2);
-                    player.AddItem(ItemType.KeycardScientist, 1);
+                    player.AddItem(ItemType.KeycardMTFOperative, 1);
                     player.AddItem(ItemType.Flashlight, 1);
-                    RandomSpawn(player);
+                    player.AddItem(ItemType.Radio, 1);
+
+                    RandomSpawn(player, ZoneType.LightContainment);
                 }
                 PList.Remove(player);
                 //Player.List.Remove(p);
@@ -221,10 +229,11 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                     player.Broadcast(5, "<color=green><b>CHAOS ROUND!");
                     player.Role.Set(RoleTypeId.Scientist, RoleSpawnFlags.UseSpawnpoint);
                     player.ClearInventory();
-                    player.AddItem(ItemType.Coin, 2);
-                    player.AddItem(ItemType.KeycardScientist, 1);
+                    player.AddItem(ItemType.KeycardMTFOperative, 1);
                     player.AddItem(ItemType.Flashlight, 1);
-                    RandomSpawn(player);
+                    player.AddItem(ItemType.Radio, 1);
+
+                    RandomSpawn(player, ZoneType.LightContainment);
                 }
             }
 

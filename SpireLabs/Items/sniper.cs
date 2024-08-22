@@ -7,6 +7,7 @@ using Exiled.Events.EventArgs.Player;
 using InventorySystem.Items.Firearms.Attachments;
 using InventorySystem.Items.Firearms.BasicMessages;
 using PlayerRoles;
+using PlayerStatsSystem;
 using SpireSCP.GUI.API.Features;
 using System.Collections.Generic;
 using Player = Exiled.Events.Handlers.Player;
