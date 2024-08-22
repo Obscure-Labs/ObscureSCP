@@ -10,9 +10,13 @@ HID Damage Rebalancing
 
 Custom items
 
-And More
+Custom Roles
 
-Get the GUI component here : https://github.com/ImIsaacTbh/SpireSCP.GUI
+Custom HUD
+
+Gamemodes
+
+And More
 
 ## You might have some difficulty getting this plugin working on your server as it is not designed to really be public but if you really want to then go for it 
 
