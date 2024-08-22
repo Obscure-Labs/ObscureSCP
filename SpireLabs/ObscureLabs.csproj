@@ -160,9 +160,7 @@
     <Compile Include="Modules\Gamemode Handler\Core\RemoteKeycard.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\Scp1162.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\Scp914Handler.cs" />
-    <Compile Include="Modules\Gamemode Handler\Minigames\Data\TDMData.cs" />
     <Compile Include="Modules\Gamemode Handler\Minigames\TDM.cs" />
-    <Compile Include="Modules\Gamemode Handler\Minigames\TeamDeathmatch.cs" />
     <Compile Include="Modules\Gamemode Handler\Minigames\TeamHandler.cs" />
     <Compile Include="Modules\Gamemode Handler\Minigames\Сhaos.cs" />
     <Compile Include="Modules\Gamemode Handler\Minigames\GamemodeHandler.cs" />

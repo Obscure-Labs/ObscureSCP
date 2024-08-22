@@ -48,7 +48,7 @@ namespace ObscureLabs.Gamemode_Handler
 
         public override bool Enable()
         {
-            Exiled.Events.Handlers.Server.RoundStarted += OnRoundStarted;
+            //Exiled.Events.Handlers.Server.RoundStarted += OnRoundStarted;
 
             _serializableGameMode = Deserializer.Deserialize<gamemodeInfo>(File.ReadAllText(Plugin.SpireConfigLocation + "gamemodeInfo.Yaml"));
             //File.WriteAllText(Plugin.SpireConfigLocation + "gamemodeInfo.yaml",
