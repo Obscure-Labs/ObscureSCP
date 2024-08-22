@@ -19,8 +19,9 @@ namespace ObscureLabs.Commands.Admin.Other
         {
             if (arguments.Count == 0)
             {
-                response = $"You must enter argument";
-                return false;
+                Force(-1);
+                response = "doing mode ignore";
+                return true;
             }
 
             if (!int.TryParse(arguments.FirstElement(), out var result))
@@ -39,8 +40,8 @@ namespace ObscureLabs.Commands.Admin.Other
 
         private void Force(int arguments)
         {
-            Plugin.IsActiveEventround = true;
             Round.Start();
+            Plugin.IsActiveEventround = true;
             GamemodeHandler.AttemptGameModeRound(true, arguments);
         }
     }

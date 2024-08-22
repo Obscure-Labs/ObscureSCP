@@ -101,7 +101,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
 
             yield return Timing.WaitForSeconds(0.5f);
             juggernautPlayer.Health = maxjhp;
-            juggernautPlayer.MaxHealth = maxjhp / 2.7f;
+            juggernautPlayer.MaxHealth = maxjhp;
         }
     }
 }

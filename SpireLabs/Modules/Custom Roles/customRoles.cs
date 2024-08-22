@@ -8,6 +8,7 @@ using ObscureLabs.API.Features;
 using PlayerRoles;
 using SpireSCP.GUI.API.Features;
 using System.Collections.Generic;
+using System.Threading;
 using UncomplicatedCustomRoles.Extensions;
 using UCRAPI = UncomplicatedCustomRoles.API.Features.CustomRole;
 
@@ -21,23 +22,26 @@ namespace ObscureLabs
         {
             var scps = string.Empty;
             var counter = 0;
-
-            foreach (var player1 in Player.List)
+            new Thread(() =>
             {
-                if (player1.Role.Team is Team.SCPs)
+                Thread.Sleep(4000);
+                foreach (var player1 in Player.List)
                 {
-                    if (counter != 0)
+                    if (player1.Role.Team is Team.SCPs)
                     {
-                        scps += $"<color=white>, <color=red>{player1.Role.Name}";
-                    }
-                    else
-                    {
-                        scps += $"<color=red>{player1.Role.Name}";
-                    }
+                        if (counter != 0)
+                        {
+                            scps += $"<color=white>, <color=red>{player1.Role.Name}";
+                        }
+                        else
+                        {
+                            scps += $"<color=red>{player1.Role.Name}";
+                        }
 
-                    counter++;
+                        counter++;
+                    }
                 }
-            }
+            }).Start();
 
             int? UCRID = null;
 

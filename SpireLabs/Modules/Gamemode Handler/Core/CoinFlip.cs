@@ -22,7 +22,7 @@ namespace ObscureLabs
 
         public override bool IsInitializeOnStart => true;
 
-        private readonly string[] _good = { "You gained <color=green><u>50HP!</u></color>", "You gained a <color=blue><u>5 second speed boost!</u></color>", "You found a <color=yellow><u>keycard!</u></color>", "You are <color=magenta><u>invisible for 5 seconds!</u></color>", "You are <color=red><u>healed!</u></color>", "<color=red>GRENADE FOUNTAIN!</color>", "<color=green>Ammo pile!!</color>", "<color=green>FREE CANDY!</color>", "You can't die for the next <color=green><u>25s!</u></color>", "<color=red>You bring health to those around you!</color>", "<color=purple>Nice hat..</color>", "<color=yellow>You have such radiant skin!</color>", "<color=#add8e6ff>You got an item!</color>", "<color=green>Brought a random player to you!</color>" };
+        private readonly string[] _good = { "You gained <color=green><u>50HP!</u></color>", "You gained a <color=blue><u>5 second speed boost!</u></color>", "You found a <color=yellow><u>keycard!</u></color>", "You are <color=#800680><u>invisible for 5 seconds!</u></color>", "You are <color=red><u>healed!</u></color>", "<color=red>GRENADE FOUNTAIN!</color>", "<color=green>Ammo pile!!</color>", "<color=green>FREE CANDY!</color>", "You can't die for the next <color=green><u>25s!</u></color>", "<color=red>You bring health to those around you!</color>", "<color=purple>Nice hat..</color>", "<color=yellow>You have such radiant skin!</color>", "<color=#add8e6ff>You got an item!</color>", "<color=green>Brought a random player to you!</color>" };
         private readonly string[] _bad = { "You now have <color=red><u>50HP!</u></color>", "<color=red>You dropped all of your items, How clumsy...</color>", "<color=red>You have heavy feet for 5 seconds...</color>", "<color=red>Pocket Sand!</color>", "<color=red>You got lost and found yourself in a random room!</color>", "<color=red>Don't gamble kids!</color>", "You hear the sound of an alarm!", "<color=#008000ff>Portal to hell!!!</color>", "Others percieve you as upside down!", "You caused a blackout in your zone!", "Door stuck! DOOR STUCK!", "Your coin melted :(", "You have been detained!", "You have been brought to a random player!", "The facility is having some technical difficulties" };
 
         private Dictionary<int, CandyKindID> _candies = new(6)
@@ -62,7 +62,6 @@ namespace ObscureLabs
             {
                 return;
             }
-
             Manager.SendHint(ev.Player, "Flipping this coin will cause a random event, use with caution!", 5);
         }
 

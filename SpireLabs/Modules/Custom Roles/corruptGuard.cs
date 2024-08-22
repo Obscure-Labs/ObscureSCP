@@ -1,10 +1,12 @@
 ﻿using Exiled.API.Extensions;
+using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
 using Exiled.Events.Handlers;
 using MEC;
 using ObscureLabs.API.Features;
 using PlayerRoles;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using UncomplicatedCustomRoles.Extensions;
 
@@ -23,13 +25,7 @@ namespace ObscureLabs
         public override bool Enable()
         {
             Exiled.Events.Handlers.Player.Spawned += Spawned;
-            Exiled.Events.Handlers.Player.Shot += Shot;
-            Player.Hurting += Hurt;
-
-            for (int i = 0; i < cantShoot.Length; i++)
-            {
-                cantShoot[i] = false;
-            }
+            Exiled.Events.Handlers.Player.Hurting += Hurt;
 
             return base.Enable();
         }
@@ -38,8 +34,7 @@ namespace ObscureLabs
         {
             cantShoot = new bool[60];
             Exiled.Events.Handlers.Player.Spawned -= Spawned;
-            Exiled.Events.Handlers.Player.Shot -= Shot;
-
+            Exiled.Events.Handlers.Player.Hurting -= Hurt;
             return base.Disable();
         }
 
@@ -48,16 +43,26 @@ namespace ObscureLabs
             Timing.RunCoroutine(SpawnThingCoroutine(ev));
         }
 
-        private static void Shot(ShotEventArgs ev)
+
+
+        private static void Hurt(HurtingEventArgs ev)
         {
-            if (CustomRoles.RolesData.FirstOrDefault(x => x.Player == ev.Target).UcrId == 3)
+            if (CorruptGuards[ev.Attacker.Id])
             {
-                if (cantShoot[ev.Target.Id] == true)
+                if (ev.Player.Role.Type == RoleTypeId.FacilityGuard && Round.ElapsedTime.TotalMinutes < 2)
                 {
-                    ev.CanHurt = false;
+                    ev.IsAllowed = false;
                 }
+                else{ return; }
             }
-            //ev.CanHurt = element is true && ev.Player.Role == RoleTypeId.FacilityGuard;
+            else if (!CorruptGuards[ev.Attacker.Id])
+            {
+                if (CorruptGuards[ev.Attacker.Id] && Round.ElapsedTime.TotalMinutes < 2)
+                {
+                    ev.IsAllowed = false;
+                }
+                else { return; }
+            }
         }
 
         private static void Hurt(HurtingEventArgs ev)
@@ -89,15 +94,8 @@ namespace ObscureLabs
             yield return Timing.WaitForSeconds(0.5f);
 
             ev.Player.ChangeAppearance(RoleTypeId.FacilityGuard, false);
-            cantShoot[ev.Player.Id] = true;
-            Timing.RunCoroutine(SetCantShootCoroutine(ev.Player.Id));
             CorruptGuards[ev.Player.Id] = true;
         }
 
-        private static IEnumerator<float> SetCantShootCoroutine(int PlayerID)
-        {
-            yield return Timing.WaitForSeconds(60f);
-            cantShoot[PlayerID] = false;
-        }
     }
 }

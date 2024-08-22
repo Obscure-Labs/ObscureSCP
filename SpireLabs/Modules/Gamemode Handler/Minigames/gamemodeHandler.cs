@@ -48,7 +48,7 @@ namespace ObscureLabs.Gamemode_Handler
 
         public override bool Enable()
         {
-            Exiled.Events.Handlers.Server.RoundStarted += OnRoundStarted;
+            //Exiled.Events.Handlers.Server.RoundStarted += OnRoundStarted;
 
             _serializableGameMode = Deserializer.Deserialize<gamemodeInfo>(File.ReadAllText(Plugin.SpireConfigLocation + "gamemodeInfo.Yaml"));
             //File.WriteAllText(Plugin.SpireConfigLocation + "gamemodeInfo.yaml",
@@ -91,11 +91,12 @@ namespace ObscureLabs.Gamemode_Handler
             var ran = new Random();
             int chance = ran.Next(0, 100);
 
-            if (_serializableGameMode.nextRoundIsGamemode || force || chance > 30 && chance < 50 && Plugin.IsActiveEventround == false)
+            //if (_serializableGameMode.nextRoundIsGamemode || force || chance > 30 && chance < 50 && Plugin.IsActiveEventround == false)
+            if (force)
             {
                 Plugin.IsActiveEventround = true;
                 int selectedGM;
-                if (args > _gameModes.Count() || args == -1)
+                if (args == -1)
                 {
                     selectedGM = ran.Next(0, _gameModes.Count());
                 }
@@ -114,6 +115,7 @@ namespace ObscureLabs.Gamemode_Handler
                         break;
                     case 1:
                         ModulesManager.GetModule("TeamHandler").Enable();
+                        ModulesManager.GetModule("ChaosRound").Enable();
                         Timing.RunCoroutine(Chaos.RunChaosCoroutine());
                         Plugin.IsActiveEventround = true;
                         Plugin.EventRoundType = EventRoundType.Chaos;
@@ -131,7 +133,7 @@ namespace ObscureLabs.Gamemode_Handler
             else
             {
                 runningChecks = false;
-                WriteAllGameModeData(false, -1, _serializableGameMode.nextRoundIsGamemode);
+                //WriteAllGameModeData(false, -1, _serializableGameMode.nextRoundIsGamemode);
                 Plugin.IsActiveEventround = false;
                 SCPHandler.doSCPThings();
                 ModulesManager.GetModule("SCP3114").Enable();

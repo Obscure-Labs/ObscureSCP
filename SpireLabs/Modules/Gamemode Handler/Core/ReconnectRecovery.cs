@@ -26,7 +26,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
     internal class ReconnectRecovery : Module
     {
         public override string Name => "ReconnectRecovery";
-        public override bool IsInitializeOnStart => true;
+        public override bool IsInitializeOnStart => false;
 
         private List<SerializableReconnectData> _reconnectData;
 
