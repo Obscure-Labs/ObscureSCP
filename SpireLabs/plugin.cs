@@ -23,6 +23,7 @@ using System.IO;
 using ObscureLabs.Configs;
 using UnityEngine;
 using YamlDotNet.Serialization;
+using ObscureLabs.Modules.Default;
 
 namespace ObscureLabs
 {
@@ -112,6 +113,7 @@ namespace ObscureLabs
             ModulesManager.AddModule(new ReconnectRecovery());
             ModulesManager.AddModule(new TeamHandler());
             ModulesManager.AddModule(new TDM());
+            ModulesManager.AddModule(new LightHandler());
             RegisterEvents();
         }
 

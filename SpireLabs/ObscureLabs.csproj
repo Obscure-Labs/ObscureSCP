@@ -151,6 +151,7 @@
     <Compile Include="Modules\Custom Roles\CorruptGuard.cs" />
     <Compile Include="Modules\Custom Roles\CustomRoles.cs" />
     <Compile Include="Modules\Custom Roles\IDThief.cs" />
+    <Compile Include="Modules\Default\LightHandler.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\ChaosCounter.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\DamageModifiers.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\MapInteractions.cs" />
@@ -159,7 +160,9 @@
     <Compile Include="Modules\Gamemode Handler\Core\RemoteKeycard.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\Scp1162.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\Scp914Handler.cs" />
+    <Compile Include="Modules\Gamemode Handler\Minigames\Data\TDMData.cs" />
     <Compile Include="Modules\Gamemode Handler\Minigames\TDM.cs" />
+    <Compile Include="Modules\Gamemode Handler\Minigames\TeamDeathmatch.cs" />
     <Compile Include="Modules\Gamemode Handler\Minigames\TeamHandler.cs" />
     <Compile Include="Modules\Gamemode Handler\Minigames\Сhaos.cs" />
     <Compile Include="Modules\Gamemode Handler\Minigames\GamemodeHandler.cs" />
