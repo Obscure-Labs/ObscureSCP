@@ -129,7 +129,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                         player.Role.Set(RoleTypeId.ChaosRepressor, RoleSpawnFlags.UseSpawnpoint);
                         player.ClearInventory();
                         player.AddItem(ItemType.Coin, 1);
-                        player.AddItem(ItemType.KeycardMTFCaptain, 1);
+                    player.AddItem(ItemType.KeycardMTFCaptain, 1);
+                    player.EnableEffect(EffectType.DamageReduction, intensity: 255, duration: 30, false);
                     player.AddItem(ItemType.Flashlight, 1);
                     player.AddItem(ItemType.Radio, 1);
                     RandomSpawn(player, ZoneType.HeavyContainment);
@@ -144,7 +145,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                         player.Role.Set(RoleTypeId.NtfCaptain, RoleSpawnFlags.UseSpawnpoint);
                         player.ClearInventory();
                         player.AddItem(ItemType.Coin, 1);
-                        player.AddItem(ItemType.KeycardMTFCaptain, 1);
+                    player.AddItem(ItemType.KeycardMTFCaptain, 1);
+                    player.EnableEffect(EffectType.DamageReduction, intensity: 255, duration: 30, false);
                     player.AddItem(ItemType.Flashlight, 1);
                     player.AddItem(ItemType.Radio, 1);
                     RandomSpawn(player, ZoneType.HeavyContainment);

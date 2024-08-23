@@ -52,7 +52,9 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                 running = true;
             _coroutines.Add(Timing.RunCoroutine(RoundSetup()));
             }
+
             Teams = new List<SerializableTeamData>();
+
             Exiled.Events.Handlers.Server.RoundStarted += RoundStarted;
             Exiled.Events.Handlers.Server.RespawningTeam += RespawnWave;
             Exiled.Events.Handlers.Player.Died += Died;
@@ -66,6 +68,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
             //}
             running = false;
             die = true;
+
             Teams = new List<SerializableTeamData>();
             Exiled.Events.Handlers.Server.RoundStarted -= RoundStarted;
             Exiled.Events.Handlers.Server.RespawningTeam -= RespawnWave;
@@ -212,7 +215,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                 if (die)
                 {
                     yield break;
-
                 }
             }
 
