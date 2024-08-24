@@ -26,6 +26,7 @@ namespace ObscureLabs.Items
             CustomItem.Get((uint)7), // ClusterFlash
             CustomItem.Get((uint)0), // EssentialOils
             CustomItem.Get((uint)4), // NovaGrenade
+            CustomItem.Get((uint)4), // S-NAV
         };
 
         private static readonly ItemType[] _blacklistedItems = new[]
@@ -67,6 +68,7 @@ namespace ObscureLabs.Items
             var clusterFlash = 0;
             var clusterHE = 0;
             var novaGrenade = 0;
+            var snav = 0;
 
             // limits
 
@@ -78,6 +80,7 @@ namespace ObscureLabs.Items
             var clusterFlash_l = 5;
             var clusterHE_l = 3;
             var novaGrenade_l = 10;
+            var snav_l = 2;
 
             yield return Timing.WaitForOneFrame;
 
@@ -231,6 +234,21 @@ namespace ObscureLabs.Items
                                     pickup = itemToSpawn.Spawn(targetItem.Transform.position);
                                     pickup.Rotation = targetItem.Transform.rotation;
                                     novaGrenade++;
+                                    Log.Info($"Made new item in {room.Type}");
+                                    yield return Timing.WaitForOneFrame;
+                                    targetItem.Destroy();
+                                    Log.Warn($"Removed original item in {room.Type}");
+
+                                    break;
+                                }
+                            }
+                            else if (itemToSpawn == CustomItem.Get((uint)12)) // S-NAV
+                            {
+                                if (snav < snav_l)
+                                {
+                                    pickup = itemToSpawn.Spawn(targetItem.Transform.position);
+                                    pickup.Rotation = targetItem.Transform.rotation;
+                                    snav++;
                                     Log.Info($"Made new item in {room.Type}");
                                     yield return Timing.WaitForOneFrame;
                                     targetItem.Destroy();

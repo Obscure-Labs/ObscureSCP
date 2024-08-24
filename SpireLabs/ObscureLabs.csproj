@@ -148,6 +148,7 @@
     <Compile Include="Items\AttachmentFix.cs" />
     <Compile Include="Items\CustomItemSpawner.cs" />
     <Compile Include="Commands\Admins\Other\GameMode.cs" />
+    <Compile Include="Items\S-NAV.cs" />
     <Compile Include="Modules\Custom Roles\CorruptGuard.cs" />
     <Compile Include="Modules\Custom Roles\CustomRoles.cs" />
     <Compile Include="Modules\Custom Roles\IDThief.cs" />

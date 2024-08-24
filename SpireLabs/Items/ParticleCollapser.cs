@@ -151,7 +151,7 @@ namespace ObscureLabs.Items
                     continue;
                 }
 
-                if (player1.Role.Team != ev.Player.Role.Team)
+                if (player1.Role.Side != ev.Player.Role.Side)
                 {
                     ev.Player.ShowHitMarker();
                     player1.Hurt(250, DamageType.Explosion);

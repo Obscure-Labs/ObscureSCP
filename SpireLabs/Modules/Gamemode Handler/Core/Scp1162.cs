@@ -93,10 +93,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                     {
                         Manager.SendHint(player, _hintText, 2f);
                     }
-                    else
-                    {
-                        continue;
-                    }
                 }
             }
         }

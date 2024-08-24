@@ -90,7 +90,7 @@ namespace ObscureLabs.Items
             {
                 yield return Timing.WaitForOneFrame;
                 FlashGrenade grenade = (FlashGrenade)Item.Create(ItemType.GrenadeFlash);
-                grenade.FuseTime = 0.0f;
+                grenade.FuseTime = 0.1f;
                 grenade.SpawnActive(ev.Position, ev.Player);
             }
         }

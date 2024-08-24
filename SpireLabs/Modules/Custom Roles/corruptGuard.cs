@@ -57,7 +57,7 @@ namespace ObscureLabs
             }
             else if (!CorruptGuards[ev.Attacker.Id])
             {
-                if (CorruptGuards[ev.Attacker.Id] && Round.ElapsedTime.TotalMinutes < 2)
+                if (CorruptGuards[ev.Player.Id] && Round.ElapsedTime.TotalMinutes < 2)
                 {
                     ev.IsAllowed = false;
                 }
@@ -65,16 +65,6 @@ namespace ObscureLabs
             }
         }
 
-        private static void Hurt(HurtingEventArgs ev)
-        {
-            if(CustomRoles.RolesData.FirstOrDefault(x => x.Player == ev.Attacker).UcrId == 3)
-            {
-                if (cantShoot[ev.Player.Id] == true)
-                {
-                    ev.IsAllowed = false;
-                }
-            }
-        }
         
         private static IEnumerator<float> SpawnThingCoroutine(SpawnedEventArgs ev)
         {

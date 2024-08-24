@@ -104,25 +104,31 @@ namespace ObscureLabs.Items
         {
             if (ev.Player == null || ev.Player.CurrentItem == null)
                 return;
-
+            ev.CanHurt = false;
             if(!Check(ev.Player.CurrentItem))
             {
                 return;
             }
 
-            if (ev.Target.Role.Type.IsHuman())
+            if (ev.Target.IsHuman)
             {
+                Log.Info($"hitbox was: {ev.Hitbox.HitboxType.ToString()}");
                 if(ev.Hitbox.HitboxType == HitboxType.Headshot)
                 {
                     ev.Target.Hurt(ev.Player, 150f, DamageType.Revolver, null);
+                    ev.Player.ShowHitMarker(4f);
                 }
                 else
                 {
                     ev.Target.Hurt(ev.Player, 75f, DamageType.Revolver, null);
+                    ev.Player.ShowHitMarker();
                 }
             }
             else
             {
+                Log.Info($"hitbox was: {ev.Hitbox.HitboxType.ToString()}");
+                Log.Info("Player was not human");
+                ev.Player.ShowHitMarker();
                 ev.Target.Hurt(ev.Player, 200f, DamageType.Revolver, null);
             }
         }
