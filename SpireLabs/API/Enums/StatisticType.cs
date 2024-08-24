@@ -8,7 +8,7 @@ namespace ObscureLabs.API.Enums
 {
     public static class StatisticType
     {
-        public static enum stat
+        public enum stat
         {
             kills
         }

@@ -127,6 +127,7 @@
     <Compile Include="API\Data\EffectData.cs" />
     <Compile Include="API\Data\MapData.cs" />
     <Compile Include="API\Data\PlayerPrimitiveData.cs" />
+    <Compile Include="API\Enums\StatisticType.cs" />
     <Compile Include="API\Serializable\SerializableGameModeData.cs" />
     <Compile Include="API\Data\HealthData.cs" />
     <Compile Include="API\Data\PlayerData.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Configs\HintConfig.cs" />
     <Compile Include="Configs\LobbyConfig.cs" />
     <Compile Include="Configs\OverrideConfig.cs" />
+    <Compile Include="Extensions\PlayerExtension.cs" />
     <Compile Include="Hud\HudController.cs" />
     <Compile Include="Hud\HudHandler.cs" />
     <Compile Include="Hud\Manager.cs" />
