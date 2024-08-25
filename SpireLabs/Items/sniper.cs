@@ -104,12 +104,12 @@ namespace ObscureLabs.Items
         {
             if (ev.Player == null || ev.Player.CurrentItem == null)
                 return;
-            ev.CanHurt = false;
+
             if(!Check(ev.Player.CurrentItem))
             {
                 return;
             }
-
+            ev.CanHurt = false;
             if (ev.Target.IsHuman)
             {
                 Log.Info($"hitbox was: {ev.Hitbox.HitboxType.ToString()}");
