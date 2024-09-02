@@ -73,7 +73,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
 
             foreach (var player in Player.List)
             {
-                if (player == juggernautPlayer)
+                if (player == juggernautPlayer || player == null)
                 {
                     continue;
                 }
