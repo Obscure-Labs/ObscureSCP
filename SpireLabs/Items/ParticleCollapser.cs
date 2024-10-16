@@ -151,10 +151,10 @@ namespace ObscureLabs.Items
                     continue;
                 }
 
-                if (player1.Role.Side != ev.Player.Role.Side)
+                if (player1.Role.Side != ev.Player.Role.Side || Server.FriendlyFire == true)
                 {
                     ev.Player.ShowHitMarker();
-                    player1.Hurt(250, DamageType.Explosion);
+                    player1.Hurt(250, DamageType.Unknown);
                     player1.EnableEffect(EffectType.Burned, 30, true);
                 }
             }
