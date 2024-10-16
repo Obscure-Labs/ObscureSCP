@@ -9,6 +9,7 @@ using InventorySystem.Items.Firearms.BasicMessages;
 using PlayerRoles;
 using PlayerStatsSystem;
 using SpireSCP.GUI.API.Features;
+using Subtitles;
 using System.Collections.Generic;
 using Player = Exiled.Events.Handlers.Player;
 
@@ -115,12 +116,12 @@ namespace ObscureLabs.Items
                 Log.Info($"hitbox was: {ev.Hitbox.HitboxType.ToString()}");
                 if(ev.Hitbox.HitboxType == HitboxType.Headshot)
                 {
-                    ev.Target.Hurt(ev.Player, 150f, DamageType.Revolver, null);
+                    ev.Target.Hurt(attacker: ev.Player, damage: 75f);
                     ev.Player.ShowHitMarker(4f);
                 }
                 else
                 {
-                    ev.Target.Hurt(ev.Player, 75f, DamageType.Revolver, null);
+                    ev.Target.Hurt(attacker: ev.Player, damage: 150f);
                     ev.Player.ShowHitMarker();
                 }
             }
@@ -129,7 +130,7 @@ namespace ObscureLabs.Items
                 Log.Info($"hitbox was: {ev.Hitbox.HitboxType.ToString()}");
                 Log.Info("Player was not human");
                 ev.Player.ShowHitMarker();
-                ev.Target.Hurt(ev.Player, 200f, DamageType.Revolver, null);
+                ev.Target.Hurt(attacker: ev.Player, damage: 200f);
             }
         }
     }

@@ -124,10 +124,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Data\AbilityData.cs" />
     <Compile Include="API\Data\EffectData.cs" />
     <Compile Include="API\Data\MapData.cs" />
     <Compile Include="API\Data\PlayerPrimitiveData.cs" />
+    <Compile Include="API\Data\PowerupData.cs" />
+    <Compile Include="API\Data\SpawnedPowerupBase.cs" />
+    <Compile Include="API\Enums\Abilities.cs" />
+    <Compile Include="API\Powerups\Powerups.cs" />
     <Compile Include="API\Enums\StatisticType.cs" />
+    <Compile Include="API\Powerups\Speedboost.cs" />
     <Compile Include="API\Serializable\SerializableGameModeData.cs" />
     <Compile Include="API\Data\HealthData.cs" />
     <Compile Include="API\Data\PlayerData.cs" />
@@ -175,6 +181,7 @@
     <Compile Include="Items\NovaGrenade.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\Profiles.cs" />
     <Compile Include="Modules\Gamemode Handler\Minigames\Juggernaut.cs" />
+    <Compile Include="Modules\Powerups\PowerupHandler.cs" />
     <Compile Include="Modules\SCPs\Scp3114.cs" />
     <Compile Include="Configs\ItemConfig.cs" />
     <Compile Include="Items\Sniper.cs" />

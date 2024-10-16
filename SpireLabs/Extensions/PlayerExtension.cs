@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 using UncomplicatedCustomRoles.Manager;
 using Exiled.API.Features;
 using stat = ObscureLabs.API.Enums.StatisticType.stat;
+using ObscureLabs.API.Data;
 
 namespace ObscureLabs.Extensions
 {
     public static class PlayerExtension
     {
         private static Dictionary<Player, Dictionary<stat, string>> _playerData = new();
+        private static Dictionary<Player, Dictionary<Powerup, float>> _powerupData = new();
 
         public static string Data(this Player player, stat StatisticType)
         {
