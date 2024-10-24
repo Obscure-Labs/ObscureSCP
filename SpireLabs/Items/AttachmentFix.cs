@@ -1,4 +1,5 @@
-﻿using Exiled.CustomItems.API.Features;
+﻿using Exiled.API.Features;
+using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Item;
 using ObscureLabs.API.Features;
 
