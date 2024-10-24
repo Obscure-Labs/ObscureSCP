@@ -1,4 +1,5 @@
-﻿using Exiled.Events.EventArgs.Item;
+﻿using Exiled.CustomItems.API.Features;
+using Exiled.Events.EventArgs.Item;
 using ObscureLabs.API.Features;
 
 namespace ObscureLabs.Items
@@ -25,7 +26,7 @@ namespace ObscureLabs.Items
 
         private void OnChangingAttachments(ChangingAttachmentsEventArgs ev)
         {
-            ev.IsAllowed = !CustomItems.API.API.HasCustomItemInHand(ev.Player, out _);
+            ev.IsAllowed = !CustomItem.TryGet(ev.Player.CurrentItem, out _);
         }
     }
 }

@@ -53,9 +53,6 @@
     <Reference Include="CommandSystem.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ExMod.Exiled.8.13.0\lib\net48\CommandSystem.Core.dll</HintPath>
     </Reference>
-    <Reference Include="CustomItems, Version=1.8.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CustomItems.1.8.2\lib\net472\CustomItems.dll</HintPath>
-    </Reference>
     <Reference Include="Exiled.API, Version=8.13.0.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>..\packages\ExMod.Exiled.8.13.0\lib\net48\Exiled.API.dll</HintPath>
     </Reference>

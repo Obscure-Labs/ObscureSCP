@@ -1,2 +1,0 @@
-#!/bin/bash
-mono nuget.exe pack CustomItems.nuspec

@@ -1,4 +1,4 @@
-﻿using CustomItems.API;
+﻿using Exiled.CustomItems.API;
 using Exiled.API.Features.Attributes;
 using Exiled.API.Features.Items;
 using Exiled.API.Features.Spawn;
