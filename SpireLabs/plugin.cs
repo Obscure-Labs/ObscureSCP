@@ -115,6 +115,8 @@ namespace ObscureLabs
             ModulesManager.AddModule(new TDM());
             ModulesManager.AddModule(new LightHandler());
             ModulesManager.AddModule(new AttachmentFix());
+            ModulesManager.AddModule(new Teamswap());
+            ModulesManager.AddModule(new CustomRoles());
 
             RegisterEvents();
         }

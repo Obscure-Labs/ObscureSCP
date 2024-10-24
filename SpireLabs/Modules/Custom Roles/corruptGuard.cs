@@ -1,5 +1,6 @@
 ﻿using Exiled.API.Extensions;
 using Exiled.API.Features;
+using Exiled.API.Features.Items;
 using Exiled.Events.EventArgs.Player;
 using Exiled.Events.Handlers;
 using MEC;
@@ -82,7 +83,6 @@ namespace ObscureLabs
             }
 
             yield return Timing.WaitForSeconds(0.5f);
-
             ev.Player.ChangeAppearance(RoleTypeId.FacilityGuard, false);
             CorruptGuards[ev.Player.Id] = true;
         }
