@@ -117,7 +117,7 @@ namespace ObscureLabs.Items
                 if(ev.Hitbox.HitboxType == HitboxType.Headshot)
                 {
                     ev.Target.Hurt(attacker: ev.Player, damage: 75f);
-                    ev.Player.ShowHitMarker(4f);
+                    ev.Player.ShowHitMarker(7f);
                 }
                 else
                 {

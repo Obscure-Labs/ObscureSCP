@@ -26,7 +26,7 @@ namespace ObscureLabs.Items
             CustomItem.Get((uint)7), // ClusterFlash
             CustomItem.Get((uint)0), // EssentialOils
             CustomItem.Get((uint)4), // NovaGrenade
-            CustomItem.Get((uint)4), // S-NAV
+            CustomItem.Get((uint)12), // S-NAV
         };
 
         private static readonly ItemType[] _blacklistedItems = new[]

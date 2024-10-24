@@ -8,6 +8,7 @@ using Exiled.Events.EventArgs.Player;
 using MEC;
 using SpireSCP.GUI.API.Features;
 using System.Collections.Generic;
+using UnityEngine;
 using Player = Exiled.Events.Handlers.Player;
 
 namespace ObscureLabs.Items
@@ -91,7 +92,7 @@ namespace ObscureLabs.Items
                 yield return Timing.WaitForOneFrame;
                 FlashGrenade grenade = (FlashGrenade)Item.Create(ItemType.GrenadeFlash);
                 grenade.FuseTime = 0.1f;
-                grenade.SpawnActive(ev.Position, ev.Player);
+                grenade.SpawnActive(new Vector3(ev.Position.x + Random.Range(-1, 1), ev.Position.y + Random.Range(-1, 1), ev.Position.z + Random.Range(-1, 1)), ev.Player);
             }
         }
 
