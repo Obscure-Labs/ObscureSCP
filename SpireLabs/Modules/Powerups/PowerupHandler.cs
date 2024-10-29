@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
+using Exiled.API.Enums;
+using Exiled.API.Extensions;
+using Exiled.API.Features;
 using ObscureLabs.API.Features;
-using YamlDotNet.Serialization;
-using ObscureLabs.API.Enums;
-using PlayerRoles;
 using ObscureLabs.API.Data;
 using ObscureLabs.API.Powerups;
 
 namespace ObscureLabs.Modules.PowerupsHandling
 {
-    internal class Handler : Module
+    internal class PowerupHandler : Module
     {
         public override string Name => "PowerupHandler";
         public override bool IsInitializeOnStart => false;
@@ -68,6 +66,7 @@ namespace ObscureLabs.Modules.PowerupsHandling
                 Thread.Sleep(10000);
                 Powerup powerup = Powerups.PowerupList.RandomItem();
                 int id = SpawnedPowerups.Count + 1;
+                SpawnedPowerupBase spawnedPowerup = new SpawnedPowerupBase(id, powerup, rnd.Next(1, 10), Room.List.GetRandomValue(x => x.Type != RoomType.EzCafeteria || x.Type != RoomType.EzCollapsedTunnel || x.Type != RoomType.HczServers).Position);
                 
             }
         });

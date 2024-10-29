@@ -24,6 +24,7 @@ using ObscureLabs.Configs;
 using UnityEngine;
 using YamlDotNet.Serialization;
 using ObscureLabs.Modules.Default;
+using ObscureLabs.Modules.PowerupsHandling;
 
 namespace ObscureLabs
 {
@@ -115,8 +116,9 @@ namespace ObscureLabs
             ModulesManager.AddModule(new TDM());
             ModulesManager.AddModule(new LightHandler());
             ModulesManager.AddModule(new AttachmentFix());
-            ModulesManager.AddModule(new Teamswap());
+            //ModulesManager.AddModule(new Teamswap());
             ModulesManager.AddModule(new CustomRoles());
+            ModulesManager.AddModule(new PowerupHandler());
 
             RegisterEvents();
         }
