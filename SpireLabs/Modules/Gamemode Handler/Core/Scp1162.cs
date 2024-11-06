@@ -28,6 +28,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             CustomItem.Get((uint)3), // grenade launcher
             CustomItem.Get((uint)5), // ER16
             CustomItem.Get((uint)6), // Particle Collapser
+            CustomItem.Get((uint)9)  // BallNade
         };
 
         private CoroutineHandle _playerPositionCoroutine;
@@ -55,7 +56,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             var pickup = ev.Pickup;
             var player = ev.Player;
             var customItemChance = UnityEngine.Random.Range(0, 101);
-            var isCustomItem = customItemChance >= 50 && customItemChance <= 55;
+            var isCustomItem = customItemChance >= 50 && customItemChance <= 65;
 
             var isIn1162 = Vector3.Distance(ev.Pickup.Position, RoleTypeId.Scp173.GetRandomSpawnLocation().Position) <= 8.2f;
 

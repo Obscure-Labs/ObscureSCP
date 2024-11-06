@@ -8,12 +8,8 @@ using UnityEngine;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
 {
-    public class TeamHandler : Module
+    public class TeamHandler
     {
-        public override string Name => "TeamHandler";
-
-        public override bool IsInitializeOnStart => false;
-
         public class SerializableItemData
         {
             public SerializableItemData(bool iscustomitem, int id)
@@ -45,21 +41,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
             public Vector3 SpawnLocation { get; set; } = new Vector3(0,0,0);
         }
 
-        public static List<SerializableTeamData> Teams { get; set; } = new List<SerializableTeamData>();
-
-        public override bool Enable()
-        {
-            Teams = new List<SerializableTeamData>();
-            return base.Enable();
-        }
-
-        public override bool Disable()
-        {
-            Teams = new List<SerializableTeamData>();
-            return base.Disable();
-        }
-
-        public static IEnumerator<float> SpawnTeams()
+        public static IEnumerator<float> SpawnTeams(List<SerializableTeamData> Teams)
         {
             Log.Info("Running SpawnTeams");
             yield return Timing.WaitForSeconds(1);
@@ -105,7 +87,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
 
                     }
                 }
-                }
             }
+        }
     }
 }

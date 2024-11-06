@@ -119,6 +119,8 @@
     <Compile Include="API\Data\PowerupData.cs" />
     <Compile Include="API\Data\SpawnedPowerupBase.cs" />
     <Compile Include="API\Enums\Abilities.cs" />
+    <Compile Include="API\Features\Gamemode.cs" />
+    <Compile Include="API\Features\GamemodeManager.cs" />
     <Compile Include="API\Powerups\Powerups.cs" />
     <Compile Include="API\Enums\StatisticType.cs" />
     <Compile Include="API\Powerups\Speedboost.cs" />
@@ -142,6 +144,7 @@
     <Compile Include="Hud\HudHandler.cs" />
     <Compile Include="Hud\Manager.cs" />
     <Compile Include="Items\AttachmentFix.cs" />
+    <Compile Include="Items\BallNade.cs" />
     <Compile Include="Items\CustomItemSpawner.cs" />
     <Compile Include="Commands\Admins\Other\GameMode.cs" />
     <Compile Include="Items\S-NAV.cs" />
@@ -158,10 +161,11 @@
     <Compile Include="Modules\Gamemode Handler\Core\Scp1162.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\Scp914Handler.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\Teamswap.cs" />
+    <Compile Include="Modules\Gamemode Handler\Gamemode\GamemodeHandler.cs" />
+    <Compile Include="Modules\Gamemode Handler\Gamemode\Gamemodes\TDM.cs" />
     <Compile Include="Modules\Gamemode Handler\Minigames\TDM.cs" />
     <Compile Include="Modules\Gamemode Handler\Minigames\TeamHandler.cs" />
     <Compile Include="Modules\Gamemode Handler\Minigames\Сhaos.cs" />
-    <Compile Include="Modules\Gamemode Handler\Minigames\GamemodeHandler.cs" />
     <Compile Include="Items\СlusterFlash.cs" />
     <Compile Include="Items\ParticleCollapser.cs" />
     <Compile Include="Items\GrenadeLauncher.cs" />

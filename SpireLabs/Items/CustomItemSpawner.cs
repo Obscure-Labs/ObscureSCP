@@ -28,19 +28,20 @@ namespace ObscureLabs.Items
 
         public static CustomItemSpawningData[] WeaponList { get; set; } =
         {
-            new(CustomItem.Get((uint)1), 1, 1), // sniper
-            new(CustomItem.Get((uint)3), 1, 1), // grenade launcher
-            new(CustomItem.Get((uint)5), 1, 3), // ER16
-            new(CustomItem.Get((uint)6), 1, 1), // Particle Collapser
+            new(CustomItem.Get((uint)1), 0, 1), // sniper
+            new(CustomItem.Get((uint)3), 0, 1), // grenade launcher
+            new(CustomItem.Get((uint)5), 0, 3), // ER16
+            new(CustomItem.Get((uint)6), 0, 1) // Particle Collapser
         };
 
         public static CustomItemSpawningData[] ItemList { get; set; } =
         {
-            new(CustomItem.Get((uint)2), 1, 3), // ClusterHE
-            new(CustomItem.Get((uint)7), 1, 5), // ClusterFlash
-            new(CustomItem.Get((uint)0), 1, 10), // EssentialOils
-            new(CustomItem.Get((uint)4), 1, 10), // NovaGrenade
-            new(CustomItem.Get((uint)12), 1, 2), // S-NAV
+            new(CustomItem.Get((uint)2), 0, 3), // ClusterHE
+            new(CustomItem.Get((uint)7), 0, 5), // ClusterFlash
+            new(CustomItem.Get((uint)0), 0, 10), // EssentialOils
+            new(CustomItem.Get((uint)4), 0, 10), // NovaGrenade
+            new(CustomItem.Get((uint)12),0, 2), // S-NAV
+            new(CustomItem.Get((uint)9), 0, 1) // BallNade
         };
 
         private static readonly ItemType[] _blacklistedItems = new[]
