@@ -75,7 +75,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                     {
                         data.Items.Add(item.Clone());
                     }
-                    catch(Exception ex){}
+                    catch{}
                 }
 
                 foreach (KeyValuePair<ItemType, ushort> ammo in ev.Player.Ammo)

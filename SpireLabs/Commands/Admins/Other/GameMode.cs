@@ -1,6 +1,5 @@
 ﻿using CommandSystem;
 using Exiled.API.Features;
-using ObscureLabs.Gamemode_Handler;
 using System;
 
 namespace ObscureLabs.Commands.Admin.Other
@@ -42,7 +41,7 @@ namespace ObscureLabs.Commands.Admin.Other
         {
             Round.Start();
             Plugin.IsActiveEventround = true;
-            GamemodeHandler.AttemptGameModeRound(true, arguments);
+#warning SHOULD ATTEMPT ROUND HERE
         }
     }
 }

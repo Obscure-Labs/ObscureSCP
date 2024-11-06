@@ -68,7 +68,7 @@ namespace SpireLabs.GUI
                         }
                     }
                 }
-                catch (Exception ex)
+                catch 
                 {
                     //Log.Error($"Error: {ex}");
                 }
@@ -120,7 +120,7 @@ namespace SpireLabs.GUI
 
                 deadPlayer.ShowHint(s, 0.85f);
             }
-            catch (Exception e)
+            catch
             {
                 //Log.Warn($"Error: {e}");
             }
@@ -170,7 +170,6 @@ namespace SpireLabs.GUI
         internal static IEnumerator<float> displayGUI(Player p)
         {
             Log.Debug($"Displaying GUI FOR {p.DisplayNickname}");
-            bool pp = true;
             hint[p.Id] = string.Empty;
             yield return Timing.WaitForSeconds(5f);
             Log.Debug("Displaying GUI");
@@ -227,7 +226,7 @@ namespace SpireLabs.GUI
                             }
                         }
                     }
-                    catch(Exception ex)
+                    catch
                     {
                         //Log.Error($"Error: {ex}");
                     }

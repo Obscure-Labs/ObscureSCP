@@ -17,10 +17,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
     public class MvpSystem : Module
     {
         private List<PlayerData> _playerData = new();
-        private PlayerData _firstPlace;
-        private PlayerData _secondPlace;
-        private PlayerData _thirdPlace;
-        private static bool WarheadPanelUnlocked = false;
+        private static bool _warheadPanelUnlocked = false;
 
         public override string Name => "MVPSystem";
 
@@ -43,9 +40,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         public override bool Disable()
         {
             _playerData.Clear();
-            _firstPlace = null;
-            _secondPlace = null;
-            _thirdPlace = null;
             Exiled.Events.Handlers.Server.RoundStarted -= OnRoundStarted;
             Exiled.Events.Handlers.Player.Escaping -= OnEscaping;
             Exiled.Events.Handlers.Player.Died -= OnKillingPlayer;
@@ -79,9 +73,9 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         private void OnActivatingWarheadPanel(ActivatingWarheadPanelEventArgs ev)
         {
             if (!ev.Player.Items.Any(item => item is Keycard keycard && keycard.Base.Permissions.HasFlag(KeycardPermissions.AlphaWarhead) || !Round.InProgress)) { return; }
-            else if (!WarheadPanelUnlocked)
+            else if (!_warheadPanelUnlocked)
             {
-                WarheadPanelUnlocked = true;
+                _warheadPanelUnlocked = true;
                 Timing.RunCoroutine(AddXpToPlayer(ev.Player, 7, "Opening The Warhead Panel"));
             }
             else { return; }

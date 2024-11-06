@@ -76,7 +76,9 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         private void OnInteractinglocker(InteractingLockerEventArgs ev)
         {
+#pragma warning disable CS0618
             if (ev.Player.HasKeycardPermission(ev.Chamber.RequiredPermissions))
+#pragma warning restore CS0618
             {
                 ev.IsAllowed = true;
             }

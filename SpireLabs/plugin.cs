@@ -4,12 +4,10 @@ using Exiled.API.Features.Doors;
 using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Player;
 using Exiled.Loader;
-using HarmonyLib;
 using MEC;
 using ObscureLabs.API.Data;
 using ObscureLabs.API.Enums;
 using ObscureLabs.API.Features;
-using ObscureLabs.Gamemode_Handler;
 using ObscureLabs.Items;
 using ObscureLabs.Modules.Gamemode_Handler.Core;
 using ObscureLabs.Modules.Gamemode_Handler.Minigames;
@@ -22,7 +20,6 @@ using System.Collections.Generic;
 using System.IO;
 using ObscureLabs.Configs;
 using UnityEngine;
-using YamlDotNet.Serialization;
 using ObscureLabs.Modules.Default;
 using ObscureLabs.Modules.PowerupsHandling;
 
@@ -35,10 +32,6 @@ namespace ObscureLabs
         public static string SpireConfigLocation { get; private set; }
 
         public static EventRoundType EventRoundType { get; internal set; }
-
-        public static string[] file;
-
-        public static string LastPlayerId;
 
         public static List<PlayerPrimitiveData> Objects = new();
 
@@ -55,8 +48,6 @@ namespace ObscureLabs
         public ItemConfigs.ItemConfig ItemConfigs { get; private set; } = null!;
 
         public OverrideConfig overrideConfigs { get; set; }
-
-        private Harmony _harmony;
 
         public override void OnEnabled()
         {
@@ -112,8 +103,6 @@ namespace ObscureLabs
             ModulesManager.AddModule(new RemoteKeycard());
             ModulesManager.AddModule(new Scp914Handler());
             ModulesManager.AddModule(new ReconnectRecovery());
-            ModulesManager.AddModule(new TeamHandler());
-            ModulesManager.AddModule(new TDM());
             ModulesManager.AddModule(new LightHandler());
             ModulesManager.AddModule(new AttachmentFix());
             //ModulesManager.AddModule(new Teamswap());

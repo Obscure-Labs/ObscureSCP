@@ -160,7 +160,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
         {
             var number = UnityEngine.Random.Range(0, 2);
             var goodRoom = false;
-            zone = zone;
             //what the magic number
             var room = Room.List.ElementAt(4);
             var door = Room.List.ElementAt(4).Doors.FirstOrDefault();

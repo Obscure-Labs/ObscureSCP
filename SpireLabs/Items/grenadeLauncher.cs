@@ -39,7 +39,9 @@ namespace ObscureLabs.Items
                 new()
                 {
                     Chance = 0,
+#pragma warning disable CS0618
                     Location = Exiled.API.Enums.SpawnLocationType.InsideLocker,
+#pragma warning restore CS0618
                 },
                 new()
                 {
@@ -49,7 +51,6 @@ namespace ObscureLabs.Items
             },
         };
 
-        private Exiled.CustomItems.API.Features.CustomGrenade? _loadedCustomGrenade = null;
         private ProjectileType _loadedGrenade = ProjectileType.FragGrenade;
 
         protected override void SubscribeEvents()
@@ -87,22 +88,14 @@ namespace ObscureLabs.Items
             }
 
             Projectile projectile;
-            if (_loadedCustomGrenade is not null)
+            projectile = _loadedGrenade switch
             {
-                _loadedCustomGrenade.Throw(ev.Player.Transform.position, 10f, 5f, 3f, ItemType.GrenadeHE, ev.Player);
-            }
-            else
-            {
+                ProjectileType.Scp018 => ev.Player.ThrowGrenade(ProjectileType.Scp018).Projectile,
+                ProjectileType.Flashbang => ev.Player.ThrowGrenade(ProjectileType.Flashbang).Projectile,
+                _ => ev.Player.ThrowGrenade(ProjectileType.FragGrenade).Projectile,
+            };
 
-                projectile = _loadedGrenade switch
-                {
-                    ProjectileType.Scp018 => ev.Player.ThrowGrenade(ProjectileType.Scp018).Projectile,
-                    ProjectileType.Flashbang => ev.Player.ThrowGrenade(ProjectileType.Flashbang).Projectile,
-                    _ => ev.Player.ThrowGrenade(ProjectileType.FragGrenade).Projectile,
-                };
-
-                projectile.GameObject.AddComponent<CollisionHandler>().Init(ev.Player.GameObject, projectile.Base);
-            }
+            projectile.GameObject.AddComponent<CollisionHandler>().Init(ev.Player.GameObject, projectile.Base);
         }
 
         protected override void OnReloading(ReloadingWeaponEventArgs ev)
@@ -120,11 +113,12 @@ namespace ObscureLabs.Items
                 {
                     continue;
                 }
-
+#pragma warning disable CS8632
                 if (TryGet(item, out Exiled.CustomItems.API.Features.CustomItem? customNade))
                 {
                     continue;
                 }
+#pragma warning restore CS8632
 
                 ev.Player.Connection.Send(new RequestMessage(ev.Firearm.Serial, RequestType.Reload));
 

@@ -37,7 +37,9 @@ namespace ObscureLabs.Items
                 new()
                 {
                     Chance = 10,
+#pragma warning disable CS0618
                     Location = Exiled.API.Enums.SpawnLocationType.InsideLocker,
+#pragma warning restore CS0618
                 },
             },
         };
@@ -91,6 +93,7 @@ namespace ObscureLabs.Items
 
                     _nearbySCPs = _nearbySCPs.OrderBy(x => x.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
 
+#pragma warning disable CS0472
                     if (_nearbySCPs.FirstOrDefault(x => x.Key == pl.Role.Name).Value != null && relative > 50)
                     {
                         _nearbySCPs.Remove(pl.Role.Name);
@@ -98,7 +101,6 @@ namespace ObscureLabs.Items
 
                     if (pl.IsScp && relative <= 50f)
                     {
-
                         if (_nearbySCPs.FirstOrDefault(x => x.Key == pl.Role.Name).Value != null)
                         {
                             _nearbySCPs.Remove(pl.Role.Name);
@@ -108,6 +110,7 @@ namespace ObscureLabs.Items
                         {
                             _nearbySCPs.Add(pl.Role.Name, relative);
                         }
+#pragma warning restore CS0472
 
                         string hint = string.Empty;
                         for (int i = 0; i < _nearbySCPs.Count; i++)

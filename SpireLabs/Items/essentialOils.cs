@@ -27,7 +27,9 @@ namespace ObscureLabs.Items
                 new()
                 {
                     Chance = 0,
-                    Location = Exiled.API.Enums.SpawnLocationType.InsideLocker,
+#pragma warning disable CS0618
+                    Location = Exiled.API.Enums.SpawnLocationType.InsideLocker
+#pragma warning restore CS0618
                 },
                 new()
                 {
