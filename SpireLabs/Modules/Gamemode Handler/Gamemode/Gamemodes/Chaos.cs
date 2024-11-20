@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Exiled.API.Enums;
 using Exiled.API.Extensions;
 using Exiled.API.Features;
-using Exiled.API.Features.Items;
 using Exiled.API.Features.Pickups;
 using Exiled.Events.EventArgs.Player;
 using Exiled.Events.EventArgs.Server;
-using JetBrains.Annotations;
+using InventorySystem.Items.Usables;
 using MEC;
 using ObscureLabs.Items;
 using ObscureLabs.Modules.Gamemode_Handler.Minigames;
@@ -42,14 +37,17 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
 
         public override void Enable(bool force)
         {
+            Exiled.Events.Handlers.Warhead.Detonated += NukeBoom;
             Exiled.Events.Handlers.Player.Escaping += Escaping;
             CreateTeams();
             Thread t = new Thread(() =>
             {
                 foreach (Room r in Room.List)
                 {
+                    Thread.Sleep(1);
                     foreach (Pickup p in r.Pickups)
                     {
+                        Thread.Sleep(1);
                         if(p == null) continue;
                         if(p.Category == ItemCategory.Ammo) continue;
 
@@ -95,16 +93,37 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
 
         public override void Start()
         {
+            Exiled.Events.Handlers.Player.Died += OnPlayerDeath;
             AssignTeams();
             base.Start();
-            Timing.RunCoroutine(TeamHandler.SpawnTeams(Teams));
+            Timing.RunCoroutine(TeamHandler.SpawnTeams(Teams, true));
+            Manager.setModifier(0, $"<color=#ffcc40>Scientists</color><color=#fff>: {Teams.FirstOrDefault(x => x.Name == "Science Team").Players.Count}");
+            Manager.setModifier(1, $"<color=#ff6626>D-Class</color><color=#fff>: {Teams.FirstOrDefault(x => x.Name == "D-Class").Players.Count}");
+            Manager.setModifier(2, $"<color=#fff>Your Lives: 3");
+            Manager.setModifier(3, "Current MVP: None");
         }
 
-
+        private void OnPlayerDeath(DiedEventArgs ev)
+        {
+            try
+            {
+                Teams.FirstOrDefault(x => x.Players.Contains(ev.Player)).Lives[ev.Player]--;
+            }
+            catch
+            {
+            }
+        }
+        
+        private void NukeBoom()
+        {
+            Teams.FirstOrDefault(x => x.Name == "Science Team").SpawnLocation = new Vector3(127.755f, 995.470f, -45.2f);
+            Teams.FirstOrDefault(x => x.Name == "D-Class").SpawnLocation = new Vector3(8.536f, 991.649f, -42.759f);
+        }
 
         public override void End()
         {
             Exiled.Events.Handlers.Player.Escaping -= Escaping;
+            Exiled.Events.Handlers.Warhead.Detonated -= NukeBoom;
         }
 
         public override void PlayerJoinInProgress(JoinedEventArgs ev)
@@ -123,7 +142,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
                 if(p.IsAlive) continue;
                 if (Teams.FirstOrDefault(x => x.Players.Contains(p)).Lives[p] != 0)
                 {
-                    Timing.RunCoroutine(SpawnPlayer(p, Teams.FirstOrDefault(x => x.Players.Contains(p))));
+                    SpawnPlayer(p, Teams.FirstOrDefault(x => x.Players.Contains(p)));
                 }
             }
         }
@@ -145,14 +164,14 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
                 Players = new List<Player>(),
                 LoadOut = new List<TeamHandler.SerializableItemData>
                 {
-                    new(false, 1), // Coin
-                    new(false, 2), // GuardCard
-                    new(false, 3), // Flashlight
-                    new(false, 4), // Radio
-                    new(false, 5), // Medkit
+                    new(false, (int)ItemType.Coin), // Coin
+                    new(false, (int)ItemType.KeycardGuard), // GuardCard
+                    new(false, (int)ItemType.Flashlight), // Flashlight
+                    new(false, (int)ItemType.Radio), // Radio
+                    new(false, (int)ItemType.Medkit), // Medkit
                 },
                 Ammo = new List<TeamHandler.SerializableAmmoData>(),
-                SpawnLocation = Vector3.zero
+                SpawnLocation = new Vector3(8.536f, 992.649f, -42.759f)
                 
             };
 
@@ -165,14 +184,14 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
                 Players = new List<Player>(),
                 LoadOut = new List<TeamHandler.SerializableItemData>
                 {
-                    new(false, 1), // Coin
-                    new(false, 2), // GuardCard
-                    new(false, 3), // Flashlight
-                    new(false, 4), // Radio
-                    new(false, 5), // Medkit
+                    new(false, (int)ItemType.Coin), // Coin
+                    new(false, (int)ItemType.KeycardGuard), // GuardCard
+                    new(false, (int)ItemType.Flashlight), // Flashlight
+                    new(false, (int)ItemType.Radio), // Radio
+                    new(false, (int)ItemType.Medkit), // Medkit
                 },
                 Ammo = new List<TeamHandler.SerializableAmmoData>(),
-                SpawnLocation = Vector3.zero
+                SpawnLocation = new Vector3(127.755f, 996.470f, -45.2f)
             };
 
             Teams.Add(dClass);
@@ -188,7 +207,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
                 realPlayerlist.Add(p);
             }
             realPlayerlist.ShuffleList();
-            for (int i = 0; i < realPlayerlist.Count / 2; i++)
+            for (int i = 0; i < realPlayerlist.Count; i++)
             {
                 if (i % 2 == 0)
                 {

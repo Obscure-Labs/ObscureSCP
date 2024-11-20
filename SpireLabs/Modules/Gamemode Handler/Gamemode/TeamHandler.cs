@@ -3,6 +3,10 @@ using MEC;
 using ObscureLabs.API.Features;
 using PlayerRoles;
 using System.Collections.Generic;
+using System.Linq;
+using Exiled.API.Enums;
+using Exiled.API.Extensions;
+using MapGeneration;
 using UnityEngine;
 
 
@@ -73,11 +77,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
             }
         }
 
-        //public static IEnumerator<float> SpawnPlayer(Player p, SerializableTeamData team)
-        //{
-            
-        //}
-
         public static IEnumerator<float> SpawnTeam(SerializableTeamData team)
         {
             foreach (Player p in team.Players)
@@ -122,7 +121,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
             }
         }
 
-        public static IEnumerator<float> SpawnTeams(List<SerializableTeamData> Teams)
+        public static IEnumerator<float> SpawnTeams(List<SerializableTeamData> Teams, bool chaos = false)
         {
             Log.Info("Running SpawnTeams");
             yield return Timing.WaitForSeconds(1);
@@ -163,7 +162,17 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                             p.AddAmmo(ammo.ItemType, ammo.Quantity);
                         }
                         yield return Timing.WaitForSeconds(0.1f);
-                        p.Teleport(team.SpawnLocation);
+                        if (chaos)
+                        {
+                            Room room = Room.List.GetRandomValue(x =>
+                                x.Zone == ZoneType.LightContainment && x.RoomName != RoomName.LczCheckpointA && x.RoomName != RoomName.HczCheckpointB);
+                            p.Teleport(room.Doors.FirstOrDefault().Position + new Vector3(0, 1.5f, 0));
+                        }
+                        else
+                        {
+                            p.Teleport(team.SpawnLocation);
+                        }
+
                         Log.Info("Spawned Teams");
 
                     }

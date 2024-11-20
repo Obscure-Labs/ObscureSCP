@@ -10,7 +10,6 @@ using ObscureLabs.API.Enums;
 using ObscureLabs.API.Features;
 using ObscureLabs.Items;
 using ObscureLabs.Modules.Gamemode_Handler.Core;
-using ObscureLabs.Modules.Gamemode_Handler.Minigames;
 using ObscureLabs.SpawnSystem;
 using PlayerRoles;
 using SpireLabs.GUI;
@@ -21,6 +20,7 @@ using System.IO;
 using ObscureLabs.Configs;
 using UnityEngine;
 using ObscureLabs.Modules.Default;
+using ObscureLabs.Modules.Gamemode_Handler.Gamemodes;
 using ObscureLabs.Modules.PowerupsHandling;
 
 namespace ObscureLabs
@@ -92,7 +92,7 @@ namespace ObscureLabs
             ModulesManager.AddModule(new Profiles());
             ModulesManager.AddModule(new IDThief());
             ModulesManager.AddModule(new Larry());
-            //ModulesManager.AddModule(new GamemodeHandler());
+            ModulesManager.AddModule(new GamemodeHandler());
             ModulesManager.AddModule(new MapInteractions());
             ModulesManager.AddModule(new Scp3114());
             ModulesManager.AddModule(new Doctor());

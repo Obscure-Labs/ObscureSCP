@@ -34,7 +34,21 @@ namespace SpireSCP.GUI.API.Features
         /// <param name="text">The text to display for that modifier.</param>
         public static void setModifier(int pos, string text)
         {
-            HudHandler.modifiers[pos] = text;
+            foreach (Player p in Player.List)
+            {
+                HudHandler.modifiers[p.Id, pos] = text;
+            }
+        }
+
+        /// <summary>
+        /// Sets a modifier for a specific player
+        /// </summary>
+        /// <param name="p"></param>
+        /// <param name="pos"></param>
+        /// <param name="text"></param>
+        public static void setModifier(Player p, int pos, string text)
+        {
+            HudHandler.modifiers[p.Id, pos] = text;
         }
     }
 }

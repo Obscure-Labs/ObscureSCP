@@ -28,7 +28,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
         private bool ModeRunning = false;
         private DateTime _roundStartTime;
 
-        public override void Enable()
+        public override void Enable(bool force)
         {
             Round.IsLocked = true;
             Round.IsLobbyLocked = true;
@@ -79,7 +79,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
                 SpawnLocation = _map.SpawnNtf
             });
             Exiled.Events.Handlers.Player.Joined += PlayerJoin;
-            base.Enable();
+            base.Enable(force);
         }
 
         private void PlayerJoin(JoinedEventArgs ev)
@@ -94,7 +94,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
             var selectedTeam = Teams.FirstOrDefault(x => x.Players.Count == Teams.Min(x => x.Players.Count));
             Teams.FirstOrDefault(x => x == selectedTeam).Players.Add(ev.Player);
 #pragma warning  restore CS0114
-            Timing.RunCoroutine(SpawnPlayer(ev.Player, selectedTeam));
+            SpawnPlayer(ev.Player, selectedTeam);
             base.PlayerJoin(ev.Player);
         }
 

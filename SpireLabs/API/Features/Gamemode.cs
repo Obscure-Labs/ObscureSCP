@@ -27,20 +27,7 @@ namespace ObscureLabs.API.Features
         {
             Log.Debug($"Gamemode ({this.Name}) Enabled.");
             if (force) Start();
-            else
-            {
-                Thread t = new Thread(() =>
-                {
-                    while (Round.IsLobby)
-                    {
-                        if (Round.LobbyWaitingTime == 1)
-                        {
-                            Start();
-                        }
-                    }
-                });
-                t.Start();
-            }
+            Exiled.Events.Handlers.Server.RoundStarted += Start;
         }
 
         public virtual void Start()
@@ -68,9 +55,9 @@ namespace ObscureLabs.API.Features
 
         }
 
-        public virtual IEnumerator<float> SpawnPlayer(Player player, TeamHandler.SerializableTeamData team)
+        public virtual void SpawnPlayer(Player player, TeamHandler.SerializableTeamData team)
         {
-            yield return 0;
+            Timing.RunCoroutine(TeamHandler.SpawnPlayer(player, team));
         }
 
         public virtual void PlayerJoin(Player player)

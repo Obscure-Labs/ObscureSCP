@@ -5,6 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Exiled.API.Extensions;
+using ObscureLabs;
+using ObscureLabs.API.Enums;
+using ObscureLabs.API.Features;
 
 namespace SpireLabs.GUI
 {
@@ -16,8 +19,7 @@ namespace SpireLabs.GUI
 
         public static string[] peenNutMSG = new string[60];
 
-        public static string[] modifiers = new string[7];
-
+        public static string[,] modifiers = new string[60,7];
         internal static string[] hint = new string[60];
 
         public static void FillPeenNutMessage()
@@ -74,30 +76,73 @@ namespace SpireLabs.GUI
                 }
 
                 s += $"\t\n"; //5
-                s +=
-                    $"<align=right><size=24><color=#7F7FFF>NTF Tickets: <color=#fff>{(int)Respawn.NtfTickets}<color=#fff>\n"; //6
-                s +=
-                    $"<align=right><size=24><color=#090>CHAOS Tickets: <color=#fff>{(int)Respawn.ChaosTickets}<color=#fff>\n"; //6.5
-                s += $"<align=right><size=24>Round Time: {Round.ElapsedTime.Minutes:00}:{Round.ElapsedTime.Seconds:00}\n"; //7
+                if (!Plugin.IsActiveEventround)
+                {
+                    s +=
+                        $"<align=right><size=24><color=#7F7FFF>NTF Tickets: <color=#fff>{(int)Respawn.NtfTickets}<color=#fff>\n"; //6
+                    s +=
+                        $"<align=right><size=24><color=#090>CHAOS Tickets: <color=#fff>{(int)Respawn.ChaosTickets}<color=#fff>\n"; //6.5
+                    s +=
+                        $"<align=right><size=24>Round Time: {Round.ElapsedTime.Minutes:00}:{Round.ElapsedTime.Seconds:00}\n"; //7
 
-                if (Warhead.IsDetonated)
-                {
-                    s +=
-                        $"<align=right><size=24>Warhead Status: <color=#c00>Detonated<color=#fff>\n</size><size=32>"; //7.5
-                }
-                else if (Warhead.IsInProgress)
-                {
-                    s +=
-                        $"<align=right><size=24>Warhead Status: <color=#b45f06>In Progress<color=#fff>\n</size><size=32>"; //7.5
-                }
-                else if (Warhead.LeverStatus)
-                {
-                    s += $"<align=right><size=24>Warhead Status: <color=#090>Armed<color=#fff>\n</size><size=32>"; //7.5
+                    if (Warhead.IsDetonated)
+                    {
+                        s +=
+                            $"<align=right><size=24>Warhead Status: <color=#c00>Detonated<color=#fff>\n</size><size=32>"; //7.5
+                    }
+                    else if (Warhead.IsInProgress)
+                    {
+                        s +=
+                            $"<align=right><size=24>Warhead Status: <color=#b45f06>In Progress<color=#fff>\n</size><size=32>"; //7.5
+                    }
+                    else if (Warhead.LeverStatus)
+                    {
+                        s +=
+                            $"<align=right><size=24>Warhead Status: <color=#090>Armed<color=#fff>\n</size><size=32>"; //7.5
+                    }
+                    else
+                    {
+                        s +=
+                            $"<align=right><size=24>Warhead Status: <color=#2986cc>Disarmed<color=#fff>\n</size><size=32>"; //7.5
+                    }
                 }
                 else
                 {
-                    s +=
-                        $"<align=right><size=24>Warhead Status: <color=#2986cc>Disarmed<color=#fff>\n</size><size=32>"; //7.5
+                    if (modifiers[deadPlayer.Id, 0] is null)
+                    {
+                        s += $"<align=right>\t</align>\n"; //6
+                    }
+                    else
+                    {
+                        s += $"<align=right>{modifiers[deadPlayer.Id, 0]}</align>\n"; //6
+                    }
+
+                    if (modifiers[deadPlayer.Id, 1] is null)
+                    {
+                        s += $"<align=right>\t</align>\n"; //6
+                    }
+                    else
+                    {
+                        s += $"<align=right>{modifiers[deadPlayer.Id, 1]}</align>\n"; //6
+                    }
+
+                    if (modifiers[deadPlayer.Id, 2] is null)
+                    {
+                        s += $"<align=right>\t</align>\n"; //6
+                    }
+                    else
+                    {
+                        s += $"<align=right>{modifiers[deadPlayer.Id, 2]}</align>\n"; //6
+                    }
+
+                    if (modifiers[deadPlayer.Id, 3] is null)
+                    {
+                        s += $"<align=right>\t</align>\n"; //6
+                    }
+                    else
+                    {
+                        s += $"<align=right>{modifiers[deadPlayer.Id, 3]}</align>\n"; //6
+                    }
                 }
 
                 //thats is not good too
@@ -232,67 +277,67 @@ namespace SpireLabs.GUI
                     }
                     Log.Debug("Got past hints");
                     s += $"\t\n"; //5
-                    if (modifiers[0] is null)
+                    if (modifiers[p.Id, 0] is null)
                     {
                         s += $"<align=right>\t</align>\n"; //6
                     }
                     else
                     {
-                        s += $"<align=right>{modifiers[0]}</align>\n"; //6
+                        s += $"<align=right>{modifiers[p.Id, 0]}</align>\n"; //6
                     }
 
-                    if (modifiers[1] is null)
+                    if (modifiers[p.Id, 1] is null)
                     {
                         s += $"<align=right>\t</align>\n"; //6
                     }
                     else
                     {
-                        s += $"<align=right>{modifiers[1]}</align>\n"; //6
+                        s += $"<align=right>{modifiers[p.Id, 1]}</align>\n"; //6
                     }
 
-                    if (modifiers[2] is null)
+                    if (modifiers[p.Id, 2] is null)
                     {
                         s += $"<align=right>\t</align>\n"; //6
                     }
                     else
                     {
-                        s += $"<align=right>{modifiers[2]}</align>\n"; //6
+                        s += $"<align=right>{modifiers[p.Id, 2]}</align>\n"; //6
                     }
 
-                    if (modifiers[3] is null)
+                    if (modifiers[p.Id, 3] is null)
                     {
                         s += $"<align=right>\t</align>\n"; //6
                     }
                     else
                     {
-                        s += $"<align=right>{modifiers[3]}</align>\n"; //6
+                        s += $"<align=right>{modifiers[p.Id, 3]}</align>\n"; //6
                     }
 
-                    if (modifiers[4] is null)
+                    if (modifiers[p.Id, 4] is null)
                     {
                         s += $"<align=right>\t</align>\n"; //6
                     }
                     else
                     {
-                        s += $"<align=right>{modifiers[4]}</align>\n"; //6
+                        s += $"<align=right>{modifiers[p.Id, 4]}</align>\n"; //6
                     }
 
-                    if (modifiers[5] is null)
+                    if (modifiers[p.Id, 5] is null)
                     {
                         s += $"<align=right>\t</align>\n"; //6
                     }
                     else
                     {
-                        s += $"<align=right>{modifiers[5]}</align>\n"; //6
+                        s += $"<align=right>{modifiers[p.Id, 5]}</align>\n"; //6
                     }
 
-                    if (modifiers[6] is null)
+                    if (modifiers[p.Id, 6] is null)
                     {
                         s += $"<align=right>\t</align>\n"; //6
                     }
                     else
                     {
-                        s += $"<align=right>{modifiers[6]}</align>\n"; //6
+                        s += $"<align=right>{modifiers[p.Id, 6]}</align>\n"; //6
                     }
 
                     s += $"\t\n"; //13
