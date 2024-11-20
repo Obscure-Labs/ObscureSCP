@@ -10,7 +10,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
     {
         public override string Name => "ScpProximityChat";
 
-        public override bool IsInitializeOnStart => true;
+        public override bool IsInitializeOnStart => false;
 
         public override bool Enable()
         {

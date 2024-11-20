@@ -11,9 +11,12 @@ using InventorySystem.Items.Usables;
 using MEC;
 using ObscureLabs.Items;
 using ObscureLabs.Modules.Gamemode_Handler.Minigames;
+using ObscureLabs.Modules.Gamemode_Handler.Core;
 using PlayerRoles;
 using SpireSCP.GUI.API.Features;
 using UnityEngine;
+using ObscureLabs.API.Data;
+using ObscureLabs.API.Features;
 
 //make sure they spawn out the facility after nuke
 //modifiers show: how many people on each team and lifes
@@ -44,6 +47,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
             base.Enable(force);
         }
 
+        
         private IEnumerator<float> threadception()
         {
             yield return Timing.WaitForSeconds(0.1f);
@@ -98,6 +102,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
         
         public override void Start()
         {
+
+
             Exiled.Events.Handlers.Player.Died += OnPlayerDeath;
             AssignTeams();
             base.Start();
@@ -105,7 +111,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
             Manager.setModifier(0, $"<color=#ffcc40>Scientists</color><color=#fff>: {Teams.FirstOrDefault(x => x.Name == "Science Team").Players.Count}");
             Manager.setModifier(1, $"<color=#ff6626>D-Class</color><color=#fff>: {Teams.FirstOrDefault(x => x.Name == "D-Class").Players.Count}");
             Manager.setModifier(2, $"<color=#fff>Your Lives: 3");
-            Manager.setModifier(3, "Current MVP: None");
+            Manager.setModifier(3, $"Current MVP: None");
         }
 
         private void OnPlayerDeath(DiedEventArgs ev)
@@ -113,6 +119,23 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
             try
             {
                 Teams.FirstOrDefault(x => x.Players.Contains(ev.Player)).Lives[ev.Player]--;
+                Manager.setModifier(ev.Player, 2, $"Lives: {Teams.FirstOrDefault(x => x.Players.Contains(ev.Player)).Lives[ev.Player]}");
+
+                List<PlayerData> list = new List<PlayerData>();
+                list = MvpSystem._playerData.OrderByDescending(p => p.Xp).ToList();
+                var playerData = list.ToArray();
+                Manager.setModifier(3, $"Current MVP: {playerData[0].Player.DisplayNickname}");
+
+                foreach (var t in Teams)
+                {
+                    int aliveCount = 0;
+                    foreach (var p in t.Players)
+                    {
+                        if (p.IsAlive) aliveCount++;
+                    }
+                    if(t.Name == "Science Team") Manager.setModifier(0, $"<color=#ffcc40>Scientists</color><color=#fff>: {aliveCount}");
+                    if (t.Name == "D-Class") Manager.setModifier(0, $"<color=#ff6626>D-Class</color><color=#fff>: {aliveCount}");
+                }
             }
             catch
             {
@@ -129,6 +152,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
         {
             Exiled.Events.Handlers.Player.Escaping -= Escaping;
             Exiled.Events.Handlers.Warhead.Detonated -= NukeBoom;
+            Exiled.Events.Handlers.Player.Died -= OnPlayerDeath;
         }
 
         public override void PlayerJoinInProgress(JoinedEventArgs ev)
@@ -141,21 +165,36 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
 
         public override void RespawnWave(RespawningTeamEventArgs ev)
         {
+            List<PlayerData> list = new List<PlayerData>();
+            list = MvpSystem._playerData.OrderByDescending(p => p.Xp).ToList();
+            var playerData = list.ToArray();
+            Manager.setModifier(3, $"Current MVP: {playerData[0].Player.DisplayNickname}");
+
             ev.IsAllowed = false;
             foreach (Player p in Players)
             {
-                if(p.IsAlive) continue;
+                if (p.IsAlive) continue;
                 if (Teams.FirstOrDefault(x => x.Players.Contains(p)).Lives[p] != 0)
                 {
                     SpawnPlayer(p, Teams.FirstOrDefault(x => x.Players.Contains(p)));
                 }
+            }
+            foreach (var t in Teams)
+            {
+                int aliveCount = 0;
+                foreach (var p in t.Players)
+                {
+                    if (p.IsAlive) aliveCount++;
+                }
+                if (t.Name == "Science Team") Manager.setModifier(0, $"<color=#ffcc40>Scientists</color><color=#fff>: {aliveCount}");
+                if (t.Name == "D-Class") Manager.setModifier(0, $"<color=#ff6626>D-Class</color><color=#fff>: {aliveCount}");
             }
         }
 
         private void Escaping(EscapingEventArgs ev)
         {
             ev.IsAllowed = false;
-            Manager.SendHint(ev.Player, "There is no escape", 2f);
+            Manager.SendHint(ev.Player, "There is no escape..", 2f);
         }
 
         private void CreateTeams()

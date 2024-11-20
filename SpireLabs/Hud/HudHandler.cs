@@ -279,11 +279,11 @@ namespace SpireLabs.GUI
                     s += $"\t\n"; //5
                     if (modifiers[p.Id, 0] is null)
                     {
-                        s += $"<align=right>\t</align>\n"; //6
+                        s += $"<size=16><align=right>\t</align>\n"; //6
                     }
                     else
                     {
-                        s += $"<align=right>{modifiers[p.Id, 0]}</align>\n"; //6
+                        s += $"<size=16><align=right>{modifiers[p.Id, 0]}</align>\n"; //6
                     }
 
                     if (modifiers[p.Id, 1] is null)
@@ -339,6 +339,14 @@ namespace SpireLabs.GUI
                     {
                         s += $"<align=right>{modifiers[p.Id, 6]}</align>\n"; //6
                     }
+                    s += $"<align=right>\t</align>\n"; //6
+                    s += $"<align=right>\t</align>\n"; //6
+                    s += $"<align=right>\t</align>\n"; //6
+                    s += $"<align=right>\t</align>\n"; //6
+                    s += $"<align=right>\t</align>\n"; //6
+                    s += $"<align=right>\t</align>\n"; //6
+                    s += $"<align=right>\t</align></size>\n"; //6
+
 
                     s += $"\t\n"; //13
                     s += $"\t\n"; //14

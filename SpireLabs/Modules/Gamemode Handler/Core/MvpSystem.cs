@@ -16,7 +16,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
     public class MvpSystem : Module
     {
-        private List<PlayerData> _playerData = new();
+        public static List<PlayerData> _playerData = new();
         private static bool _warheadPanelUnlocked = false;
 
         public override string Name => "MVPSystem";
