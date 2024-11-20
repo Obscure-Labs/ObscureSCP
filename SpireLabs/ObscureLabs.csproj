@@ -157,6 +157,7 @@
     <Compile Include="Modules\Gamemode Handler\Core\RemoteKeycard.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\Scp1162.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\Scp914Handler.cs" />
+    <Compile Include="Modules\Gamemode Handler\Core\ScpProximityChat.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\Teamswap.cs" />
     <Compile Include="Modules\Gamemode Handler\Gamemode\GamemodeHandler.cs" />
     <Compile Include="Modules\Gamemode Handler\Gamemode\Gamemodes\Chaos.cs" />

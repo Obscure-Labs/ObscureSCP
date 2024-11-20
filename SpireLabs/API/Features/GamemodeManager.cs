@@ -16,10 +16,25 @@ namespace ObscureLabs.API.Features
 
         public static Gamemode GetGamemode(string name)
         {
-            return _gamemodeList.FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
+            var gm = _gamemodeList.FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
+            if(gm == null)
+            {
+                return GetGamemode();
+            }
+            return gm;
         }
 
-        public static Gamemode GetRandomGamemode()
+        public static Gamemode GetGamemode(int index)
+        {
+            var gm = _gamemodeList.ElementAtOrDefault(index);
+            if(gm == null)
+            {
+                return GetGamemode();
+            }
+            return gm;
+        }
+
+        public static Gamemode GetGamemode()
         {
             return _gamemodeList.GetRandomValue();
         }

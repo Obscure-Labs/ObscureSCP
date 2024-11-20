@@ -1,6 +1,7 @@
 ﻿using CommandSystem;
 using Exiled.API.Features;
 using System;
+using ObscureLabs.API.Features;
 using ObscureLabs.Modules.Gamemode_Handler.Gamemodes;
 
 namespace ObscureLabs.Commands.Admin.Other
@@ -19,30 +20,41 @@ namespace ObscureLabs.Commands.Admin.Other
         {
             if (arguments.Count == 0)
             {
-                Force(-1);
+                Force(-1, false);
                 response = "doing mode ignore";
                 return true;
             }
 
-            if (!int.TryParse(arguments.FirstElement(), out var result))
+            if (arguments.Count == 1)
             {
-                Force(-1);
-            }
-            else
-            {
-                Force(result);
+                Force(arguments.FirstElement(), false);
             }
 
-            response = $"Force Starting Mode {result}";
+            if(arguments.Count == 2)
+            {
+                if (arguments.At(1) == "force")
+                {
+                    Force(arguments.FirstElement(), true);
+                }
+            }
+
+            response = $"Force Starting Mode {arguments.FirstElement()}";
 
             return true;
         }
 
-        private void Force(int arguments)
+        private void Force(string arguments, bool force)
         {
-            Round.Start();
             Plugin.IsActiveEventround = true;
-            
+
+            GamemodeManager.GetGamemode(arguments).Enable(force);
+        }
+
+        private void Force(int arguments, bool force)
+        {
+            Plugin.IsActiveEventround = true;
+
+            GamemodeManager.GetGamemode(arguments).Enable(force);
 #warning SHOULD ATTEMPT ROUND HERE
         }
     }

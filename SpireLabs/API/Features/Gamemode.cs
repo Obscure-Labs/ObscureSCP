@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
+using Exiled.Events.EventArgs.Server;
 using MEC;
 using ObscureLabs.Modules.Gamemode_Handler.Minigames;
 using PluginAPI.Events;
@@ -21,9 +23,24 @@ namespace ObscureLabs.API.Features
         public List<Player> Players { get; set; } = new();
         public List<TeamHandler.SerializableTeamData> Teams { get; set; } = new();
 
-        public virtual void Enable()
+        public virtual void Enable(bool force)
         {
             Log.Debug($"Gamemode ({this.Name}) Enabled.");
+            if (force) Start();
+            else
+            {
+                Thread t = new Thread(() =>
+                {
+                    while (Round.IsLobby)
+                    {
+                        if (Round.LobbyWaitingTime == 1)
+                        {
+                            Start();
+                        }
+                    }
+                });
+                t.Start();
+            }
         }
 
         public virtual void Start()
@@ -35,10 +52,18 @@ namespace ObscureLabs.API.Features
             Round.Start();
             Log.Debug($"Gamemode ({this.Name}) Round Started.");
             Exiled.Events.Handlers.Player.Joined += PlayerJoinInProgress;
+            Exiled.Events.Handlers.Server.RespawningTeam += RespawnWave;
+        }
+
+        public virtual void RespawnWave(RespawningTeamEventArgs respawnEvent)
+        {
+            
         }
 
         public virtual void End()
         {
+            Exiled.Events.Handlers.Player.Joined -= PlayerJoinInProgress;
+            Exiled.Events.Handlers.Server.RespawningTeam -= RespawnWave;
             Log.Debug($"Gamemode ({this.Name}) Round Ended.");
 
         }

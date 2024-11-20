@@ -11,11 +11,13 @@ using Exiled.API.Features;
 using Exiled.API.Features.Items;
 using Exiled.API.Features.Pickups;
 using Exiled.Events.EventArgs.Player;
+using Exiled.Events.EventArgs.Server;
 using JetBrains.Annotations;
 using MEC;
 using ObscureLabs.Items;
 using ObscureLabs.Modules.Gamemode_Handler.Minigames;
 using PlayerRoles;
+using SpireSCP.GUI.API.Features;
 using UnityEngine;
 
 //make sure they spawn out the facility after nuke
@@ -38,8 +40,9 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
         public override string Name => "Chaos";
         public override string HintText => "CHAOS ROUND";
 
-        public override void Enable()
+        public override void Enable(bool force)
         {
+            Exiled.Events.Handlers.Player.Escaping += Escaping;
             CreateTeams();
             Thread t = new Thread(() =>
             {
@@ -87,7 +90,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
                 }
             }); t.Start();
 
-            base.Enable();
+            base.Enable(force);
         }
 
         public override void Start()
@@ -101,7 +104,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
 
         public override void End()
         {
-
+            Exiled.Events.Handlers.Player.Escaping -= Escaping;
         }
 
         public override void PlayerJoinInProgress(JoinedEventArgs ev)
@@ -110,6 +113,25 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
             Teams.FirstOrDefault(x => x == selectedTeam).Players.Add(ev.Player);
             Teams.FirstOrDefault(x => x == selectedTeam).Lives.Add(ev.Player, 2);
             base.PlayerJoin(ev.Player);
+        }
+
+        public override void RespawnWave(RespawningTeamEventArgs ev)
+        {
+            ev.IsAllowed = false;
+            foreach (Player p in Players)
+            {
+                if(p.IsAlive) continue;
+                if (Teams.FirstOrDefault(x => x.Players.Contains(p)).Lives[p] != 0)
+                {
+                    Timing.RunCoroutine(SpawnPlayer(p, Teams.FirstOrDefault(x => x.Players.Contains(p))));
+                }
+            }
+        }
+
+        private void Escaping(EscapingEventArgs ev)
+        {
+            ev.IsAllowed = false;
+            Manager.SendHint(ev.Player, "There is no escape", 2f);
         }
 
         private void CreateTeams()
