@@ -118,9 +118,9 @@ namespace ObscureLabs.Items
             grenade.ScpDamageMultiplier = 1.25f;
             grenade.MaxRadius = 50;
 
-            grenade.SpawnActive(new Vector3(target.x + 0.5f, target.y, target.z));
-            grenade.SpawnActive(new Vector3(target.x + 0.25f, target.y, target.z + 0.5f));
-            grenade.SpawnActive(new Vector3(target.x + 0.25f, target.y, target.z - 0.5f));
+            grenade.SpawnActive(new Vector3(target.x + 0.5f, target.y, target.z), owner: ev.Player);
+            grenade.SpawnActive(new Vector3(target.x + 0.25f, target.y, target.z + 0.5f), owner: ev.Player);
+            grenade.SpawnActive(new Vector3(target.x + 0.25f, target.y, target.z - 0.5f), owner: ev.Player);
 
             room.TurnOffLights(0.5f);
             light.Destroy();

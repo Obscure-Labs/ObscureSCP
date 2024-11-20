@@ -989,8 +989,8 @@
             Event Handlers for the CustomItem API.
             </summary>
         </member>
-        <member name="M:Exiled.CustomItems.Events.MapHandler.OnMapGenerated">
-            <inheritdoc cref="P:Exiled.Events.Handlers.Map.Generated"/>
+        <member name="M:Exiled.CustomItems.Events.MapHandler.OnWaitingForPlayers">
+            <inheritdoc cref="P:Exiled.Events.Handlers.Server.WaitingForPlayers"/>
         </member>
         <member name="T:Exiled.CustomItems.Events.PlayerHandler">
             <summary>

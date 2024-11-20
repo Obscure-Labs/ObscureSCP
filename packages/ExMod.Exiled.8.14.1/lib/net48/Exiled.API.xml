@@ -403,22 +403,6 @@
             Damage caused by the marshmallow man.
             </summary>
         </member>
-        <member name="F:Exiled.API.Enums.DamageType.Silent">
-            <summary>
-            Generic damage. No CASSIE message will be sent.
-            </summary>
-        </member>
-        <member name="F:Exiled.API.Enums.DamageType.SpicyFlame">
-            <summary>
-            Damage caused by Spicy Flame.
-            </summary>
-            <seealso cref="F:Exiled.API.Enums.EffectType.Spicy"/>
-        </member>
-        <member name="F:Exiled.API.Enums.DamageType.MetalPipe">
-            <summary>
-            Damage caused by Metal Pipe.
-            </summary>
-        </member>
         <member name="T:Exiled.API.Enums.DanceType">
             <summary>
             All available dance variants being used by SCP-3114.
@@ -1183,11 +1167,6 @@
             Makes you a marshmallow guy.
             </summary>
         </member>
-        <member name="F:Exiled.API.Enums.EffectType.Metal">
-            <summary>
-            Makes you metal.
-            </summary>
-        </member>
         <member name="F:Exiled.API.Enums.EffectType.Strangled">
             <summary>
             The effect that is given to the player when getting attacked by SCP-3114's Strangle ability.
@@ -1207,51 +1186,6 @@
         <member name="F:Exiled.API.Enums.EffectType.Slowness">
             <summary>
             <see cref="T:CustomPlayerEffects.Slowness"/>.
-            </summary>
-        </member>
-        <member name="F:Exiled.API.Enums.EffectType.OrangeCandy">
-            <summary>
-            <see cref="T:CustomPlayerEffects.OrangeCandy"/>
-            </summary>
-        </member>
-        <member name="F:Exiled.API.Enums.EffectType.Prismatic">
-            <summary>
-            <see cref="T:CustomPlayerEffects.Prismatic"/>
-            </summary>
-        </member>
-        <member name="F:Exiled.API.Enums.EffectType.SlowMetabolism">
-            <summary>
-            <see cref="T:CustomPlayerEffects.SlowMetabolism"/>
-            </summary>
-        </member>
-        <member name="F:Exiled.API.Enums.EffectType.Spicy">
-            <summary>
-            <see cref="T:CustomPlayerEffects.Spicy"/>
-            </summary>
-        </member>
-        <member name="F:Exiled.API.Enums.EffectType.SugarCrave">
-            <summary>
-            <see cref="T:CustomPlayerEffects.SugarCrave"/>
-            </summary>
-        </member>
-        <member name="F:Exiled.API.Enums.EffectType.SugarHigh">
-            <summary>
-            <see cref="T:CustomPlayerEffects.SugarHigh"/>
-            </summary>
-        </member>
-        <member name="F:Exiled.API.Enums.EffectType.SugarRush">
-            <summary>
-            <see cref="T:CustomPlayerEffects.SugarRush"/>
-            </summary>
-        </member>
-        <member name="F:Exiled.API.Enums.EffectType.TemporaryBypass">
-            <summary>
-            <see cref="T:CustomPlayerEffects.TemporaryBypass"/>
-            </summary>
-        </member>
-        <member name="F:Exiled.API.Enums.EffectType.TraumatizedByEvil">
-            <summary>
-            <see cref="T:CustomPlayerEffects.TraumatizedByEvil"/>
             </summary>
         </member>
         <member name="T:Exiled.API.Enums.ElevatorType">
@@ -7855,65 +7789,6 @@
             <param name="player">Player to check.</param>
             <returns><see langword="true"/> if player is in hazard zone. Otherwise, false.</returns>
         </member>
-        <member name="T:Exiled.API.Features.Hazards.PrismaticCloudHazard">
-            <summary>
-            A wrapper for <see cref="T:Hazards.PrismaticCloud"/>.
-            </summary>
-        </member>
-        <member name="M:Exiled.API.Features.Hazards.PrismaticCloudHazard.#ctor(Hazards.PrismaticCloud)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Exiled.API.Features.Hazards.PrismaticCloudHazard"/> class.
-            </summary>
-            <param name="hazard">The <see cref="T:Hazards.TantrumEnvironmentalHazard"/> instance.</param>
-        </member>
-        <member name="P:Exiled.API.Features.Hazards.PrismaticCloudHazard.Base">
-            <summary>
-            Gets the <see cref="T:Hazards.PrismaticCloud"/>.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Hazards.PrismaticCloudHazard.Type">
-            <inheritdoc />
-        </member>
-        <member name="P:Exiled.API.Features.Hazards.PrismaticCloudHazard.DecaySpeed">
-            <summary>
-            Gets the decay speed.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Hazards.PrismaticCloudHazard.ExplodeDistance">
-            <summary>
-            Gets distance of explode.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Hazards.PrismaticCloudHazard.IgnoredTargets">
-            <summary>
-            Gets or sets the ignored targets.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Hazards.PrismaticCloudHazard.SynchronisedPosition">
-            <summary>
-            Gets or sets the synced position.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Hazards.PrismaticCloudHazard.CorrectPosition">
-            <summary>
-            Gets or sets the correct position of tantrum hazard.
-            </summary>
-        </member>
-        <member name="M:Exiled.API.Features.Hazards.PrismaticCloudHazard.PlaceTantrum(UnityEngine.Vector3,System.Boolean)">
-            <summary>
-            Places a Prismatic (Halloween's ability) in the indicated position.
-            </summary>
-            <param name="position">The position where you want to spawn the Tantrum.</param>
-            <param name="isActive">Whether or not the tantrum will apply the <see cref="F:Exiled.API.Enums.EffectType.Prismatic"/> effect.</param>
-            <remarks>If <paramref name="isActive"/> is <see langword="true"/>, the tantrum is moved slightly up from its original position. Otherwise, the collision will not be detected and the slowness will not work.</remarks>
-            <returns>The <see cref="T:Exiled.API.Features.Hazards.TantrumHazard"/> instance.</returns>
-        </member>
-        <member name="M:Exiled.API.Features.Hazards.PrismaticCloudHazard.EnableEffects(Exiled.API.Features.Player)">
-            <summary>
-            Enables effects for target.
-            </summary>
-            <param name="player">Target to affect.</param>
-        </member>
         <member name="T:Exiled.API.Features.Hazards.SinkholeHazard">
             <summary>
             Represents a sinkhole hazard.
@@ -7960,11 +7835,6 @@
         <member name="P:Exiled.API.Features.Hazards.TantrumHazard.PlaySizzle">
             <summary>
             Gets or sets a value indicating whether or not sizzle should be played.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Hazards.TantrumHazard.TargetedTeams">
-            <summary>
-            Gets the teams that will be affected by the tantrum.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Hazards.TantrumHazard.SynchronisedPosition">
@@ -9200,40 +9070,6 @@
         <member name="M:Exiled.API.Features.Items.Keycard.ReadPickupInfo(Exiled.API.Features.Pickups.Pickup)">
             <inheritdoc/>
         </member>
-        <member name="T:Exiled.API.Features.Items.Marshmallow">
-            <summary>
-            A wrapper for <see cref="T:InventorySystem.Items.MarshmallowMan.MarshmallowItem"/>.
-            </summary>
-        </member>
-        <member name="M:Exiled.API.Features.Items.Marshmallow.#ctor(InventorySystem.Items.MarshmallowMan.MarshmallowItem)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Exiled.API.Features.Items.Marshmallow"/> class.
-            </summary>
-            <param name="itemBase">A <see cref="T:InventorySystem.Items.MarshmallowMan.MarshmallowItem"/> instance.</param>
-        </member>
-        <member name="M:Exiled.API.Features.Items.Marshmallow.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:Exiled.API.Features.Items.Marshmallow"/> class.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Items.Marshmallow.Base">
-            <inheritdoc/>
-        </member>
-        <member name="P:Exiled.API.Features.Items.Marshmallow.EvilMode">
-            <summary>
-            Gets or sets a value indicating whether the evil mode is enabled.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Items.Marshmallow.AttackCooldown">
-            <summary>
-            Gets or sets the attack cooldown.
-            </summary>
-        </member>
-        <member name="M:Exiled.API.Features.Items.Marshmallow.ReleaseEvil">
-            <summary>
-            Releases the evil mode.
-            </summary>
-        </member>
         <member name="T:Exiled.API.Features.Items.MicroHid">
             <summary>
             A wrapper class for <see cref="T:InventorySystem.Items.MicroHID.MicroHIDItem"/>.
@@ -10090,6 +9926,16 @@
         <member name="P:Exiled.API.Features.Lockers.Chamber.Rotation">
             <inheritdoc/>
         </member>
+        <member name="P:Exiled.API.Features.Lockers.Chamber.GameObject">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Lockers.Chamber"/> <see cref="T:UnityEngine.GameObject"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Lockers.Chamber.Transform">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Lockers.Chamber"/> <see cref="T:UnityEngine.Transform"/>.
+            </summary>
+        </member>
         <member name="P:Exiled.API.Features.Lockers.Chamber.ToBeSpawned">
             <summary>
             Gets or sets all pickups that should be spawned when the door is initially opened.
@@ -10223,6 +10069,11 @@
         <member name="P:Exiled.API.Features.Lockers.Locker.Type">
             <summary>
             Gets the <see cref="T:Exiled.API.Enums.LockerType"/> of the <see cref="T:Exiled.API.Features.Lockers.Locker"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Lockers.Locker.GameObject">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Lockers.Locker"/> <see cref="T:UnityEngine.GameObject"/>.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Lockers.Locker.Transform">
@@ -10445,11 +10296,6 @@
             Gets the amnestic cloud prefab.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Map.SkyboxHubert">
-            <summary>
-            Gets the Hubert Sky prefab.
-            </summary>
-        </member>
         <member name="P:Exiled.API.Features.Map.IsLczDecontaminated">
             <summary>
             Gets a value indicating whether decontamination has begun in the light containment zone.
@@ -10496,11 +10342,6 @@
         <member name="P:Exiled.API.Features.Map.SqueakSpawner">
             <summary>
             Gets the <see cref="T:SqueakSpawner"/>.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Map.IsHubertSky">
-            <summary>
-            Gets or sets a value indicating whether the hubert sky is enabled.
             </summary>
         </member>
         <member name="M:Exiled.API.Features.Map.Broadcast(Exiled.API.Features.Broadcast,System.Boolean)">
@@ -10655,13 +10496,6 @@
             <param name="position">The position where effect will be created.</param>
             <param name="projectileType">The projectile that will create the effect.</param>
         </member>
-        <member name="M:Exiled.API.Features.Map.ExplodeEffectHalloween(UnityEngine.Vector3,Exiled.API.Enums.ProjectileType)">
-            <summary>
-            Spawn projectile effect HalloweenOnly.
-            </summary>
-            <param name="position">The position where effect will be created.</param>
-            <param name="projectileType">The projectile that will create the effect.</param>
-        </member>
         <member name="M:Exiled.API.Features.Map.PlayGunSound(UnityEngine.Vector3,ItemType,System.Byte,System.Byte)">
             <summary>
             Plays a gun sound at the specified position.
@@ -10784,10 +10618,32 @@
             <param name="position">The position to spawn the NPC.</param>
             <returns>The <see cref="T:Exiled.API.Features.Npc"/> spawned.</returns>
         </member>
+        <member name="M:Exiled.API.Features.Npc.Spawn(System.String,PlayerRoles.RoleTypeId,System.Boolean,System.String,System.Nullable{UnityEngine.Vector3})">
+            <summary>
+            Spawns an NPC based on the given parameters.
+            </summary>
+            <param name="name">The name of the NPC.</param>
+            <param name="role">The RoleTypeId of the NPC, defaulting to None.</param>
+            <param name="ignored">Whether the NPC should be ignored by round ending checks.</param>
+            <param name="userId">The userID of the NPC for authentication. Defaults to the Dedicated ID.</param>
+            <param name="position">The position where the NPC should spawn. If null, the default spawn location is used.</param>
+            <returns>The <see cref="T:Exiled.API.Features.Npc"/> spawned.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Npc.DestroyAll">
+            <summary>
+            Destroys all NPCs currently spawned.
+            </summary>
+        </member>
         <member name="M:Exiled.API.Features.Npc.Destroy">
             <summary>
             Destroys the NPC.
             </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Npc.LateDestroy(System.Single)">
+            <summary>
+            Schedules the destruction of the NPC after a delay.
+            </summary>
+            <param name="time">The delay in seconds before the NPC is destroyed.</param>
         </member>
         <member name="T:Exiled.API.Features.Paths">
             <summary>
@@ -13629,6 +13485,20 @@
             Resets the <see cref="T:Exiled.API.Features.Player"/>'s stamina.
             </summary>
         </member>
+        <member name="M:Exiled.API.Features.Player.SetScale(UnityEngine.Vector3,System.Collections.Generic.IEnumerable{Exiled.API.Features.Player})">
+            <summary>
+            Sets the scale of a player on the server side.
+            </summary>
+            <param name="scale">The scale to set.</param>
+            <param name="viewers">Who should see the updated scale.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Player.SetFakeScale(UnityEngine.Vector3,System.Collections.Generic.IEnumerable{Exiled.API.Features.Player})">
+            <summary>
+            Sets the scale of the player for other players.
+            </summary>
+            <param name="fakeScale">The scale to set to.</param>
+            <param name="viewers">Who should see the fake scale.</param>
+        </member>
         <member name="M:Exiled.API.Features.Player.GetScpPreference(PlayerRoles.RoleTypeId)">
             <summary>
             Gets a user's SCP preference.
@@ -14566,11 +14436,6 @@
             Explode the player.
             </summary>
         </member>
-        <member name="M:Exiled.API.Features.Player.ExplodeHalloween">
-            <summary>
-            Explode the player.
-            </summary>
-        </member>
         <member name="M:Exiled.API.Features.Player.Explode(Exiled.API.Enums.ProjectileType,Exiled.API.Features.Player)">
             <summary>
             Explode the player.
@@ -14583,12 +14448,6 @@
             Spawn projectile effect on the player.
             </summary>
             <param name="projectileType">The projectile that will create the effect.</param>
-        </member>
-        <member name="M:Exiled.API.Features.Player.ShakeCameraPipe(System.Single)">
-            <summary>
-            Shakes camera with metal pipe falling shake effect.
-            </summary>
-            <param name="intensity">Intensity of the shake.</param>
         </member>
         <member name="M:Exiled.API.Features.Player.ToString">
             <summary>
@@ -17894,6 +17753,12 @@
             <summary>
             Gets a value indicating whether the round is lobby or not.
             </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Round.LastClassList">
+            <summary>
+            Gets a value indicating the last ClassList.
+            </summary>
+            <remarks>this value is only updated when Round is <see cref="P:Exiled.API.Features.Round.InProgress"/> and not <see cref="P:Exiled.API.Features.Round.IsLocked"/>.</remarks>
         </member>
         <member name="P:Exiled.API.Features.Round.ChaosTargetCount">
             <summary>

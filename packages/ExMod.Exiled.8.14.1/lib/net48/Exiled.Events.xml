@@ -1568,6 +1568,50 @@
             Gets the decal owner.
             </summary>
         </member>
+        <member name="T:Exiled.Events.EventArgs.Map.PlacingPickupIntoPocketDimensionEventArgs">
+            <summary>
+            Contains information about items in the pocket dimension.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Map.PlacingPickupIntoPocketDimensionEventArgs.#ctor(InventorySystem.Items.Pickups.ItemPickupBase,PlayerRoles.PlayableScps.Scp106.Scp106PocketItemManager.PocketItem,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Map.PlacingPickupIntoPocketDimensionEventArgs"/> class.
+            </summary>
+            <param name="pickupBase"><inheritdoc cref="P:Exiled.Events.EventArgs.Map.PlacingPickupIntoPocketDimensionEventArgs.Pickup"/></param>
+            <param name="pocketItem"><inheritdoc cref="P:Exiled.Events.EventArgs.Map.PlacingPickupIntoPocketDimensionEventArgs.PocketItem"/></param>
+            <param name="isAllowed"><inheritdoc cref="P:Exiled.Events.EventArgs.Map.PlacingPickupIntoPocketDimensionEventArgs.IsAllowed"/></param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Map.PlacingPickupIntoPocketDimensionEventArgs.Pickup">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Map.PlacingPickupIntoPocketDimensionEventArgs.PocketItem">
+            <summary>
+            Gets the value of the PocketItem.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Map.PlacingPickupIntoPocketDimensionEventArgs.DropTime">
+            <summary>
+            Gets or sets a value indicating when the Pickup will be dropped onto the map.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Map.PlacingPickupIntoPocketDimensionEventArgs.ShouldRemove">
+            <summary>
+            Gets or sets a value indicating whether the pickup should be removed from the Pocket Dimension.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Map.PlacingPickupIntoPocketDimensionEventArgs.ShouldWarn">
+            <summary>
+            Gets or sets a value indicating whether the warning sound for the pickup should be sent.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Map.PlacingPickupIntoPocketDimensionEventArgs.Position">
+            <summary>
+            Gets or sets the location where the pickup will drop onto the map.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Map.PlacingPickupIntoPocketDimensionEventArgs.IsAllowed">
+            <inheritdoc/>
+        </member>
         <member name="T:Exiled.Events.EventArgs.Map.Scp244SpawningEventArgs">
             <summary>
             Contains all information up to spawning Scp244.
@@ -3490,7 +3534,7 @@
             Contains all information before a player interacts with a door.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.InteractingDoorEventArgs.#ctor(Exiled.API.Features.Player,Interactables.Interobjects.DoorUtils.DoorVariant,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Player.InteractingDoorEventArgs.#ctor(Exiled.API.Features.Player,Interactables.Interobjects.DoorUtils.DoorVariant,System.Boolean,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.InteractingDoorEventArgs" /> class.
             </summary>
@@ -3503,10 +3547,18 @@
             <param name="isAllowed">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.InteractingDoorEventArgs.IsAllowed" />
             </param>
+            <param name="canInteract">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.InteractingDoorEventArgs.CanInteract" />
+            </param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.InteractingDoorEventArgs.CanInteract">
+            <summary>
+            Gets or sets a value indicating whether or not the player can interact with the door.
+            </summary>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.InteractingDoorEventArgs.IsAllowed">
             <summary>
-            Gets or sets a value indicating whether or not the player can interact with the door.
+            Gets or sets a value indicating whether or not the player can access the door.
             </summary>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.InteractingDoorEventArgs.Door">
@@ -8434,6 +8486,11 @@
             Gets or sets the time to restart the next round.
             </summary>
         </member>
+        <member name="P:Exiled.Events.EventArgs.Server.RoundEndedEventArgs.ShowRoundSummary">
+            <summary>
+            Gets or sets a value indicating whether Round Summary will be sent to all players.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.EventArgs.Server.SelectingRespawnTeamEventArgs">
             <summary>
             Contains all information before selecting the team to respawn next.
@@ -9169,6 +9226,11 @@
             Called before spawning Scp244.
             </summary>
         </member>
+        <member name="P:Exiled.Events.Handlers.Map.PlacingPickupIntoPocketDimension">
+            <summary>
+            Invoked before an item is placed in the pocket dimension.
+            </summary>
+        </member>
         <member name="M:Exiled.Events.Handlers.Map.OnPlacingBulletHole(Exiled.Events.EventArgs.Map.PlacingBulletHoleEventArgs)">
             <summary>
             Called before placing a decal.
@@ -9275,6 +9337,12 @@
             Called before spawning Scp244.
             </summary>
             <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Map.Scp244SpawningEventArgs"/> instance.</param>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Map.OnPlacingPickupIntoPocketDimension(Exiled.Events.EventArgs.Map.PlacingPickupIntoPocketDimensionEventArgs)">
+            <summary>
+            Called before an item is dropped in the pocket dimension.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Map.PlacingPickupIntoPocketDimensionEventArgs"/> instnace.</param>
         </member>
         <member name="T:Exiled.Events.Handlers.Player">
             <summary>
@@ -11605,6 +11673,12 @@
             Adds the <see cref="P:Exiled.Events.Handlers.Map.PlacingBulletHole" /> event.
             </summary>
         </member>
+        <member name="T:Exiled.Events.Patches.Events.Map.PlacingPickupIntoPocketDimension">
+            <summary>
+                Patches <see cref="T:PlayerRoles.PlayableScps.Scp106.Scp106PocketItemManager"/>
+                Adds the <see cref="P:Exiled.Events.Handlers.Map.PlacingPickupIntoPocketDimension" /> event.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.Patches.Events.Map.Scp244Spawning">
             <summary>
             Patches <see cref="M:InventorySystem.Items.Usables.Scp244.Scp244Spawner.SpawnScp244(InventorySystem.Items.ItemBase)" />.
@@ -12690,6 +12764,11 @@
         <member name="T:Exiled.Events.Patches.Fixes.GrenadePropertiesFix">
             <summary>
             Patches <see cref="M:InventorySystem.Items.ThrowableProjectiles.ThrowableItem.ServerThrow(System.Single,System.Single,UnityEngine.Vector3,UnityEngine.Vector3)"/> to fix all grenade properties.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Fixes.JailbirdHitRegFix">
+            <summary>
+            Patches <see cref="M:InventorySystem.Items.Jailbird.JailbirdHitreg.ServerAttack(System.Boolean,Mirror.NetworkReader)" />.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Fixes.KillPlayer">

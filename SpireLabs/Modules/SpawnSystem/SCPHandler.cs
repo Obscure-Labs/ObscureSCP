@@ -4,12 +4,33 @@ using PlayerRoles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ObscureLabs.API.Features;
 
 namespace ObscureLabs.SpawnSystem
 {
 
-    internal class SCPHandler
+    internal class SCPHandler : Module
     {
+        public override string Name => "SCPHandler";
+        public override bool IsInitializeOnStart => true;
+
+        public override bool Enable()
+        {
+            Exiled.Events.Handlers.Server.RoundStarted += RoundStarting;
+            return base.Enable();
+        }
+
+        public override bool Disable()
+        {
+            Exiled.Events.Handlers.Server.RoundStarted -= RoundStarting;
+            return base.Disable();
+        }
+
+        private void RoundStarting()
+        {
+            RunScpHandler();
+        }
+
         public static List<Player> scPPs = new List<Player>();
         private static IEnumerator<float> SpawnBoner()
         {
@@ -27,12 +48,7 @@ namespace ObscureLabs.SpawnSystem
             }
         }
 
-        private IEnumerator<float> SpawnDoge(Player p)
-        {
-            yield return 0;
-        }
-
-        internal static void doSCPThings()
+        private static void RunScpHandler()
         {
             foreach (Player iP in Player.List)
             {

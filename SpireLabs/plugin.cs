@@ -94,7 +94,6 @@ namespace ObscureLabs
             ModulesManager.AddModule(new Larry());
             //ModulesManager.AddModule(new GamemodeHandler());
             ModulesManager.AddModule(new MapInteractions());
-            ModulesManager.AddModule(new Chaos());
             ModulesManager.AddModule(new Scp3114());
             ModulesManager.AddModule(new Doctor());
             ModulesManager.AddModule(new CustomItemSpawner());
@@ -108,6 +107,7 @@ namespace ObscureLabs
             //ModulesManager.AddModule(new Teamswap());
             ModulesManager.AddModule(new CustomRoles());
             ModulesManager.AddModule(new PowerupHandler());
+            ModulesManager.AddModule(new SCPHandler());
 
             RegisterEvents();
         }

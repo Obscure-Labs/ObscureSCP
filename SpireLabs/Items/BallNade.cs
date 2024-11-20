@@ -5,7 +5,12 @@ using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Map;
 using Exiled.Events.EventArgs.Player;
 using System.Collections.Generic;
+using Exiled.API.Enums;
+using Exiled.API.Features.Items;
+using Exiled.API.Features.Pickups.Projectiles;
 using Exiled.Events.Handlers;
+using InventorySystem.Items.ThrowableProjectiles;
+using Item = Exiled.API.Features.Items.Item;
 
 namespace ObscureLabs.Items
 {
@@ -44,18 +49,21 @@ namespace ObscureLabs.Items
             },
         };
 
-        protected override void OnExploding(ExplodingGrenadeEventArgs ev)
+        protected override void OnThrownProjectile(ThrownProjectileEventArgs ev)
         {
-            ev.IsAllowed = false;
-            Pickup.CreateAndSpawn(ItemType.SCP018, ev.Position, ev.Projectile.Transform.rotation, null);
-            Pickup.CreateAndSpawn(ItemType.SCP018, ev.Position, ev.Projectile.Transform.rotation, null);
-            Pickup.CreateAndSpawn(ItemType.SCP018, ev.Position, ev.Projectile.Transform.rotation, null);
-            Pickup.CreateAndSpawn(ItemType.SCP018, ev.Position, ev.Projectile.Transform.rotation, null);
-            Pickup.CreateAndSpawn(ItemType.SCP018, ev.Position, ev.Projectile.Transform.rotation, null);
-            Pickup.CreateAndSpawn(ItemType.SCP018, ev.Position, ev.Projectile.Transform.rotation, null);
-            Pickup.CreateAndSpawn(ItemType.SCP018, ev.Position, ev.Projectile.Transform.rotation, null);
+            ev.Player.ThrowGrenade(ProjectileType.Scp018);
+            ev.Player.ThrowGrenade(ProjectileType.Scp018);
+            ev.Player.ThrowGrenade(ProjectileType.Scp018);
+            ev.Player.ThrowGrenade(ProjectileType.Scp018);
+            ev.Player.ThrowGrenade(ProjectileType.Scp018);
+            ev.Player.ThrowGrenade(ProjectileType.Scp018);
+            ev.Player.ThrowGrenade(ProjectileType.Scp018);
+            ev.Player.ThrowGrenade(ProjectileType.Scp018);
+            ev.Player.ThrowGrenade(ProjectileType.Scp018);
+            ev.Player.ThrowGrenade(ProjectileType.Scp018);
+            ev.Player.ThrowGrenade(ProjectileType.Scp018);
             ev.Projectile.Destroy();
-            base.OnExploding(ev);
+            base.OnThrownProjectile(ev);
         }
     }
 }

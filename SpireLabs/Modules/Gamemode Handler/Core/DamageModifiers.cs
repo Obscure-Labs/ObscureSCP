@@ -29,7 +29,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         {
             if (ev.DamageHandler.Type is DamageType.MicroHid)
             {
-                ev.Amount *= Plugin.Instance.Config.HidDPS / 100;
+                ev.Amount *= 70 / 100;
             }
             if (ev.DamageHandler.Type is DamageType.Scp3114 && Plugin.Instance.Config.RolesDamage.TryGetValue(RoleTypeId.Scp3114, out var value))
             {

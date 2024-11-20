@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Exiled.API.Extensions;
 using Exiled.API.Features;
-using Exiled.API.Features.Items;
 using Exiled.Events.EventArgs.Player;
 using ObscureLabs.API.Data;
-using ObscureLabs.Modules.Gamemode_Handler.Minigames;
 using PlayerRoles;
 using UnityEngine;
 using static ObscureLabs.Modules.Gamemode_Handler.Minigames.TeamHandler;
+using MEC;
+using SpireSCP.GUI.API.Features;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
 {
@@ -26,6 +24,9 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
             { new MapData("pvpA2_2t", "\"Tilted Towers\"",new Vector3(9.7f, 1102f, 52.46f), new Vector3(-20.20f, 1102f, 35.37f)) },
             { new MapData("pvpMZA1_2t", "\"The Maze\"", new Vector3(23.96f, 1126f, 29.14f), new Vector3(-30.74f, 1126f, -16.93f)) },
         };
+
+        private bool ModeRunning = false;
+        private DateTime _roundStartTime;
 
         public override void Enable()
         {
@@ -87,22 +88,57 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
             base.PlayerJoin(ev.Player);
         }
 
+#pragma warning disable CS0114
         private void PlayerJoinInProgress(JoinedEventArgs ev)
         {
-            Teams.FirstOrDefault(x => x.Players.Count == Teams.Min(x => x.Players.Count)).Players.Add(ev.Player);
+            var selectedTeam = Teams.FirstOrDefault(x => x.Players.Count == Teams.Min(x => x.Players.Count));
+            Teams.FirstOrDefault(x => x == selectedTeam).Players.Add(ev.Player);
+#pragma warning  restore CS0114
+            Timing.RunCoroutine(SpawnPlayer(ev.Player, selectedTeam));
             base.PlayerJoin(ev.Player);
         }
 
         public override void Start()
         {
+            _roundStartTime = DateTime.UtcNow;
+            Timing.RunCoroutine(EndTimer());
             Exiled.Events.Handlers.Player.Joined -= PlayerJoin;
-            SpawnTeams(Teams);
+            Timing.RunCoroutine(SpawnTeams(Teams));
+            ModeRunning = true;
+            Timing.RunCoroutine(PointsDisplay());
             Exiled.Events.Handlers.Player.Joined += PlayerJoinInProgress;
             base.Start();
         }
 
+        public IEnumerator<float> PointsDisplay()
+        {
+            while (ModeRunning)
+            {
+                foreach (var team in Teams)
+                {
+                    Manager.setModifier(0, $"<color=white>Timer: {-(DateTime.UtcNow - _roundStartTime.AddMinutes(5))}</color>");
+                    Manager.setModifier(1, $"<color=red>Conscripts: {Teams[0].Score}</color>");
+                    Manager.setModifier(2, $"<color=blue>PMC: {Teams[1].Score}</color>");
+                }
+                yield return Timing.WaitForSeconds(1f);
+            }
+        }
+
+        public IEnumerator<float> EndTimer()
+        {
+            while(ModeRunning)
+            {
+                if (_roundStartTime.AddMinutes(5) > DateTime.UtcNow)
+                {
+                    End();
+                }
+                yield return Timing.WaitForSeconds(1f);
+            }
+        }
+
         public override void End()
         {
+            ModeRunning = false;
             Exiled.Events.Handlers.Player.Joined -= PlayerJoinInProgress;
             base.End();
         }

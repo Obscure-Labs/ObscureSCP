@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Exiled.API.Extensions;
+using ObscureLabs.Commands.Admin.Other;
 
 namespace ObscureLabs.API.Features
 {
@@ -15,6 +17,11 @@ namespace ObscureLabs.API.Features
         public static Gamemode GetGamemode(string name)
         {
             return _gamemodeList.FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
+        }
+
+        public static Gamemode GetRandomGamemode()
+        {
+            return _gamemodeList.GetRandomValue();
         }
 
         public static void AddGamemode(Gamemode gamemode)

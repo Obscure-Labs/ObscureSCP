@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ObscureLabs.API.Features;
+using ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Gamemodes
 {
@@ -14,7 +15,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemodes
 
         public override bool Enable()
         {
-
+            //GamemodeManager.AddGamemode(new TDM());
+            //GamemodeManager.AddGamemode(new Chaos());
             return base.Enable();
         } 
 
@@ -26,7 +28,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemodes
 
         private void RunRandomGamemode()
         {
-
+            GamemodeManager.GetRandomGamemode().Enable();
         }
 
         private void RunGamemode(string gamemodeName)

@@ -105,6 +105,8 @@ namespace ObscureLabs.Items
             Manager.SendHint(ev.Player, "You equipped the <b>Particle Collapser</b> \n The lable on the stock reads: \n <b><color=red>WARNING EMITS VERY BRIGHT LIGHTS - WEAR EYE PROTECTION</b>.", 3.0f);
         }
 
+        private ExplosionGrenadeProjectile _tempGrenade;
+
         private IEnumerator<float> EnergyBurstCoroutine(ShotEventArgs ev)
         {
             Color color = colors[UnityEngine.Random.Range(0, colors.Count())];
@@ -128,9 +130,13 @@ namespace ObscureLabs.Items
             grenade.DeafenDuration = 15;
             grenade.ConcussDuration = 25;
 
-            ExplosionGrenadeProjectile g = grenade.SpawnActive(target, ev.Player);
+            _tempGrenade = grenade.SpawnActive(target, ev.Player);
 
             Timing.WaitForSeconds(0.05f);
+            Exiled.Events.Handlers.Player.Hurting += ModifyGrenadeDamage;
+
+            #region old
+            /*
             foreach (Player player in Player.List)
             {
                 int loopCntr = 0;
@@ -160,7 +166,8 @@ namespace ObscureLabs.Items
                     player1.EnableEffect(EffectType.Burned, 30, true);
                 }
             }
-
+            */
+#endregion
             for (var i = 0; i < 250; i++)
             {
                 yield return Timing.WaitForSeconds(0.005f);
@@ -169,6 +176,13 @@ namespace ObscureLabs.Items
             }
 
             light.Destroy();
+        }
+
+        private void ModifyGrenadeDamage(HurtingEventArgs ev)
+        {
+            if (_tempGrenade == null) return;
+            ev.IsAllowed = false;
+            ev.Player.Hurt(UnityEngine.Random.Range(250, 501), DamageType.ParticleDisruptor);
         }
 
         protected override void OnReloading(ReloadingWeaponEventArgs ev)

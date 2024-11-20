@@ -41,7 +41,7 @@ namespace ObscureLabs.Items
             new(CustomItem.Get((uint)0), 0, 10), // EssentialOils
             new(CustomItem.Get((uint)4), 0, 10), // NovaGrenade
             new(CustomItem.Get((uint)12),0, 2), // S-NAV
-            new(CustomItem.Get((uint)9), 0, 1) // BallNade
+            //new(CustomItem.Get((uint)9), 0, 1) // BallNade
         };
 
         private static readonly ItemType[] _blacklistedItems = new[]

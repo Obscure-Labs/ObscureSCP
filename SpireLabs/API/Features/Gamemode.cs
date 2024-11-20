@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
+using MEC;
 using ObscureLabs.Modules.Gamemode_Handler.Minigames;
 using PluginAPI.Events;
 using SpireLabs.GUI;
@@ -33,6 +34,7 @@ namespace ObscureLabs.API.Features
             }
             Round.Start();
             Log.Debug($"Gamemode ({this.Name}) Round Started.");
+            Exiled.Events.Handlers.Player.Joined += PlayerJoinInProgress;
         }
 
         public virtual void End()
@@ -41,10 +43,21 @@ namespace ObscureLabs.API.Features
 
         }
 
+        public virtual IEnumerator<float> SpawnPlayer(Player player, TeamHandler.SerializableTeamData team)
+        {
+            yield return 0;
+        }
+
         public virtual void PlayerJoin(Player player)
         {
             Players.Add(player);
             Log.Debug($"Gamemode ({this.Name}) Player Joined ({player.DisplayNickname}).");
+        }
+
+        public virtual void PlayerJoinInProgress(JoinedEventArgs player)
+        {
+            Players.Add(player.Player);
+            Log.Debug($"Gamemode ({this.Name}) Player Joined In Progress ({player.Player.DisplayNickname}).");
         }
 
         public virtual void PlayerLeave(LeftEventArgs leftEvent)
