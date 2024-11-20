@@ -108,6 +108,7 @@ namespace ObscureLabs
             ModulesManager.AddModule(new CustomRoles());
             ModulesManager.AddModule(new PowerupHandler());
             ModulesManager.AddModule(new SCPHandler());
+            ModulesManager.AddModule(new ScpProximityChat());
 
             RegisterEvents();
         }
