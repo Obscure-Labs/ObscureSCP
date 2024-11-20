@@ -18,12 +18,12 @@ namespace ObscureLabs.Commands.Admin.Other
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            if (arguments.Count == 0)
-            {
-                Force(-1, false);
-                response = "doing mode ignore";
-                return true;
-            }
+            // if (arguments.Count == 0)
+            // {
+            //     Force(-1, false);
+            //     response = "doing mode ignore";
+            //     return true;
+            // }
 
             if (arguments.Count == 1)
             {
@@ -55,7 +55,6 @@ namespace ObscureLabs.Commands.Admin.Other
             Plugin.IsActiveEventround = true;
 
             GamemodeManager.GetGamemode(arguments).Enable(force);
-#warning SHOULD ATTEMPT ROUND HERE
         }
     }
 }

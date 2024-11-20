@@ -26,8 +26,16 @@ namespace ObscureLabs.API.Features
         public virtual void Enable(bool force)
         {
             Log.Debug($"Gamemode ({this.Name}) Enabled.");
-            if (force) Start();
-            Exiled.Events.Handlers.Server.RoundStarted += Start;
+            if (force)
+            {
+                Round.Start(); 
+                Start();
+                
+            }
+            else
+            {
+                Exiled.Events.Handlers.Server.RoundStarted += Start;
+            }
         }
 
         public virtual void Start()
@@ -36,7 +44,6 @@ namespace ObscureLabs.API.Features
             {
                 Manager.SendHint(p, HintText, 5f);
             }
-            Round.Start();
             Log.Debug($"Gamemode ({this.Name}) Round Started.");
             Exiled.Events.Handlers.Player.Joined += PlayerJoinInProgress;
             Exiled.Events.Handlers.Server.RespawningTeam += RespawnWave;

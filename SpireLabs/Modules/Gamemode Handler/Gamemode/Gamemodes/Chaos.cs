@@ -40,6 +40,13 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
             Exiled.Events.Handlers.Warhead.Detonated += NukeBoom;
             Exiled.Events.Handlers.Player.Escaping += Escaping;
             CreateTeams();
+            Timing.RunCoroutine(threadception());
+            base.Enable(force);
+        }
+
+        private IEnumerator<float> threadception()
+        {
+            yield return Timing.WaitForSeconds(0.1f);
             Thread t = new Thread(() =>
             {
                 foreach (Room r in Room.List)
@@ -87,10 +94,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
                     }
                 }
             }); t.Start();
-
-            base.Enable(force);
         }
-
+        
         public override void Start()
         {
             Exiled.Events.Handlers.Player.Died += OnPlayerDeath;
@@ -213,11 +218,13 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
                 {
                     Teams[0].Players.Add(realPlayerlist[i]);
                     Teams[0].Lives.Add(realPlayerlist[i], 3);
+                    Log.Warn($"{realPlayerlist[i].DisplayNickname} is now part of {Teams[0].Name}");
                 }
                 else
                 {
                     Teams[1].Players.Add(realPlayerlist[i]);
                     Teams[1].Lives.Add(realPlayerlist[i], 3);
+                    Log.Warn($"{realPlayerlist[i].DisplayNickname} is now part of {Teams[1].Name}");
                 }
             }
         }
