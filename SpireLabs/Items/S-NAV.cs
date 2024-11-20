@@ -61,12 +61,14 @@ namespace ObscureLabs.Items
             equipped = Check(ev.Item);
             if (equipped)
             { 
-                Manager.SendHint(ev.Player, "S-NAV ver1.0.1: \n", 5.0f);
+                Manager.setModifier(ev.Player, 5, "S-NAV ver1.0.1:");
                 Timing.RunCoroutine(Snav(ev));
             }
             else
             {
+
                 return;
+
             }
         }
 
@@ -74,13 +76,13 @@ namespace ObscureLabs.Items
         {
             Dictionary<string, float> _nearbySCPs = new();
 
-            string yep = _nearbySCPs.ToString(); 
+            string yep = _nearbySCPs.ToString();
             while (equipped)
             {
-                yield return Timing.WaitForSeconds(1f);
+                yield return Timing.WaitForSeconds(0.15f);
                 if (_nearbySCPs.Count < 1)
                 {
-                    Manager.SendHint(ev.Player, "No SCP Subjects Nearby! ", 1.0f);
+                    Manager.setModifier(ev.Player, 5, "No SCP Subjects Nearby! ");
                 }
 
 
@@ -129,7 +131,7 @@ namespace ObscureLabs.Items
                                 hint += $"{_nearbySCPs.ElementAt(i).Key.ToString()}: {(int)(_nearbySCPs.ElementAt(i).Value + 5 / 10) * 10}m\t";
                             }
                         }
-                        Manager.SendHint(ev.Player, hint, 1f);
+                        Manager.setModifier(ev.Player, 5, hint);
 
 
 
@@ -137,6 +139,7 @@ namespace ObscureLabs.Items
 
                 }
             }
+            Manager.setModifier(ev.Player, 5, null);
         }
     }
 }

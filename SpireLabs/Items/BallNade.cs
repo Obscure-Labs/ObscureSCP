@@ -51,19 +51,21 @@ namespace ObscureLabs.Items
 
         protected override void OnThrownProjectile(ThrownProjectileEventArgs ev)
         {
-            ev.Player.ThrowGrenade(ProjectileType.Scp018);
-            ev.Player.ThrowGrenade(ProjectileType.Scp018);
-            ev.Player.ThrowGrenade(ProjectileType.Scp018);
-            ev.Player.ThrowGrenade(ProjectileType.Scp018);
-            ev.Player.ThrowGrenade(ProjectileType.Scp018);
-            ev.Player.ThrowGrenade(ProjectileType.Scp018);
-            ev.Player.ThrowGrenade(ProjectileType.Scp018);
-            ev.Player.ThrowGrenade(ProjectileType.Scp018);
-            ev.Player.ThrowGrenade(ProjectileType.Scp018);
-            ev.Player.ThrowGrenade(ProjectileType.Scp018);
-            ev.Player.ThrowGrenade(ProjectileType.Scp018);
-            ev.Projectile.Destroy();
             base.OnThrownProjectile(ev);
+            ev.Throwable.Destroy();
+            ev.Player.ThrowGrenade(ProjectileType.Scp018, true);
+            ev.Player.ThrowGrenade(ProjectileType.FragGrenade, false);
+            ev.Player.ThrowGrenade(ProjectileType.FragGrenade, false);
+            ev.Player.ThrowGrenade(ProjectileType.FragGrenade, false);
+            ev.Player.ThrowGrenade(ProjectileType.FragGrenade, false);
+            ev.Player.ThrowGrenade(ProjectileType.FragGrenade, false);
+            ev.Player.ThrowGrenade(ProjectileType.FragGrenade, false);
+            ev.Player.ThrowGrenade(ProjectileType.FragGrenade, false);
+            ev.Player.ThrowGrenade(ProjectileType.FragGrenade, false);
+            ev.Player.ThrowGrenade(ProjectileType.Scp018, false);
+            ev.Player.ThrowGrenade(ProjectileType.Scp018, false);
+            ev.Projectile.Destroy();
+
         }
     }
 }

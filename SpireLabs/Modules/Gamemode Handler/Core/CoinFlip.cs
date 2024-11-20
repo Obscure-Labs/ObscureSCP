@@ -176,9 +176,7 @@ namespace ObscureLabs
                         break;
                     case 8:
                         Manager.SendHint(ev.Player, _good[8], 3);
-                        ev.Player.EnableEffect(EffectType.DamageReduction, 25);
-                        ev.Player.ChangeEffectIntensity(EffectType.DamageReduction, 255, 25);
-                        ev.Player.GetEffect(EffectType.DamageReduction).Duration.ToString();
+                        Timing.RunCoroutine(Immunity(ev.Player));
                         break;
                     case 9:
                         Manager.SendHint(ev.Player, _good[9], 1.5f);
@@ -491,6 +489,13 @@ namespace ObscureLabs
             yield return Timing.WaitForSeconds(30);
             player.Scale = Vector3.one;
 
+        }
+
+        private IEnumerator<float> Immunity(Player player)
+        {
+            player.IsGodModeEnabled = true;
+            yield return Timing.WaitForSeconds(25);
+            player.IsGodModeEnabled = false;
         }
 
         private IEnumerator<float> RaycastHealCoroutine(Player player)

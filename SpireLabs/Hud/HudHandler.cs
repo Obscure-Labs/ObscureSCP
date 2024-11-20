@@ -143,6 +143,7 @@ namespace SpireLabs.GUI
                     {
                         s += $"<align=right>{modifiers[deadPlayer.Id, 3]}</align>\n"; //6
                     }
+
                 }
 
                 //thats is not good too
@@ -339,13 +340,13 @@ namespace SpireLabs.GUI
                     {
                         s += $"<align=right>{modifiers[p.Id, 6]}</align>\n"; //6
                     }
-                    s += $"<align=right>\t</align>\n"; //6
-                    s += $"<align=right>\t</align>\n"; //6
-                    s += $"<align=right>\t</align>\n"; //6
-                    s += $"<align=right>\t</align>\n"; //6
-                    s += $"<align=right>\t</align>\n"; //6
-                    s += $"<align=right>\t</align>\n"; //6
-                    s += $"<align=right>\t</align></size>\n"; //6
+                    s += $"<align=right>\t</align>\n"; //7
+                    s += $"<align=right>\t</align>\n"; //8
+                    s += $"<align=right>\t</align>\n"; //9
+                    s += $"<align=right>\t</align>\n"; //10
+                    s += $"<align=right>\t</align>\n"; //11
+                    s += $"<align=right>\t</align>\n"; //12
+                    s += $"<align=right>\t</align></size>\n"; //13
 
 
                     s += $"\t\n"; //13

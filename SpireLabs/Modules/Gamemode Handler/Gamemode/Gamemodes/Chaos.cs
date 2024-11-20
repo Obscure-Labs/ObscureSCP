@@ -107,6 +107,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
             Exiled.Events.Handlers.Player.Died += OnPlayerDeath;
             AssignTeams();
             base.Start();
+            
             Timing.RunCoroutine(TeamHandler.SpawnTeams(Teams, true));
             Manager.setModifier(0, $"<color=#ffcc40>Scientists</color><color=#fff>: {Teams.FirstOrDefault(x => x.Name == "Science Team").Players.Count}");
             Manager.setModifier(1, $"<color=#ff6626>D-Class</color><color=#fff>: {Teams.FirstOrDefault(x => x.Name == "D-Class").Players.Count}");
@@ -177,6 +178,16 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
                 if (Teams.FirstOrDefault(x => x.Players.Contains(p)).Lives[p] != 0)
                 {
                     SpawnPlayer(p, Teams.FirstOrDefault(x => x.Players.Contains(p)));
+                    //if (Warhead.IsInProgress || Warhead.IsDetonated)
+                    //{
+                    //    return;
+                    //}
+                    //else
+                    //{
+                    //    var roomtospawn = Room.Random(ZoneType.HeavyContainment);
+                    //    p.Teleport(roomtospawn);
+                    //    p.CurrentRoom.UnlockAll();
+                    //}
                 }
             }
             foreach (var t in Teams)
