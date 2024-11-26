@@ -116,6 +116,7 @@
     <Compile Include="API\Data\PowerupData.cs" />
     <Compile Include="API\Data\SpawnedPowerupBase.cs" />
     <Compile Include="API\Enums\Abilities.cs" />
+    <Compile Include="API\Features\ExternalGamemode.cs" />
     <Compile Include="API\Features\Gamemode.cs" />
     <Compile Include="API\Features\GamemodeManager.cs" />
     <Compile Include="API\Powerups\Powerups.cs" />

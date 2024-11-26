@@ -54,7 +54,7 @@ namespace ObscureLabs.API.Features
             
         }
 
-        public virtual void End()
+        public virtual void End(RoundEndedEventArgs ev)
         {
             Exiled.Events.Handlers.Player.Joined -= PlayerJoinInProgress;
             Exiled.Events.Handlers.Server.RespawningTeam -= RespawnWave;
@@ -64,6 +64,7 @@ namespace ObscureLabs.API.Features
 
         public virtual void SpawnPlayer(Player player, TeamHandler.SerializableTeamData team)
         {
+            Log.Info("Passed through");
             Timing.RunCoroutine(TeamHandler.SpawnPlayer(player, team));
         }
 

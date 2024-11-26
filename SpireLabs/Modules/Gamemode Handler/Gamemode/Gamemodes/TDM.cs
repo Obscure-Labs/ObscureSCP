@@ -4,6 +4,7 @@ using System.Linq;
 using Exiled.API.Extensions;
 using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
+using Exiled.Events.EventArgs.Server;
 using ObscureLabs.API.Data;
 using PlayerRoles;
 using UnityEngine;
@@ -130,17 +131,17 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
             {
                 if (_roundStartTime.AddMinutes(5) > DateTime.UtcNow)
                 {
-                    End();
+                    End(null);
                 }
                 yield return Timing.WaitForSeconds(1f);
             }
         }
 
-        public override void End()
+        public override void End(RoundEndedEventArgs ev)
         {
             ModeRunning = false;
             Exiled.Events.Handlers.Player.Joined -= PlayerJoinInProgress;
-            base.End();
+            base.End(ev);
         }
     }
 }

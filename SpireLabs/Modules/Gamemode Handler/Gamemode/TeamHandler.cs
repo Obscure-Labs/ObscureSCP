@@ -47,34 +47,35 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
 
         public static IEnumerator<float> SpawnPlayer(Player p, SerializableTeamData team)
         {
-            if (p.Role.Type == team.RoleType && team.Players.Contains(p))
+            Log.Warn($"Passed to team handler");
+            p.RoleManager.ServerSetRole(team.RoleType, RoleChangeReason.RemoteAdmin, RoleSpawnFlags.All);
+            Log.Warn($"Role Set");
+            p.EnableEffect(Exiled.API.Enums.EffectType.DamageReduction, 5f, false);
+            Log.Warn($"Effects Given");
+            p.ChangeEffectIntensity(Exiled.API.Enums.EffectType.DamageReduction, 255, 5f);
+            Log.Warn($"Effects Intensity Changed");
+            p.ClearInventory();
+            Log.Warn("Got to inventory assignment");
+            foreach (SerializableItemData i in team.LoadOut)
             {
-                yield break;
+                if (!i.IsCustomItem)
+                {
+                    Exiled.API.Features.Items.Item.Create((ItemType)i.Id).Give(p);
+                }
+                else
+                {
+                    Exiled.CustomItems.API.Features.CustomItem.Get((uint)i.Id).Give(p);
+                }
             }
-            else
+            Log.Warn("Passed inventory assignment");
+            foreach (SerializableAmmoData ammo in team.Ammo)
             {
-                p.RoleManager.ServerSetRole(team.RoleType, RoleChangeReason.RoundStart, RoleSpawnFlags.None);
-                p.EnableEffect(Exiled.API.Enums.EffectType.DamageReduction, 5f, false);
-                p.ChangeEffectIntensity(Exiled.API.Enums.EffectType.DamageReduction, 255, 5f);
-                p.ClearInventory();
-                foreach (SerializableItemData i in team.LoadOut)
-                {
-                    if (!i.IsCustomItem)
-                    {
-                        Exiled.API.Features.Items.Item.Create((ItemType)i.Id).Give(p);
-                    }
-                    else
-                    {
-                        Exiled.CustomItems.API.Features.CustomItem.Get((uint)i.Id).Give(p);
-                    }
-                }
-                foreach (SerializableAmmoData ammo in team.Ammo)
-                {
-                    p.AddAmmo(ammo.ItemType, ammo.Quantity);
-                }
-                yield return Timing.WaitForSeconds(0.1f);
-                p.Teleport(team.SpawnLocation);
+                p.AddAmmo(ammo.ItemType, ammo.Quantity);
             }
+            yield return Timing.WaitForSeconds(0.1f);
+            Log.Warn("Teleporting Player");
+            p.Teleport(team.SpawnLocation);
+            Log.Warn("Spawn Complete");
         }
 
         public static IEnumerator<float> SpawnTeam(SerializableTeamData team)

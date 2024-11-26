@@ -25,18 +25,7 @@ namespace ObscureLabs.Commands.Admin.Other
             //     return true;
             // }
 
-            if (arguments.Count == 1)
-            {
-                Force(arguments.FirstElement(), false);
-            }
-
-            if(arguments.Count == 2)
-            {
-                if (arguments.At(1) == "force")
-                {
-                    Force(arguments.FirstElement(), true);
-                }
-            }
+            Force(arguments.FirstElement(), false);
 
             response = $"Force Starting Mode {arguments.FirstElement()}";
 

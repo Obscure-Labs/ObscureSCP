@@ -399,9 +399,16 @@ namespace ObscureLabs
                         Manager.SendHint(ev.Player, _bad[14], 3);
                         foreach (Room _r in Room.List)
                         {
+                            List<DoorType> bannedDoors =
+                            [
+                                DoorType.ElevatorGateA, DoorType.ElevatorGateB, DoorType.ElevatorLczA,
+                                DoorType.ElevatorLczB, DoorType.ElevatorNuke, DoorType.ElevatorScp049, DoorType.UnknownElevator
+                            ];
+
                             _r.TurnOffLights(15);
                             foreach (Door _d in _r.Doors)
                             {
+                                if(bannedDoors.Contains(_d.Type)) continue;
                                 _d.IsOpen = false;
                             }
                         }
