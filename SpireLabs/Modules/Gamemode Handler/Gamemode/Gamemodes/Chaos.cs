@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Exiled.API.Enums;
@@ -16,7 +17,9 @@ using PlayerRoles;
 using SpireSCP.GUI.API.Features;
 using UnityEngine;
 using ObscureLabs.API.Data;
+using ObscureLabs.API.Enums;
 using ObscureLabs.API.Features;
+using ObscureLabs.Extensions;
 
 //make sure they spawn out the facility after nuke
 //modifiers show: how many people on each team and lifes
@@ -40,11 +43,12 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
 
         public override void Enable(bool force)
         {
-            Exiled.Events.Handlers.Warhead.Detonated += NukeBoom;
+            Plugin.IsActiveEventround = true;
             Exiled.Events.Handlers.Player.Escaping += Escaping;
             Exiled.Events.Handlers.Server.RoundEnded += End;
             Timing.RunCoroutine(CreateTeams());
             Timing.RunCoroutine(threadception());
+            Server.FriendlyFire = true;
             base.Enable(force);
         }
 
@@ -52,10 +56,9 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
         private IEnumerator<float> threadception()
         {
             yield return Timing.WaitForSeconds(0.1f);
-            foreach (Room r in Room.List)
+            foreach (Room r in Room.List.ToList())
             {
-                Thread.Sleep(1);
-                foreach (Pickup p in r.Pickups)
+                foreach (Pickup p in r.Pickups.ToList())
                 {
                     yield return Timing.WaitForSeconds(0.1f);
                     if(p == null) continue;
@@ -63,37 +66,33 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
 
                     try
                     {
-                        int c = UnityEngine.Random.Range(0, 101);
-                        if (c >= 50 && c <= 55)
-                        {
                             Vector3 pos = p.Position;
                             Quaternion ros = p.Rotation;
 
-                            if (p.Category == ItemCategory.Firearm || p.Category == ItemCategory.MicroHID)
+                            if (UnityEngine.Random.Range(0, 100) < 50)
                             {
                                 p.Destroy();
-                                var i = CustomItemSpawner.WeaponList.GetRandomValue().item.Spawn(pos);
-                                i.Rotation = ros;
+                                Pickup.CreateAndSpawn(
+                                    Enum.GetValues(typeof(ItemType)).ToArray<ItemType>().GetRandomValue(),
+                                    pos, ros);
                             }
                             else
                             {
-                                p.Destroy();
-                                var i = CustomItemSpawner.ItemList.GetRandomValue().item.Spawn(pos);
-                                i.Rotation = ros;
+                                if (UnityEngine.Random.Range(0, 100) < 50)
+                                {
+                                    p.Destroy();
+                                    var i = CustomItemSpawner.WeaponList.GetRandomValue().item.Spawn(pos);
+                                    i.Rotation = ros;
+                                }
+                                else
+                                {
+                                    p.Destroy();
+                                    var i = CustomItemSpawner.ItemList.GetRandomValue().item.Spawn(pos);
+                                    i.Rotation = ros;
+                                }   
                             }
-                        }
-                        else
-                        {
-                            Vector3 pos = p.Position;
-                            Quaternion ros = p.Rotation;
-
-                            var pickup = Pickup.Create((ItemType)UnityEngine.Random.Range(0, 54));
-                            p.Destroy();
-                            pickup.Spawn(pos, ros);
-
-                        }
                     }
-                    catch {}
+                    catch (Exception e){Log.Warn(e);}
                 }
             }
         }
@@ -140,17 +139,10 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
             {
             }
         }
-        
-        private void NukeBoom()
-        {
-            Teams.FirstOrDefault(x => x.Name == "Science Team").SpawnLocation = new Vector3(127.755f, 995.470f, -45.2f);
-            Teams.FirstOrDefault(x => x.Name == "D-Class").SpawnLocation = new Vector3(8.536f, 991.649f, -42.759f);
-        }
 
         public override void End(RoundEndedEventArgs e)
         {
             Exiled.Events.Handlers.Player.Escaping -= Escaping;
-            Exiled.Events.Handlers.Warhead.Detonated -= NukeBoom;
             Exiled.Events.Handlers.Player.Died -= OnPlayerDeath;
         }
 
@@ -171,7 +163,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
             foreach (Player p in Players)
             {
                 if (p.Role != RoleTypeId.Spectator) { Log.Warn("Passing alive player"); continue; }
-                if (Teams.FirstOrDefault(x => x.Players.Contains(p)).Lives[p] != 0)
+                if (Teams.FirstOrDefault(x => x.Players.Contains(p)).Lives[p] > 0)
                 {
                     SpawnPlayer(p, Teams.FirstOrDefault(x => x.Players.Contains(p)));
                 }
@@ -187,6 +179,11 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
                 if (t.Name == "D-Class") Manager.setModifier(0, $"<color=#ff6626>D-Class</color><color=#fff>: {aliveCount}");
             }
             ev.IsAllowed = false;
+        }
+
+        public override void SpawnPlayer(Player player, TeamHandler.SerializableTeamData team)
+        {
+            Timing.RunCoroutine(TeamHandler.SpawnPlayer(player, team, true));
         }
 
         private void Escaping(EscapingEventArgs ev)
@@ -214,7 +211,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
                     new(false, (int)ItemType.Medkit), // Medkit
                 },
                 Ammo = new List<TeamHandler.SerializableAmmoData>(),
-                SpawnLocation = new Vector3(8.536f, 992.649f, -42.759f)
+                SpawnLocation = new Vector3(-1, -1, -1)
                 
             };
 
@@ -234,7 +231,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Gamemode.Gamemodes
                     new(false, (int)ItemType.Medkit), // Medkit
                 },
                 Ammo = new List<TeamHandler.SerializableAmmoData>(),
-                SpawnLocation = new Vector3(127.755f, 996.470f, -45.2f)
+                SpawnLocation = new Vector3(-1, -1, -1)
             };
 
             Teams.Add(dClass);

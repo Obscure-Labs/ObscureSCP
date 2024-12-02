@@ -1,3 +1,4 @@
+using System;
 using Exiled.API.Features;
 using MEC;
 using ObscureLabs.API.Features;
@@ -45,7 +46,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
             public Vector3 SpawnLocation { get; set; } = new Vector3(0,0,0);
         }
 
-        public static IEnumerator<float> SpawnPlayer(Player p, SerializableTeamData team)
+        public static IEnumerator<float> SpawnPlayer(Player p, SerializableTeamData team, bool chaos)
         {
             Log.Warn($"Passed to team handler");
             p.RoleManager.ServerSetRole(team.RoleType, RoleChangeReason.RemoteAdmin, RoleSpawnFlags.All);
@@ -74,7 +75,17 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
             }
             yield return Timing.WaitForSeconds(0.1f);
             Log.Warn("Teleporting Player");
-            p.Teleport(team.SpawnLocation);
+            if (chaos && !Warhead.IsDetonated)
+            {
+                Room room = Room.List.GetRandomValue(x =>
+                    x.Zone == ZoneType.HeavyContainment && x.RoomName != RoomName.HczCheckpointA && x.RoomName != RoomName.HczCheckpointB && x.RoomName != RoomName.Hcz079 && x.RoomName != RoomName.Hcz106);
+                p.Teleport(room.Doors.FirstOrDefault().Position + new Vector3(0, 1.5f, 0));
+            }
+            else
+            {
+                p.Teleport(team.SpawnLocation);
+            }
+
             Log.Warn("Spawn Complete");
         }
 
@@ -130,53 +141,64 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
             {
                 foreach (Player p in team.Players)
                 {
-                    if (p.Role.Type == team.RoleType && team.Players.Contains(p))
+                    try
                     {
-                        continue;
-                    }
-                    else
-                    {
-
-                        Log.Info("Player");
-                        p.RoleManager.ServerSetRole(team.RoleType, RoleChangeReason.RoundStart, RoleSpawnFlags.None);
-                        p.EnableEffect(Exiled.API.Enums.EffectType.DamageReduction, 5f, false);
-                        p.ChangeEffectIntensity(Exiled.API.Enums.EffectType.DamageReduction, 255, 5f);
-                        p.ClearInventory();
-                        Log.Info("Set Player Role");
-                        foreach (SerializableItemData i in team.LoadOut)
+                        if (p.Role.Type == team.RoleType && team.Players.Contains(p))
                         {
-                            Log.Info("Giving Item");
-                            if (!i.IsCustomItem)
-                            {
-                                Exiled.API.Features.Items.Item.Create((ItemType)i.Id).Give(p);
-                            }
-                            else
-                            {
-                                Exiled.CustomItems.API.Features.CustomItem.Get((uint)i.Id).Give(p);
-                            }
-                        }
-                        foreach (SerializableAmmoData ammo in team.Ammo)
-                        {
-                            //p.Ammo.Add(ammo.ItemType, (ushort)ammo.Quantity);
-                            //p.SetAmmo(ammo.ItemType, (ushort)ammo.Quantity);
-                            //p.AddAmmo(ammo.ItemType, (ushort)ammo.Quantity);
-                            p.AddAmmo(ammo.ItemType, ammo.Quantity);
-                        }
-                        yield return Timing.WaitForSeconds(0.1f);
-                        if (chaos)
-                        {
-                            Room room = Room.List.GetRandomValue(x =>
-                                x.Zone == ZoneType.LightContainment && x.RoomName != RoomName.LczCheckpointA && x.RoomName != RoomName.HczCheckpointB);
-                            p.Teleport(room.Doors.FirstOrDefault().Position + new Vector3(0, 1.5f, 0));
+                            continue;
                         }
                         else
                         {
-                            p.Teleport(team.SpawnLocation);
+
+                            Log.Info("Player");
+                            p.RoleManager.ServerSetRole(team.RoleType, RoleChangeReason.RoundStart,
+                                RoleSpawnFlags.None);
+                            p.EnableEffect(Exiled.API.Enums.EffectType.DamageReduction, 5f, false);
+                            p.ChangeEffectIntensity(Exiled.API.Enums.EffectType.DamageReduction, 255, 5f);
+                            p.ClearInventory();
+                            Log.Info("Set Player Role");
+                            foreach (SerializableItemData i in team.LoadOut)
+                            {
+                                Log.Info("Giving Item");
+                                if (!i.IsCustomItem)
+                                {
+                                    Exiled.API.Features.Items.Item.Create((ItemType)i.Id).Give(p);
+                                }
+                                else
+                                {
+                                    Exiled.CustomItems.API.Features.CustomItem.Get((uint)i.Id).Give(p);
+                                }
+                            }
+
+                            foreach (SerializableAmmoData ammo in team.Ammo)
+                            {
+                                //p.Ammo.Add(ammo.ItemType, (ushort)ammo.Quantity);
+                                //p.SetAmmo(ammo.ItemType, (ushort)ammo.Quantity);
+                                //p.AddAmmo(ammo.ItemType, (ushort)ammo.Quantity);
+                                p.AddAmmo(ammo.ItemType, ammo.Quantity);
+                            }
+
+                            yield return Timing.WaitForSeconds(0.1f);
+                            if (chaos && !Exiled.API.Features.Warhead.IsDetonated)
+                            {
+                                Room room = Room.List.GetRandomValue(x =>
+                                    x.Zone == ZoneType.LightContainment && x.RoomName != RoomName.LczCheckpointA &&
+                                    x.RoomName != RoomName.HczCheckpointB);
+                                p.Teleport(room.Doors.FirstOrDefault().Position + new Vector3(0, 1.5f, 0));
+                            }
+                            else
+                            {
+                                p.Teleport(team.SpawnLocation);
+                            }
                         }
-
-                        Log.Info("Spawned Teams");
-
                     }
+                    catch (Exception ex)
+                    {
+                        Log.Info($"Spawning Player Error : {ex}");
+                    }
+
+                    Log.Info("Spawned Teams");
+
                 }
             }
         }

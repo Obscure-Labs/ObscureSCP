@@ -65,7 +65,7 @@ namespace ObscureLabs.API.Features
         public virtual void SpawnPlayer(Player player, TeamHandler.SerializableTeamData team)
         {
             Log.Info("Passed through");
-            Timing.RunCoroutine(TeamHandler.SpawnPlayer(player, team));
+            Timing.RunCoroutine(TeamHandler.SpawnPlayer(player, team, false));
         }
 
         public virtual void PlayerJoin(Player player)
