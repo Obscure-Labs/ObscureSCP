@@ -178,7 +178,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                                 p.AddAmmo(ammo.ItemType, ammo.Quantity);
                             }
 
-                            yield return Timing.WaitForSeconds(0.1f);
+                            Timing.WaitForSeconds(0.1f);
                             if (chaos && !Exiled.API.Features.Warhead.IsDetonated)
                             {
                                 Room room = Room.List.GetRandomValue(x =>
