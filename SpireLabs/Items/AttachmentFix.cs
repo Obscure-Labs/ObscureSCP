@@ -1,5 +1,8 @@
-﻿using Exiled.Events.EventArgs.Item;
+﻿using Exiled.CustomItems;
+using Exiled.CustomItems.API.Features;
+using Exiled.Events.EventArgs.Item;
 using ObscureLabs.API.Features;
+using System.Linq;
 
 namespace ObscureLabs.Items
 {
@@ -25,7 +28,11 @@ namespace ObscureLabs.Items
 
         private void OnChangingAttachments(ChangingAttachmentsEventArgs ev)
         {
-            ev.IsAllowed = !CustomItems.API.API.HasCustomItemInHand(ev.Player, out _);
+            if (CustomItem.Registered.FirstOrDefault(x => x.TrackedSerials.Contains(ev.Firearm.Serial)) != null)
+            {
+                ev.IsAllowed = false;
+            }
+            //ev.IsAllowed = !CustomItems.API.HasCustomItemInHand(ev.Player, out _);
         }
     }
 }

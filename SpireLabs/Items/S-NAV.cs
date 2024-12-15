@@ -32,18 +32,7 @@ namespace ObscureLabs.Items
         public override SpawnProperties SpawnProperties { get; set; } = new()
         {
             Limit = 2,
-<<<<<<< Updated upstream
-            DynamicSpawnPoints = new List<DynamicSpawnPoint>
-            {
-                new()
-                {
-                    Chance = 10,
-                    Location = Exiled.API.Enums.SpawnLocationType.InsideLocker,
-                },
-            },
-=======
             DynamicSpawnPoints = new List<DynamicSpawnPoint>()
->>>>>>> Stashed changes
         };
 
         protected override void SubscribeEvents()
@@ -94,16 +83,18 @@ namespace ObscureLabs.Items
 
 
                     _nearbySCPs = _nearbySCPs.OrderBy(x => x.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
-
+#pragma warning disable CS0472
                     if (_nearbySCPs.FirstOrDefault(x => x.Key == pl.Role.Name).Value != null && relative > 50)
+#pragma warning restore CS0472
                     {
                         _nearbySCPs.Remove(pl.Role.Name);
                     }
 
                     if (pl.IsScp && relative <= 50f)
                     {
-
+#pragma warning disable CS0472
                         if (_nearbySCPs.FirstOrDefault(x => x.Key == pl.Role.Name).Value != null)
+#pragma warning restore cCS0472
                         {
                             _nearbySCPs.Remove(pl.Role.Name);
                             _nearbySCPs.Add(pl.Role.Name, relative);

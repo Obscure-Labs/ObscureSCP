@@ -1,5 +1,4 @@
-﻿using CustomItems.API;
-using Exiled.API.Enums;
+﻿using Exiled.API.Enums;
 using Exiled.API.Features.Attributes;
 using Exiled.API.Features.Components;
 using Exiled.API.Features.Items;
@@ -39,26 +38,10 @@ namespace ObscureLabs.Items
         public override SpawnProperties SpawnProperties { get; set; } = new()
         {
             Limit = 2,
-<<<<<<< Updated upstream
-            DynamicSpawnPoints = new List<DynamicSpawnPoint>
-            {
-                new()
-                {
-                    Chance = 0,
-                    Location = Exiled.API.Enums.SpawnLocationType.InsideLocker,
-                },
-                new()
-                {
-                    Chance = 0,
-                    Location = Exiled.API.Enums.SpawnLocationType.Inside096,
-                }
-            },
-=======
             DynamicSpawnPoints = new List<DynamicSpawnPoint>()
->>>>>>> Stashed changes
         };
 
-        private Exiled.CustomItems.API.Features.CustomGrenade? _loadedCustomGrenade = null;
+        private Exiled.CustomItems.API.Features.CustomGrenade _loadedCustomGrenade = null;
         private ProjectileType _loadedGrenade = ProjectileType.FragGrenade;
 
         protected override void SubscribeEvents()
@@ -131,7 +114,7 @@ namespace ObscureLabs.Items
                     continue;
                 }
 
-                if (TryGet(item, out Exiled.CustomItems.API.Features.CustomItem? customNade))
+                if (TryGet(item, out CustomItem customNade))
                 {
                     continue;
                 }

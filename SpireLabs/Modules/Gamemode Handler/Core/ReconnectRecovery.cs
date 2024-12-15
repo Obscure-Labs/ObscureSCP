@@ -4,7 +4,6 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using CustomItems.API;
 using CustomPlayerEffects;
 using Exiled.API.Enums;
 using Exiled.API.Extensions;
@@ -75,7 +74,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                     {
                         data.Items.Add(item.Clone());
                     }
-                    catch(Exception ex){}
+                    catch{}
                 }
 
                 foreach (KeyValuePair<ItemType, ushort> ammo in ev.Player.Ammo)

@@ -37,11 +37,13 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
             {
                 Log.Info($"Running Juggernaut Round Respawn Wave Handler for count: {wavecount}");
 
-                Respawn.ChaosTickets += 100;
-                Respawn.TimeUntilNextPhase = 120f;
+                Respawn.ModifyTokens(Faction.FoundationEnemy, 100);
+
+#warning Need to figure out how to set this now
+                //Respawn.TimeUntilNextPhase = 120f;
 
                 yield return Timing.WaitForSeconds(120f);
-                Respawn.ForceWave(Respawning.SpawnableTeamType.ChaosInsurgency, false);
+                Respawn.ForceWave(Faction.FoundationEnemy, false);
                 wavecount++;
                 if (Round.StartedTime != s)
                 {
@@ -53,8 +55,9 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
         public static IEnumerator<float> RunJuggernautCoroutine()
         {
             Log.Warn("Running Juggernaut round!");
-            Respawn.TimeUntilNextPhase = 120f;
-            Respawn.ChaosTickets = 100;
+#warning Need to figure out how to set the respawn time
+            //Respawn.TimeUntilNextPhase = 120f;
+            Respawn.SetTokens(SpawnableFaction.ChaosWave, 100);
             Timing.RunCoroutine(DWaveCoroutine(), "juggerwave");
             yield return Timing.WaitForSeconds(0.5f);
             Log.Warn("Started Juggernaut Round");

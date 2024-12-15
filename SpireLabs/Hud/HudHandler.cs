@@ -69,33 +69,21 @@ namespace SpireLabs.GUI
                         }
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     //Log.Error($"Error: {ex}");
                 }
 
                 s += $"\t\n"; //5
                 s +=
-                    $"<align=right><size=24><color=#7F7FFF>NTF Tickets: <color=#fff>{(int)Respawn.NtfTickets}<color=#fff>\n"; //6
+                    $"<align=right><size=24><color=#7F7FFF>NTF Tickets: <color=#fff>{(Respawn.TryGetTokens(SpawnableFaction.NtfWave, out int pNTFTokens) ? pNTFTokens : "Error Fetching Tokens")}<color=#fff>\n"; //6
                 s +=
-                    $"<align=right><size=24><color=#090>CHAOS Tickets: <color=#fff>{(int)Respawn.ChaosTickets}<color=#fff>\n"; //6.5
+                    $"<align=right><size=24><color=#090>CHAOS Tickets: <color=#fff>{(Respawn.TryGetTokens(SpawnableFaction.ChaosWave, out int pChaosTokens) ? pChaosTokens : "Error Fetching Tokens")}<color=#fff>\n"; //6.5
                 s += $"<align=right><size=24>Round Time: {Round.ElapsedTime.Minutes:00}:{Round.ElapsedTime.Seconds:00}\n"; //7
 
                 if (Warhead.IsDetonated)
                 {
                     s +=
-<<<<<<< Updated upstream
-                        $"<align=right><size=24>Warhead Status: <color=#c00>Detonated<color=#fff>\n</size><size=32>"; //7.5
-                }
-                else if (Warhead.IsInProgress)
-                {
-                    s +=
-                        $"<align=right><size=24>Warhead Status: <color=#b45f06>In Progress<color=#fff>\n</size><size=32>"; //7.5
-                }
-                else if (Warhead.LeverStatus)
-                {
-                    s += $"<align=right><size=24>Warhead Status: <color=#090>Armed<color=#fff>\n</size><size=32>"; //7.5
-=======
                         $"<align=right><size=24><color=#7F7FFF>NTF Tickets: <color=#fff>{(Respawn.TryGetTokens(SpawnableFaction.NtfWave, out int NTFTokens) ? NTFTokens : "Error Fetching Tokens")}<color=#fff>\n"; //6
                     s +=
                         $"<align=right><size=24><color=#090>CHAOS Tickets: <color=#fff>{(Respawn.TryGetTokens(SpawnableFaction.ChaosWave, out int ChaosTokens) ? ChaosTokens : "Error Fetching Tokens")}<color=#fff>\n"; //6.5
@@ -122,7 +110,6 @@ namespace SpireLabs.GUI
                         s +=
                             $"<align=right><size=24>Warhead Status: <color=#2986cc>Disarmed<color=#fff>\n</size><size=32>"; //7.5
                     }
->>>>>>> Stashed changes
                 }
                 else
                 {
@@ -150,7 +137,7 @@ namespace SpireLabs.GUI
 
                 deadPlayer.ShowHint(s, 0.85f);
             }
-            catch (Exception e)
+            catch
             {
                 //Log.Warn($"Error: {e}");
             }
@@ -200,7 +187,6 @@ namespace SpireLabs.GUI
         internal static IEnumerator<float> displayGUI(Player p)
         {
             Log.Debug($"Displaying GUI FOR {p.DisplayNickname}");
-            bool pp = true;
             hint[p.Id] = string.Empty;
             yield return Timing.WaitForSeconds(5f);
             Log.Debug("Displaying GUI");
@@ -257,7 +243,7 @@ namespace SpireLabs.GUI
                             }
                         }
                     }
-                    catch(Exception ex)
+                    catch
                     {
                         //Log.Error($"Error: {ex}");
                     }

@@ -22,26 +22,10 @@ namespace ObscureLabs.Items
 
         public override string Description { get; set; } = "\t";
 
-        public override SpawnProperties? SpawnProperties { get; set; } = new()
+        public override SpawnProperties SpawnProperties { get; set; } = new()
         {
             Limit = 1,
-<<<<<<< Updated upstream
-            DynamicSpawnPoints = new List<DynamicSpawnPoint>
-            {
-                new()
-                {
-                    Chance = 0,
-                    Location = Exiled.API.Enums.SpawnLocationType.InsideNukeArmory,
-                },
-                new()
-                {
-                    Chance = 0,
-                    Location = Exiled.API.Enums.SpawnLocationType.InsideLocker,
-                },
-            },
-=======
             DynamicSpawnPoints = new List<DynamicSpawnPoint>()
->>>>>>> Stashed changes
         };
         public override uint Id { get; set; } = 1;
 
@@ -106,7 +90,7 @@ namespace ObscureLabs.Items
             Manager.SendHint(ev.Player, "You equipped the <b>MTF-E14-HSR</b> \nThis is a long range rifle chambered in .44 magnum rounds \nand can only hold 1 round in the magazine at any given time.", 3);
         }
 
-        private void OnShot(ShotEventArgs ev)
+        protected override void OnShot(ShotEventArgs ev)
         {
             if (ev.Player == null || ev.Player.CurrentItem == null)
                 return;

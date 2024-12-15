@@ -1,5 +1,4 @@
-﻿using CustomItems.API;
-using Exiled.API.Enums;
+﻿using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.API.Features.Attributes;
 using Exiled.API.Features.Items;
@@ -34,38 +33,7 @@ namespace ObscureLabs.Items
         public override SpawnProperties SpawnProperties { get; set; } = new()
         {
             Limit = 3,
-<<<<<<< Updated upstream
-            DynamicSpawnPoints = new List<DynamicSpawnPoint>
-            {
-                new()
-                {
-                    Chance = 0,
-                    Location = Exiled.API.Enums.SpawnLocationType.InsideLocker,
-                },
-                new()
-                {
-                    Chance = 0,
-                    Location = Exiled.API.Enums.SpawnLocationType.Inside096,
-                },
-                new()
-                {
-                    Chance = 0,
-                    Location = Exiled.API.Enums.SpawnLocationType.InsideNukeArmory,
-                },
-                new()
-                {
-                    Chance = 0,
-                    Location = Exiled.API.Enums.SpawnLocationType.Inside049Armory,
-                },
-                new()
-                {
-                    Chance = 0,
-                    Location = Exiled.API.Enums.SpawnLocationType.InsideHid,
-                },
-            },
-=======
             DynamicSpawnPoints = new List<DynamicSpawnPoint>()
->>>>>>> Stashed changes
         };
 
         public Color[] colors = {

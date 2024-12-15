@@ -122,7 +122,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                 ev.IsAllowed = false;
                 Log.Info("Run ChaosMode Spawn wave");
 
-                if (ev.NextKnownTeam is SpawnableTeamType.ChaosInsurgency)
+                if (ev.NextKnownTeam is Faction.FoundationEnemy)
                 {
                     foreach (Player player in ev.Players)
                     {
@@ -134,8 +134,9 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                     player.AddItem(ItemType.Flashlight, 1);
                     player.AddItem(ItemType.Radio, 1);
                     RandomSpawn(player, ZoneType.HeavyContainment);
-                    Respawn.NtfTickets = 100;
-                        Respawn.TimeUntilNextPhase = 45;
+                    Respawn.SetTokens(SpawnableFaction.NtfWave, 100);
+#warning Need to figure out how to set Respawn wave time
+                    //Respawn.TimeUntilNextPhase = 45;
                     }
                 }
                 else
@@ -150,8 +151,9 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                     player.AddItem(ItemType.Flashlight, 1);
                     player.AddItem(ItemType.Radio, 1);
                     RandomSpawn(player, ZoneType.HeavyContainment);
-                    Respawn.ChaosTickets = 100;
-                        Respawn.TimeUntilNextPhase = 45;
+                    Respawn.SetTokens(SpawnableFaction.ChaosWave, 100);
+#warning Need to figure out how to set Respawn wave time
+                        //Respawn.TimeUntilNextPhase = 45;
                     }
                 }
             }
@@ -160,7 +162,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
         {
             var number = UnityEngine.Random.Range(0, 2);
             var goodRoom = false;
-            zone = zone;
             //what the magic number
             var room = Room.List.ElementAt(4);
             var door = Room.List.ElementAt(4).Doors.FirstOrDefault();
@@ -238,8 +239,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
                     RandomSpawn(player, ZoneType.LightContainment);
                 }
             }
-
-            Respawn.TimeUntilNextPhase = 45;
+#warning Need to figure out how to set Respawn wave time
+            //Respawn.TimeUntilNextPhase = 45;
         }
     }
 }

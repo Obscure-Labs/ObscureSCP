@@ -1,5 +1,4 @@
-﻿using CustomItems.API;
-using Exiled.API.Features.Attributes;
+﻿using Exiled.API.Features.Attributes;
 using Exiled.API.Features.Items;
 using Exiled.API.Features.Spawn;
 using Exiled.CustomItems.API.Features;
@@ -26,28 +25,7 @@ namespace ObscureLabs.Items
         public override SpawnProperties SpawnProperties { get; set; } = new()
         {
             Limit = 2,
-<<<<<<< Updated upstream
-            DynamicSpawnPoints = new List<DynamicSpawnPoint>
-            {
-                new()
-                {
-                    Chance = 0,
-                    Location = Exiled.API.Enums.SpawnLocationType.InsideLocker,
-                },
-                new()
-                {
-                    Chance = 0,
-                    Location = Exiled.API.Enums.SpawnLocationType.InsideNukeArmory,
-                },
-                new()
-                {
-                    Chance = 0,
-                    Location = Exiled.API.Enums.SpawnLocationType.Inside049Armory,
-                }
-            },
-=======
             DynamicSpawnPoints = new List<DynamicSpawnPoint>()
->>>>>>> Stashed changes
         };
         public override bool ExplodeOnCollision { get; set; } = false;
 

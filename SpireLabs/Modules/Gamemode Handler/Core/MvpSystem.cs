@@ -17,9 +17,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
     public class MvpSystem : Module
     {
         private List<PlayerData> _playerData = new();
-        private PlayerData _firstPlace;
-        private PlayerData _secondPlace;
-        private PlayerData _thirdPlace;
         private static bool WarheadPanelUnlocked = false;
 
         public override string Name => "MVPSystem";
@@ -43,9 +40,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         public override bool Disable()
         {
             _playerData.Clear();
-            _firstPlace = null;
-            _secondPlace = null;
-            _thirdPlace = null;
             Exiled.Events.Handlers.Server.RoundStarted -= OnRoundStarted;
             Exiled.Events.Handlers.Player.Escaping -= OnEscaping;
             Exiled.Events.Handlers.Player.Died -= OnKillingPlayer;

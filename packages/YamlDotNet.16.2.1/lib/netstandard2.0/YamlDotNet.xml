@@ -205,6 +205,15 @@
             Indent sequences. The default is to not indent.
             </summary>
         </member>
+        <member name="P:YamlDotNet.Core.EmitterSettings.UseUtf16SurrogatePairs">
+            <summary>
+            If true, then 4-byte UTF-32 characters are broken into two 2-byte code-points.
+            </summary>
+            <remarks>
+            This ensures compatibility with JSON format, as it does not allow '\Uxxxxxxxxx'
+            and instead expects two escaped 2-byte character '\uxxxx\uxxxx'.
+            </remarks>
+        </member>
         <member name="T:YamlDotNet.Core.Events.AnchorAlias">
             <summary>
             Represents an alias event.
@@ -1188,6 +1197,153 @@
             Simple implementation of <see cref="T:YamlDotNet.Core.IParser"/> that implements merging: http://yaml.org/type/merge.html
             </summary>
         </member>
+        <member name="T:YamlDotNet.Core.ObjectPool.DefaultObjectPool`1">
+            <summary>
+            Default implementation of <see cref="T:YamlDotNet.Core.ObjectPool.ObjectPool`1"/>.
+            </summary>
+            <typeparam name="T">The type to pool objects for.</typeparam>
+            <remarks>This implementation keeps a cache of retained objects. This means that if objects are returned when the pool has already reached "maximumRetained" objects they will be available to be Garbage Collected.</remarks>
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.DefaultObjectPool`1.#ctor(YamlDotNet.Core.ObjectPool.IPooledObjectPolicy{`0})">
+            <summary>
+            Creates an instance of <see cref="T:YamlDotNet.Core.ObjectPool.DefaultObjectPool`1"/>.
+            </summary>
+            <param name="policy">The pooling policy to use.</param>
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.DefaultObjectPool`1.#ctor(YamlDotNet.Core.ObjectPool.IPooledObjectPolicy{`0},System.Int32)">
+            <summary>
+            Creates an instance of <see cref="T:YamlDotNet.Core.ObjectPool.DefaultObjectPool`1"/>.
+            </summary>
+            <param name="policy">The pooling policy to use.</param>
+            <param name="maximumRetained">The maximum number of objects to retain in the pool.</param>
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.DefaultObjectPool`1.Get">
+            <inheritdoc />
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.DefaultObjectPool`1.Return(`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.DefaultObjectPool`1.ReturnCore(`0)">
+            <summary>
+            Returns an object to the pool.
+            </summary>
+            <returns>true if the object was returned to the pool</returns>
+        </member>
+        <member name="T:YamlDotNet.Core.ObjectPool.DefaultPooledObjectPolicy`1">
+            <summary>
+            Default implementation for <see cref="!:PooledObjectPolicy&lt;T&gt;"/>.
+            </summary>
+            <typeparam name="T">The type of object which is being pooled.</typeparam>
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.DefaultPooledObjectPolicy`1.Create">
+            <inheritdoc />
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.DefaultPooledObjectPolicy`1.Return(`0)">
+            <inheritdoc />
+        </member>
+        <member name="T:YamlDotNet.Core.ObjectPool.IPooledObjectPolicy`1">
+            <summary>
+            Represents a policy for managing pooled objects.
+            </summary>
+            <typeparam name="T">The type of object which is being pooled.</typeparam>
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.IPooledObjectPolicy`1.Create">
+            <summary>
+            Create a <typeparamref name="T"/>.
+            </summary>
+            <returns>The <typeparamref name="T"/> which was created.</returns>
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.IPooledObjectPolicy`1.Return(`0)">
+            <summary>
+            Runs some processing when an object was returned to the pool. Can be used to reset the state of an object and indicate if the object should be returned to the pool.
+            </summary>
+            <param name="obj">The object to return to the pool.</param>
+            <returns><see langword="true" /> if the object should be returned to the pool. <see langword="false" /> if it's not possible/desirable for the pool to keep the object.</returns>
+        </member>
+        <member name="T:YamlDotNet.Core.ObjectPool.IResettable">
+            <summary>
+            Defines a method to reset an object to its initial state.
+            </summary>
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.IResettable.TryReset">
+            <summary>
+            Reset the object to a neutral state, semantically similar to when the object was first constructed.
+            </summary>
+            <returns><see langword="true" /> if the object was able to reset itself, otherwise <see langword="false" />.</returns>
+            <remarks>
+            In general, this method is not expected to be thread-safe.
+            </remarks>
+        </member>
+        <member name="T:YamlDotNet.Core.ObjectPool.ObjectPool`1">
+            <summary>
+            A pool of objects.
+            </summary>
+            <typeparam name="T">The type of objects to pool.</typeparam>
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.ObjectPool`1.Get">
+            <summary>
+            Gets an object from the pool if one is available, otherwise creates one.
+            </summary>
+            <returns>A <typeparamref name="T"/>.</returns>
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.ObjectPool`1.Return(`0)">
+            <summary>
+            Return an object to the pool.
+            </summary>
+            <param name="obj">The object to add to the pool.</param>
+        </member>
+        <member name="T:YamlDotNet.Core.ObjectPool.ObjectPool">
+            <summary>
+            Methods for creating <see cref="T:YamlDotNet.Core.ObjectPool.ObjectPool`1"/> instances.
+            </summary>
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.ObjectPool.Create``1(YamlDotNet.Core.ObjectPool.IPooledObjectPolicy{``0})">
+            <summary>
+            Create a new <see cref="T:YamlDotNet.Core.ObjectPool.ObjectPool`1"/> instance using the default implementation.
+            </summary>
+            <typeparam name="T">The type of object to be pooled</typeparam>
+            <param name="policy">The <see cref="T:YamlDotNet.Core.ObjectPool.IPooledObjectPolicy`1"/> to use (or <see cref="T:YamlDotNet.Core.ObjectPool.DefaultPooledObjectPolicy`1"/> if <see langword="null"/>).</param>
+            <returns>An instance of <see cref="T:YamlDotNet.Core.ObjectPool.DefaultObjectPool`1"/> with the specified policy.</returns>
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.ObjectPool.Create``1(System.Int32,YamlDotNet.Core.ObjectPool.IPooledObjectPolicy{``0})">
+            <inheritdoc cref="M:YamlDotNet.Core.ObjectPool.ObjectPool.Create``1(YamlDotNet.Core.ObjectPool.IPooledObjectPolicy{``0})" />
+            <param name="maximumRetained">The maximum number of objects to retain in the pool.</param>
+            <param name="policy">The <see cref="T:YamlDotNet.Core.ObjectPool.IPooledObjectPolicy`1"/> to use (or <see cref="T:YamlDotNet.Core.ObjectPool.DefaultPooledObjectPolicy`1"/> if <see langword="null"/>).</param>
+        </member>
+        <member name="T:YamlDotNet.Core.ObjectPool.StringBuilderPool">
+            <summary>
+            Pooling of StringBuilder instances.
+            </summary>
+        </member>
+        <member name="T:YamlDotNet.Core.ObjectPool.StringBuilderPooledObjectPolicy">
+            <summary>
+            A policy for pooling <see cref="T:System.Text.StringBuilder"/> instances.
+            </summary>
+        </member>
+        <member name="P:YamlDotNet.Core.ObjectPool.StringBuilderPooledObjectPolicy.InitialCapacity">
+            <summary>
+            Gets or sets the initial capacity of pooled <see cref="T:System.Text.StringBuilder"/> instances.
+            </summary>
+            <value>Defaults to <c>100</c>.</value>
+        </member>
+        <member name="P:YamlDotNet.Core.ObjectPool.StringBuilderPooledObjectPolicy.MaximumRetainedCapacity">
+            <summary>
+            Gets or sets the maximum value for <see cref="P:System.Text.StringBuilder.Capacity"/> that is allowed to be
+            retained, when <see cref="M:YamlDotNet.Core.ObjectPool.StringBuilderPooledObjectPolicy.Return(System.Text.StringBuilder)"/> is invoked.
+            </summary>
+            <value>Defaults to <c>4096</c>.</value>
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.StringBuilderPooledObjectPolicy.Create">
+            <inheritdoc />
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.StringBuilderPooledObjectPolicy.Return(System.Text.StringBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:YamlDotNet.Core.ObjectPool.StringLookAheadBufferPool">
+            <summary>
+            Pooling of <see cref="T:YamlDotNet.Core.StringLookAheadBuffer"/> instances.
+            </summary>
+        </member>
         <member name="T:YamlDotNet.Core.Parser">
             <summary>
             Parses YAML streams.
@@ -1509,6 +1665,11 @@
             The folded scalar style.
             </summary>
         </member>
+        <member name="F:YamlDotNet.Core.ScalarStyle.ForcePlain">
+            <summary>
+             Forced plain scalar, regardless.
+            </summary>
+        </member>
         <member name="T:YamlDotNet.Core.Scanner">
             <summary>
             Converts a sequence of characters into a sequence of YAML tokens.
@@ -1525,6 +1686,14 @@
             </summary>
             <param name="input">The input.</param>
             <param name="skipComments">Indicates whether comments should be ignored</param>
+        </member>
+        <member name="M:YamlDotNet.Core.Scanner.#ctor(System.IO.TextReader,System.Boolean,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YamlDotNet.Core.Scanner"/> class.
+            </summary>
+            <param name="input">The input.</param>
+            <param name="skipComments">Indicates whether comments should be ignored</param>
+            <param name="maxKeySize">Override the default of 1024 characters for the max key size</param>
         </member>
         <member name="P:YamlDotNet.Core.Scanner.CurrentPosition">
             <summary>
@@ -2421,51 +2590,6 @@
             <param name="message">The message.</param>
             <param name="inner">The inner.</param>
         </member>
-        <member name="T:YamlDotNet.Helpers.ConcurrentObjectPool`1">
-             <summary>
-             Generic implementation of object pooling pattern with predefined pool size limit. The main
-             purpose is that limited number of frequently used objects can be kept in the pool for
-             further recycling.
-            
-             Notes:
-             1) it is not the goal to keep all returned objects. Pool is not meant for storage. If there
-                is no space in the pool, extra returned objects will be dropped.
-            
-             2) it is implied that if object was obtained from a pool, the caller will return it back in
-                a relatively short time. Keeping checked out objects for long durations is ok, but
-                reduces usefulness of pooling. Just new up your own.
-            
-             Not returning objects to the pool in not detrimental to the pool's work, but is a bad practice.
-             Rationale:
-                If there is no intent for reusing the object, do not use pool - just use "new".
-             </summary>
-        </member>
-        <member name="T:YamlDotNet.Helpers.ConcurrentObjectPool`1.Factory">
-            <remarks>
-            Not using System.Func{T} because this file is linked into the (debugger) Formatter,
-            which does not have that type (since it compiles against .NET 2.0).
-            </remarks>
-        </member>
-        <member name="M:YamlDotNet.Helpers.ConcurrentObjectPool`1.Allocate">
-            <summary>
-            Produces an instance.
-            </summary>
-            <remarks>
-            Search strategy is a simple linear probing which is chosen for it cache-friendliness.
-            Note that Free will try to store recycled objects close to the start thus statistically
-            reducing how far we will typically search.
-            </remarks>
-        </member>
-        <member name="M:YamlDotNet.Helpers.ConcurrentObjectPool`1.Free(`0)">
-            <summary>
-            Returns objects to the pool.
-            </summary>
-            <remarks>
-            Search strategy is a simple linear probing which is chosen for it cache-friendliness.
-            Note that Free will try to store recycled objects close to the start thus statistically
-            reducing how far we will typically search in Allocate.
-            </remarks>
-        </member>
         <member name="M:YamlDotNet.Helpers.ExpressionExtensions.AsProperty(System.Linq.Expressions.LambdaExpression)">
             <summary>
             Returns the <see cref="T:System.Reflection.PropertyInfo" /> that describes the property that
@@ -2509,9 +2633,9 @@
             </summary>
             <param name="index">The zero-based index of the element to remove.</param>
         </member>
-        <member name="T:YamlDotNet.Helpers.StringBuilderPool">
+        <member name="T:YamlDotNet.Helpers.NullFsharpHelper">
             <summary>
-            Pooling of StringBuilder instances.
+            Empty implementation of the fsharphelper to allow trimming of csharp applications.
             </summary>
         </member>
         <member name="M:YamlDotNet.ReflectionExtensions.HasDefaultConstructor(System.Type,System.Boolean)">
@@ -3800,47 +3924,6 @@
             <param name="argument">The argument of the factory.</param>
             <returns>Returns a new instance of <typeparamref name="TComponent" /> that is based on <paramref name="wrapped" /> and <paramref name="argument" />.</returns>
         </member>
-        <member name="T:YamlDotNet.Serialization.Converters.DateOnlyConverter">
-            <summary>
-            This represents the YAML converter entity for <see cref="T:System.DateOnly"/>.
-            </summary>
-        </member>
-        <member name="M:YamlDotNet.Serialization.Converters.DateOnlyConverter.#ctor(System.IFormatProvider,System.Boolean,System.String[])">
-            <summary>
-            Initializes a new instance of the <see cref="T:YamlDotNet.Serialization.Converters.DateOnlyConverter"/> class.
-            </summary>
-            <param name="provider"><see cref="T:System.IFormatProvider"/> instance. Default value is <see cref="P:System.Globalization.CultureInfo.InvariantCulture"/>.</param>
-            <param name="doubleQuotes">If true, will use double quotes when writing the value to the stream.</param>
-            <param name="formats">List of date/time formats for parsing. Default value is "<c>d</c>".</param>
-            <remarks>On deserializing, all formats in the list are used for conversion, while on serializing, the first format in the list is used.</remarks>
-        </member>
-        <member name="M:YamlDotNet.Serialization.Converters.DateOnlyConverter.Accepts(System.Type)">
-            <summary>
-            Gets a value indicating whether the current converter supports converting the specified type.
-            </summary>
-            <param name="type"><see cref="T:System.Type"/> to check.</param>
-            <returns>Returns <c>True</c>, if the current converter supports; otherwise returns <c>False</c>.</returns>
-        </member>
-        <member name="M:YamlDotNet.Serialization.Converters.DateOnlyConverter.ReadYaml(YamlDotNet.Core.IParser,System.Type,YamlDotNet.Serialization.ObjectDeserializer)">
-            <summary>
-            Reads an object's state from a YAML parser.
-            </summary>
-            <param name="parser"><see cref="T:YamlDotNet.Core.IParser"/> instance.</param>
-            <param name="type"><see cref="T:System.Type"/> to convert.</param>
-            <param name="rootDeserializer">The deserializer to use to deserialize complex types.</param>
-            <returns>Returns the <see cref="T:System.DateOnly"/> instance converted.</returns>
-            <remarks>On deserializing, all formats in the list are used for conversion.</remarks>
-        </member>
-        <member name="M:YamlDotNet.Serialization.Converters.DateOnlyConverter.WriteYaml(YamlDotNet.Core.IEmitter,System.Object,System.Type,YamlDotNet.Serialization.ObjectSerializer)">
-            <summary>
-            Writes the specified object's state to a YAML emitter.
-            </summary>
-            <param name="emitter"><see cref="T:YamlDotNet.Core.IEmitter"/> instance.</param>
-            <param name="value">Value to write.</param>
-            <param name="type"><see cref="T:System.Type"/> to convert.</param>
-            <param name="serializer">The root serializer that can be used to serialize complex types.</param>
-            <remarks>On serializing, the first format in the list is used.</remarks>
-        </member>
         <member name="T:YamlDotNet.Serialization.Converters.DateTime8601Converter">
             <summary>
             This represents the YAML converter entity for <see cref="T:System.DateTime"/> using the ISO-8601 standard format.
@@ -3981,47 +4064,6 @@
             <remarks>
             Converts <see cref="T:System.Type" /> to a scalar containing the assembly qualified name of the type.
             </remarks>
-        </member>
-        <member name="T:YamlDotNet.Serialization.Converters.TimeOnlyConverter">
-            <summary>
-            This represents the YAML converter entity for <see cref="T:System.TimeOnly"/>.
-            </summary>
-        </member>
-        <member name="M:YamlDotNet.Serialization.Converters.TimeOnlyConverter.#ctor(System.IFormatProvider,System.Boolean,System.String[])">
-            <summary>
-            Initializes a new instance of the <see cref="T:YamlDotNet.Serialization.Converters.TimeOnlyConverter"/> class.
-            </summary>
-            <param name="provider"><see cref="T:System.IFormatProvider"/> instance. Default value is <see cref="P:System.Globalization.CultureInfo.InvariantCulture"/>.</param>
-            <param name="doubleQuotes">If true, will use double quotes when writing the value to the stream.</param>
-            <param name="formats">List of date/time formats for parsing. Default value is "<c>T</c>".</param>
-            <remarks>On deserializing, all formats in the list are used for conversion, while on serializing, the first format in the list is used.</remarks>
-        </member>
-        <member name="M:YamlDotNet.Serialization.Converters.TimeOnlyConverter.Accepts(System.Type)">
-            <summary>
-            Gets a value indicating whether the current converter supports converting the specified type.
-            </summary>
-            <param name="type"><see cref="T:System.Type"/> to check.</param>
-            <returns>Returns <c>True</c>, if the current converter supports; otherwise returns <c>False</c>.</returns>
-        </member>
-        <member name="M:YamlDotNet.Serialization.Converters.TimeOnlyConverter.ReadYaml(YamlDotNet.Core.IParser,System.Type,YamlDotNet.Serialization.ObjectDeserializer)">
-            <summary>
-            Reads an object's state from a YAML parser.
-            </summary>
-            <param name="parser"><see cref="T:YamlDotNet.Core.IParser"/> instance.</param>
-            <param name="type"><see cref="T:System.Type"/> to convert.</param>
-            <param name="rootDeserializer">The deserializer to use to deserialize complex types.</param>
-            <returns>Returns the <see cref="T:System.TimeOnly"/> instance converted.</returns>
-            <remarks>On deserializing, all formats in the list are used for conversion.</remarks>
-        </member>
-        <member name="M:YamlDotNet.Serialization.Converters.TimeOnlyConverter.WriteYaml(YamlDotNet.Core.IEmitter,System.Object,System.Type,YamlDotNet.Serialization.ObjectSerializer)">
-            <summary>
-            Writes the specified object's state to a YAML emitter.
-            </summary>
-            <param name="emitter"><see cref="T:YamlDotNet.Core.IEmitter"/> instance.</param>
-            <param name="value">Value to write.</param>
-            <param name="type"><see cref="T:System.Type"/> to convert.</param>
-            <param name="serializer">A serializer to serializer complext objects.</param>
-            <remarks>On serializing, the first format in the list is used.</remarks>
         </member>
         <member name="T:YamlDotNet.Serialization.DefaultValuesHandling">
             <summary>
@@ -5991,6 +6033,31 @@
             </summary>
             <typeparam name="TConvertible">The type to which the converter should be associated.</typeparam>
             <typeparam name="TConverter">The type of the converter.</typeparam>
+        </member>
+        <member name="T:YamlDotNet.Serialization.Utilities.TypeConverterCache">
+            <summary>
+            A cache / map for <see cref="T:YamlDotNet.Serialization.IYamlTypeConverter"/> instances.
+            </summary>
+        </member>
+        <member name="M:YamlDotNet.Serialization.Utilities.TypeConverterCache.TryGetConverterForType(System.Type,YamlDotNet.Serialization.IYamlTypeConverter@)">
+            <summary>
+            Returns the first <see cref="T:YamlDotNet.Serialization.IYamlTypeConverter"/> that accepts the given type.
+            </summary>
+            <param name="type">The <see cref="T:System.Type"/> to lookup.</param>
+            <param name="typeConverter">The <see cref="T:YamlDotNet.Serialization.IYamlTypeConverter" /> that accepts this type or <see langword="false" /> if no converter is found.</param>
+            <returns><see langword="true"/> if a type converter was found; <see langword="false"/> otherwise.</returns>
+        </member>
+        <member name="M:YamlDotNet.Serialization.Utilities.TypeConverterCache.GetConverterByType(System.Type)">
+            <summary>
+            Returns the <see cref="T:YamlDotNet.Serialization.IYamlTypeConverter"/> of the given type.
+            </summary>
+            <param name="converter">The type of the converter.</param>
+            <returns>The <see cref="T:YamlDotNet.Serialization.IYamlTypeConverter"/> of the given type.</returns>
+            <exception cref="T:System.ArgumentException">If no type converter of the given type is found.</exception>
+            <remarks>
+            Note that this method searches on the type of the <see cref="T:YamlDotNet.Serialization.IYamlTypeConverter"/> itself. If you want to find a type converter
+            that accepts a given <see cref="T:System.Type"/>, use <see cref="M:YamlDotNet.Serialization.Utilities.TypeConverterCache.TryGetConverterForType(System.Type,YamlDotNet.Serialization.IYamlTypeConverter@)"/> instead.
+            </remarks>
         </member>
         <member name="T:YamlDotNet.Serialization.YamlAttributeOverrides">
             <summary>

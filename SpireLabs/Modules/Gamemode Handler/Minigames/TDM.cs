@@ -208,10 +208,13 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
             while (true)
             {
                 yield return Timing.WaitForSeconds(1f);
-                if (Respawn.TimeUntilSpawnWave.Seconds >= 5f)
-                {
-                    Respawn.TimeUntilNextPhase = 5f;
-                }
+
+#warning Need to figure out how to set this now
+
+                //if (Respawn.TimeUntilSpawnWave.Seconds >= 5f)
+                //{
+                //    Respawn.TimeUntilNextPhase = 5f;
+                //}
                 if (die)
                 {
                     yield break;
@@ -231,7 +234,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Minigames
         {
             _coroutines.Add(Timing.RunCoroutine(RespawnTimer()));
             _coroutines.Add(Timing.RunCoroutine(TeamAssignment()));
-            Respawn.TimeUntilNextPhase = 5f;
+#warning Need to figure out how to set the respawn time
+            //Respawn.TimeUntilNextPhase = 5f;
 
         }
 

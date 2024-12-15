@@ -55,7 +55,7 @@ namespace ObscureLabs
 
         public OverrideConfig overrideConfigs { get; set; }
 
-        private Harmony _harmony;
+        //private Harmony _harmony;
 
         public override void OnEnabled()
         {
@@ -179,7 +179,7 @@ namespace ObscureLabs
             Timing.KillCoroutines("flockerRoutine");
             Timing.KillCoroutines("lockRoutine");
             Timing.KillCoroutines("chaosChecker");
-            Timing.RunCoroutine(ChaosCounter.ChaosUpdateCoroutine(), "chaosChecker");
+            //Timing.RunCoroutine(ChaosCounter.ChaosUpdateCoroutine(), "chaosChecker");
 
             Log.Info("Round has started!");
             Timing.RunCoroutine(OnLockAnnouncement(), "lockRoutine");

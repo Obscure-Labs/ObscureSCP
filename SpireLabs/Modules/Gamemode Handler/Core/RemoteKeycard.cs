@@ -12,6 +12,7 @@ using Exiled.Events.EventArgs.Player;
 using InventorySystem;
 using InventorySystem.Items.Keycards;
 using KeycardPermissions = Interactables.Interobjects.DoorUtils.KeycardPermissions;
+using Interactables.Interobjects.DoorUtils;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
@@ -76,13 +77,9 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         private void OnInteractinglocker(InteractingLockerEventArgs ev)
         {
-<<<<<<< Updated upstream
-            if (ev.Player.HasKeycardPermission(ev.Chamber.RequiredPermissions))
-=======
 #pragma warning disable CS0618
-            if (ev.Player.HasKeycardPermission(ev.InteractingChamber.RequiredPermissions))
+            if (ev.Player.HasKeycardPermission((KeycardPermissions)ev.InteractingChamber.RequiredPermissions));
 #pragma warning restore CS0618
->>>>>>> Stashed changes
             {
                 ev.IsAllowed = true;
             }
