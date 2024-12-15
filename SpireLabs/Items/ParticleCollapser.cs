@@ -109,6 +109,7 @@ namespace ObscureLabs.Items
 
         private IEnumerator<float> EnergyBurstCoroutine(ShotEventArgs ev)
         {
+            
             Color color = colors[UnityEngine.Random.Range(0, colors.Count())];
 
             yield return Timing.WaitForOneFrame;
@@ -180,6 +181,7 @@ namespace ObscureLabs.Items
 
         private void ModifyGrenadeDamage(HurtingEventArgs ev)
         {
+            if (ev.Player == null) return; 
             if (_tempGrenade == null) return;
             ev.IsAllowed = false;
             ev.Player.Hurt(UnityEngine.Random.Range(250, 501), DamageType.ParticleDisruptor);
