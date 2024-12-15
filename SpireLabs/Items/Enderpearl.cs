@@ -17,7 +17,7 @@ namespace ObscureLabs.Items
     [CustomItem(ItemType.SCP2176)]
     public class Enderpearl : Exiled.CustomItems.API.Features.CustomGrenade
     {
-        public override string Name { get; set; } = "Cluster Grenade";
+        public override string Name { get; set; } = "EnderPearl";
 
         public override uint Id { get; set; } = 15;
 
