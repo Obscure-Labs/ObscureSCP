@@ -76,7 +76,13 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         private void OnInteractinglocker(InteractingLockerEventArgs ev)
         {
+<<<<<<< Updated upstream
             if (ev.Player.HasKeycardPermission(ev.Chamber.RequiredPermissions))
+=======
+#pragma warning disable CS0618
+            if (ev.Player.HasKeycardPermission(ev.InteractingChamber.RequiredPermissions))
+#pragma warning restore CS0618
+>>>>>>> Stashed changes
             {
                 ev.IsAllowed = true;
             }

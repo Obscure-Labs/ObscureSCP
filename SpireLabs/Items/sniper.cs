@@ -10,6 +10,7 @@ using PlayerRoles;
 using PlayerStatsSystem;
 using SpireSCP.GUI.API.Features;
 using System.Collections.Generic;
+using Mirror;
 using Player = Exiled.Events.Handlers.Player;
 
 namespace ObscureLabs.Items
@@ -24,6 +25,7 @@ namespace ObscureLabs.Items
         public override SpawnProperties? SpawnProperties { get; set; } = new()
         {
             Limit = 1,
+<<<<<<< Updated upstream
             DynamicSpawnPoints = new List<DynamicSpawnPoint>
             {
                 new()
@@ -37,6 +39,9 @@ namespace ObscureLabs.Items
                     Location = Exiled.API.Enums.SpawnLocationType.InsideLocker,
                 },
             },
+=======
+            DynamicSpawnPoints = new List<DynamicSpawnPoint>()
+>>>>>>> Stashed changes
         };
         public override uint Id { get; set; } = 1;
 
@@ -89,7 +94,8 @@ namespace ObscureLabs.Items
             {
                 ev.Player.SetAmmo(AmmoType.Ammo44Cal, (ushort)(cal44 - 1));
                 ev.Firearm.Ammo = 1;
-                ev.Player.Connection.Send(new RequestMessage(ev.Firearm.Serial, RequestType.Reload));
+                //ev.Player.Connection.Send()
+                //ev.Player.Connection.Send(new RequestMessage(ev.Firearm.Serial, RequestType.Reload));
             }
         }
 

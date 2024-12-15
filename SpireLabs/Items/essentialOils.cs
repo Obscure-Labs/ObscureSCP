@@ -22,6 +22,7 @@ namespace ObscureLabs.Items
         public override SpawnProperties SpawnProperties { get; set; } = new()
         {
             Limit = 2,
+<<<<<<< Updated upstream
             DynamicSpawnPoints = new List<DynamicSpawnPoint>
             {
                 new()
@@ -45,6 +46,9 @@ namespace ObscureLabs.Items
                     Location = Exiled.API.Enums.SpawnLocationType.Inside330
                 }
             },
+=======
+            DynamicSpawnPoints = new List<DynamicSpawnPoint>(),
+>>>>>>> Stashed changes
         };
 
         protected override void SubscribeEvents()

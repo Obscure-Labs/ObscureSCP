@@ -4,6 +4,7 @@ using ObscureLabs.API.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Exiled.API.Enums;
 using Exiled.API.Extensions;
 
 namespace SpireLabs.GUI
@@ -83,6 +84,7 @@ namespace SpireLabs.GUI
                 if (Warhead.IsDetonated)
                 {
                     s +=
+<<<<<<< Updated upstream
                         $"<align=right><size=24>Warhead Status: <color=#c00>Detonated<color=#fff>\n</size><size=32>"; //7.5
                 }
                 else if (Warhead.IsInProgress)
@@ -93,6 +95,34 @@ namespace SpireLabs.GUI
                 else if (Warhead.LeverStatus)
                 {
                     s += $"<align=right><size=24>Warhead Status: <color=#090>Armed<color=#fff>\n</size><size=32>"; //7.5
+=======
+                        $"<align=right><size=24><color=#7F7FFF>NTF Tickets: <color=#fff>{(Respawn.TryGetTokens(SpawnableFaction.NtfWave, out int NTFTokens) ? NTFTokens : "Error Fetching Tokens")}<color=#fff>\n"; //6
+                    s +=
+                        $"<align=right><size=24><color=#090>CHAOS Tickets: <color=#fff>{(Respawn.TryGetTokens(SpawnableFaction.ChaosWave, out int ChaosTokens) ? ChaosTokens : "Error Fetching Tokens")}<color=#fff>\n"; //6.5
+                    s +=
+                        $"<align=right><size=24>Round Time: {Round.ElapsedTime.Minutes:00}:{Round.ElapsedTime.Seconds:00}\n"; //7
+
+                    if (Warhead.IsDetonated)
+                    {
+                        s +=
+                            $"<align=right><size=24>Warhead Status: <color=#c00>Detonated<color=#fff>\n</size><size=32>"; //7.5
+                    }
+                    else if (Warhead.IsInProgress)
+                    {
+                        s +=
+                            $"<align=right><size=24>Warhead Status: <color=#b45f06>In Progress<color=#fff>\n</size><size=32>"; //7.5
+                    }
+                    else if (Warhead.LeverStatus)
+                    {
+                        s +=
+                            $"<align=right><size=24>Warhead Status: <color=#090>Armed<color=#fff>\n</size><size=32>"; //7.5
+                    }
+                    else
+                    {
+                        s +=
+                            $"<align=right><size=24>Warhead Status: <color=#2986cc>Disarmed<color=#fff>\n</size><size=32>"; //7.5
+                    }
+>>>>>>> Stashed changes
                 }
                 else
                 {
@@ -105,7 +135,7 @@ namespace SpireLabs.GUI
                 {
                     if (i == 27)
                     {
-                        s += $"<size=16><align=center>Respawning in: {(Respawn.NextTeamTime - DateTime.UtcNow).Minutes:00}:{(Respawn.NextTeamTime - DateTime.UtcNow).Seconds:00}\n\t</size><size=32>\n";
+                        s += $"<size=16><align=center>Respawning in: PLACEHOLDER\n\t</size><size=32>\n"; /*{( - DateTime.UtcNow).Minutes:00}:{(Respawn.NextTeamTime - DateTime.UtcNow).Seconds:00}\n\t</size><size=32>\n";*/
                     }
                     else if (i == 29)
                     {

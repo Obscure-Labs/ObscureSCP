@@ -6,31 +6,33 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
     public class ChaosCounter
     {
-        public static IEnumerator<float> ChaosUpdateCoroutine()
-        {
-            yield return Timing.WaitForSeconds(1f);
+        //Potentially Not Needed Anymore
 
-            while (!Round.IsEnded)
-            {
-                yield return Timing.WaitForSeconds(1f);
+        //public static IEnumerator<float> ChaosUpdateCoroutine()
+        //{
+        //    yield return Timing.WaitForSeconds(1f);
 
-                var chaos = 0;
+        //    while (!Round.IsEnded)
+        //    {
+        //        yield return Timing.WaitForSeconds(1f);
 
-                foreach (var p in Player.List)
-                {
-                    if (p.IsCHI)
-                    {
-                        chaos++;
-                    }
-                }
+        //        var chaos = 0;
 
-                if (chaos != 0)
-                {
-                    Round.ChaosTargetCount = chaos;
-                }
+        //        foreach (var p in Player.List)
+        //        {
+        //            if (p.IsCHI)
+        //            {
+        //                chaos++;
+        //            }
+        //        }
 
-                yield return Timing.WaitForSeconds(2f);
-            }
-        }
+        //        if (chaos != 0)
+        //        {
+        //            Round. = chaos;
+        //        }
+
+        //        yield return Timing.WaitForSeconds(2f);
+        //    }
+        //}
     }
 }

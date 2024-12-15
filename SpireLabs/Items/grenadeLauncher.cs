@@ -12,6 +12,11 @@ using MEC;
 using SpireSCP.GUI.API.Features;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using HarmonyLib;
+using InventorySystem.Items.Firearms.Modules.Misc;
+using InventorySystem.Items.ThrowableProjectiles;
+using Mirror;
 using Player = Exiled.Events.Handlers.Player;
 
 namespace ObscureLabs.Items
@@ -34,6 +39,7 @@ namespace ObscureLabs.Items
         public override SpawnProperties SpawnProperties { get; set; } = new()
         {
             Limit = 2,
+<<<<<<< Updated upstream
             DynamicSpawnPoints = new List<DynamicSpawnPoint>
             {
                 new()
@@ -47,6 +53,9 @@ namespace ObscureLabs.Items
                     Location = Exiled.API.Enums.SpawnLocationType.Inside096,
                 }
             },
+=======
+            DynamicSpawnPoints = new List<DynamicSpawnPoint>()
+>>>>>>> Stashed changes
         };
 
         private Exiled.CustomItems.API.Features.CustomGrenade? _loadedCustomGrenade = null;
@@ -77,7 +86,8 @@ namespace ObscureLabs.Items
             {
                 if (firearm.Ammo != ClipSize)
                 {
-                    ev.Player.Connection.Send(new RequestMessage(ev.Firearm.Serial, RequestType.Dryfire));
+#warning not sure how to fix this yet will look into it
+                    //ev.Player.Connection.Send(new RequestMessage(ev.Firearm.Serial, RequestType.Dryfire));
                     return;
                 }
                 else
@@ -126,7 +136,8 @@ namespace ObscureLabs.Items
                     continue;
                 }
 
-                ev.Player.Connection.Send(new RequestMessage(ev.Firearm.Serial, RequestType.Reload));
+                //This is Firearm RequestMessage NetworkMessages.Lookup[7109]
+                //ev.Player.Connection.Send(new RequestMessage(ev.Firearm.Serial, InventorySystem.Items.Firearms.BasicMessages.RequestType.Reload));
 
                 Timing.CallDelayed(1.5f, () => firearm.Ammo = ClipSize);
 

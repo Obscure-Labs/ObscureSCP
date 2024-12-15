@@ -34,6 +34,7 @@ namespace ObscureLabs.Items
         public override SpawnProperties SpawnProperties { get; set; } = new()
         {
             Limit = 3,
+<<<<<<< Updated upstream
             DynamicSpawnPoints = new List<DynamicSpawnPoint>
             {
                 new()
@@ -62,6 +63,9 @@ namespace ObscureLabs.Items
                     Location = Exiled.API.Enums.SpawnLocationType.InsideHid,
                 },
             },
+=======
+            DynamicSpawnPoints = new List<DynamicSpawnPoint>()
+>>>>>>> Stashed changes
         };
 
         public Color[] colors = {
@@ -114,7 +118,7 @@ namespace ObscureLabs.Items
             var light = Exiled.API.Features.Toys.Light.Create(target, null, Vector3.one, true, color);
             light.Intensity = 1000000;
             light.Range = 25;
-            light.ShadowEmission = true;
+            //light.ShadowEmission = true;
             light.Spawn();
 
             var room = Room.Get(target);
