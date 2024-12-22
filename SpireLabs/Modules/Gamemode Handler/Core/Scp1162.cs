@@ -24,10 +24,10 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             CustomItem.Get((uint)7), // ClusterFlash
             CustomItem.Get((uint)0), // EssentialOils
             CustomItem.Get((uint)4), // NovaGrenade
-            CustomItem.Get((uint)1), // sniper
-            CustomItem.Get((uint)3), // grenade launcher
-            CustomItem.Get((uint)5), // ER16
-            CustomItem.Get((uint)6), // Particle Collapser
+            //CustomItem.Get((uint)1), // sniper
+            //CustomItem.Get((uint)3), // grenade launcher
+            //CustomItem.Get((uint)5), // ER16
+            //CustomItem.Get((uint)6), // Particle Collapser
         };
 
         private CoroutineHandle _playerPositionCoroutine;

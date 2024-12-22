@@ -38,7 +38,6 @@ namespace ObscureLabs.Items
         public override SpawnProperties SpawnProperties { get; set; } = new()
         {
             Limit = 2,
-            DynamicSpawnPoints = new List<DynamicSpawnPoint>()
         };
 
         private Exiled.CustomItems.API.Features.CustomGrenade _loadedCustomGrenade = null;

@@ -53,8 +53,7 @@ namespace ObscureLabs.Items
 
         public override SpawnProperties SpawnProperties { get; set; } = new()
         {
-            Limit = 3, 
-            DynamicSpawnPoints = new List<DynamicSpawnPoint>()
+            Limit = 3,
         };
 
         protected override void SubscribeEvents()

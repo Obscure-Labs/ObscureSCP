@@ -25,7 +25,6 @@ namespace ObscureLabs.Items
         public override SpawnProperties SpawnProperties { get; set; } = new()
         {
             Limit = 1,
-            DynamicSpawnPoints = new List<DynamicSpawnPoint>()
         };
         public override uint Id { get; set; } = 1;
 

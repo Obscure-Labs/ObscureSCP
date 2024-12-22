@@ -17,7 +17,8 @@ namespace ObscureLabs
 
         public override string Name => "IDThief";
 
-        public override bool IsInitializeOnStart => true;
+#warning make this stop using UCS stuff
+        public override bool IsInitializeOnStart => false;
 
         public override bool Enable()
         {

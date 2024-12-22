@@ -33,7 +33,6 @@ namespace ObscureLabs.Items
         public override SpawnProperties SpawnProperties { get; set; } = new()
         {
             Limit = 3,
-            DynamicSpawnPoints = new List<DynamicSpawnPoint>()
         };
 
         public Color[] colors = {
