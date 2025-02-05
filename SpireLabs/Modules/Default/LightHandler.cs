@@ -34,10 +34,9 @@ namespace ObscureLabs.Modules.Default
 
         private IEnumerator<float> OnMapGenerated()
         {
-            Exiled.API.Features.Lift.List.Where(x => x.Name.Contains("Gate")).ToList().Where(x => x.CurrentLevel == 1).ToList().ForEach(x => x.TryStart(0, true));
+            Lift.List.Where(x => x.Name.Contains("Gate")).ToList().Where(x => x.CurrentLevel == 1).ToList().ForEach(x => x.TryStart(0, true));
             yield return Timing.WaitForSeconds(7f);
-            //PluginAPI.Core.Map.Rooms.FirstOrDefault(x => x.Zone == MapGeneration.FacilityZone.Surface).
-            Exiled.API.Features.Room.Get(ZoneType.Surface).First().Color = new UnityEngine.Color(0f, 0f, 0f);
+            Room.Get(ZoneType.Surface).First().Color = new UnityEngine.Color(0f, 0f, 0f);
         }
     }
 }

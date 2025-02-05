@@ -9,11 +9,8 @@ using MEC;
 using ObscureLabs.API.Data;
 using ObscureLabs.API.Enums;
 using ObscureLabs.API.Features;
-using ObscureLabs.Gamemode_Handler;
 using ObscureLabs.Items;
 using ObscureLabs.Modules.Gamemode_Handler.Core;
-using ObscureLabs.Modules.Gamemode_Handler.Minigames;
-using ObscureLabs.SpawnSystem;
 using PlayerRoles;
 using SpireLabs.GUI;
 using SpireSCP.GUI.API.Features;
@@ -33,15 +30,7 @@ namespace ObscureLabs
 
         public static string SpireConfigLocation { get; private set; }
 
-        public static EventRoundType EventRoundType { get; internal set; }
-
         public static string[] file;
-
-        public static string LastPlayerId;
-
-        public static List<PlayerPrimitiveData> Objects = new();
-
-        public static bool IsActiveEventround = false;
 
         public override string Name => "Obscure Labs";
 
@@ -51,8 +40,6 @@ namespace ObscureLabs
 
         public override Version RequiredExiledVersion { get; } = new Version(8, 0, 1);
 
-        public ItemConfigs.ItemConfig ItemConfigs { get; private set; } = null!;
-
         public OverrideConfig overrideConfigs { get; set; }
 
         //private Harmony _harmony;
@@ -61,7 +48,6 @@ namespace ObscureLabs
         {
             Instance = this;
 
-            //LoadItems();
             CustomItem.RegisterItems();
 
             Log.SendRaw("[ObscureLabs]\n\r\n .d8888b.           d8b                 .d8888b.   .d8888b.  8888888b.  \r\nd88P  Y88b          Y8P                d88P  Y88b d88P  Y88b 888   Y88b \r\nY88b.                                  Y88b.      888    888 888    888 \r\n \"Y888b.   88888b.  888 888d888 .d88b.  \"Y888b.   888        888   d88P \r\n    \"Y88b. 888 \"88b 888 888P\"  d8P  Y8b    \"Y88b. 888        8888888P\"  \r\n      \"888 888  888 888 888    88888888      \"888 888    888 888        \r\nY88b  d88P 888 d88P 888 888    Y8b.    Y88b  d88P Y88b  d88P 888        \r\n \"Y8888P\"  88888P\"  888 888     \"Y8888  \"Y8888P\"   \"Y8888P\"  888        \r\n           888                                                          \r\n           888                                                          \r\n           888                                                          \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n", color: ConsoleColor.DarkMagenta);
@@ -93,26 +79,8 @@ namespace ObscureLabs
         {
             ModulesManager.AddModule(new HudController());
             ModulesManager.AddModule(new MvpSystem());
-            ModulesManager.AddModule(new CorruptGuard());
-            ModulesManager.AddModule(new DamageModifiers());
-            ModulesManager.AddModule(new CoinFlip());
-            ModulesManager.AddModule(new TheNut());
-            ModulesManager.AddModule(new Profiles());
-            ModulesManager.AddModule(new IDThief());
-            ModulesManager.AddModule(new Larry());
-            ModulesManager.AddModule(new GamemodeHandler());
-            ModulesManager.AddModule(new MapInteractions());
-            ModulesManager.AddModule(new Chaos());
-            ModulesManager.AddModule(new Scp3114());
-            ModulesManager.AddModule(new Doctor());
             ModulesManager.AddModule(new CustomItemSpawner());
-            ModulesManager.AddModule(new HealthOverride());
-            ModulesManager.AddModule(new Scp1162());
             ModulesManager.AddModule(new RemoteKeycard());
-            ModulesManager.AddModule(new Scp914Handler());
-            ModulesManager.AddModule(new ReconnectRecovery());
-            ModulesManager.AddModule(new TeamHandler());
-            ModulesManager.AddModule(new TDM());
             ModulesManager.AddModule(new LightHandler());
 
             RegisterEvents();
@@ -156,30 +124,11 @@ namespace ObscureLabs
             }
         }
 
-        //private void LoadItems()
-        //{
-        //    if (!Directory.Exists(SpireConfigLocation + "/CustomItems/"))
-        //        Directory.CreateDirectory(SpireConfigLocation + "/CustomItems/");
-        //    string filePath = SpireConfigLocation + "/CustomItems/global.yml";
-        //    if (!File.Exists(filePath))
-        //    {
-        //        ItemConfigs = new ItemConfigs.ItemConfig();
-        //        File.WriteAllText(filePath, Loader.Serializer.Serialize(ItemConfigs));
-        //    }
-        //    else
-        //    {
-        //        ItemConfigs = Loader.Deserializer.Deserialize<ItemConfigs.ItemConfig>(File.ReadAllText(filePath));
-        //        File.WriteAllText(filePath, Loader.Serializer.Serialize(ItemConfigs));
-        //    }
-
-        //}
-
         private void OnRoundStarted()
         {
             Timing.KillCoroutines("flockerRoutine");
             Timing.KillCoroutines("lockRoutine");
             Timing.KillCoroutines("chaosChecker");
-            //Timing.RunCoroutine(ChaosCounter.ChaosUpdateCoroutine(), "chaosChecker");
 
             Log.Info("Round has started!");
             Timing.RunCoroutine(OnLockAnnouncement(), "lockRoutine");
@@ -264,8 +213,6 @@ namespace ObscureLabs
                 m.Disable();
             }
 
-            Timing.KillCoroutines("juggerwave");
-
             foreach (Module m in ModulesManager.Modules)
             {
                 if (m.IsInitializeOnStart == true)
@@ -274,12 +221,7 @@ namespace ObscureLabs
                 }
             }
         }
-
-        private void OnPlayerLeave(LeftEventArgs ev)
-        {
-            Log.Info($"Player count is now: \"{Player.List.Count}\"");
-        }
-
+        
         private void OnLeft(LeftEventArgs ev)
         {
             Manager.SendJoinLeave(ev.Player, true);
