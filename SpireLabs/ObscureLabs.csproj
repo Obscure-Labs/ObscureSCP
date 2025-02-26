@@ -16,7 +16,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugType>embedded</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -38,7 +38,7 @@
       <HintPath>..\refs\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\packages\ExMod.Exiled.9.0.1\lib\net48\Assembly-CSharp-Publicized.dll</HintPath>
+      <HintPath>..\packages\ExMod.Exiled.9.6.0-beta3\lib\net48\Assembly-CSharp-Publicized.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -46,35 +46,38 @@
       <HintPath>..\refs\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-Publicized, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ExMod.Exiled.9.0.1\lib\net48\Assembly-CSharp-Publicized.dll</HintPath>
+      <HintPath>..\packages\ExMod.Exiled.9.6.0-beta3\lib\net48\Assembly-CSharp-Publicized.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="AudioPlayer">
       <HintPath>..\refs\AudioPlayer.dll</HintPath>
     </Reference>
     <Reference Include="CommandSystem.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ExMod.Exiled.9.0.1\lib\net48\CommandSystem.Core.dll</HintPath>
+      <HintPath>..\packages\ExMod.Exiled.9.6.0-beta3\lib\net48\CommandSystem.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.API, Version=9.0.1.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\ExMod.Exiled.9.0.1\lib\net48\Exiled.API.dll</HintPath>
+    <Reference Include="Exiled.API, Version=9.6.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\ExMod.Exiled.9.6.0-beta3\lib\net48\Exiled.API.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.CreditTags, Version=9.0.1.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\ExMod.Exiled.9.0.1\lib\net48\Exiled.CreditTags.dll</HintPath>
+    <Reference Include="Exiled.CreditTags, Version=9.6.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\ExMod.Exiled.9.6.0-beta3\lib\net48\Exiled.CreditTags.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.CustomItems, Version=9.0.1.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\ExMod.Exiled.9.0.1\lib\net48\Exiled.CustomItems.dll</HintPath>
+    <Reference Include="Exiled.CustomItems, Version=9.6.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\ExMod.Exiled.9.6.0-beta3\lib\net48\Exiled.CustomItems.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.CustomRoles, Version=9.0.1.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\ExMod.Exiled.9.0.1\lib\net48\Exiled.CustomRoles.dll</HintPath>
+    <Reference Include="Exiled.CustomRoles, Version=9.6.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\ExMod.Exiled.9.6.0-beta3\lib\net48\Exiled.CustomRoles.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Events, Version=9.0.1.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\ExMod.Exiled.9.0.1\lib\net48\Exiled.Events.dll</HintPath>
+    <Reference Include="Exiled.Events, Version=9.6.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\ExMod.Exiled.9.6.0-beta3\lib\net48\Exiled.Events.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Loader, Version=9.0.1.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\ExMod.Exiled.9.0.1\lib\net48\Exiled.Loader.dll</HintPath>
+    <Reference Include="Exiled.Loader, Version=9.6.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\ExMod.Exiled.9.6.0-beta3\lib\net48\Exiled.Loader.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Permissions, Version=9.0.1.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\ExMod.Exiled.9.0.1\lib\net48\Exiled.Permissions.dll</HintPath>
+    <Reference Include="Exiled.Permissions, Version=9.6.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\ExMod.Exiled.9.6.0-beta3\lib\net48\Exiled.Permissions.dll</HintPath>
+    </Reference>
+    <Reference Include="LabApi, Version=0.4.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\ExMod.Exiled.9.6.0-beta3\lib\net48\LabApi.dll</HintPath>
     </Reference>
     <Reference Include="MapEditorReborn">
       <HintPath>..\refs\MapEditorReborn.dll</HintPath>
@@ -84,10 +87,7 @@
       <HintPath>..\refs\Mirror.dll</HintPath>
     </Reference>
     <Reference Include="NorthwoodLib, Version=1.3.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ExMod.Exiled.9.0.1\lib\net48\NorthwoodLib.dll</HintPath>
-    </Reference>
-    <Reference Include="PluginAPI, Version=13.1.5.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\ExMod.Exiled.9.0.1\lib\net48\PluginAPI.dll</HintPath>
+      <HintPath>..\packages\ExMod.Exiled.9.6.0-beta3\lib\net48\NorthwoodLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -114,7 +114,7 @@
       <HintPath>..\refs\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
     <Reference Include="YamlDotNet, Version=11.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e, processorArchitecture=MSIL">
-      <HintPath>..\packages\ExMod.Exiled.9.0.1\lib\net48\YamlDotNet.dll</HintPath>
+      <HintPath>..\packages\ExMod.Exiled.9.6.0-beta3\lib\net48\YamlDotNet.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -134,9 +134,12 @@
     <Compile Include="Hud\Manager.cs" />
     <Compile Include="Items\CustomItemSpawner.cs" />
     <Compile Include="Modules\Default\LightHandler.cs" />
+    <Compile Include="Modules\Gamemode Handler\Core\CoinFlip.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\MvpSystem.cs" />
+    <Compile Include="Modules\Gamemode Handler\Core\Powerup.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\RemoteKeycard.cs" />
     <Compile Include="Configs\Config.cs" />
+    <Compile Include="Modules\Lobby.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -149,6 +152,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(TargetPath)" "%25APPDATA%25\EXILED\Plugins/"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

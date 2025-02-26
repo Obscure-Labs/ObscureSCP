@@ -563,7 +563,7 @@
             Contains all the information after sending a C.A.S.S.I.E. message.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Cassie.SendingCassieMessageEventArgs.#ctor(System.String,System.Boolean,System.Boolean,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Cassie.SendingCassieMessageEventArgs.#ctor(System.String,System.Boolean,System.Boolean,System.Boolean,System.String,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Cassie.SendingCassieMessageEventArgs" /> class.
             </summary>
@@ -576,11 +576,22 @@
             <param name="makeNoise">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Cassie.SendingCassieMessageEventArgs.MakeNoise" />
             </param>
+            <param name="customAnnouncement">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Cassie.SendingCassieMessageEventArgs.IsCustomAnnouncement" />
+            </param>
+            <param name="customSubtitles">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Cassie.SendingCassieMessageEventArgs.CustomSubtitles" />
+            </param>
             <param name="isAllowed">Indicates whether the event can be executed.</param>
         </member>
         <member name="P:Exiled.Events.EventArgs.Cassie.SendingCassieMessageEventArgs.Words">
             <summary>
             Gets or sets the message.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Cassie.SendingCassieMessageEventArgs.CustomSubtitles">
+            <summary>
+            Gets or sets the message subtitles.
             </summary>
         </member>
         <member name="P:Exiled.Events.EventArgs.Cassie.SendingCassieMessageEventArgs.MakeHold">
@@ -594,6 +605,11 @@
             </summary>
         </member>
         <member name="P:Exiled.Events.EventArgs.Cassie.SendingCassieMessageEventArgs.IsAllowed">
+            <summary>
+            Gets or sets a value indicating whether the message can be sent.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Cassie.SendingCassieMessageEventArgs.IsCustomAnnouncement">
             <summary>
             Gets or sets a value indicating whether the message can be sent.
             </summary>
@@ -788,6 +804,16 @@
             Gets the <see cref="T:Exiled.API.Features.Items.Scp1344" /> triggering the event.
             </summary>
         </member>
+        <member name="T:Exiled.Events.EventArgs.Interfaces.IScp1507Event">
+            <summary>
+            Event args used for all <see cref="T:Exiled.API.Features.Roles.Scp1507Role"/> related events.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Interfaces.IScp1507Event.Scp1507">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Roles.Scp1507Role"/> triggering the event.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.EventArgs.Interfaces.IScp173Event">
             <summary>
             Event args used for all <see cref="T:Exiled.API.Features.Roles.Scp173Role" /> related events.
@@ -816,6 +842,16 @@
         <member name="P:Exiled.Events.EventArgs.Interfaces.IScp330Event.Scp330">
             <summary>
             Gets the <see cref="T:Exiled.API.Features.Items.Scp330" /> triggering the event.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.EventArgs.Interfaces.IScp559Event">
+            <summary>
+            Defines the base contract for all <see cref="T:Scp559Cake"/> related events.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Interfaces.IScp559Event.Scp559">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Scp559"/>.
             </summary>
         </member>
         <member name="T:Exiled.Events.EventArgs.Interfaces.IScp939Event">
@@ -895,19 +931,12 @@
             Contains all information before changing item attachments.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Item.ChangingAttachmentsEventArgs.#ctor(Exiled.API.Features.Player,InventorySystem.Items.Firearms.Firearm,System.UInt32,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Item.ChangingAttachmentsEventArgs.#ctor(InventorySystem.Items.Firearms.Attachments.AttachmentsChangeRequest)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Item.ChangingAttachmentsEventArgs" /> class.
             </summary>
-            <param name="player">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Item.ChangingAttachmentsEventArgs.Player" />
-            </param>
-            <param name="firearm">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Item.ChangingAttachmentsEventArgs.Firearm" />
-            </param>
-            <param name="code">The attachments code.</param>
-            <param name="isAllowed">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Item.ChangingAttachmentsEventArgs.IsAllowed" />
+            <param name="request">
+            The request received from client.
             </param>
         </member>
         <member name="P:Exiled.Events.EventArgs.Item.ChangingAttachmentsEventArgs.CurrentAttachmentIdentifiers">
@@ -948,6 +977,43 @@
             Gets the <see cref="T:Exiled.API.Features.Player" /> who's changing attachments.
             </summary>
         </member>
+        <member name="T:Exiled.Events.EventArgs.Item.ChangingMicroHIDPickupStateEventArgs">
+            <summary>
+            Contains all information before MicroHID pickup state is changed.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Item.ChangingMicroHIDPickupStateEventArgs.#ctor(InventorySystem.Items.Pickups.ItemPickupBase,InventorySystem.Items.MicroHID.Modules.MicroHidPhase,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Item.ChangingMicroHIDPickupStateEventArgs" /> class.
+            </summary>
+            <param name="microHID">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Item.ChangingMicroHIDPickupStateEventArgs.MicroHID" />
+            </param>
+            <param name="newPhase">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Item.ChangingMicroHIDPickupStateEventArgs.NewPhase" />
+            </param>
+            <param name="isAllowed">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Item.ChangingMicroHIDPickupStateEventArgs.IsAllowed" />
+            </param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Item.ChangingMicroHIDPickupStateEventArgs.MicroHID">
+            <summary>
+            Gets the MicroHID instance.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Item.ChangingMicroHIDPickupStateEventArgs.NewPhase">
+            <summary>
+            Gets or sets the new MicroHID state.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Item.ChangingMicroHIDPickupStateEventArgs.IsAllowed">
+            <summary>
+            Gets or sets a value indicating whether the MicroHID state can be changed.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Item.ChangingMicroHIDPickupStateEventArgs.Pickup">
+            <inheritdoc/>
+        </member>
         <member name="T:Exiled.Events.EventArgs.Item.ChargingJailbirdEventArgs">
             <summary>
             Contains all information before a player charges a <see cref="P:Exiled.Events.EventArgs.Item.ChargingJailbirdEventArgs.Jailbird"/>.
@@ -978,7 +1044,7 @@
         </member>
         <member name="P:Exiled.Events.EventArgs.Item.ChargingJailbirdEventArgs.IsAllowed">
             <summary>
-            Gets a value indicating whether the Jailbird can be charged.
+            Gets or sets a value indicating whether the Jailbird can be charged.
             </summary>
         </member>
         <member name="T:Exiled.Events.EventArgs.Item.KeycardInteractingEventArgs">
@@ -1354,12 +1420,39 @@
             Gets or sets a value indicating whether light containment zone decontamination can begin.
             </summary>
         </member>
+        <member name="T:Exiled.Events.EventArgs.Map.ElevatorSequencesUpdatedEventArgs">
+            <summary>
+            Contains all information after an elevator sequence is updated.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Map.ElevatorSequencesUpdatedEventArgs.#ctor(Interactables.Interobjects.ElevatorChamber,Interactables.Interobjects.ElevatorChamber.ElevatorSequence)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Map.ElevatorSequencesUpdatedEventArgs"/> class.
+            </summary>
+            <param name="elevatorChamber"><inheritdoc cref="T:Interactables.Interobjects.ElevatorChamber"/></param>
+            <param name="sequence"><inheritdoc cref="T:Interactables.Interobjects.ElevatorChamber.ElevatorSequence"/></param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Map.ElevatorSequencesUpdatedEventArgs.Elevator">
+            <summary>
+            Gets the elevator chamber that triggered this event.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Map.ElevatorSequencesUpdatedEventArgs.Lift">
+            <summary>
+            Gets the lift that triggered this event.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Map.ElevatorSequencesUpdatedEventArgs.Sequence">
+            <summary>
+            Gets the new sequence of the elevator.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.EventArgs.Map.ExplodingGrenadeEventArgs">
             <summary>
             Contains all information before a grenade explodes.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Map.ExplodingGrenadeEventArgs.#ctor(Footprinting.Footprint,UnityEngine.Vector3,InventorySystem.Items.ThrowableProjectiles.ExplosionGrenade,UnityEngine.Collider[])">
+        <member name="M:Exiled.Events.EventArgs.Map.ExplodingGrenadeEventArgs.#ctor(Footprinting.Footprint,UnityEngine.Vector3,InventorySystem.Items.ThrowableProjectiles.ExplosionGrenade,UnityEngine.Collider[],ExplosionType)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Map.ExplodingGrenadeEventArgs"/> class.
             </summary>
@@ -1367,6 +1460,7 @@
             <param name="position"><inheritdoc cref="P:Exiled.Events.EventArgs.Map.ExplodingGrenadeEventArgs.Position"/></param>
             <param name="grenade"><inheritdoc cref="P:Exiled.Events.EventArgs.Map.ExplodingGrenadeEventArgs.Projectile"/></param>
             <param name="targets"><inheritdoc cref="P:Exiled.Events.EventArgs.Map.ExplodingGrenadeEventArgs.TargetsToAffect"/></param>
+            <param name="explosionType"><inheritdoc cref="P:Exiled.Events.EventArgs.Map.ExplodingGrenadeEventArgs.ExplosionType"/></param>
         </member>
         <member name="M:Exiled.Events.EventArgs.Map.ExplodingGrenadeEventArgs.#ctor(Exiled.API.Features.Player,InventorySystem.Items.ThrowableProjectiles.EffectGrenade,System.Collections.Generic.HashSet{Exiled.API.Features.Player},System.Boolean)">
             <summary>
@@ -1394,6 +1488,12 @@
             <summary>
             Gets the position where the grenade is exploding.
             </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Map.ExplodingGrenadeEventArgs.ExplosionType">
+            <summary>
+            Gets or sets the Explosion type.
+            </summary>
+            <remarks>Explosion that are not from <see cref="T:Exiled.API.Features.Pickups.Projectiles.ExplosionGrenadeProjectile"/> will return <see cref="F:ExplosionType.Custom"/> and can't be modified.</remarks>
         </member>
         <member name="P:Exiled.Events.EventArgs.Map.ExplodingGrenadeEventArgs.TargetsToAffect">
             <summary>
@@ -2104,6 +2204,9 @@
             Gets a new disruptor's fire mode.
             </summary>
         </member>
+        <member name="P:Exiled.Events.EventArgs.Player.ChangingDisruptorModeEventArgs.Player">
+            <inheritdoc />
+        </member>
         <member name="T:Exiled.Events.EventArgs.Player.ChangingEmotionEventArgs">
             <summary>
             Contains all the information before the player's emotion changes.
@@ -2238,7 +2341,7 @@
             Contains all information before MicroHID state is changed.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.ChangingMicroHIDStateEventArgs.#ctor(Exiled.API.Features.Items.Item,InventorySystem.Items.MicroHID.Modules.MicroHidPhase,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Player.ChangingMicroHIDStateEventArgs.#ctor(InventorySystem.Items.ItemBase,InventorySystem.Items.MicroHID.Modules.MicroHidPhase,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.ChangingMicroHIDStateEventArgs" /> class.
             </summary>
@@ -2268,6 +2371,9 @@
             </summary>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.ChangingMicroHIDStateEventArgs.Item">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.ChangingMicroHIDStateEventArgs.Player">
             <inheritdoc/>
         </member>
         <member name="T:Exiled.Events.EventArgs.Player.ChangingMoveStateEventArgs">
@@ -2790,20 +2896,44 @@
             Gets the attacker.
             </summary>
         </member>
+        <member name="T:Exiled.Events.EventArgs.Player.DrinkingCoffeeEventArgs">
+            <summary>
+            Contains all information before player interacts with coffee cup.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Player.DrinkingCoffeeEventArgs.#ctor(Exiled.API.Features.Player,Exiled.API.Features.Coffee,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.DrinkingCoffeeEventArgs"/> class.
+            </summary>
+            <param name="player"><inheritdoc cref="P:Exiled.Events.EventArgs.Player.DrinkingCoffeeEventArgs.Player"/></param>
+            <param name="coffee"><inheritdoc cref="P:Exiled.Events.EventArgs.Player.DrinkingCoffeeEventArgs.Coffee"/></param>
+            <param name="isAllowed"><inheritdoc cref="P:Exiled.Events.EventArgs.Player.DrinkingCoffeeEventArgs.IsAllowed"/></param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.DrinkingCoffeeEventArgs.Coffee">
+            <summary>
+            Gets the coffee with which player is interacting.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.DrinkingCoffeeEventArgs.Player">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.DrinkingCoffeeEventArgs.IsAllowed">
+            <inheritdoc/>
+        </member>
         <member name="T:Exiled.Events.EventArgs.Player.DroppedAmmoEventArgs">
             <summary>
             Contains all information after a player drops ammo.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.DroppedAmmoEventArgs.#ctor(Exiled.API.Features.Player,Exiled.API.Enums.AmmoType,System.UInt16,System.Collections.Generic.List{InventorySystem.Items.Firearms.Ammo.AmmoPickup})">
+        <member name="M:Exiled.Events.EventArgs.Player.DroppedAmmoEventArgs.#ctor(Exiled.API.Features.Player,ItemType,System.UInt16,System.Collections.Generic.List{InventorySystem.Items.Firearms.Ammo.AmmoPickup})">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.DroppedAmmoEventArgs" /> class.
             </summary>
             <param name="player">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.DroppedAmmoEventArgs.Player" />
             </param>
-            <param name="ammoType">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.DroppedAmmoEventArgs.AmmoType" />
+            <param name="itemType">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.DroppedAmmoEventArgs.ItemType"/>
             </param>
             <param name="amount">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.DroppedAmmoEventArgs.Amount" />
@@ -2811,6 +2941,11 @@
             <param name="ammoPickups">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.DroppedAmmoEventArgs.AmmoPickups" />
             </param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.DroppedAmmoEventArgs.ItemType">
+            <summary>
+            Gets the type of dropped item instead of <see cref="T:Exiled.API.Enums.AmmoType"/>.
+            </summary>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.DroppedAmmoEventArgs.AmmoType">
             <summary>
@@ -2867,15 +3002,15 @@
             Contains all information before a player drops ammo.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.DroppingAmmoEventArgs.#ctor(Exiled.API.Features.Player,Exiled.API.Enums.AmmoType,System.UInt16,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Player.DroppingAmmoEventArgs.#ctor(Exiled.API.Features.Player,ItemType,System.UInt16,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.DroppingAmmoEventArgs" /> class.
             </summary>
             <param name="player">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.DroppingAmmoEventArgs.Player" />
             </param>
-            <param name="ammoType">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.DroppingAmmoEventArgs.AmmoType" />
+            <param name="itemType">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.DroppingAmmoEventArgs.ItemType"/>
             </param>
             <param name="amount">
             <inheritdoc cref="T:System.Int32" />
@@ -2883,6 +3018,12 @@
             <param name="isAllowed">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.DroppingAmmoEventArgs.IsAllowed" />
             </param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.DroppingAmmoEventArgs.ItemType">
+            <summary>
+            Gets the type of item being dropped instead of <see cref="T:Exiled.API.Enums.AmmoType"/>.
+            For example, if the plugin gives the player one of the items instead of ammo.
+            </summary>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.DroppingAmmoEventArgs.AmmoType">
             <summary>
@@ -3188,11 +3329,11 @@
             Contains all information before a player escapes.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.EscapingEventArgs.#ctor(Exiled.API.Features.Player,PlayerRoles.RoleTypeId,Exiled.API.Enums.EscapeScenario)">
+        <member name="M:Exiled.Events.EventArgs.Player.EscapingEventArgs.#ctor(ReferenceHub,PlayerRoles.RoleTypeId,Exiled.API.Enums.EscapeScenario)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.EscapingEventArgs" /> class.
             </summary>
-            <param name="player">
+            <param name="referenceHub">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.EscapingEventArgs.Player" />
             </param>
             <param name="newRole">
@@ -3227,16 +3368,24 @@
             Contains all information before a player escapes the pocket dimension.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.EscapingPocketDimensionEventArgs.#ctor(Exiled.API.Features.Player,UnityEngine.Vector3)">
+        <member name="M:Exiled.Events.EventArgs.Player.EscapingPocketDimensionEventArgs.#ctor(PocketDimensionTeleport,Exiled.API.Features.Player,UnityEngine.Vector3)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.EscapingPocketDimensionEventArgs" /> class.
             </summary>
+            <param name="pocketDimensionTeleport">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.EscapingPocketDimensionEventArgs.Teleporter" />
+            </param>
             <param name="player">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.EscapingPocketDimensionEventArgs.Player" />
             </param>
             <param name="position">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.EscapingPocketDimensionEventArgs.TeleportPosition" />
             </param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.EscapingPocketDimensionEventArgs.Teleporter">
+            <summary>
+            Gets the PocketDimensionTeleport the player walked into.
+            </summary>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.EscapingPocketDimensionEventArgs.Player">
             <summary>
@@ -3284,15 +3433,15 @@
             Contains all information before a player dies from walking through an incorrect exit in the pocket dimension.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.FailingEscapePocketDimensionEventArgs.#ctor(Exiled.API.Features.Player,PocketDimensionTeleport,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Player.FailingEscapePocketDimensionEventArgs.#ctor(PocketDimensionTeleport,Exiled.API.Features.Player,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.FailingEscapePocketDimensionEventArgs" /> class.
             </summary>
+            <param name="pocketDimensionTeleport">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.FailingEscapePocketDimensionEventArgs.Teleporter" />
+            </param>
             <param name="player">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.FailingEscapePocketDimensionEventArgs.Player" />
-            </param>
-            <param name="teleporter">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.FailingEscapePocketDimensionEventArgs.Teleporter" />
             </param>
             <param name="isAllowed">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.FailingEscapePocketDimensionEventArgs.IsAllowed" />
@@ -3318,11 +3467,11 @@
             Contains all information before a player flips a coin.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.FlippingCoinEventArgs.#ctor(Exiled.API.Features.Player,InventorySystem.Items.Coin.Coin,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Player.FlippingCoinEventArgs.#ctor(ReferenceHub,InventorySystem.Items.Coin.Coin,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.FlippingCoinEventArgs" /> class.
             </summary>
-            <param name="player">
+            <param name="referenceHub">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.FlippingCoinEventArgs.Player" />
             </param>
             <param name="coin">
@@ -3445,11 +3594,11 @@
             Contains all information before a player gets damaged.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.HurtEventArgs.#ctor(Exiled.API.Features.Player,PlayerStatsSystem.DamageHandlerBase,PlayerStatsSystem.DamageHandlerBase.HandlerOutput)">
+        <member name="M:Exiled.Events.EventArgs.Player.HurtEventArgs.#ctor(ReferenceHub,PlayerStatsSystem.DamageHandlerBase,PlayerStatsSystem.DamageHandlerBase.HandlerOutput)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.HurtEventArgs" /> class.
             </summary>
-            <param name="target">
+            <param name="referenceHub">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.HurtEventArgs.Player" />
             </param>
             <param name="damageHandler">
@@ -3539,7 +3688,7 @@
             Contains all information before a player interacts with a door.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.InteractingDoorEventArgs.#ctor(Exiled.API.Features.Player,Interactables.Interobjects.DoorUtils.DoorVariant,System.Boolean,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Player.InteractingDoorEventArgs.#ctor(Exiled.API.Features.Player,Interactables.Interobjects.DoorUtils.DoorVariant,System.Byte,System.Boolean,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.InteractingDoorEventArgs" /> class.
             </summary>
@@ -3548,6 +3697,9 @@
             </param>
             <param name="door">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.InteractingDoorEventArgs.Door" />
+            </param>
+            <param name="colliderId">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.InteractingDoorEventArgs.ColliderId"/>
             </param>
             <param name="isAllowed">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.InteractingDoorEventArgs.IsAllowed" />
@@ -3568,7 +3720,17 @@
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.InteractingDoorEventArgs.Door">
             <summary>
-            Gets or sets the <see cref="T:Exiled.API.Features.Doors.Door" /> instance.
+            Gets or sets the <see cref="T:Exiled.API.Features.Doors.Door"/> instance.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.InteractingDoorEventArgs.Collider">
+            <summary>
+            Gets the <see cref="T:Interactables.InteractableCollider"/> instance that the player interacted with.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.InteractingDoorEventArgs.ColliderId">
+            <summary>
+            Gets the ColliderId of <see cref="T:Interactables.InteractableCollider"/> that the player interacted with.
             </summary>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.InteractingDoorEventArgs.Player">
@@ -3581,7 +3743,7 @@
             Contains all information before a player interacts with an elevator.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.InteractingElevatorEventArgs.#ctor(Exiled.API.Features.Player,Interactables.Interobjects.ElevatorChamber,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Player.InteractingElevatorEventArgs.#ctor(Exiled.API.Features.Player,Interactables.Interobjects.ElevatorChamber,System.Boolean,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.InteractingElevatorEventArgs" /> class.
             </summary>
@@ -3590,6 +3752,9 @@
             </param>
             <param name="elevator">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.InteractingElevatorEventArgs.Elevator" />
+            </param>
+            <param name="isCalledFromInside">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.InteractingElevatorEventArgs.IsCalledFromInside" />
             </param>
             <param name="isAllowed">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.InteractingElevatorEventArgs.IsAllowed" />
@@ -3608,6 +3773,11 @@
         <member name="P:Exiled.Events.EventArgs.Player.InteractingElevatorEventArgs.IsAllowed">
             <summary>
             Gets or sets a value indicating whether the player can interact with the elevator.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.InteractingElevatorEventArgs.IsCalledFromInside">
+            <summary>
+            Gets a value indicating whether the player as interact with the elevator from the inside.
             </summary>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.InteractingElevatorEventArgs.Player">
@@ -4065,11 +4235,11 @@
             Contains all information before a player picks up an item.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.PickingUpItemEventArgs.#ctor(Exiled.API.Features.Player,InventorySystem.Items.Pickups.ItemPickupBase,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Player.PickingUpItemEventArgs.#ctor(ReferenceHub,InventorySystem.Items.Pickups.ItemPickupBase,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.PickingUpItemEventArgs" /> class.
             </summary>
-            <param name="player">
+            <param name="referenceHub">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.PickingUpItemEventArgs.Player" />
             </param>
             <param name="pickup">
@@ -4183,54 +4353,65 @@
             Gets a value indicating whether the player can be authenticated.
             </summary>
         </member>
-        <member name="P:Exiled.Events.EventArgs.Player.PreAuthenticatingEventArgs.CachedPreauthData">
-            <summary>
-            Gets or sets the cached <see cref="P:Exiled.Events.EventArgs.Player.PreAuthenticatingEventArgs.CachedPreauthData"/> that is returned back to the NwPluginAPI.
-            </summary>
-        </member>
         <member name="M:Exiled.Events.EventArgs.Player.PreAuthenticatingEventArgs.Delay(System.Byte,System.Boolean)">
             <summary>
-            Delays a pre-authentincating player.
+            Delays the connection.
             </summary>
-            <param name="seconds">The seconds of delay.</param>
-            <param name="isForced">Indicates whether the delay is forced.</param>
+            <param name="seconds">The delay in seconds.</param>
+            <param name="isForced">Indicates whether the player has to be rejected forcefully.</param>
         </member>
         <member name="M:Exiled.Events.EventArgs.Player.PreAuthenticatingEventArgs.Redirect(System.UInt16,System.Boolean)">
             <summary>
-            Redirects a pre-authentincating player.
+            Rejects the player and redirects them to another server port.
             </summary>
-            <param name="port">The redirection port.</param>
-            <param name="isForced">Indicates whether the redirection is forced.</param>
+            <param name="port">The new server port.</param>
+            <param name="isForced">Indicates whether the player has to be rejected forcefully.</param>
         </member>
         <member name="M:Exiled.Events.EventArgs.Player.PreAuthenticatingEventArgs.RejectBanned(System.String,System.DateTime,System.Boolean)">
             <summary>
-            Rejects a pre-authentincating banned player.
+            Rejects a player who's trying to authenticate.
             </summary>
-            <param name="banReason">The ban reason.</param>>
-            <param name="expiration">The ban <see cref="T:System.DateTime"/> expiration.</param>
-            <param name="isForced">Indicates whether the rejection is forced.</param>
+            <param name="banReason">The ban reason.</param>
+            <param name="expiration">The ban expiration time.</param>
+            <param name="isForced">Indicates whether the player has to be rejected forcefully.</param>
         </member>
         <member name="M:Exiled.Events.EventArgs.Player.PreAuthenticatingEventArgs.RejectBanned(System.String,System.Int64,System.Boolean)">
             <summary>
-            Rejects a pre-authentincating banned player.
+            Rejects a player who's trying to authenticate.
             </summary>
             <param name="banReason">The ban reason.</param>
-            <param name="expiration">The ban expiration.</param>
-            <param name="isForced">Indicates whether the rejection is forced.</param>
+            <param name="expiration">The ban expiration time in .NET Ticks.</param>
+            <param name="isForced">Indicates whether the player has to be rejected forcefully.</param>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Player.PreAuthenticatingEventArgs.Reject(LiteNetLib.Utils.NetDataWriter,System.Boolean)">
+            <summary>
+            Rejects a player who's trying to authenticate.
+            </summary>
+            <param name="writer">The <see cref="T:LiteNetLib.Utils.NetDataWriter" /> instance.</param>
+            <param name="isForced">Indicates whether the player has to be rejected forcefully.</param>
         </member>
         <member name="M:Exiled.Events.EventArgs.Player.PreAuthenticatingEventArgs.Reject(System.String,System.Boolean)">
             <summary>
-            Rejects a pre-authentincating player.
+            Rejects a player who's trying to authenticate.
             </summary>
-            <param name="customReason">The rejection custom reason.</param>
-            <param name="isForced">Indicates whether the rejection is forced.</param>
+            <param name="rejectionReason">The custom rejection reason.</param>
+            <param name="isForced">Indicates whether the player has to be rejected forcefully.</param>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.PreAuthenticatingEventArgs.Reject(RejectionReason,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Player.PreAuthenticatingEventArgs.ForceReject">
             <summary>
-            Rejects a pre-authentincating player.
+            Rejects a player who's trying to authenticate.
             </summary>
-            <param name="reason">The <see cref="T:RejectionReason"/>.</param>
-            <param name="isForced">Indicates whether the rejection is forced.</param>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Player.PreAuthenticatingEventArgs.Reject(RejectionReason,System.Boolean,System.String,System.Int64,System.Byte,System.UInt16)">
+            <summary>
+            Rejects a player who's trying to authenticate.
+            </summary>
+            <param name="rejectionReason">The rejection reason.</param>
+            <param name="isForced">Indicates whether the player has to be rejected forcefully.</param>
+            <param name="customReason">The custom rejection reason (Banned and Custom reasons only).</param>
+            <param name="expiration">The ban expiration ticks (Banned reason only).</param>
+            <param name="seconds">The delay in seconds (Delay reason only).</param>
+            <param name="port">The redirection port (Redirect reason only).</param>
         </member>
         <member name="T:Exiled.Events.EventArgs.Player.ReceivingEffectEventArgs">
             <summary>
@@ -4278,23 +4459,43 @@
             Gets or sets a value indicating whether the effect will be applied.
             </summary>
         </member>
+        <member name="T:Exiled.Events.EventArgs.Player.ReloadedWeaponEventArgs">
+            <summary>
+            Contains all information after a player's weapon is reloaded.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Player.ReloadedWeaponEventArgs.#ctor(InventorySystem.Items.Firearms.Firearm)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.ReloadedWeaponEventArgs" /> class.
+            </summary>
+            <param name="firearm">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.ReloadedWeaponEventArgs.Firearm" />
+            </param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.ReloadedWeaponEventArgs.Firearm">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Items.Firearm" /> being reloaded.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.ReloadedWeaponEventArgs.Item">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.ReloadedWeaponEventArgs.Player">
+            <summary>
+            Gets the player who's reloading the weapon.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.EventArgs.Player.ReloadingWeaponEventArgs">
             <summary>
             Contains all information before a player's weapon is reloaded.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.ReloadingWeaponEventArgs.#ctor(Exiled.API.Features.Player,Exiled.API.Features.Items.Firearm,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Player.ReloadingWeaponEventArgs.#ctor(InventorySystem.Items.Firearms.Firearm)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.ReloadingWeaponEventArgs" /> class.
             </summary>
-            <param name="player">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.ReloadingWeaponEventArgs.Player" />
-            </param>
             <param name="firearm">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.ReloadingWeaponEventArgs.Firearm" />
-            </param>
-            <param name="isAllowed">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.ReloadingWeaponEventArgs.IsAllowed" />
             </param>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.ReloadingWeaponEventArgs.IsAllowed">
@@ -4383,15 +4584,15 @@
             Contains all information when checking if a player has a reserved slot.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.ReservedSlotsCheckEventArgs.#ctor(System.String,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Player.ReservedSlotsCheckEventArgs.#ctor(System.Boolean,System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.ReservedSlotsCheckEventArgs" /> class.
             </summary>
-            <param name="userId">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.ReservedSlotsCheckEventArgs.UserId" />
-            </param>
             <param name="hasReservedSlot">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.ReservedSlotsCheckEventArgs.HasReservedSlot" />
+            </param>
+            <param name="userId">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.ReservedSlotsCheckEventArgs.UserId" />
             </param>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.ReservedSlotsCheckEventArgs.UserId">
@@ -4402,6 +4603,11 @@
         <member name="P:Exiled.Events.EventArgs.Player.ReservedSlotsCheckEventArgs.HasReservedSlot">
             <summary>
             Gets a value indicating whether the player has a reserved slot in the base game system.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.ReservedSlotsCheckEventArgs.IsAllowed">
+            <summary>
+            Gets or sets a value indicating whether the player is allowed to connect.
             </summary>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.ReservedSlotsCheckEventArgs.Result">
@@ -4553,6 +4759,119 @@
         <member name="P:Exiled.Events.EventArgs.Player.SendingAdminChatMessageEventsArgs.Player">
             <summary>
             Gets the player who's sending the message.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.EventArgs.Player.SendingValidCommandEventArgs">
+            <summary>
+            Contains all information before a player sends the command.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Player.SendingValidCommandEventArgs.#ctor(Exiled.API.Features.Player,CommandSystem.ICommand,LabApi.Features.Enums.CommandType,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.SendingValidCommandEventArgs" /> class.
+            </summary>
+            <param name="player">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.SendingValidCommandEventArgs.Player" />
+            </param>
+            <param name="command">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.SendingValidCommandEventArgs.Command" />
+            </param>
+            <param name="commandType">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.SendingValidCommandEventArgs.Type" />
+            </param>
+            <param name="query">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.SendingValidCommandEventArgs.Query" />
+            </param>
+            <param name="response">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.SendingValidCommandEventArgs.Response" />
+            </param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SendingValidCommandEventArgs.IsAllowed">
+            <summary>
+            Gets or sets a value indicating whether the player can send the command.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SendingValidCommandEventArgs.Response">
+            <summary>
+            Gets or sets the response of the command. If this value is null, the response will stay unchanged.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SendingValidCommandEventArgs.Player">
+            <summary>
+            Gets the player who is sending the command.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SendingValidCommandEventArgs.Query">
+            <summary>
+            Gets the command query.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SendingValidCommandEventArgs.Type">
+            <summary>
+            Gets the command type.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SendingValidCommandEventArgs.Command">
+            <summary>
+            Gets the command interface.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.EventArgs.Player.SentValidCommandEventArgs">
+            <summary>
+            Contains all information after a player sends the command.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Player.SentValidCommandEventArgs.#ctor(Exiled.API.Features.Player,CommandSystem.ICommand,LabApi.Features.Enums.CommandType,System.String,System.String,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.SentValidCommandEventArgs" /> class.
+            </summary>
+            <param name="player">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.SentValidCommandEventArgs.Player" />
+            </param>
+            <param name="command">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.SentValidCommandEventArgs.Command" />
+            </param>
+            <param name="commandType">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.SentValidCommandEventArgs.Type" />
+            </param>
+            <param name="query">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.SentValidCommandEventArgs.Query" />
+            </param>
+            <param name="response">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.SentValidCommandEventArgs.Response" />
+            </param>
+            <param name="result">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.SentValidCommandEventArgs.Result" />
+            </param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SentValidCommandEventArgs.Result">
+            <summary>
+            Gets a value indicating whether the command succeeded.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SentValidCommandEventArgs.Response">
+            <summary>
+            Gets the response of the command.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SentValidCommandEventArgs.Player">
+            <summary>
+            Gets the player who is sending the command.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SentValidCommandEventArgs.Query">
+            <summary>
+            Gets the command query.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SentValidCommandEventArgs.Type">
+            <summary>
+            Gets the command type.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SentValidCommandEventArgs.Command">
+            <summary>
+            Gets the command interface.
             </summary>
         </member>
         <member name="T:Exiled.Events.EventArgs.Player.ShootingEventArgs">
@@ -4864,7 +5183,12 @@
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.SpawningRagdollEventArgs.Scale">
             <summary>
-            Gets or sets the ragdoll's scale.
+            Gets or sets the ragdoll's scale with RagdollData.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SpawningRagdollEventArgs.RagdollScale">
+            <summary>
+            Gets or sets the ragdoll's scale with GameObject.
             </summary>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.SpawningRagdollEventArgs.Role">
@@ -5062,11 +5386,11 @@
             Contains all information before a player toggles noclip.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.TogglingNoClipEventArgs.#ctor(Exiled.API.Features.Player,System.Boolean,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Player.TogglingNoClipEventArgs.#ctor(ReferenceHub,System.Boolean,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.TogglingNoClipEventArgs" /> class.
             </summary>
-            <param name="player">
+            <param name="referenceHub">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.TogglingNoClipEventArgs.Player" />
             </param>
             <param name="newValue">
@@ -5083,7 +5407,7 @@
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.TogglingNoClipEventArgs.IsEnabled">
             <summary>
-            Gets or sets a value indicating whether the noclip mode will be enabled.
+            Gets a value indicating whether the noclip mode will be enabled.
             </summary>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.TogglingNoClipEventArgs.IsAllowed">
@@ -5287,23 +5611,43 @@
             Gets or sets a value indicating whether the tesla will be deactivated.
             </summary>
         </member>
+        <member name="T:Exiled.Events.EventArgs.Player.UnloadedWeaponEventArgs">
+            <summary>
+            Contains all information after a player's weapon is unloaded.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Player.UnloadedWeaponEventArgs.#ctor(InventorySystem.Items.Firearms.Firearm)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.UnloadedWeaponEventArgs" /> class.
+            </summary>
+            <param name="firearm">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.UnloadedWeaponEventArgs.Firearm" />
+            </param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.UnloadedWeaponEventArgs.Firearm">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Items.Firearm" /> being unloaded.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.UnloadedWeaponEventArgs.Item">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.UnloadedWeaponEventArgs.Player">
+            <summary>
+            Gets the player who's unloading the weapon.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.EventArgs.Player.UnloadingWeaponEventArgs">
             <summary>
             Contains all information before a player's weapon is unloaded.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.UnloadingWeaponEventArgs.#ctor(Exiled.API.Features.Player,Exiled.API.Features.Items.Firearm,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Player.UnloadingWeaponEventArgs.#ctor(InventorySystem.Items.Firearms.Firearm)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.UnloadingWeaponEventArgs" /> class.
             </summary>
-            <param name="player">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.UnloadingWeaponEventArgs.Player" />
-            </param>
             <param name="firearm">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.UnloadingWeaponEventArgs.Firearm" />
-            </param>
-            <param name="isAllowed">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.UnloadingWeaponEventArgs.IsAllowed" />
             </param>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.UnloadingWeaponEventArgs.IsAllowed">
@@ -5496,20 +5840,20 @@
             Gets or sets a value indicating whether the MicroHID energy can be changed.
             </summary>
         </member>
+        <member name="P:Exiled.Events.EventArgs.Player.UsingMicroHIDEnergyEventArgs.Player">
+            <inheritdoc/>
+        </member>
         <member name="T:Exiled.Events.EventArgs.Player.UsingRadioBatteryEventArgs">
             <summary>
             Contains all information before radio battery charge is changed.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.UsingRadioBatteryEventArgs.#ctor(InventorySystem.Items.Radio.RadioItem,Exiled.API.Features.Player,System.Single,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Player.UsingRadioBatteryEventArgs.#ctor(InventorySystem.Items.Radio.RadioItem,System.Single,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.UsingRadioBatteryEventArgs" /> class.
             </summary>
             <param name="radio">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.UsingRadioBatteryEventArgs.Radio" />
-            </param>
-            <param name="player">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.UsingRadioBatteryEventArgs.Player" />
             </param>
             <param name="drain">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.UsingRadioBatteryEventArgs.Drain" />
@@ -6189,6 +6533,53 @@
             Gets or sets a value indicating whether SCP-079 can lockdown a room.
             </summary>
         </member>
+        <member name="T:Exiled.Events.EventArgs.Scp079.LosingSignalEventArgs">
+            <summary>
+            Contains all information before SCP-079 loses a signal by SCP-2176.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Scp079.LosingSignalEventArgs.#ctor(ReferenceHub)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Scp079.LosingSignalEventArgs" /> class.
+            </summary>
+            <param name="player">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Scp079.LosingSignalEventArgs.Player" />
+            </param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp079.LosingSignalEventArgs.Player">
+            <summary>
+            Gets the player who's controlling SCP-079.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp079.LosingSignalEventArgs.IsAllowed">
+            <summary>
+            Gets or sets a value indicating whether or not SCP-079 will lose his signal.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp079.LosingSignalEventArgs.Scp079">
+            <inheritdoc/>
+        </member>
+        <member name="T:Exiled.Events.EventArgs.Scp079.LostSignalEventArgs">
+            <summary>
+            Contains all information before SCP-079 loses a signal by SCP-2176.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Scp079.LostSignalEventArgs.#ctor(ReferenceHub)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Scp079.LostSignalEventArgs" /> class.
+            </summary>
+            <param name="player">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Scp079.LostSignalEventArgs.Player" />
+            </param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp079.LostSignalEventArgs.Player">
+            <summary>
+            Gets the player who's controlling SCP-079.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp079.LostSignalEventArgs.Scp079">
+            <inheritdoc/>
+        </member>
         <member name="T:Exiled.Events.EventArgs.Scp079.PingingEventArgs">
             <summary>
             Contains all information before SCP-079 pings a location.
@@ -6378,88 +6769,6 @@
         <member name="P:Exiled.Events.EventArgs.Scp079.RoomBlackoutEventArgs.IsAllowed">
             <summary>
             Gets or sets a value indicating whether SCP-079 can black out the room.
-            </summary>
-        </member>
-        <member name="T:Exiled.Events.EventArgs.Scp079.StartingSpeakerEventArgs">
-            <summary>
-            Contains all information before SCP-079 uses a speaker.
-            </summary>
-        </member>
-        <member name="M:Exiled.Events.EventArgs.Scp079.StartingSpeakerEventArgs.#ctor(Exiled.API.Features.Player,Exiled.API.Features.Room,System.Single,System.Boolean)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Scp079.StartingSpeakerEventArgs" /> class.
-            </summary>
-            <param name="player">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Scp079.StartingSpeakerEventArgs.Player" />
-            </param>
-            <param name="room">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Scp079.StartingSpeakerEventArgs.Room" />
-            </param>
-            <param name="auxiliaryPowerCost">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Scp079.StartingSpeakerEventArgs.AuxiliaryPowerCost" />
-            </param>
-            <param name="isAllowed">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Scp079.StartingSpeakerEventArgs.IsAllowed" />
-            </param>
-        </member>
-        <member name="P:Exiled.Events.EventArgs.Scp079.StartingSpeakerEventArgs.Player">
-            <summary>
-            Gets the player who's controlling SCP-079.
-            </summary>
-        </member>
-        <member name="P:Exiled.Events.EventArgs.Scp079.StartingSpeakerEventArgs.Scp079">
-            <inheritdoc/>
-        </member>
-        <member name="P:Exiled.Events.EventArgs.Scp079.StartingSpeakerEventArgs.Room">
-            <summary>
-            Gets the room that the speaker is located in.
-            </summary>
-        </member>
-        <member name="P:Exiled.Events.EventArgs.Scp079.StartingSpeakerEventArgs.AuxiliaryPowerCost">
-            <summary>
-            Gets or sets the amount of auxiliary power required to use a speaker through SCP-079.
-            </summary>
-        </member>
-        <member name="P:Exiled.Events.EventArgs.Scp079.StartingSpeakerEventArgs.IsAllowed">
-            <summary>
-            Gets or sets a value indicating whether SCP-079 can use the speaker.
-            </summary>
-        </member>
-        <member name="T:Exiled.Events.EventArgs.Scp079.StoppingSpeakerEventArgs">
-            <summary>
-            Contains all information before SCP-079 finishes using a speaker.
-            </summary>
-        </member>
-        <member name="M:Exiled.Events.EventArgs.Scp079.StoppingSpeakerEventArgs.#ctor(Exiled.API.Features.Player,Exiled.API.Features.Room,System.Boolean)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Scp079.StoppingSpeakerEventArgs" /> class.
-            </summary>
-            <param name="player">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Scp079.StoppingSpeakerEventArgs.Player" />
-            </param>
-            <param name="room">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Scp079.StoppingSpeakerEventArgs.Room" />
-            </param>
-            <param name="isAllowed">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Scp079.StoppingSpeakerEventArgs.IsAllowed" />
-            </param>
-        </member>
-        <member name="P:Exiled.Events.EventArgs.Scp079.StoppingSpeakerEventArgs.Player">
-            <summary>
-            Gets the player who's controlling SCP-079.
-            </summary>
-        </member>
-        <member name="P:Exiled.Events.EventArgs.Scp079.StoppingSpeakerEventArgs.Scp079">
-            <inheritdoc/>
-        </member>
-        <member name="P:Exiled.Events.EventArgs.Scp079.StoppingSpeakerEventArgs.Room">
-            <summary>
-            Gets the room that the speaker is located in.
-            </summary>
-        </member>
-        <member name="P:Exiled.Events.EventArgs.Scp079.StoppingSpeakerEventArgs.IsAllowed">
-            <summary>
-            Gets or sets a value indicating whether SCP-079 can stop using the speaker.
             </summary>
         </member>
         <member name="T:Exiled.Events.EventArgs.Scp079.TriggeringDoorEventArgs">
@@ -7080,6 +7389,98 @@
         <member name="P:Exiled.Events.EventArgs.Scp1344.TryingDeactivatingEventArgs.IsAllowed">
             <inheritdoc/>
         </member>
+        <member name="T:Exiled.Events.EventArgs.Scp1507.AttackingDoorEventArgs">
+            <summary>
+            Contains all information before SCP-1507 attacks door.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Scp1507.AttackingDoorEventArgs.#ctor(Exiled.API.Features.Player,Interactables.Interobjects.DoorUtils.DoorVariant,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Scp1507.AttackingDoorEventArgs"/> class.
+            </summary>
+            <param name="player"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp1507.AttackingDoorEventArgs.Player"/></param>
+            <param name="doorVariant"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp1507.AttackingDoorEventArgs.Door"/></param>
+            <param name="isAllowed"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp1507.AttackingDoorEventArgs.IsAllowed"/></param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp1507.AttackingDoorEventArgs.Player">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp1507.AttackingDoorEventArgs.Scp1507">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp1507.AttackingDoorEventArgs.IsAllowed">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp1507.AttackingDoorEventArgs.Door">
+            <inheritdoc/>
+        </member>
+        <member name="T:Exiled.Events.EventArgs.Scp1507.ScreamingEventArgs">
+            <summary>
+            Contains all information before SCP-1507 screams.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Scp1507.ScreamingEventArgs.#ctor(Exiled.API.Features.Player,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Scp1507.ScreamingEventArgs"/> class.
+            </summary>
+            <param name="player"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp1507.ScreamingEventArgs.Player"/></param>
+            <param name="isAllowed"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp1507.ScreamingEventArgs.IsAllowed"/></param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp1507.ScreamingEventArgs.Player">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp1507.ScreamingEventArgs.Scp1507">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp1507.ScreamingEventArgs.IsAllowed">
+            <inheritdoc/>
+        </member>
+        <member name="T:Exiled.Events.EventArgs.Scp1507.SpawningFlamingosEventArgs">
+            <summary>
+            Contains all information before flamingos get spawned.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Scp1507.SpawningFlamingosEventArgs.#ctor(Exiled.API.Features.Player,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Scp1507.SpawningFlamingosEventArgs"/> class.
+            </summary>
+            <param name="newAlpha"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp1507.SpawningFlamingosEventArgs.Player"/></param>
+            <param name="isAllowed"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp1507.SpawningFlamingosEventArgs.IsAllowed"/></param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp1507.SpawningFlamingosEventArgs.Player">
+            <summary>
+            Gets or sets the player which is being spawned as a new alpha flamingo.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp1507.SpawningFlamingosEventArgs.SpawnablePlayers">
+            <summary>
+            Gets or sets all enqueued spawnable players.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp1507.SpawningFlamingosEventArgs.IsAllowed">
+            <inheritdoc />
+        </member>
+        <member name="T:Exiled.Events.EventArgs.Scp1507.UsingTapeEventArgs">
+            <summary>
+            Contains all information before SCP-1507 screams.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Scp1507.UsingTapeEventArgs.#ctor(InventorySystem.Items.ItemBase,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Scp1507.UsingTapeEventArgs"/> class.
+            </summary>
+            <param name="itemBase"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp1507.UsingTapeEventArgs.Item"/></param>
+            <param name="isAllowed"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp1507.UsingTapeEventArgs.IsAllowed"/></param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp1507.UsingTapeEventArgs.Player">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp1507.UsingTapeEventArgs.Item">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp1507.UsingTapeEventArgs.IsAllowed">
+            <inheritdoc/>
+        </member>
         <member name="T:Exiled.Events.EventArgs.Scp173.BeingObservedEventArgs">
             <summary>
             Contains all the information before SCP-173 is observed.
@@ -7362,6 +7763,74 @@
             <summary>
             Gets the player who's using the SCP-244.
             </summary>
+        </member>
+        <member name="T:Exiled.Events.EventArgs.Scp2536.FindingPositionEventArgs">
+            <summary>
+            Contains all information before SCP-2536 chooses target for spawning.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Scp2536.FindingPositionEventArgs.#ctor(Exiled.API.Features.Player,Christmas.Scp2536.Scp2536Spawnpoint,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Scp2536.FindingPositionEventArgs"/> class.
+            </summary>
+            <param name="player"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp2536.FindingPositionEventArgs.Player"/></param>
+            <param name="spawnpoint"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp2536.FindingPositionEventArgs.Spawnpoint"/></param>
+            <param name="isAllowed"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp2536.FindingPositionEventArgs.IsAllowed"/></param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp2536.FindingPositionEventArgs.IsAllowed">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp2536.FindingPositionEventArgs.Player">
+            <summary>
+            Gets the player near whom SCP-2536 will spawn.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp2536.FindingPositionEventArgs.Spawnpoint">
+            <summary>
+            Gets or sets the spawn point where SCP will spawn.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.EventArgs.Scp2536.GrantingGiftEventArgs">
+            <summary>
+            Contains all information before player receives a gift from SCP-2536.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Scp2536.GrantingGiftEventArgs.#ctor(Exiled.API.Features.Player,Christmas.Scp2536.Scp2536GiftBase,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Scp2536.GrantingGiftEventArgs"/> class.
+            </summary>
+            <param name="player"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp2536.GrantingGiftEventArgs.Player"/></param>
+            <param name="gift"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp2536.GrantingGiftEventArgs.Gift"/></param>
+            <param name="isAllowed"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp2536.GrantingGiftEventArgs.IsAllowed"/></param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp2536.GrantingGiftEventArgs.IsAllowed">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp2536.GrantingGiftEventArgs.Player">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp2536.GrantingGiftEventArgs.Gift">
+            <summary>
+            Gets or sets a gift that will be granted to a <see cref="P:Exiled.Events.EventArgs.Scp2536.GrantingGiftEventArgs.Player"/>.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.EventArgs.Scp2536.OpeningGiftEventArgs">
+            <summary>
+            Contains all information before player receives a gift from SCP-2536.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Scp2536.OpeningGiftEventArgs.#ctor(Exiled.API.Features.Player,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Scp2536.OpeningGiftEventArgs"/> class.
+            </summary>
+            <param name="player"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp2536.OpeningGiftEventArgs.Player"/></param>
+            <param name="isAllowed"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp2536.OpeningGiftEventArgs.IsAllowed"/></param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp2536.OpeningGiftEventArgs.IsAllowed">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp2536.OpeningGiftEventArgs.Player">
+            <inheritdoc/>
         </member>
         <member name="T:Exiled.Events.EventArgs.Scp3114.DancingEventArgs">
             <summary>
@@ -7802,6 +8271,58 @@
         <member name="P:Exiled.Events.EventArgs.Scp330.InteractingScp330EventArgs.Item">
             <inheritdoc/>
         </member>
+        <member name="T:Exiled.Events.EventArgs.Scp559.InteractingScp559EventArgs">
+            <summary>
+            Contains all information before a player interacts with SCP-559.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Scp559.InteractingScp559EventArgs.#ctor(Exiled.API.Features.Scp559,Exiled.API.Features.Player,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Scp559.InteractingScp559EventArgs"/> class.
+            </summary>
+            <param name="scp559"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp559.InteractingScp559EventArgs.Scp559"/></param>
+            <param name="player"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp559.InteractingScp559EventArgs.Player"/></param>
+            <param name="isAllowed"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp559.InteractingScp559EventArgs.IsAllowed"/></param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp559.InteractingScp559EventArgs.Scp559">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp559.InteractingScp559EventArgs.IsAllowed">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp559.InteractingScp559EventArgs.Player">
+            <inheritdoc/>
+        </member>
+        <member name="T:Exiled.Events.EventArgs.Scp559.SpawningEventArgs">
+            <summary>
+            Contains all information before SCP-559 spawns.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Scp559.SpawningEventArgs.#ctor(Exiled.API.Features.Scp559,UnityEngine.Vector3,UnityEngine.Vector3,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Scp559.SpawningEventArgs"/> class.
+            </summary>
+            <param name="scp559"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp559.SpawningEventArgs.Scp559"/></param>
+            <param name="oldPosition"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp559.SpawningEventArgs.PreviousPosition"/></param>
+            <param name="newPosition"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp559.SpawningEventArgs.NextPosition"/></param>
+            <param name="isAllowed"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp559.SpawningEventArgs.IsAllowed"/></param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp559.SpawningEventArgs.IsAllowed">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp559.SpawningEventArgs.Scp559">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp559.SpawningEventArgs.NextPosition">
+            <summary>
+            Gets or sets the next spawn position.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp559.SpawningEventArgs.PreviousPosition">
+            <summary>
+            Gets the previous spawn position.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.EventArgs.Scp914.ActivatingEventArgs">
             <summary>
             Contains all information before a player activates SCP-914.
@@ -7826,6 +8347,11 @@
         <member name="P:Exiled.Events.EventArgs.Scp914.ActivatingEventArgs.Player">
             <summary>
             Gets the player who's activating SCP-914.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp914.ActivatingEventArgs.KnobSetting">
+            <summary>
+            Gets or sets SCP-914 working knob setting.
             </summary>
         </member>
         <member name="T:Exiled.Events.EventArgs.Scp914.ChangingKnobSettingEventArgs">
@@ -8100,6 +8626,9 @@
         <member name="P:Exiled.Events.EventArgs.Scp939.PlacedAmnesticCloudEventArgs.Scp939">
             <inheritdoc/>
         </member>
+        <member name="P:Exiled.Events.EventArgs.Scp939.PlacedAmnesticCloudEventArgs.Hazard">
+            <inheritdoc/>
+        </member>
         <member name="T:Exiled.Events.EventArgs.Scp939.PlacingAmnesticCloudEventArgs">
             <summary>
             Contains all information before SCP-939 uses its amnestic cloud ability.
@@ -8315,42 +8844,91 @@
         <member name="P:Exiled.Events.EventArgs.Scp939.SavingVoiceEventArgs.Scp939">
             <inheritdoc/>
         </member>
-        <member name="T:Exiled.Events.EventArgs.Scp939.ValidatingVisibilityEventArgs">
+        <member name="T:Exiled.Events.EventArgs.Scp939.UpdatedCloudStateEventArgs">
             <summary>
-                Contains all information before SCP-939 sees the player.
+            Contains all information after <see cref="T:Exiled.Events.EventArgs.Scp939.PlacedAmnesticCloudEventArgs"/> got updated state.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Scp939.ValidatingVisibilityEventArgs.#ctor(ReferenceHub,ReferenceHub,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Scp939.UpdatedCloudStateEventArgs.#ctor(ReferenceHub,PlayerRoles.PlayableScps.Scp939.Scp939AmnesticCloudInstance.CloudState,PlayerRoles.PlayableScps.Scp939.Scp939AmnesticCloudInstance)">
             <summary>
-                Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Scp939.ValidatingVisibilityEventArgs" /> class.
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Scp939.UpdatedCloudStateEventArgs" /> class.
             </summary>
+            <param name="hub">
+            <inheritdoc cref="T:ReferenceHub" />
+            </param>
+            <param name="cloudState">
+            <inheritdoc cref="T:PlayerRoles.PlayableScps.Scp939.Scp939AmnesticCloudInstance.CloudState" />
+            </param>
+            <param name="cloud">
+            <inheritdoc cref="T:PlayerRoles.PlayableScps.Scp939.Scp939AmnesticCloudInstance" />
+            </param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp939.UpdatedCloudStateEventArgs.Player">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp939.UpdatedCloudStateEventArgs.AmnesticCloud">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Hazards.AmnesticCloudHazard"/> instance.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp939.UpdatedCloudStateEventArgs.NewState">
+            <summary>
+            Gets the <see cref="T:PlayerRoles.PlayableScps.Scp939.Scp939AmnesticCloudInstance.CloudState"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp939.UpdatedCloudStateEventArgs.Scp939">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp939.UpdatedCloudStateEventArgs.Hazard">
+            <inheritdoc/>
+        </member>
+        <member name="T:Exiled.Events.EventArgs.Scp939.ValidatingVisibilityEventArgs">
+            <summary>
+            Contains all information before SCP-939 sees the player.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Scp939.ValidatingVisibilityEventArgs.#ctor(Exiled.API.Enums.Scp939VisibilityState,ReferenceHub,ReferenceHub)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Scp939.ValidatingVisibilityEventArgs" /> class.
+            </summary>
+            <param name="state">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Scp939.ValidatingVisibilityEventArgs.TargetVisibilityState"/>
+            </param>
             <param name="player">
-                <inheritdoc cref="P:Exiled.Events.EventArgs.Scp939.ValidatingVisibilityEventArgs.Player" />
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Scp939.ValidatingVisibilityEventArgs.Player" />
             </param>
             <param name="target">
-                The target being shown to SCP-939.
-            </param>
-            <param name="isAllowed">
-                Whether SCP-939 is allowed to view the player.
+            The target being shown to SCP-939.
             </param>
         </member>
         <member name="P:Exiled.Events.EventArgs.Scp939.ValidatingVisibilityEventArgs.Target">
             <summary>
-                Gets the player who's being shown to SCP-939.
+            Gets the player who's being shown to SCP-939.
             </summary>
         </member>
         <member name="P:Exiled.Events.EventArgs.Scp939.ValidatingVisibilityEventArgs.Player">
             <summary>
-                Gets the player who's controlling SCP-939.
+            Gets the player who's controlling SCP-939.
             </summary>
         </member>
         <member name="P:Exiled.Events.EventArgs.Scp939.ValidatingVisibilityEventArgs.Scp939">
             <inheritdoc/>
         </member>
-        <member name="P:Exiled.Events.EventArgs.Scp939.ValidatingVisibilityEventArgs.IsAllowed">
+        <member name="P:Exiled.Events.EventArgs.Scp939.ValidatingVisibilityEventArgs.TargetVisibilityState">
             <summary>
-               Gets or sets a value indicating whether visibility can be validated.
+            Gets the info about base-game vision information.
             </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp939.ValidatingVisibilityEventArgs.IsLateSeen">
+            <summary>
+            Gets or sets a value indicating whether or not the SCP-939 will detect that vision as <see cref="F:Exiled.API.Enums.Scp939VisibilityState.SeenByRange"/>.
+            </summary>
+            <remarks>
+            Works only when <see cref="P:Exiled.Events.EventArgs.Scp939.ValidatingVisibilityEventArgs.IsAllowed"/> = <see langword="true"/>, and makes player visible to SCP-939 for a while, after it's out of range.
+            </remarks>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp939.ValidatingVisibilityEventArgs.IsAllowed">
+            <inheritdoc/>
         </member>
         <member name="T:Exiled.Events.EventArgs.Server.AddingUnitNameEventArgs">
             <summary>
@@ -8403,12 +8981,32 @@
             </summary>
             <returns>The actual modified TeamRespawnQueue.</returns>
         </member>
+        <member name="T:Exiled.Events.EventArgs.Server.CompletingObjectiveEventArgs">
+            <summary>
+            Contains all information before the completion of an objective.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Server.CompletingObjectiveEventArgs.#ctor(Respawning.Objectives.FactionObjectiveBase,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Server.CompletingObjectiveEventArgs"/> class.
+            </summary>
+            <param name="objective"><inheritdoc cref="P:Exiled.Events.EventArgs.Server.CompletingObjectiveEventArgs.Objective"/></param>
+            <param name="isAllowed"><inheritdoc cref="P:Exiled.Events.EventArgs.Server.CompletingObjectiveEventArgs.IsAllowed"/></param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Server.CompletingObjectiveEventArgs.Objective">
+            <summary>
+            Gets the objective that is being completed.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Server.CompletingObjectiveEventArgs.IsAllowed">
+            <inheritdoc/>
+        </member>
         <member name="T:Exiled.Events.EventArgs.Server.EndingRoundEventArgs">
             <summary>
             Contains all information before ending a round.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Server.EndingRoundEventArgs.#ctor(Exiled.API.Enums.LeadingTeam,RoundSummary.SumInfo_ClassList,System.Boolean,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Server.EndingRoundEventArgs.#ctor(Exiled.API.Enums.LeadingTeam,RoundSummary.SumInfo_ClassList,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Server.EndingRoundEventArgs" /> class.
             </summary>
@@ -8417,9 +9015,6 @@
             </param>
             <param name="classList">
             <inheritdoc cref="T:RoundSummary.SumInfo_ClassList" />
-            </param>
-            <param name="isForceEnded">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Server.EndingRoundEventArgs.IsForceEnded" />
             </param>
             <param name="isAllowed">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Server.EndingRoundEventArgs.IsAllowed" />
@@ -8752,6 +9347,14 @@
             <summary>
             Gets the player who's changing the warhead status.
             </summary>
+        </member>
+        <member name="T:Exiled.Events.EventArgs.Warhead.DeadmanSwitchInitiatingEventArgs">
+            <summary>
+            Contains all information before detonating the warhead.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Warhead.DeadmanSwitchInitiatingEventArgs.IsAllowed">
+            <inheritdoc/>
         </member>
         <member name="T:Exiled.Events.EventArgs.Warhead.DetonatingEventArgs">
             <summary>
@@ -9263,6 +9866,11 @@
             Invoked before a radio pickup is draining battery.
             </summary>
         </member>
+        <member name="P:Exiled.Events.Handlers.Item.ChangingMicroHIDPickupState">
+            <summary>
+            Invoked before a<see cref="T:Exiled.API.Features.Pickups.MicroHIDPickup"/> state is changed.
+            </summary>
+        </member>
         <member name="M:Exiled.Events.Handlers.Item.OnChangingAmmo(Exiled.Events.EventArgs.Item.ChangingAmmoEventArgs)">
             <summary>
             Called before the ammo of an firearm is changed.
@@ -9305,6 +9913,12 @@
             </summary>
             <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Item.UsingRadioPickupBatteryEventArgs"/> instance.</param>
         </member>
+        <member name="M:Exiled.Events.Handlers.Item.OnChangingMicroHIDPickupState(Exiled.Events.EventArgs.Item.ChangingMicroHIDPickupStateEventArgs)">
+            <summary>
+            Called before a <see cref="T:Exiled.API.Features.Pickups.MicroHIDPickup"/> state is changed.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Item.ChangingMicroHIDPickupStateEventArgs"/> instance.</param>
+        </member>
         <member name="T:Exiled.Events.Handlers.Map">
             <summary>
             Map related events.
@@ -9345,6 +9959,11 @@
             Invoked before decontaminating the light containment zone.
             </summary>
         </member>
+        <member name="P:Exiled.Events.Handlers.Map.ElevatorSequencesUpdated">
+            <summary>
+            Invoked after an elevator sequence is updated.
+            </summary>
+        </member>
         <member name="P:Exiled.Events.Handlers.Map.ExplodingGrenade">
             <summary>
             Invoked before a grenade explodes.
@@ -9382,12 +10001,12 @@
         </member>
         <member name="P:Exiled.Events.Handlers.Map.PickupAdded">
             <summary>
-            Invoked after an pickup is spawned.
+            Invoked after a pickup is spawned.
             </summary>
         </member>
         <member name="P:Exiled.Events.Handlers.Map.PickupDestroyed">
             <summary>
-            Invoked after an pickup is destroyed.
+            Invoked after a pickup is destroyed.
             </summary>
         </member>
         <member name="P:Exiled.Events.Handlers.Map.SpawningTeamVehicle">
@@ -9446,6 +10065,12 @@
             Called before decontaminating the light containment zone.
             </summary>
             <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Map.DecontaminatingEventArgs"/> instance.</param>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Map.OnElevatorSequencesUpdated(Exiled.Events.EventArgs.Map.ElevatorSequencesUpdatedEventArgs)">
+            <summary>
+            Called after an elevator sequence is updated.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Map.ElevatorSequencesUpdatedEventArgs"/> instance.</param>
         </member>
         <member name="M:Exiled.Events.Handlers.Map.OnExplodingGrenade(Exiled.Events.EventArgs.Map.ExplodingGrenadeEventArgs)">
             <summary>
@@ -9785,6 +10410,11 @@
             Invoked before a <see cref="T:Exiled.API.Features.Player"/> reloads a weapon.
             </summary>
         </member>
+        <member name="P:Exiled.Events.Handlers.Player.ReloadedWeapon">
+            <summary>
+            Invoked after a <see cref="T:Exiled.API.Features.Player"/> reloads a weapon.
+            </summary>
+        </member>
         <member name="P:Exiled.Events.Handlers.Player.Spawning">
             <summary>
             Invoked before spawning a <see cref="T:Exiled.API.Features.Player"/>.
@@ -9925,6 +10555,11 @@
             Invoked before a <see cref="T:Exiled.API.Features.Player"/> unloads a weapon.
             </summary>
         </member>
+        <member name="P:Exiled.Events.Handlers.Player.UnloadedWeapon">
+            <summary>
+            Invoked after a <see cref="T:Exiled.API.Features.Player"/> unloads a weapon.
+            </summary>
+        </member>
         <member name="P:Exiled.Events.Handlers.Player.AimingDownSight">
             <summary>
             Invoked before a <see cref="T:Exiled.API.Features.Player"/> triggers an aim action.
@@ -10040,6 +10675,16 @@
             Invoked before a <see cref="T:Exiled.API.Features.Player"/>'s nickname is changed.
             </summary>
         </member>
+        <member name="P:Exiled.Events.Handlers.Player.SendingValidCommand">
+            <summary>
+            Invoked before a <see cref="T:Exiled.API.Features.Player"/> sends valid command.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.Handlers.Player.SentValidCommand">
+            <summary>
+            Invoked after a <see cref="T:Exiled.API.Features.Player"/> sends valid command.
+            </summary>
+        </member>
         <member name="P:Exiled.Events.Handlers.Player.ChangingEmotion">
             <summary>
             Invoked before a player's emotion changed.
@@ -10058,6 +10703,11 @@
         <member name="P:Exiled.Events.Handlers.Player.ChangingDisruptorMode">
             <summary>
             Invoked before disruptor's mode is changed.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.Handlers.Player.DrinkingCoffee">
+            <summary>
+            Invoked before player interacts with coffee cup.
             </summary>
         </member>
         <member name="M:Exiled.Events.Handlers.Player.OnChangingEmotion(Exiled.Events.EventArgs.Player.ChangingEmotionEventArgs)">
@@ -10319,6 +10969,12 @@
             </summary>
             <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Player.ReloadingWeaponEventArgs"/> instance.</param>
         </member>
+        <member name="M:Exiled.Events.Handlers.Player.OnReloadedWeapon(Exiled.Events.EventArgs.Player.ReloadedWeaponEventArgs)">
+            <summary>
+            Called after a <see cref="T:Exiled.API.Features.Player"/> reloads a weapon.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Player.ReloadedWeaponEventArgs"/> instance.</param>
+        </member>
         <member name="M:Exiled.Events.Handlers.Player.OnSpawning(Exiled.Events.EventArgs.Player.SpawningEventArgs)">
             <summary>
             Called before spawning a <see cref="T:Exiled.API.Features.Player"/>.
@@ -10420,6 +11076,12 @@
             Called before a <see cref="T:Exiled.API.Features.Player"/> unloads a weapon.
             </summary>
             <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Player.UnloadingWeaponEventArgs"/> instance.</param>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Player.OnUnloadedWeapon(Exiled.Events.EventArgs.Player.UnloadedWeaponEventArgs)">
+            <summary>
+            Called after a <see cref="T:Exiled.API.Features.Player"/> unloads a weapon.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Player.UnloadedWeaponEventArgs"/> instance.</param>
         </member>
         <member name="M:Exiled.Events.Handlers.Player.OnAimingDownSight(Exiled.Events.EventArgs.Player.AimingDownSightEventArgs)">
             <summary>
@@ -10677,6 +11339,18 @@
             </summary>
             <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Player.ChangingNicknameEventArgs"/> instance.</param>
         </member>
+        <member name="M:Exiled.Events.Handlers.Player.OnSendingValidCommand(Exiled.Events.EventArgs.Player.SendingValidCommandEventArgs)">
+            <summary>
+            Called before a <see cref="T:Exiled.Events.Handlers.Player"/> sends valid command.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Player.SendingValidCommandEventArgs"/> instance.</param>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Player.OnSentValidCommand(Exiled.Events.EventArgs.Player.SentValidCommandEventArgs)">
+            <summary>
+            Called after a <see cref="T:Exiled.Events.Handlers.Player"/> sends valid command.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Player.SentValidCommandEventArgs"/> instance.</param>
+        </member>
         <member name="M:Exiled.Events.Handlers.Player.OnRotatingRevolver(Exiled.Events.EventArgs.Player.RotatingRevolverEventArgs)">
             <summary>
             Called before a <see cref="T:Exiled.API.Features.Player"/>'s rotates the revolver.
@@ -10689,19 +11363,17 @@
             </summary>
             <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Player.ChangingDisruptorModeEventArgs"/> instance.</param>
         </member>
-        <member name="M:Exiled.Events.Handlers.Player.OnPreAuthenticating(System.String,System.String,System.Int64,CentralAuthPreauthFlags,System.String,System.Byte[],LiteNetLib.ConnectionRequest,System.Int32)">
+        <member name="M:Exiled.Events.Handlers.Player.OnDrinkingCoffee(Exiled.Events.EventArgs.Player.DrinkingCoffeeEventArgs)">
+            <summary>
+            Called before player interacts with coffee cup.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Player.DrinkingCoffeeEventArgs"/> instance.</param>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Player.OnPreAuthenticating(Exiled.Events.EventArgs.Player.PreAuthenticatingEventArgs)">
             <summary>
             Called before pre-authenticating a <see cref="T:Exiled.API.Features.Player"/>.
             </summary>
-            <param name="userId"><inheritdoc cref="P:Exiled.Events.EventArgs.Player.PreAuthenticatingEventArgs.UserId"/></param>
-            <param name="ipAddress"><inheritdoc cref="P:Exiled.Events.EventArgs.Player.PreAuthenticatingEventArgs.IpAddress"/></param>
-            <param name="expiration"><inheritdoc cref="P:Exiled.Events.EventArgs.Player.PreAuthenticatingEventArgs.Expiration"/></param>
-            <param name="flags"><inheritdoc cref="P:Exiled.Events.EventArgs.Player.PreAuthenticatingEventArgs.Flags"/></param>
-            <param name="country"><inheritdoc cref="P:Exiled.Events.EventArgs.Player.PreAuthenticatingEventArgs.Country"/></param>
-            <param name="signature"><inheritdoc cref="P:Exiled.Events.EventArgs.Player.PreAuthenticatingEventArgs.Signature"/></param>
-            <param name="request"><inheritdoc cref="P:Exiled.Events.EventArgs.Player.PreAuthenticatingEventArgs.Request"/></param>
-            <param name="readerStartPosition"><inheritdoc cref="P:Exiled.Events.EventArgs.Player.PreAuthenticatingEventArgs.ReaderStartPosition"/></param>
-            <returns>Returns the <see cref="T:PluginAPI.Events.PreauthCancellationData"/> instance.</returns>
+            <param name="ev"><The cref="T:Exiled.Events.EventArgs.Player.PreAuthenticatingEventArgs"/> instance.</param>
         </member>
         <member name="T:Exiled.Events.Handlers.Scp049">
             <summary>
@@ -10871,6 +11543,16 @@
             Invoked before SCP-079 turns off the lights in a zone.
             </summary>
         </member>
+        <member name="P:Exiled.Events.Handlers.Scp079.LosingSignal">
+            <summary>
+            Invoked before SCP-079 loses a signal by SCP-2176.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.Handlers.Scp079.LostSignal">
+            <summary>
+            Invoked after SCP-079 loses a signal by SCP-2176.
+            </summary>
+        </member>
         <member name="M:Exiled.Events.Handlers.Scp079.OnChangingCamera(Exiled.Events.EventArgs.Scp079.ChangingCameraEventArgs)">
             <summary>
             Called before SCP-079 switches cameras.
@@ -10948,6 +11630,18 @@
             Called before SCP-079 turns off the lights in a zone.
             </summary>
             <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Scp079.PingingEventArgs" /> instance.</param>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Scp079.OnLosingSignal(Exiled.Events.EventArgs.Scp079.LosingSignalEventArgs)">
+            <summary>
+            Called before SCP-079 loses a signal by SCP-2176.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Scp079.LosingSignalEventArgs" /> instance.</param>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Scp079.OnLostSignal(Exiled.Events.EventArgs.Scp079.LostSignalEventArgs)">
+            <summary>
+            Called after SCP-079 loses a signal by SCP-2176.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Scp079.LostSignalEventArgs" /> instance.</param>
         </member>
         <member name="T:Exiled.Events.Handlers.Scp096">
             <summary>
@@ -11129,6 +11823,55 @@
             </summary>
             <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Scp1344.ChangedStatusEventArgs"/> instance.</param>
         </member>
+        <member name="T:Exiled.Events.Handlers.Scp1507">
+            <summary>
+            SCP-1507 related events.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.Handlers.Scp1507.AttackingDoor">
+            <summary>
+            Invokes before SCP-1507 attacks door.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.Handlers.Scp1507.Screaming">
+            <summary>
+            Invoked before SCP-1507 screams.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.Handlers.Scp1507.SpawningFlamingos">
+            <summary>
+            Invoked before flamingos get spawned.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.Handlers.Scp1507.UsingTape">
+            <summary>
+            Invoked before tape is used.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Scp1507.OnAttackingDoor(Exiled.Events.EventArgs.Scp1507.AttackingDoorEventArgs)">
+            <summary>
+            Called before SCP-1507 attacks door.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Scp1507.AttackingDoorEventArgs"/> instance.</param>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Scp1507.OnScreaming(Exiled.Events.EventArgs.Scp1507.ScreamingEventArgs)">
+            <summary>
+            Called before SCP-1507 screams.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Scp1507.ScreamingEventArgs"/> instance.</param>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Scp1507.OnSpawningFlamingos(Exiled.Events.EventArgs.Scp1507.SpawningFlamingosEventArgs)">
+            <summary>
+            Called before flamingos get spawned.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Scp1507.SpawningFlamingosEventArgs"/> instance.</param>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Scp1507.OnUsingTape(Exiled.Events.EventArgs.Scp1507.UsingTapeEventArgs)">
+            <summary>
+            Called before tape is used.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Scp1507.UsingTapeEventArgs"/> instance.</param>
+        </member>
         <member name="T:Exiled.Events.Handlers.Scp173">
             <summary>
             SCP-173 related events.
@@ -11226,6 +11969,44 @@
             Called before Scp244 open because the angle was too low.
             </summary>
             <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Scp244.DamagingScp244EventArgs" /> instance.</param>
+        </member>
+        <member name="T:Exiled.Events.Handlers.Scp2536">
+            <summary>
+            SCP-2536 related events.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.Handlers.Scp2536.FindingPosition">
+            <summary>
+            Invoked before SCP-2536 chooses target to spawn.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.Handlers.Scp2536.GrantingGift">
+            <summary>
+            Invoked before SCP-2536 gives a gift to a player.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.Handlers.Scp2536.OpeningGift">
+            <summary>
+            Invoked before SCP-2536 is open to a player.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Scp2536.OnFindingPosition(Exiled.Events.EventArgs.Scp2536.FindingPositionEventArgs)">
+            <summary>
+            Called before SCP-2536 chooses a target.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Scp2536.FindingPositionEventArgs"/> instance.</param>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Scp2536.OnGrantingGift(Exiled.Events.EventArgs.Scp2536.GrantingGiftEventArgs)">
+            <summary>
+            Called before SCP-2536 gives a gift to a player.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Scp2536.GrantingGiftEventArgs"/> instance.</param>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Scp2536.OnOppeningGift(Exiled.Events.EventArgs.Scp2536.OpeningGiftEventArgs)">
+            <summary>
+            Called before SCP-2536 is open to a player.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Scp2536.OpeningGiftEventArgs"/> instance.</param>
         </member>
         <member name="T:Exiled.Events.Handlers.Scp3114">
             <summary>
@@ -11380,6 +12161,33 @@
             </summary>
             <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Scp330.DroppingScp330EventArgs" /> instance.</param>
         </member>
+        <member name="T:Exiled.Events.Handlers.Scp559">
+            <summary>
+            All SCP-559 related events.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.Handlers.Scp559.Spawning">
+            <summary>
+            Invoked before SCP-559 spawns.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.Handlers.Scp559.Interacting">
+            <summary>
+            Invoked before player interacts with SCP-559.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Scp559.OnSpawning(Exiled.Events.EventArgs.Scp559.SpawningEventArgs)">
+            <summary>
+            Called before SCP-559 spawns.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Scp559.SpawningEventArgs"/> instance.</param>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Scp559.OnInteracting(Exiled.Events.EventArgs.Scp559.InteractingScp559EventArgs)">
+            <summary>
+            Called before player interacts with SCP-559.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Scp559.InteractingScp559EventArgs"/> instance.</param>
+        </member>
         <member name="T:Exiled.Events.Handlers.Scp914">
             <summary>
             Handles SCP-914 related events.
@@ -11465,6 +12273,11 @@
             Invoked after SCP-939 used its amnestic cloud ability.
             </summary>
         </member>
+        <member name="P:Exiled.Events.Handlers.Scp939.UpdatedCloudState">
+            <summary>
+            Invoked after SCP-939 <see cref="T:Exiled.API.Features.Hazards.AmnesticCloudHazard"/> is state updated.
+            </summary>
+        </member>
         <member name="P:Exiled.Events.Handlers.Scp939.PlayingVoice">
             <summary>
             Invoked before SCP-939 plays a stolen voice.
@@ -11519,6 +12332,12 @@
             Called after SCP-939 used its amnestic cloud ability.
             </summary>
             <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Scp939.PlacedAmnesticCloudEventArgs" /> instance.</param>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Scp939.OnUpdatedCloudState(Exiled.Events.EventArgs.Scp939.UpdatedCloudStateEventArgs)">
+            <summary>
+            Called after <see cref="T:Exiled.API.Features.Hazards.AmnesticCloudHazard"/> is state updated.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Scp939.UpdatedCloudStateEventArgs" /> instance.</param>
         </member>
         <member name="M:Exiled.Events.Handlers.Scp939.OnPlayingVoice(Exiled.Events.EventArgs.Scp939.PlayingVoiceEventArgs)">
             <summary>
@@ -11661,6 +12480,11 @@
             Invoked after player is being unbanned.
             </summary>
         </member>
+        <member name="P:Exiled.Events.Handlers.Server.CompletingObjective">
+            <summary>
+            Invoked before before the completion of an objective.
+            </summary>
+        </member>
         <member name="M:Exiled.Events.Handlers.Server.OnWaitingForPlayers">
             <summary>
             Called before waiting for players.
@@ -11773,6 +12597,12 @@
             </summary>
             <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Server.UnbannedEventArgs"/> instance.</param>
         </member>
+        <member name="M:Exiled.Events.Handlers.Server.OnCompletingObjective(Exiled.Events.EventArgs.Server.CompletingObjectiveEventArgs)">
+            <summary>
+            Called before the completion of an objective.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Server.CompletingObjectiveEventArgs"/> instance.</param>
+        </member>
         <member name="T:Exiled.Events.Handlers.Warhead">
             <summary>
             Handles warhead related events.
@@ -11796,6 +12626,11 @@
         <member name="P:Exiled.Events.Handlers.Warhead.Detonated">
             <summary>
             Invoked after the warhead has been detonated.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.Handlers.Warhead.DeadmanSwitchInitiating">
+            <summary>
+            Invoked before the DeadmanSwitch is Initiated.
             </summary>
         </member>
         <member name="P:Exiled.Events.Handlers.Warhead.Detonating">
@@ -11826,6 +12661,12 @@
             Called after the warhead has been detonated.
             </summary>
         </member>
+        <member name="M:Exiled.Events.Handlers.Warhead.OnDeadmanSwitchInitiating(Exiled.Events.EventArgs.Warhead.DeadmanSwitchInitiatingEventArgs)">
+            <summary>
+            Called after the warhead has been detonated.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Warhead.DeadmanSwitchInitiatingEventArgs"/> instance.</param>
+        </member>
         <member name="M:Exiled.Events.Handlers.Warhead.OnDetonating(Exiled.Events.EventArgs.Warhead.DetonatingEventArgs)">
             <summary>
             Called before detonating the warhead.
@@ -11834,7 +12675,7 @@
         </member>
         <member name="T:Exiled.Events.Patches.Events.Cassie.SendingCassieMessage">
             <summary>
-            Patches <see cref="M:Respawning.RespawnEffectsController.PlayCassieAnnouncement(System.String,System.Boolean,System.Boolean,System.Boolean)" />.
+            Patches <see cref="M:Respawning.RespawnEffectsController.PlayCassieAnnouncement(System.String,System.Boolean,System.Boolean,System.Boolean,System.String)" />.
             Adds the <see cref="P:Exiled.Events.Handlers.Cassie.SendingCassieMessage" /> event.
             </summary>
         </member>
@@ -11931,6 +12772,12 @@
             <summary>
             Patches <see cref="M:LightContainmentZoneDecontamination.DecontaminationController.FinishDecontamination" />.
             Adds the <see cref="P:Exiled.Events.Handlers.Map.Decontaminating" /> event.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Events.Map.ElevatorSequencesUpdated">
+            <summary>
+            Patches <see cref="P:Interactables.Interobjects.ElevatorChamber.CurSequence" />'s setter.
+            Adds the <see cref="P:Exiled.Events.Handlers.Map.ElevatorSequencesUpdated" /> event.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Events.Map.ExplodingFlashGrenade">
@@ -12140,6 +12987,12 @@
             Adds the <see cref="P:Exiled.Events.Handlers.Player.Destroying" /> event.
             </summary>
         </member>
+        <member name="T:Exiled.Events.Patches.Events.Player.DrinkingCoffee">
+            <summary>
+            Patches <see cref="M:Coffee.ServerInteract(ReferenceHub,System.Byte)"/>
+            to add <see cref="P:Exiled.Events.Handlers.Player.DrinkingCoffee"/> event.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.Patches.Events.Player.DroppingAmmo">
             <summary>
             Patches <see cref="M:InventorySystem.Inventory.UserCode_CmdDropAmmo__Byte__UInt16(System.Byte,System.UInt16)" />.
@@ -12158,16 +13011,10 @@
             to add <see cref="P:Exiled.Events.Handlers.Player.DryfiringWeapon"/> event for automatic firearms.
             </summary>
         </member>
-        <member name="T:Exiled.Events.Patches.Events.Player.DryFireDouble">
-            <summary>
-            Patches <see cref="M:InventorySystem.Items.Firearms.Modules.DoubleActionModule.FireDry"/>
-            to add <see cref="P:Exiled.Events.Handlers.Player.DryfiringWeapon"/> event for double shots.
-            </summary>
-        </member>
         <member name="T:Exiled.Events.Patches.Events.Player.DryFirePump">
             <summary>
-            Patches <see cref="M:InventorySystem.Items.Firearms.Modules.DoubleActionModule.FireDry"/>
-            to add <see cref="P:Exiled.Events.Handlers.Player.DryfiringWeapon"/> event for double shots.
+            Patches <see cref="M:InventorySystem.Items.Firearms.Modules.PumpActionModule.ShootOneBarrel(System.Boolean)"/>
+            to add <see cref="P:Exiled.Events.Handlers.Player.DryfiringWeapon"/> event for pump shots.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Events.Player.DyingAndDied">
@@ -12218,15 +13065,9 @@
             Patches <see cref="M:Escape.ServerHandlePlayer(ReferenceHub)"/> for <see cref="P:Exiled.Events.Handlers.Player.Escaping" /> and <see cref="P:Exiled.Events.Handlers.Player.Escaped"/>.
             </summary>
         </member>
-        <member name="T:Exiled.Events.Patches.Events.Player.GetScenario">
-            <summary>
-            Patches <see cref="M:Escape.ServerGetScenario(ReferenceHub)"/> for <see cref="P:Exiled.Events.Handlers.Player.Escaping"/>.
-            Replaces last returned <see cref="F:Exiled.API.Enums.EscapeScenario.None"/> to <see cref="F:Exiled.API.Enums.EscapeScenario.CustomEscape"/>.
-            </summary>
-        </member>
         <member name="T:Exiled.Events.Patches.Events.Player.EscapingPocketDimension">
             <summary>
-            Patches the <see cref="M:PocketDimensionTeleport.OnTriggerEnter(UnityEngine.Collider)"/> method.
+            Patches the <see cref="M:PocketDimensionTeleport.Exit(PocketDimensionTeleport,ReferenceHub)"/> method.
             Adds the <see cref="P:Exiled.Events.Handlers.Player.EscapingPocketDimension"/> event.
             </summary>
         </member>
@@ -12244,7 +13085,7 @@
         </member>
         <member name="T:Exiled.Events.Patches.Events.Player.FailingEscapePocketDimension">
             <summary>
-            Patches <see cref="M:PocketDimensionTeleport.OnTriggerEnter(UnityEngine.Collider)" />.
+            Patches <see cref="M:PocketDimensionTeleport.Kill(PocketDimensionTeleport,ReferenceHub)" />.
             Adds the <see cref="P:Exiled.Events.Handlers.Player.FailingEscapePocketDimension" /> event.
             </summary>
         </member>
@@ -12283,8 +13124,16 @@
         </member>
         <member name="T:Exiled.Events.Patches.Events.Player.InteractingElevator">
             <summary>
-            Patches <see cref="T:Interactables.Interobjects.ElevatorManager" />.
+            Patches <see cref="M:Interactables.Interobjects.ElevatorDoor.ServerInteract(ReferenceHub,System.Byte)" />.
             Adds the <see cref="P:Exiled.Events.Handlers.Player.InteractingElevator" /> event.
+            <remarks>This event only get call when interact on the outside button.</remarks>
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Events.Player.InteractingElevator2">
+            <summary>
+            Patches <see cref="M:Interactables.Interobjects.ElevatorChamber.ServerInteract(ReferenceHub,System.Byte)" />.
+            Adds the <see cref="P:Exiled.Events.Handlers.Player.InteractingElevator" /> event.
+            <remarks>This event only get call when interact on the inside button.</remarks>
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Events.Player.InteractingGenerator">
@@ -12394,6 +13243,12 @@
             Adds the <see cref="P:Exiled.Events.Handlers.Player.PlayingAudioLog" /> event.
             </summary>
         </member>
+        <member name="T:Exiled.Events.Patches.Events.Player.PreAuthenticating">
+            <summary>
+            Patches <see cref="M:CustomLiteNetLib4MirrorTransport.ProcessConnectionRequest(LiteNetLib.ConnectionRequest)" />.
+            Adds the <see cref="P:Exiled.Events.Handlers.Player.PreAuthenticating" /> event.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.Patches.Events.Player.ProcessDisarmMessage">
             <summary>
             Patches <see cref="M:InventorySystem.Disarming.DisarmingHandlers.ServerProcessDisarmMessage(Mirror.NetworkConnection,InventorySystem.Disarming.DisarmMessage)" />.
@@ -12412,9 +13267,21 @@
             Adds the <see cref="P:Exiled.Events.Handlers.Player.ReceivingEffect"/> event.
             </summary>
         </member>
+        <member name="T:Exiled.Events.Patches.Events.Player.ReloadedAndUnloaded">
+            <summary>
+            Patches <see cref="T:InventorySystem.Items.Firearms.Modules.AnimatorReloaderModuleBase" /> to add missing event handler to the
+            <see cref="P:Exiled.Events.Handlers.Player.UnloadedWeapon" /> and <see cref="P:Exiled.Events.Handlers.Player.ReloadedWeapon" /> .
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Events.Player.ReloadingWeapon">
+            <summary>
+            Patches <see cref="M:InventorySystem.Items.Firearms.Modules.AnimatorReloaderModuleBase.ServerProcessCmd(Mirror.NetworkReader)" />.
+            Adds the <see cref="P:Exiled.Events.Handlers.Player.ReloadingWeapon" /> and <see cref="P:Exiled.Events.Handlers.Player.UnloadingWeapon" />event.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.Patches.Events.Player.ReservedSlotPatch">
             <summary>
-            Patches <see cref="M:ReservedSlot.HasReservedSlot(System.String,System.Boolean@)" />.
+            Patches <see cref="M:ReservedSlot.HasReservedSlot(System.String)" />.
             Adds the <see cref="P:Exiled.Events.Handlers.Player.ReservedSlot" /> event.
             </summary>
         </member>
@@ -12440,6 +13307,20 @@
             <summary>
             Patches <see cref="M:RemoteAdmin.CommandProcessor.ProcessAdminChat(System.String,CommandSender)" />.
             Adds the <see cref="P:Exiled.Events.Handlers.Player.SendingAdminChatMessage" /> event.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Events.Player.SendingValidGameConsoleCommand">
+            <summary>
+            Patches <see cref="M:RemoteAdmin.QueryProcessor.ProcessGameConsoleQuery(System.String)" />.
+            Adds the <see cref="P:Exiled.Events.Handlers.Player.SendingValidCommand" /> and
+            the <see cref="P:Exiled.Events.Handlers.Player.SentValidCommand" /> events.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Events.Player.SendingValidRACommand">
+            <summary>
+            Patches <see cref="M:RemoteAdmin.CommandProcessor.ProcessQuery(System.String,CommandSender)" />.
+            Adds the <see cref="P:Exiled.Events.Handlers.Player.SendingValidCommand" /> and
+            the <see cref="P:Exiled.Events.Handlers.Player.SentValidCommand" /> events.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Events.Player.Shooting">
@@ -12672,6 +13553,12 @@
             Adds the <see cref="P:Exiled.Events.Handlers.Scp079.LockingDown" /> event for SCP-079.
             </summary>
         </member>
+        <member name="T:Exiled.Events.Patches.Events.Scp079.Lost">
+            <summary>
+            Patches <see cref="M:PlayerRoles.PlayableScps.Scp079.Scp079LostSignalHandler.ServerLoseSignal(System.Single)" />.
+            Adds the <see cref="P:Exiled.Events.Handlers.Scp079.LosingSignal" /> and <see cref="P:Exiled.Events.Handlers.Scp079.LostSignal"/> event.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.Patches.Events.Scp079.Pinging">
             <summary>
             Patches <see cref="M:PlayerRoles.PlayableScps.Scp079.Pinging.Scp079PingAbility.ServerProcessCmd(Mirror.NetworkReader)" />.
@@ -12783,6 +13670,30 @@
             <see cref="P:Exiled.Events.Handlers.Scp1344.ChangedStatus" /> event.
             </summary>
         </member>
+        <member name="T:Exiled.Events.Patches.Events.Scp1507.AttackingDoor">
+            <summary>
+            Patches <see cref="M:PlayerRoles.PlayableScps.Scp1507.Scp1507AttackAbility.TryAttackDoor"/>
+            to add <see cref="P:Exiled.Events.Handlers.Scp1507.AttackingDoor"/> event.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Events.Scp1507.Scream">
+            <summary>
+            Patches <see cref="M:PlayerRoles.PlayableScps.Scp1507.Scp1507VocalizeAbility.ServerProcessCmd(Mirror.NetworkReader)"/>
+            to add <see cref="P:Exiled.Events.Handlers.Scp1507.Screaming"/> event.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Events.Scp1507.SpawningFlamingos">
+            <summary>
+            Patches <see cref="M:PlayerRoles.PlayableScps.Scp1507.Scp1507Spawner.Spawn"/>
+            to add <see cref="P:Exiled.Events.Handlers.Scp1507.SpawningFlamingos"/> event.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Events.Scp1507.TapeUsing">
+            <summary>
+            Patches <see cref="M:InventorySystem.Items.FlamingoTapePlayer.TapeItem.ServerProcessCmd(Mirror.NetworkReader)"/>
+            to add <see cref="P:Exiled.Events.Handlers.Scp1507.UsingTape"/> event.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.Patches.Events.Scp173.BeingObserved">
             <summary>
             Patches <see cref="M:PlayerRoles.PlayableScps.Scp173.Scp173ObserversTracker.IsObservedBy(ReferenceHub,System.Single)" />.
@@ -12829,6 +13740,24 @@
             <summary>
             Patches <see cref="T:InventorySystem.Items.Usables.Scp244.Scp244Item" /> to add missing event handler to the
             <see cref="P:Exiled.Events.Handlers.Scp244.UsingScp244" />.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Events.Scp2536.FindingPosition">
+            <summary>
+            Patches <see cref="M:Christmas.Scp2536.Scp2536Controller.CanFindPosition(ReferenceHub,Christmas.Scp2536.Scp2536Spawnpoint@)"/>
+            to add <see cref="P:Exiled.Events.Handlers.Scp2536.FindingPosition"/> event.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Events.Scp2536.GrantingGift">
+            <summary>
+            Patches <see cref="M:Christmas.Scp2536.Scp2536GiftController.ServerGrantRandomGift(ReferenceHub)"/>
+            to add <see cref="P:Exiled.Events.Handlers.Scp2536.GrantingGift"/> event.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Events.Scp2536.OpeningGift">
+            <summary>
+            Patches <see cref="M:Christmas.Scp2536.Scp2536GiftController.ServerInteract(ReferenceHub,System.Byte)"/>
+            to add <see cref="P:Exiled.Events.Handlers.Scp2536.OpeningGift"/> event.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Events.Scp3114.Dancing">
@@ -12902,6 +13831,18 @@
             <see cref="P:Exiled.Events.Handlers.Scp330.InteractingScp330" /> event.
             </summary>
         </member>
+        <member name="T:Exiled.Events.Patches.Events.Scp559.Interacting">
+            <summary>
+            Patches <see cref="M:Scp559Cake.ServerInteract(ReferenceHub,System.Byte)"/>
+            to add <see cref="P:Exiled.Events.Handlers.Scp559.Interacting"/> event.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Events.Scp559.Spawning">
+            <summary>
+            Patches <see cref="M:Scp559Cake.SetPosition(UnityEngine.Vector3,UnityEngine.Vector3)"/>
+            to add <see cref="P:Exiled.Events.Handlers.Scp559.Spawning"/> event.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.Patches.Events.Scp914.InteractingEvents">
             <summary>
             Patches <see cref="M:Scp914.Scp914Controller.ServerInteract(ReferenceHub,System.Byte)" />.
@@ -12924,6 +13865,12 @@
             <summary>
             Patches <see cref="M:PlayerRoles.PlayableScps.Scp939.Scp939ClawAbility.ServerProcessCmd(Mirror.NetworkReader)"/>
             to add <see cref="T:Exiled.Events.Patches.Events.Scp939.Clawed"/> event.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Events.Scp939.CreatedAmnesticCloud">
+            <summary>
+            Patches <see cref="P:PlayerRoles.PlayableScps.Scp939.Scp939AmnesticCloudInstance.State" /> setter.
+            to add the <see cref="P:Exiled.Events.Handlers.Scp939.UpdatedCloudState" /> event.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Events.Scp939.Focus">
@@ -12992,6 +13939,12 @@
             Adds the <see cref="P:Exiled.Events.Handlers.Server.ChoosingStartTeamQueue" />.
             </summary>
         </member>
+        <member name="T:Exiled.Events.Patches.Events.Server.CompletingObjective">
+            <summary>
+            Patches <see cref="M:Respawning.Objectives.FactionObjectiveBase.ServerSendUpdate"/>
+            to add <see cref="P:Exiled.Events.Handlers.Server.CompletingObjective"/> event.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.Patches.Events.Server.Reporting">
             <summary>
             Patches CheaterReport.UserCode_CmdReport__UInt32__String__Byte\u005B\u005D__Boolean(uint, string, byte[], bool) />.
@@ -13024,8 +13977,8 @@
         </member>
         <member name="T:Exiled.Events.Patches.Events.Server.Unban">
             <summary>
-            Patches <see cref="M:BanHandler.RemoveBan(System.String,BanHandler.BanType,System.Boolean)"/>
-            to add <see cref="P:Exiled.Events.Handlers.Server.Unbanning"/> and <see cref="P:Exiled.Events.Handlers.Server.Unbanned"/> events.
+                Patches <see cref="M:BanHandler.RemoveBan(System.String,BanHandler.BanType,System.Boolean)" />
+                to add <see cref="P:Exiled.Events.Handlers.Server.Unbanning" /> and <see cref="P:Exiled.Events.Handlers.Server.Unbanned" /> events.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Events.Server.WaitingForPlayers">
@@ -13038,6 +13991,12 @@
             <summary>
             Patches <see cref="M:PlayerInteract.UserCode_CmdUsePanel__AlphaPanelOperations(PlayerInteract.AlphaPanelOperations)" />.
             Adds the <see cref="P:Exiled.Events.Handlers.Warhead.ChangingLeverStatus" /> event.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Events.Warhead.DeadmanSwitchStart">
+            <summary>
+            Patches <see cref="M:AlphaWarheadController.Detonate" />
+            to add <see cref="P:Exiled.API.Features.Warhead.DeadmanSwitchEnabled"/> and  <see cref="P:Exiled.Events.Handlers.Warhead.DeadmanSwitchInitiating"/> events.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Events.Warhead.Detonation">
@@ -13068,6 +14027,12 @@
             Patches the <see cref="M:InventorySystem.Items.Usables.Scp244.Hypothermia.Hypothermia.Update"/> delegate.
             Fix than SCP-106 regenerates slower in SCP-244 even if they are in stalk.
             Bug reported to NW (https://git.scpslgame.com/northwood-qa/scpsl-bug-reporting/-/issues/367).
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Fixes.FixElevatorChamberAwake">
+            <summary>
+            Patches <see cref="M:Interactables.Interobjects.ElevatorChamber.Awake" />'s setter.
+            Fix for the <see cref="P:Exiled.Events.Handlers.Map.ElevatorSequencesUpdated" /> event having its Lift value being null.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Fixes.FixOnAddedBeingCallAfterOnRemoved">
@@ -13101,7 +14066,7 @@
         <member name="T:Exiled.Events.Patches.Fixes.Jailbird914CoarseFix">
             <summary>
             Patches <see cref="M:InventorySystem.Items.Jailbird.JailbirdDeteriorationTracker.Setup(InventorySystem.Items.Jailbird.JailbirdItem,InventorySystem.Items.Jailbird.JailbirdHitreg)" />.
-            Bug reported to NW (https://trello.com/c/kyr3hV9B).
+            Bug reported to NW (https://git.scpslgame.com/northwood-qa/scpsl-bug-reporting/-/issues/88).
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Fixes.JailbirdHitRegFix">
@@ -13130,11 +14095,6 @@
             Patches the <see cref="M:PlayerRoles.PlayableScps.Scp096.Scp096HitHandler.CheckDoorHit(UnityEngine.Collider,Footprinting.Footprint)"/> delegate.
             Fixes open doors getting easily broke.
             Bug reported to NW (https://git.scpslgame.com/northwood-qa/scpsl-bug-reporting/-/issues/198).
-            </summary>
-        </member>
-        <member name="T:Exiled.Events.Patches.Fixes.OptimiseNWPocketDimensionGenerator">
-            <summary>
-            Patches <see cref="M:PocketDimensionGenerator.PrepTeleports"/>.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Fixes.RoleChangedPatch">
@@ -13173,16 +14133,9 @@
             Bug reported to NW (https://git.scpslgame.com/northwood-qa/scpsl-bug-reporting/-/issues/55).
             </summary>
         </member>
-        <member name="T:Exiled.Events.Patches.Fixes.SlownessFix">
+        <member name="T:Exiled.Events.Patches.Fixes.ServerHubMicroHidFix">
             <summary>
-            Patches <see cref="P:PlayerRoles.FirstPersonControl.FpcMotor.DesiredMove"/> getter to fix Slowness effect.
-            reported to NW (https://git.scpslgame.com/northwood-qa/scpsl-bug-reporting/-/issues/378).
-            </summary>
-        </member>
-        <member name="T:Exiled.Events.Patches.Fixes.SlownessFixPosition">
-            <summary>
-            Patches <see cref="M:PlayerRoles.FirstPersonControl.FpcMotor.UpdatePosition(System.Boolean@)"/> method to fix Slowness effect.
-            reported to NW (https://git.scpslgame.com/northwood-qa/scpsl-bug-reporting/-/issues/378).
+            Patches <see cref="M:InventorySystem.Items.MicroHID.Modules.CycleSyncModule.Update"/> to fix phantom <see cref="T:Exiled.API.Features.Items.MicroHid"/> for <see cref="M:Exiled.API.Features.Items.Item.Create(ItemType,Exiled.API.Features.Player)"/>.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Fixes.VoiceChatMutesClear">
@@ -13221,6 +14174,14 @@
             <param name="continueLabel">Label for help.</param>
             <returns>Instructions for <see cref="P:Exiled.API.Features.Items.Firearm.AmmoDrain"/>.</returns>
         </member>
+        <member name="M:Exiled.Events.Patches.Generic.AmmoDrainAutomatic.GetAmmoDrainLimit(System.Int32,System.Int32)">
+            <summary>
+            Calculates modified ammo limit.
+            </summary>
+            <param name="ammoLimit">Current ammo limit for reloading.</param>
+            <param name="ammoDrain">Target <see cref="P:Exiled.API.Features.Items.Firearm.AmmoDrain"/>.</param>
+            <returns>Modified ammo limit for reloading.</returns>
+        </member>
         <member name="T:Exiled.Events.Patches.Generic.AmmoDrainPump">
             <summary>
             Patch for adding <see cref="P:Exiled.API.Features.Items.Firearm.AmmoDrain"/> support for shotguns.
@@ -13245,6 +14206,11 @@
             <summary>
             Patches <see cref="M:PlayerRoles.PlayableScps.Scp049.Scp049SenseAbility.CanFindTarget(ReferenceHub@)"/>.
             <see cref="P:Exiled.Events.Config.CanScp049SenseTutorial"/>.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Generic.CoffeeListAdd">
+            <summary>
+            Patches <see cref="M:Coffee.Start"/> to control coffee list.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Generic.CommandLogging">
@@ -13409,21 +14375,6 @@
                 Patches <see cref="M:CentralAuth.PlayerAuthenticationManager.Start"/> to add an @offline suffix to UserIds in Offline Mode.
             </summary>
         </member>
-        <member name="T:Exiled.Events.Patches.Generic.OfflineModePlayerIds">
-            <summary>
-                Patches <see cref="M:CentralAuth.PlayerAuthenticationManager.Start"/> to add the player's UserId to the <see cref="F:PluginAPI.Core.Player.PlayersUserIds"/> dictionary.
-            </summary>
-        </member>
-        <member name="T:Exiled.Events.Patches.Generic.OfflineModeReferenceHub">
-            <summary>
-                Patches <see cref="M:ReferenceHub.Start"/> to prevent it from executing the <see cref="T:PluginAPI.Events.PlayerLeftEvent"/> event when the server is in offline mode.
-            </summary>
-        </member>
-        <member name="T:Exiled.Events.Patches.Generic.OfflineModeJoin">
-            <summary>
-                Patches <see cref="M:NicknameSync.UserCode_CmdSetNick__String(System.String)"/> to execute the <see cref="T:PluginAPI.Events.PlayerJoinedEvent"/> event when the server is in offline mode.
-            </summary>
-        </member>
         <member name="T:Exiled.Events.Patches.Generic.ParseVisionInformation">
             <summary>
             Patches <see cref="M:PlayerRoles.PlayableScps.Scp096.Scp096TargetsTracker.IsObservedBy(ReferenceHub)"/>.
@@ -13443,6 +14394,11 @@
         <member name="T:Exiled.Events.Patches.Generic.PocketDimensionTeleportList">
             <summary>
             Patches <see cref="M:PocketDimensionTeleport.Awake"/>.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Generic.RoomLightControllersList">
+            <summary>
+            Patch for adding <see cref="T:RoomLightController"/> to list.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Generic.RoomList">
@@ -13469,6 +14425,18 @@
         <member name="T:Exiled.Events.Patches.Generic.Scp173BeingLooked">
             <summary>
             Patches <see cref="M:PlayerRoles.PlayableScps.Scp173.Scp173ObserversTracker.UpdateObserver(ReferenceHub)"/>.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Generic.Scp559List">
+            <summary>
+            Patches <see cref="M:Scp559Cake.Start"/>
+            to control <see cref="P:Exiled.API.Features.Scp559.List"/>.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Generic.Scp956Capybara">
+            <summary>
+            Patches <see cref="M:Scp956Pinata.UpdateAi"/>
+            to implement better pinata capybara.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Generic.ServerNamePatch">

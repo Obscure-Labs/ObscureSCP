@@ -650,7 +650,7 @@
         </member>
         <member name="T:Exiled.Loader.LoaderPlugin">
             <summary>
-            The Northwood PluginAPI Plugin class for the EXILED Loader.
+            The Northwood LabAPI Plugin class for the EXILED Loader.
             </summary>
         </member>
         <member name="F:Exiled.Loader.LoaderPlugin.Config">
@@ -658,9 +658,49 @@
             The config for the EXILED Loader.
             </summary>
         </member>
+        <member name="F:Exiled.Loader.LoaderPlugin.Instance">
+            <summary>
+            The config for the EXILED Loader.
+            </summary>
+        </member>
+        <member name="P:Exiled.Loader.LoaderPlugin.Name">
+            <summary>
+            Gets the Name of the EXILED Loader.
+            </summary>
+        </member>
+        <member name="P:Exiled.Loader.LoaderPlugin.Description">
+            <summary>
+            Gets the Description of the EXILED Loader.
+            </summary>
+        </member>
+        <member name="P:Exiled.Loader.LoaderPlugin.Author">
+            <summary>
+            Gets the Author of the EXILED Loader.
+            </summary>
+        </member>
+        <member name="P:Exiled.Loader.LoaderPlugin.RequiredApiVersion">
+            <summary>
+            Gets the RequiredApiVersion of the EXILED Loader.
+            </summary>
+        </member>
+        <member name="P:Exiled.Loader.LoaderPlugin.Version">
+            <summary>
+            Gets the Exiled Version.
+            </summary>
+        </member>
+        <member name="P:Exiled.Loader.LoaderPlugin.Priority">
+            <summary>
+            Gets the Exiled Priority load.
+            </summary>
+        </member>
         <member name="M:Exiled.Loader.LoaderPlugin.Enable">
             <summary>
-            Called by PluginAPI when the plugin is enabled.
+            Called by LabAPI when the plugin is enabled.
+            </summary>
+        </member>
+        <member name="M:Exiled.Loader.LoaderPlugin.Disable">
+            <summary>
+            Called by LabAPI when the plugin is Disable.
             </summary>
         </member>
         <member name="T:Exiled.Loader.Models.ExiledLib">

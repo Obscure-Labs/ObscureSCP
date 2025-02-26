@@ -641,11 +641,23 @@
             </summary>
             <param name="ev"><see cref="T:Exiled.CustomItems.API.EventArgs.OwnerHandcuffingEventArgs"/>.</param>
         </member>
+        <member name="M:Exiled.CustomItems.API.Features.CustomItem.OnDroppingItem(Exiled.Events.EventArgs.Player.DroppingItemEventArgs)">
+            <summary>
+            Handles tracking items when they are dropped by a player.
+            </summary>
+            <param name="ev"><see cref="T:Exiled.Events.EventArgs.Player.DroppingItemEventArgs"/>.</param>
+        </member>
         <member name="M:Exiled.CustomItems.API.Features.CustomItem.OnDropping(Exiled.Events.EventArgs.Player.DroppingItemEventArgs)">
             <summary>
             Handles tracking items when they are dropped by a player.
             </summary>
             <param name="ev"><see cref="T:Exiled.Events.EventArgs.Player.DroppingItemEventArgs"/>.</param>
+        </member>
+        <member name="M:Exiled.CustomItems.API.Features.CustomItem.OnDroppingAmmo(Exiled.Events.EventArgs.Player.DroppingAmmoEventArgs)">
+            <summary>
+            Handles tracking when player requests drop of item which <see cref="T:ItemType"/> equals to the <see cref="T:ItemType"/> specified by <see cref="T:Exiled.CustomItems.API.Features.CustomItem"/>.
+            </summary>
+            <param name="ev"><see cref="T:Exiled.Events.EventArgs.Player.DroppingAmmoEventArgs"/>.</param>
         </member>
         <member name="M:Exiled.CustomItems.API.Features.CustomItem.OnPickingUp(Exiled.Events.EventArgs.Player.PickingUpItemEventArgs)">
             <summary>
@@ -693,6 +705,46 @@
             </summary>
             <param name="player">The <see cref="T:Exiled.API.Features.Player"/> who will be shown the message.</param>
         </member>
+        <member name="T:Exiled.CustomItems.API.Features.CustomKeycard">
+            <summary>
+            The Custom keycard base class.
+            </summary>
+        </member>
+        <member name="P:Exiled.CustomItems.API.Features.CustomKeycard.Type">
+            <inheritdoc/>
+            <exception cref="T:System.ArgumentOutOfRangeException">Throws if specified <see cref="T:ItemType"/> is not Keycard.</exception>
+        </member>
+        <member name="P:Exiled.CustomItems.API.Features.CustomKeycard.Permissions">
+            <summary>
+            Gets or sets the permissions for custom keycard.
+            </summary>
+        </member>
+        <member name="M:Exiled.CustomItems.API.Features.CustomKeycard.Give(Exiled.API.Features.Player,Exiled.API.Features.Items.Item,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.CustomItems.API.Features.CustomKeycard.Spawn(UnityEngine.Vector3,Exiled.API.Features.Items.Item,Exiled.API.Features.Player)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.CustomItems.API.Features.CustomKeycard.OnInteractingDoor(Exiled.API.Features.Player,Exiled.API.Features.Doors.Door)">
+            <summary>
+            Called when custom keycard interacts with a door.
+            </summary>
+            <param name="player">Owner of Custom keycard.</param>
+            <param name="door">Door with which interacting.</param>
+        </member>
+        <member name="M:Exiled.CustomItems.API.Features.CustomKeycard.OnInteractingLocker(Exiled.API.Features.Player,Exiled.API.Features.Lockers.Chamber)">
+            <summary>
+            Called when custom keycard interacts with a locker.
+            </summary>
+            <param name="player">Owner of Custom keycard.</param>
+            <param name="chamber">Chamber with which interacting.</param>
+        </member>
+        <member name="M:Exiled.CustomItems.API.Features.CustomKeycard.SubscribeEvents">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.CustomItems.API.Features.CustomKeycard.UnsubscribeEvents">
+            <inheritdoc/>
+        </member>
         <member name="T:Exiled.CustomItems.API.Features.CustomWeapon">
             <summary>
             The Custom Weapon base class.
@@ -715,6 +767,8 @@
             <summary>
             Gets or sets a value indicating how big of a clip the weapon will have.
             </summary>
+            <remarks>Warning for <see cref="F:ItemType.GunShotgun"/> and <see cref="F:ItemType.GunRevolver"/>.
+            They are not fully compatible with this features.</remarks>
         </member>
         <member name="P:Exiled.CustomItems.API.Features.CustomWeapon.FriendlyFire">
             <summary>
@@ -741,6 +795,12 @@
             Handles reloading for custom weapons.
             </summary>
             <param name="ev"><see cref="T:Exiled.Events.EventArgs.Player.ReloadingWeaponEventArgs"/>.</param>
+        </member>
+        <member name="M:Exiled.CustomItems.API.Features.CustomWeapon.OnReloaded(Exiled.Events.EventArgs.Player.ReloadedWeaponEventArgs)">
+            <summary>
+            Handles reloaded for custom weapons.
+            </summary>
+            <param name="ev"><see cref="T:Exiled.Events.EventArgs.Player.ReloadedWeaponEventArgs"/>.</param>
         </member>
         <member name="M:Exiled.CustomItems.API.Features.CustomWeapon.OnShooting(Exiled.Events.EventArgs.Player.ShootingEventArgs)">
             <summary>

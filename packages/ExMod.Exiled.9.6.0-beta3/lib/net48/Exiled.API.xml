@@ -413,6 +413,21 @@
             Damage caused by the marshmallow man.
             </summary>
         </member>
+        <member name="F:Exiled.API.Enums.DamageType.Scp1507">
+            <summary>
+            Damage caused by <see cref="F:PlayerRoles.RoleTypeId.Flamingo"/> ,<see cref="F:PlayerRoles.RoleTypeId.AlphaFlamingo"/> or <see cref="F:PlayerRoles.RoleTypeId.ZombieFlamingo"/>.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.DamageType.Scp956">
+            <summary>
+            Damage caused by Scp956 the pinata.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.DamageType.SnowBall">
+            <summary>
+            Damage caused by <see cref="F:ItemType.Snowball"/>.
+            </summary>
+        </member>
         <member name="T:Exiled.API.Enums.DanceType">
             <summary>
             All available dance variants being used by SCP-3114.
@@ -1248,6 +1263,26 @@
             <see cref="T:CustomPlayerEffects.Blurred"/>.
             </summary>
         </member>
+        <member name="F:Exiled.API.Enums.EffectType.BecomingFlamingo">
+            <summary>
+            Makes you a flamingo.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.EffectType.Scp559">
+            <summary>
+            Makes you a Child after eating Cake.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.EffectType.Scp956Target">
+            <summary>
+            Scp956 found you.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.EffectType.Snowed">
+            <summary>
+            you are snowed.
+            </summary>
+        </member>
         <member name="T:Exiled.API.Enums.ElevatorType">
             <summary>
             The unique type of elevator.
@@ -1691,6 +1726,102 @@
             Unknow type of locker.
             </summary>
         </member>
+        <member name="F:Exiled.API.Enums.LockerType.MicroHid">
+            <summary>
+            MircoHid pedestal.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.LockerType.ExperimentalWeapon">
+            <summary>
+            Experimental weapon locker.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.LockerType.Scp500Pedestal">
+            <summary>
+            SCP-500 pedestal.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.LockerType.AntiScp207Pedestal">
+            <summary>
+            SCP-207? (Anti SCP-207) pedestal.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.LockerType.Scp207Pedestal">
+            <summary>
+            SCP-207 pedestal.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.LockerType.Scp268Pedestal">
+            <summary>
+            SCP-268 pedestal.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.LockerType.Scp1344Pedestal">
+            <summary>
+            SCP-1344 pedestal.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.LockerType.Scp018Pedestal">
+            <summary>
+            SCP-018 pedestal.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.LockerType.Scp1576Pedestal">
+            <summary>
+            SCP-1576 pedestal.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.LockerType.Scp244Pedestal">
+            <summary>
+            SCP-244 pedestal.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.LockerType.Scp2176Pedestal">
+            <summary>
+            SCP-2176 pedestal.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.LockerType.Scp1853Pedestal">
+            <summary>
+            SCP-1853 pedestal.
+            </summary>
+        </member>
+        <member name="T:Exiled.API.Enums.ObjectiveType">
+            <summary>
+            An enum representing the different types of objectives.
+            </summary>
+            <seealso cref="T:Exiled.API.Features.Objectives.Objective" />
+        </member>
+        <member name="F:Exiled.API.Enums.ObjectiveType.None">
+            <summary>
+            Unknown objective.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.ObjectiveType.ScpItemPickup">
+            <summary>
+            Objective that is completed when SCP item is picked up.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.ObjectiveType.HumanDamage">
+            <summary>
+            Objective that is completed when enemy military is damaged.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.ObjectiveType.HumanKill">
+            <summary>
+            Objective that is completed when enemy military is killed.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.ObjectiveType.GeneratorActivation">
+            <summary>
+            Objective that is completed when generator is activated.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.ObjectiveType.Escape">
+            <summary>
+            Objective that is completed when player escapes.
+            </summary>
+        </member>
         <member name="T:Exiled.API.Enums.PingType">
             <summary>
             Enum that represents the type of SCP-079 ping.
@@ -1820,6 +1951,24 @@
             <summary>
             SCP-2176 lightbulb.
             Used by <see cref="F:ItemType.SCP2176"/>.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.ProjectileType.Coal">
+            <summary>
+            Coal.
+            Used by <see cref="F:ItemType.Coal"/>.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.ProjectileType.SpecialCoal">
+            <summary>
+            SpecialCoal.
+            Used by <see cref="F:ItemType.SpecialCoal"/>.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.ProjectileType.Snowball">
+            <summary>
+            Snowball.
+            Used by <see cref="F:ItemType.Snowball"/>.
             </summary>
         </member>
         <member name="T:Exiled.API.Enums.RadioRange">
@@ -2268,6 +2417,41 @@
             A black menu before loading the <see cref="F:Exiled.API.Enums.ScenesType.NewMainMenu"/>.
             </summary>
         </member>
+        <member name="T:Exiled.API.Enums.Scp939VisibilityState">
+            <summary>
+            Unique identifier for a <see cref="T:Exiled.API.Features.Roles.Scp939Role"/>.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.Scp939VisibilityState.None">
+            <summary>
+            SCP-939 doesnt see an other player, by default FPC role logic.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.Scp939VisibilityState.NotSeen">
+            <summary>
+            SCP-939 doesnt see an player, by basic SCP-939 logic.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.Scp939VisibilityState.SeenAsScp">
+            <summary>
+            SCP-939 sees an other player, who is teammate SCP.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.Scp939VisibilityState.SeenByDetonation">
+            <summary>
+            SCP-939 sees an other player due the Alpha Warhead detonation.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.Scp939VisibilityState.SeenByRange">
+            <summary>
+            SCP-939 sees an other player, due the base-game vision range logic.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.Scp939VisibilityState.SeenByLastTime">
+            <summary>
+            SCP-939 sees an other player for a while, after it's out of range.
+            </summary>
+        </member>
         <member name="T:Exiled.API.Enums.ShootingTargetButton">
             <summary>
             Possible shooting target buttons.
@@ -2519,19 +2703,19 @@
             Inside the 3-way intersection HCZ Armory.
             </summary>
         </member>
-        <member name="F:Exiled.API.Enums.SpawnLocationType.InsideHid">
+        <member name="F:Exiled.API.Enums.SpawnLocationType.InsideHidChamber">
             <summary>
-            Inside the Micro-HID room.
+            Inside the chamber that contains the Micro-HID in Micro-HID room.
             </summary>
         </member>
-        <member name="F:Exiled.API.Enums.SpawnLocationType.InsideHidLeft">
+        <member name="F:Exiled.API.Enums.SpawnLocationType.InsideHidLower">
             <summary>
-            Just inside the left door next to Micro-HID room.
+            Inside the lower door that leads to the stairs in Micro-HID room.
             </summary>
         </member>
-        <member name="F:Exiled.API.Enums.SpawnLocationType.InsideHidRight">
+        <member name="F:Exiled.API.Enums.SpawnLocationType.InsideHidUpper">
             <summary>
-            Just inside the right door next to Micro-HID room.
+            Inside the upper door that leads into the Micro-HID room just after the stairs.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.SpawnLocationType.InsideLczWc">
@@ -2587,6 +2771,11 @@
         <member name="F:Exiled.API.Enums.SpawnReason.Destroyed">
             <summary>
             The user will be destroyed.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.SpawnReason.ItemUsage">
+            <summary>
+            The user has been spawn by the usage of an Item.
             </summary>
         </member>
         <member name="T:Exiled.API.Enums.ThrowRequest">
@@ -2756,6 +2945,15 @@
             <param name="changeFlags">The flags to modify.</param>
             <typeparam name="T">The type of the enum.</typeparam>
             <returns>The flags enum with the flag set to the given value.</returns>
+        </member>
+        <member name="M:Exiled.API.Extensions.BitwiseExtensions.HasFlagFast``1(``0,``0)">
+            <summary>
+            Checks if flag has specified value.
+            </summary>
+            <param name="flag">Flag to check.</param>
+            <param name="value">Value to check in flag.</param>
+            <typeparam name="T">The type of the enum.</typeparam>
+            <returns><see langword="true"/> if value is presented in flag. Otherwise, <see langword="false"/>.</returns>
         </member>
         <member name="T:Exiled.API.Extensions.CommonExtensions">
             <summary>
@@ -4401,6 +4599,77 @@
             </summary>
             <param name="sentence">The sentence to check.</param>
             <returns><see langword="true"/> if the sentence is valid; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="T:Exiled.API.Features.Coffee">
+            <summary>
+            A wrapper for coffee cup.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Features.Coffee.BaseToWrapper">
+            <summary>
+            Gets the <see cref="T:System.Collections.Generic.Dictionary`2"/> containing <see cref="T:Coffee"/> to <see cref="T:Exiled.API.Features.Coffee"/>.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Coffee.#ctor(Coffee)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Coffee"/> class.
+            </summary>
+            <param name="coffee"><inheritdoc cref="P:Exiled.API.Features.Coffee.Base"/></param>
+        </member>
+        <member name="P:Exiled.API.Features.Coffee.BlacklistedPlayers">
+            <summary>
+            Gets or sets an <see cref="T:System.Collections.Generic.IEnumerable`1"/> of players who cannot interact with coffee cups.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Coffee.List">
+            <summary>
+            Gets the list with all available <see cref="T:Exiled.API.Features.Coffee"/> instanses.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Coffee.Base">
+            <summary>
+            Gets the base coffee instance.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Coffee.IsConsumed">
+            <summary>
+            Gets or sets a value indicating whether or not coffee has been drunk.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Coffee.CoffeeTranslation">
+            <summary>
+            Gets or sets text which will be displayed to player when he drinks coffee.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Coffee.TranslationAuthor">
+            <summary>
+            Gets or sets the author of current <see cref="P:Exiled.API.Features.Coffee.CoffeeTranslation"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Coffee.DrinkColor">
+            <summary>
+            Gets the color of a drink in a cup.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Coffee.Get(Coffee)">
+            <summary>
+            Gets a <see cref="T:Exiled.API.Features.Coffee"/> given a <see cref="T:Coffee"/> instance.
+            </summary>
+            <param name="baseCoffee">The <see cref="T:Coffee"/> instance.</param>
+            <returns>The <see cref="T:Exiled.API.Features.Coffee"/> instance.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Coffee.Get(System.Func{Exiled.API.Features.Coffee,System.Boolean})">
+            <summary>
+            Gets a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Coffee"/> matching the condition.
+            </summary>
+            <param name="predicate">The condition to satisfy.</param>
+            <returns>A <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Coffee"/> matching the condition.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Coffee.Interact(Exiled.API.Features.Player)">
+            <summary>
+            Interacts with <see cref="T:Exiled.API.Features.Coffee"/>.
+            </summary>
+            <param name="player">The player who interacts. If <see langword="null"/>, it will be chosen randomly.</param>
         </member>
         <member name="T:Exiled.API.Features.ComponentsEqualityComparer">
             <summary>
@@ -6317,7 +6586,7 @@
         </member>
         <member name="M:Exiled.API.Features.Core.UserSettings.SettingBase.TryGetSetting``1(Exiled.API.Features.Player,System.Int32,``0@)">
             <summary>
-            Tries ti get the setting with the specified id.
+            Tries to get the setting with the specified id.
             </summary>
             <param name="player">Player who has received the setting.</param>
             <param name="id">Id of the setting.</param>
@@ -6404,6 +6673,80 @@
             </summary>
             <param name="hub"><see cref="T:ReferenceHub"/> that has updates the setting.</param>
             <param name="settingBase">A new updated setting.</param>
+        </member>
+        <member name="T:Exiled.API.Features.Core.UserSettings.SliderSetting">
+            <summary>
+            Represents a slider setting.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Core.UserSettings.SliderSetting.#ctor(System.Int32,System.String,System.Single,System.Single,System.Single,System.Boolean,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Core.UserSettings.SliderSetting"/> class.
+            </summary>
+            <param name="id"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Id"/></param>
+            <param name="label"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Label"/></param>
+            <param name="minValue"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SliderSetting.MinimumValue"/></param>
+            <param name="maxValue"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SliderSetting.MaximumValue"/></param>
+            <param name="defaultValue"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SliderSetting.DefaultValue"/></param>
+            <param name="isInteger"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SliderSetting.IsInteger"/></param>
+            <param name="stringFormat"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SliderSetting.StringFormat"/></param>
+            <param name="displayFormat"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SliderSetting.DisplayFormat"/></param>
+            <param name="hintDescription"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.HintDescription"/></param>
+        </member>
+        <member name="M:Exiled.API.Features.Core.UserSettings.SliderSetting.#ctor(UserSettings.ServerSpecific.SSSliderSetting)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Core.UserSettings.SliderSetting"/> class.
+            </summary>
+            <param name="settingBase">A <see cref="T:UserSettings.ServerSpecific.SSSliderSetting"/> instance.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Core.UserSettings.SliderSetting.MinimumValue">
+            <summary>
+            Gets or sets the minimum value of the slider.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.UserSettings.SliderSetting.MaximumValue">
+            <summary>
+            Gets or sets the maximum value of the slider.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.UserSettings.SliderSetting.DefaultValue">
+            <summary>
+            Gets or sets the default value of the slider.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.UserSettings.SliderSetting.IsInteger">
+            <summary>
+            Gets or sets a value indicating whether the slider displays integers.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.UserSettings.SliderSetting.IsBeingDragged">
+            <summary>
+            Gets a value indicating whether the slider is currently being dragged.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.UserSettings.SliderSetting.SliderValue">
+            <summary>
+            Gets a float that represents the current value of the slider.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.UserSettings.SliderSetting.StringFormat">
+            <summary>
+            Gets or sets the formatting used for the number in the slider.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.UserSettings.SliderSetting.DisplayFormat">
+            <summary>
+            Gets or sets the formatting used for the final display of the value of the slider.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.UserSettings.SliderSetting.Base">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Core.UserSettings.SliderSetting.ToString">
+            <summary>
+            Returns a representation of this <see cref="T:Exiled.API.Features.Core.UserSettings.SliderSetting"/>.
+            </summary>
+            <returns>A string in human-readable format.</returns>
         </member>
         <member name="T:Exiled.API.Features.Core.UserSettings.TextInputSetting">
             <summary>
@@ -6510,18 +6853,69 @@
             </summary>
             <returns>A string in human-readable format.</returns>
         </member>
-        <member name="T:Exiled.API.Features.CustomHealthStat">
+        <member name="T:Exiled.API.Features.Core.UserSettings.UserTextInputSetting">
             <summary>
-            A custom version of <see cref="T:PlayerStatsSystem.HealthStat"/> which allows the player's max amount of health to be changed.
+            Represents a user text input setting.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.CustomHealthStat.MaxValue">
+        <member name="M:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.#ctor(System.Int32,System.String,System.String,System.Int32,TMPro.TMP_InputField.ContentType,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Core.UserSettings.UserTextInputSetting"/> class.
+            </summary>
+            <param name="id"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Id"/></param>
+            <param name="label"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Label"/></param>
+            <param name="placeHolder"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.PlaceHolder"/></param>
+            <param name="characterLimit"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.CharacterLimit"/></param>
+            <param name="contentType"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.ContentType"/></param>
+            /// <param name="hintDescription"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.HintDescription"/></param>
+        </member>
+        <member name="M:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.#ctor(UserSettings.ServerSpecific.SSPlaintextSetting)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Core.UserSettings.UserTextInputSetting"/> class.
+            </summary>
+            <param name="settingBase">A <see cref="T:UserSettings.ServerSpecific.SSPlaintextSetting"/> instance.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.Base">
             <inheritdoc/>
         </member>
-        <member name="P:Exiled.API.Features.CustomHealthStat.CustomMaxValue">
+        <member name="P:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.Text">
             <summary>
-            Gets or sets the maximum amount of health the player will have.
+            Gets the value of the text entered by a  client.
             </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.PlaceHolder">
+            <summary>
+            Gets or sets a value indicating the placeholder shown within the PlainTextSetting.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.ContentType">
+            <summary>
+            Gets or sets a value indicating the type of content within the PlainTextSetting.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.CharacterLimit">
+            <summary>
+            Gets or sets a value indicating the max number of characters in the PlainTextSetting.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.ToString">
+            <summary>
+            Returns a representation of this <see cref="T:Exiled.API.Features.Core.UserSettings.UserTextInputSetting"/>.
+            </summary>
+            <returns>A string in human-readable format.</returns>
+        </member>
+        <member name="T:Exiled.API.Features.CustomStats.CustomHumeShieldStat">
+            <summary>
+            A custom version of <see cref="T:PlayerStatsSystem.HumeShieldStat"/> which allows the player's max amount of HumeShield to be changed.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.CustomStats.CustomHumeShieldStat.ShieldRegenerationMultiplier">
+            <summary>
+            Gets or sets the multiplier for gaining HumeShield.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.CustomStats.CustomHumeShieldStat.Update">
+            <inheritdoc/>
         </member>
         <member name="T:Exiled.API.Features.DamageHandlers.AttackerDamageHandler">
             <summary>
@@ -8861,7 +9255,7 @@
             </summary>
             <returns> New <see cref="T:Exiled.API.Features.Items.Armor"/> object. </returns>
         </member>
-        <member name="M:Exiled.API.Features.Items.Armor.ReadPickupInfo(Exiled.API.Features.Pickups.Pickup)">
+        <member name="M:Exiled.API.Features.Items.Armor.ReadPickupInfoBefore(Exiled.API.Features.Pickups.Pickup)">
             <inheritdoc/>
         </member>
         <member name="T:Exiled.API.Features.Items.Consumable">
@@ -8963,7 +9357,7 @@
             </summary>
             <returns> New <see cref="T:Exiled.API.Features.Items.ExplosiveGrenade"/> object. </returns>
         </member>
-        <member name="M:Exiled.API.Features.Items.ExplosiveGrenade.ReadPickupInfo(Exiled.API.Features.Pickups.Pickup)">
+        <member name="M:Exiled.API.Features.Items.ExplosiveGrenade.ReadPickupInfoBefore(Exiled.API.Features.Pickups.Pickup)">
             <inheritdoc/>
         </member>
         <member name="T:Exiled.API.Features.Items.Firearm">
@@ -9022,6 +9416,11 @@
             <see langword="null"/> for Revolver and ParticleDisruptor.
             </remarks>
         </member>
+        <member name="P:Exiled.API.Features.Items.Firearm.HitscanHitregModule">
+            <summary>
+            Gets a primaty magazine for current firearm.
+            </summary>
+        </member>
         <member name="P:Exiled.API.Features.Items.Firearm.MagazineAmmo">
             <summary>
             Gets or sets the amount of ammo in the firearm magazine.
@@ -9043,6 +9442,41 @@
         <member name="P:Exiled.API.Features.Items.Firearm.MaxMagazineAmmo">
             <summary>
             Gets or sets the max ammo for this firearm.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Firearm.Damage">
+            <summary>
+            Gets or sets the damage for this firearm.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Firearm.Inaccuracy">
+            <summary>
+            Gets or sets the inaccuracy for this firearm.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Firearm.Penetration">
+            <summary>
+            Gets or sets the penetration for this firearm.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Firearm.DamageFalloffDistance">
+            <summary>
+            Gets or sets how much fast the value drop over the distance.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Firearm.EffectiveDamage">
+            <summary>
+            Gets the damage for this firearm with attachement modifier.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Firearm.EffectiveInaccuracy">
+            <summary>
+            Gets the inaccuracy for this firearm with attachement modifier.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Firearm.EffectivePenetration">
+            <summary>
+            Gets the penetration for this firearm with attachement modifier.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Items.Firearm.MaxBarrelAmmo">
@@ -9339,7 +9773,7 @@
             <param name="oldOwner">old <see cref="T:Exiled.API.Features.Items.Firearm"/> owner.</param>
             <param name="newOwner">new <see cref="T:Exiled.API.Features.Items.Firearm"/> owner.</param>
         </member>
-        <member name="M:Exiled.API.Features.Items.Firearm.ReadPickupInfo(Exiled.API.Features.Pickups.Pickup)">
+        <member name="M:Exiled.API.Features.Items.Firearm.ReadPickupInfoBefore(Exiled.API.Features.Pickups.Pickup)">
             <inheritdoc/>
         </member>
         <member name="T:Exiled.API.Features.Items.FirearmModules.Barrel.AutomaticBarrelMagazine">
@@ -9584,6 +10018,9 @@
         <member name="P:Exiled.API.Features.Items.FirearmModules.Primary.NormalMagazine.MaxAmmo">
             <inheritdoc/>
         </member>
+        <member name="P:Exiled.API.Features.Items.FirearmModules.Primary.NormalMagazine.Ammo">
+            <inheritdoc/>
+        </member>
         <member name="P:Exiled.API.Features.Items.FirearmModules.Primary.NormalMagazine.ConstantMaxAmmo">
             <inheritdoc/>
         </member>
@@ -9707,7 +10144,7 @@
             </summary>
             <returns>A string containing FlashGrenade-related data.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Items.FlashGrenade.ReadPickupInfo(Exiled.API.Features.Pickups.Pickup)">
+        <member name="M:Exiled.API.Features.Items.FlashGrenade.ReadPickupInfoBefore(Exiled.API.Features.Pickups.Pickup)">
             <inheritdoc/>
         </member>
         <member name="T:Exiled.API.Features.Items.Flashlight">
@@ -10022,11 +10459,27 @@
             <param name="oldOwner">old <see cref="T:Exiled.API.Features.Items.Item"/> owner.</param>
             <param name="newOwner">new <see cref="T:Exiled.API.Features.Items.Item"/> owner.</param>
         </member>
-        <member name="M:Exiled.API.Features.Items.Item.ReadPickupInfo(Exiled.API.Features.Pickups.Pickup)">
+        <member name="M:Exiled.API.Features.Items.Item.ReadPickupInfoBefore(Exiled.API.Features.Pickups.Pickup)">
             <summary>
             Helper method for saving data between items and pickups.
             </summary>
             <param name="pickup"><see cref="T:Exiled.API.Features.Pickups.Pickup"/>-related data to give to the <see cref="T:Exiled.API.Features.Items.Item"/>.</param>
+            <remarks>
+            Analog to <see cref="M:Exiled.API.Features.Items.Item.ReadPickupInfoAfter(Exiled.API.Features.Pickups.Pickup)"/>, but it is called before item initialization.
+            <see cref="M:InventorySystem.Items.ItemBase.OnAdded(InventorySystem.Items.Pickups.ItemPickupBase)"/>.
+            </remarks>
+            <see cref="M:Exiled.API.Features.Items.Item.ReadPickupInfoAfter(Exiled.API.Features.Pickups.Pickup)"/>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Item.ReadPickupInfoAfter(Exiled.API.Features.Pickups.Pickup)">
+            <summary>
+            Helper method for saving data between items and pickups.
+            </summary>
+            <param name="pickup"><see cref="T:Exiled.API.Features.Pickups.Pickup"/>-related data to give to the <see cref="T:Exiled.API.Features.Items.Item"/>.</param>
+            <remarks>
+            Analog to <see cref="M:Exiled.API.Features.Items.Item.ReadPickupInfoAfter(Exiled.API.Features.Pickups.Pickup)"/>, but it is called after item initialization.
+            <see cref="M:InventorySystem.Items.ItemBase.OnAdded(InventorySystem.Items.Pickups.ItemPickupBase)"/>.
+            </remarks>
+            <see cref="M:Exiled.API.Features.Items.Item.ReadPickupInfoBefore(Exiled.API.Features.Pickups.Pickup)"/>
         </member>
         <member name="T:Exiled.API.Features.Items.Jailbird">
             <summary>
@@ -10120,7 +10573,7 @@
             </summary>
             <returns>A string containing JailBird-related data.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Items.Jailbird.ReadPickupInfo(Exiled.API.Features.Pickups.Pickup)">
+        <member name="M:Exiled.API.Features.Items.Jailbird.ReadPickupInfoBefore(Exiled.API.Features.Pickups.Pickup)">
             <inheritdoc/>
         </member>
         <member name="T:Exiled.API.Features.Items.Keycard">
@@ -10162,7 +10615,7 @@
             </summary>
             <returns>A string containing Keycard-related data.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Items.Keycard.ReadPickupInfo(Exiled.API.Features.Pickups.Pickup)">
+        <member name="M:Exiled.API.Features.Items.Keycard.ReadPickupInfoBefore(Exiled.API.Features.Pickups.Pickup)">
             <inheritdoc/>
         </member>
         <member name="T:Exiled.API.Features.Items.MicroHid">
@@ -10292,6 +10745,9 @@
             Returns the MicroHid in a human readable format.
             </summary>
             <returns>A string containing MicroHid-related data.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Items.MicroHid.ChangeOwner(Exiled.API.Features.Player,Exiled.API.Features.Player)">
+            <inheritdoc/>
         </member>
         <member name="T:Exiled.API.Features.Items.Radio">
             <summary>
@@ -10604,7 +11060,7 @@
             </summary>
             <returns>A string containing SCP-244 related data.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Items.Scp244.ReadPickupInfo(Exiled.API.Features.Pickups.Pickup)">
+        <member name="M:Exiled.API.Features.Items.Scp244.ReadPickupInfoBefore(Exiled.API.Features.Pickups.Pickup)">
             <inheritdoc/>
         </member>
         <member name="T:Exiled.API.Features.Items.CandyAddStatus">
@@ -10866,9 +11322,14 @@
             <summary>
             Uses the item.
             </summary>
-            <exception cref="T:System.InvalidOperationException">The <see cref="P:Exiled.API.Features.Items.Item.Owner"/> of the item cannot be <see langword="null"/>.</exception>
         </member>
-        <member name="M:Exiled.API.Features.Items.Usable.ReadPickupInfo(Exiled.API.Features.Pickups.Pickup)">
+        <member name="M:Exiled.API.Features.Items.Usable.Use(Exiled.API.Features.Player)">
+            <summary>
+            Uses the item.
+            </summary>
+            <param name="owner">Target <see cref="T:Exiled.API.Features.Player"/> to use an <see cref="T:Exiled.API.Features.Items.Usable"/>.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Usable.ReadPickupInfoBefore(Exiled.API.Features.Pickups.Pickup)">
             <inheritdoc/>
         </member>
         <member name="T:Exiled.API.Features.Lift">
@@ -11039,6 +11500,13 @@
             <param name="type">The <see cref="T:Exiled.API.Enums.ElevatorType"/>.</param>
             <returns>A <see cref="T:Exiled.API.Features.Lift"/> or <see langword="null"/> if not found.</returns>
         </member>
+        <member name="M:Exiled.API.Features.Lift.Get(Interactables.Interobjects.ElevatorGroup)">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Lift"/> corresponding to the specified <see cref="T:Interactables.Interobjects.ElevatorGroup"/>, if any.
+            </summary>
+            <param name="type">The <see cref="T:Interactables.Interobjects.ElevatorGroup"/>.</param>
+            <returns>A <see cref="T:Exiled.API.Features.Lift"/> or <see langword="null"/> if not found.</returns>
+        </member>
         <member name="M:Exiled.API.Features.Lift.Get(System.String)">
             <summary>
             Gets the <see cref="T:Exiled.API.Features.Lift"/> corresponding to the specified name, if any.
@@ -11198,7 +11666,7 @@
         </member>
         <member name="P:Exiled.API.Features.Lockers.Chamber.IsOpen">
             <summary>
-            Gets a value indicating whether the chamber is currently open.
+            Gets or sets a value indicating whether the chamber is currently open.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Lockers.Chamber.Id">
@@ -11337,12 +11805,19 @@
             <param name="zoneType">The <see cref="T:Exiled.API.Enums.ZoneType"/> to search for.</param>
             <returns>The <see cref="T:Exiled.API.Features.Lockers.Locker"/> with the given <see cref="T:Exiled.API.Enums.ZoneType"/> or <see langword="null"/> if not found.</returns>
         </member>
+        <member name="M:Exiled.API.Features.Lockers.Locker.Get(Exiled.API.Enums.LockerType)">
+            <summary>
+            Gets an <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Lockers.Locker"/> given the specified <see cref="T:Exiled.API.Enums.LockerType"/>.
+            </summary>
+            <param name="lockerType">The <see cref="T:Exiled.API.Enums.LockerType"/> to search for.</param>
+            <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Lockers.Locker"/> which contains elements that satisfy the condition.</returns>
+        </member>
         <member name="M:Exiled.API.Features.Lockers.Locker.Get(System.Func{Exiled.API.Features.Lockers.Locker,System.Boolean})">
             <summary>
             Gets a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Lockers.Locker"/> filtered based on a predicate.
             </summary>
             <param name="predicate">The condition to satify.</param>
-            <returns>A <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Lockers.Locker"/> which contains elements that satify the condition.</returns>
+            <returns>A <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Lockers.Locker"/> which contains elements that satisfy the condition.</returns>
         </member>
         <member name="M:Exiled.API.Features.Lockers.Locker.Random(Exiled.API.Enums.ZoneType,Exiled.API.Enums.LockerType)">
             <summary>
@@ -11506,6 +11981,14 @@
             <summary>
             Gets a value indicating whether decontamination phase is in the light containment zone.
             </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Map.RemainingDecontaminationTime">
+            <summary>
+            Gets the remaining time for the decontamination process.
+            </summary>
+            <returns>
+            The remaining time in seconds for the decontamination process.
+            </returns>
         </member>
         <member name="P:Exiled.API.Features.Map.PocketDimensionTeleports">
             <summary>
@@ -11850,6 +12333,309 @@
             Schedules the destruction of the NPC after a delay.
             </summary>
             <param name="time">The delay in seconds before the NPC is destroyed.</param>
+        </member>
+        <member name="T:Exiled.API.Features.Objectives.EscapeObjective">
+            <summary>
+            Represents an objective that is completed when a player escapes.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.EscapeObjective.#ctor(Respawning.Objectives.EscapeObjective)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Objectives.EscapeObjective"/> class.
+            </summary>
+            <param name="objectiveFootprintBase">A <see cref="T:Respawning.Objectives.EscapeObjective"/> instance.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Objectives.EscapeObjective.Base">
+            <inheritdoc />
+        </member>
+        <member name="P:Exiled.API.Features.Objectives.EscapeObjective.Type">
+            <inheritdoc />
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.EscapeObjective.Escape(Exiled.API.Features.Player,PlayerRoles.RoleTypeId)">
+            <summary>
+            Fakes player's escape and tries to achieve this objective.
+            </summary>
+            <param name="player">Target that has escaped.</param>
+            <param name="newRole">Role that target will get after escaping.</param>
+        </member>
+        <member name="T:Exiled.API.Features.Objectives.GeneratorActivatedObjective">
+            <summary>
+            Represents an objective that is completed when a generator is activated.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.GeneratorActivatedObjective.#ctor(Respawning.Objectives.GeneratorActivatedObjective)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Objectives.GeneratorActivatedObjective"/> class.
+            </summary>
+            <param name="objectiveFootprintBase">A <see cref="T:Respawning.Objectives.GeneratorActivatedObjective"/> instance.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Objectives.GeneratorActivatedObjective.Base">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.API.Features.Objectives.GeneratorActivatedObjective.Type">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.GeneratorActivatedObjective.Activate(Exiled.API.Features.Generator,Exiled.API.Features.Player)">
+            <summary>
+            Fakes generator activation and tries to achieve this objective.
+            </summary>
+            <param name="generator">Generator that is activated.</param>
+            <param name="player">Player that activated the generator.</param>
+        </member>
+        <member name="T:Exiled.API.Features.Objectives.HumanDamageObjective">
+            <summary>
+            A wrapper for the human damage objective.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.HumanDamageObjective.#ctor(Respawning.Objectives.HumanDamageObjective)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Objectives.HumanDamageObjective"/> class.
+            </summary>
+            <param name="objectiveFootprintBase"><inheritdoc cref="P:Exiled.API.Features.Objectives.HumanDamageObjective.Base"/></param>
+        </member>
+        <member name="P:Exiled.API.Features.Objectives.HumanDamageObjective.Base">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.API.Features.Objectives.HumanDamageObjective.Type">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.HumanDamageObjective.Damage(Exiled.API.Features.Player,Exiled.API.Features.Player,System.Single,Exiled.API.Enums.DamageType)">
+            <summary>
+            Fakes player's damage and tries to achieve this objective.
+            </summary>
+            <param name="attacker">Attacker.</param>
+            <param name="target">Target to damage.</param>
+            <param name="amount">Amount of damage.</param>
+            <param name="type">Type of damage.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.HumanDamageObjective.Damage(Exiled.API.Features.DamageHandlers.AttackerDamageHandler)">
+            <summary>
+            Fakes player's damage and tries to achieve this objective.
+            </summary>
+            <param name="damageHandler">An <see cref="T:Exiled.API.Features.DamageHandlers.AttackerDamageHandler"/> instance.</param>
+        </member>
+        <member name="T:Exiled.API.Features.Objectives.HumanKillObjective">
+            <summary>
+            A wrapper for Human kill objective.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.HumanKillObjective.#ctor(Respawning.Objectives.HumanKillObjective)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Objectives.HumanKillObjective"/> class.
+            </summary>
+            <param name="objectiveFootprintBase"><inheritdoc cref="P:Exiled.API.Features.Objectives.HumanKillObjective.Base"/></param>
+        </member>
+        <member name="P:Exiled.API.Features.Objectives.HumanKillObjective.Base">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.API.Features.Objectives.HumanKillObjective.Type">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.HumanKillObjective.IsValidEnemy(PlayerRoles.RoleTypeId,Exiled.API.Features.Player)">
+            <summary>
+            Checks if the role is an enemy role.
+            </summary>
+            <param name="target">Target role.</param>
+            <param name="player">Attacker.</param>
+            <returns><c>true</c> if role is an enemy role, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.HumanKillObjective.IsValidEnemy(Exiled.API.Features.Player,Exiled.API.Features.Player)">
+            <summary>
+            Checks if the player is an enemy.
+            </summary>
+            <param name="target">Target player.</param>
+            <param name="player">Attacker.</param>
+            <returns><c>true</c> if player is an enemy, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.HumanKillObjective.Kill(Exiled.API.Features.DamageHandlers.AttackerDamageHandler)">
+            <summary>
+            Fakes player's kill and tries to achieve this objective.
+            </summary>
+            <param name="damageHandler">An <see cref="T:Exiled.API.Features.DamageHandlers.AttackerDamageHandler"/> instance.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.HumanKillObjective.Kill(Exiled.API.Features.Player,Exiled.API.Features.Player,Exiled.API.Enums.DamageType)">
+            <summary>
+            Fakes player's kill and tries to achieve this objective.
+            </summary>
+            <param name="target">Target player.</param>
+            <param name="attacker">Attacker.</param>
+            <param name="damageType">Damage type.</param>
+        </member>
+        <member name="T:Exiled.API.Features.Objectives.HumanObjective`1">
+            <summary>
+            Represents a human objective.
+            </summary>
+            <typeparam name="T">An objective footprint type.</typeparam>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.HumanObjective`1.#ctor(Respawning.Objectives.HumanObjectiveBase{`0})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Objectives.HumanObjective`1"/> class.
+            </summary>
+            <param name="objectiveFootprintBase">A <see cref="T:Respawning.Objectives.HumanObjectiveBase`1"/> instance.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Objectives.HumanObjective`1.Base">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.API.Features.Objectives.HumanObjective`1.ObjectiveFootprint">
+            <summary>
+            Gets or sets the objective footprint.
+            </summary>
+            <remarks>Can be <c>null</c>. It's being set by game only before achieving.</remarks>
+        </member>
+        <member name="P:Exiled.API.Features.Objectives.HumanObjective`1.TimeReward">
+            <summary>
+            Gets or sets the time reward.
+            </summary>
+            <remarks>
+            Can be <c>0</c> if <see cref="P:Exiled.API.Features.Objectives.HumanObjective`1.ObjectiveFootprint"/> is <c>null</c>.
+            Setter affects only client notification.
+            </remarks>
+        </member>
+        <member name="P:Exiled.API.Features.Objectives.HumanObjective`1.InfluenceReward">
+            <summary>
+            Gets or sets the influence reward.
+            </summary>
+            <remarks>
+            Can be <c>0</c> if <see cref="P:Exiled.API.Features.Objectives.HumanObjective`1.ObjectiveFootprint"/> is <c>null</c>.
+            Setter affects only client notification.
+            </remarks>
+        </member>
+        <member name="P:Exiled.API.Features.Objectives.HumanObjective`1.Achiever">
+            <summary>
+            Gets or sets the achiever.
+            </summary>
+            <remarks>
+            Can be <c>null</c> if <see cref="P:Exiled.API.Features.Objectives.HumanObjective`1.ObjectiveFootprint"/> is <c>null</c>.
+            Setter affects only client notification.
+            </remarks>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.HumanObjective`1.Achieve(`0)">
+            <summary>
+            Achieves the objective.
+            </summary>
+            <param name="objectiveFootprint">An objective footprint instance.</param>
+        </member>
+        <member name="T:Exiled.API.Features.Objectives.Objective">
+            <summary>
+            A wrapper for Faction objective.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Features.Objectives.Objective.Objectives">
+            <summary>
+            A dictionary of all objectives.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.Objective.#ctor(Respawning.Objectives.FactionObjectiveBase)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Objectives.Objective"/> class.
+            </summary>
+            <param name="objectiveFootprintBase"><inheritdoc cref="P:Exiled.API.Features.Objectives.Objective.Base"/></param>
+        </member>
+        <member name="P:Exiled.API.Features.Objectives.Objective.List">
+            <summary>
+            Gets all objectives.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Objectives.Objective.Base">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.API.Features.Objectives.Objective.Type">
+            <summary>
+            Gets the type of objective.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.Objective.Get(Exiled.API.Enums.ObjectiveType)">
+            <summary>
+            Gets the objective by its type.
+            </summary>
+            <param name="type">Type of objective.</param>
+            <returns>An <see cref="T:Exiled.API.Features.Objectives.Objective"/> instance if found, <c>null</c> otherwise.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.Objective.Get(Respawning.Objectives.FactionObjectiveBase)">
+            <summary>
+            Gets the objective by its base.
+            </summary>
+            <param name="factionObjectiveBase">A <see cref="T:Respawning.Objectives.FactionObjectiveBase"/> instance.</param>
+            <returns>An <see cref="T:Exiled.API.Features.Objectives.Objective"/> instance.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.Objective.ReduceTimer(PlayerRoles.Faction,System.Single)">
+            <summary>
+            Reduces timer for faction.
+            </summary>
+            <param name="faction">Faction to affect.</param>
+            <param name="seconds">Time to reduce in seconds.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.Objective.GrantInfluence(PlayerRoles.Faction,System.Single)">
+            <summary>
+            Grants influence to faction.
+            </summary>
+            <param name="faction">Faction to affect.</param>
+            <param name="amount">Amount of influence to grant.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.Objective.Achieve">
+            <summary>
+            Achieves objective.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.Objective.IsValidFaction(PlayerRoles.Faction)">
+            <summary>
+            Checks if faction has this objective.
+            </summary>
+            <param name="faction">Faction to check.</param>
+            <returns><c>true</c> if faction has this objective, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.Objective.IsValidFaction(Exiled.API.Features.Player)">
+            <summary>
+            Checks if player has this objective.
+            </summary>
+            <param name="player">Player to check.</param>
+            <returns><c>true</c> if player has this objective, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="T:Exiled.API.Features.Objectives.ScpItemPickupObjective">
+            <summary>
+            Represents an objective that is completed when a SCP item is picked up.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.ScpItemPickupObjective.#ctor(Respawning.Objectives.ScpItemPickupObjective)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Objectives.ScpItemPickupObjective"/> class.
+            </summary>
+            <param name="objectiveFootprintBase">A <see cref="T:Respawning.Objectives.ScpItemPickupObjective"/> instance.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Objectives.ScpItemPickupObjective.Base">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.API.Features.Objectives.ScpItemPickupObjective.Type">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.ScpItemPickupObjective.AddItem(Exiled.API.Features.Player,Exiled.API.Features.Items.Item,Exiled.API.Features.Pickups.Pickup)">
+            <summary>
+            Fakes picking up an item and tries to achieve this objective.
+            </summary>
+            <param name="target">Target player.</param>
+            <param name="item">Item that was picked up.</param>
+            <param name="pickup">Pickup that was picked up.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.ScpItemPickupObjective.AddItem(Exiled.API.Features.Player,Exiled.API.Features.Items.Item)">
+            <summary>
+            Fakes picking up an item and tries to achieve this objective.
+            </summary>
+            <param name="target">Target player.</param>
+            <param name="item">Item that was picked up.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.ScpItemPickupObjective.AddItem(Exiled.API.Features.Player,Exiled.API.Features.Pickups.Pickup)">
+            <summary>
+            Fakes picking up an item and tries to achieve this objective.
+            </summary>
+            <param name="target">Target player.</param>
+            <param name="pickup">Pickup that was picked up.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Objectives.ScpItemPickupObjective.AddItem(Exiled.API.Features.Player,ItemType)">
+            <summary>
+            Fakes picking up an item and tries to achieve this objective.
+            </summary>
+            <param name="target">Target player.</param>
+            <param name="type">Item that was picked up.</param>
         </member>
         <member name="T:Exiled.API.Features.Paths">
             <summary>
@@ -14010,6 +14796,16 @@
             </summary>
             <remarks>This value can bypass the role's hume shield maximum. However, this value will only be visible to the end-player as Hume Shield if <see cref="P:Exiled.API.Features.Roles.FpcRole.IsHumeShieldedRole"/> is <see langword="true"/>. Otherwise, the game will treat the player as though they have the amount of Hume Shield specified, even though they cannot see it.</remarks>
         </member>
+        <member name="P:Exiled.API.Features.Player.MaxHumeShield">
+            <summary>
+            Gets or sets the players maximum Hume Shield.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Player.HumeShieldRegenerationMultiplier">
+            <summary>
+            Gets or sets the players multiplier for gaining HumeShield.
+            </summary>
+        </member>
         <member name="P:Exiled.API.Features.Player.ActiveArtificialHealthProcesses">
             <summary>
             Gets a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of all active Artificial Health processes on the player.
@@ -14018,6 +14814,7 @@
         <member name="P:Exiled.API.Features.Player.HumeShieldStat">
             <summary>
             Gets the player's <see cref="T:PlayerStatsSystem.HumeShieldStat"/>.
+            TODO: Change to <see cref="T:Exiled.API.Features.CustomStats.CustomHumeShieldStat"/>.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Player.CurrentItem">
@@ -14172,11 +14969,18 @@
             Gets a dictionary for storing player objects of connected but not yet verified players.
             </summary>
         </member>
-        <member name="M:Exiled.API.Features.Player.op_Implicit(PluginAPI.Core.Player)~Exiled.API.Features.Player">
+        <member name="M:Exiled.API.Features.Player.op_Implicit(LabApi.Features.Wrappers.Player)~Exiled.API.Features.Player">
             <summary>
-            Converts NwPluginAPI player to EXILED player.
+            Converts LabApi player to EXILED player.
             </summary>
-            <param name="player">The NwPluginAPI player.</param>
+            <param name="player">The LabApi player.</param>
+            <returns>EXILED player.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Player.op_Implicit(Exiled.API.Features.Player)~LabApi.Features.Wrappers.Player">
+            <summary>
+            Converts LabApi player to EXILED player.
+            </summary>
+            <param name="player">The LabApi player.</param>
             <returns>EXILED player.</returns>
         </member>
         <member name="M:Exiled.API.Features.Player.Get(Exiled.API.Enums.Side)">
@@ -14284,11 +15088,11 @@
             <param name="args">The player's nickname, ID, steamID64 or Discord ID.</param>
             <returns>Returns the player found or <see langword="null"/> if not found.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Player.Get(PluginAPI.Core.Player)">
+        <member name="M:Exiled.API.Features.Player.Get(LabApi.Features.Wrappers.Player)">
             <summary>
-            Gets the <see cref="T:Exiled.API.Features.Player"/> from NwPluginAPI class.
+            Gets the <see cref="T:Exiled.API.Features.Player"/> from LabApi class.
             </summary>
-            <param name="apiPlayer">The <see cref="T:PluginAPI.Core.Player"/> class.</param>
+            <param name="apiPlayer">The <see cref="T:LabApi.Features.Wrappers.Player"/> class.</param>
             <returns>A <see cref="T:Exiled.API.Features.Player"/> or <see langword="null"/> if not found.</returns>
         </member>
         <member name="M:Exiled.API.Features.Player.TryGet(CommandSystem.ICommandSender,Exiled.API.Features.Player@)">
@@ -14371,11 +15175,11 @@
             <param name="player">The player found or <see langword="null"/> if not found.</param>
             <returns>A boolean indicating whether a player was found.</returns>
         </member>
-        <member name="M:Exiled.API.Features.Player.TryGet(PluginAPI.Core.Player,Exiled.API.Features.Player@)">
+        <member name="M:Exiled.API.Features.Player.TryGet(LabApi.Features.Wrappers.Player,Exiled.API.Features.Player@)">
             <summary>
-            Try-get the <see cref="T:Exiled.API.Features.Player"/> from NwPluginAPI class.
+            Try-get the <see cref="T:Exiled.API.Features.Player"/> from LabApi class.
             </summary>
-            <param name="apiPlayer">The <see cref="T:PluginAPI.Core.Player"/> class.</param>
+            <param name="apiPlayer">The <see cref="T:LabApi.Features.Wrappers.Player"/> class.</param>
             <param name="player">The player found or <see langword="null"/> if not found.</param>
             <returns>A boolean indicating whether a player was found.</returns>
         </member>
@@ -14803,6 +15607,12 @@
             </summary>
             <param name="usableItem">The ItemType to be used.</param>
             <returns><see langword="true"/> if item was used successfully. Otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Player.UseItem(Exiled.API.Features.Items.Usable)">
+            <summary>
+            Forces the player to use an item.
+            </summary>
+            <param name="usable">The item to be used.</param>
         </member>
         <member name="M:Exiled.API.Features.Player.UseItem(Exiled.API.Features.Items.Item)">
             <summary>
@@ -16602,6 +17412,34 @@
             <param name="amount">The amount of tokens to set.</param>
             <returns><c>true</c> if tokens were successfully set for an <see cref="T:Respawning.Waves.Generic.ILimitedWave"/>, otherwise <c>false</c>.</returns>
         </member>
+        <member name="M:Exiled.API.Features.Respawn.GrantInfluence(PlayerRoles.Faction,System.Int32)">
+            <summary>
+            Grants influence to a given <see cref="T:PlayerRoles.Faction"/>'s <see cref="T:Respawning.Waves.Generic.ILimitedWave"/>s.
+            </summary>
+            <param name="faction">The <see cref="T:PlayerRoles.Faction"/> to whose <see cref="T:Respawning.Waves.Generic.ILimitedWave"/>s to grant influence.</param>
+            <param name="amount">The amount of influence to grant.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Respawn.RemoveInfluence(PlayerRoles.Faction,System.Int32)">
+            <summary>
+            Removes influence from a given <see cref="T:PlayerRoles.Faction"/>'s <see cref="T:Respawning.Waves.Generic.ILimitedWave"/>s.
+            </summary>
+            <param name="faction">The <see cref="T:PlayerRoles.Faction"/> from whose <see cref="T:Respawning.Waves.Generic.ILimitedWave"/>s to remove influence.</param>
+            <param name="amount">The amount of influence to remove.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Respawn.GetInfluence(PlayerRoles.Faction)">
+            <summary>
+            Get influence to a given <see cref="T:PlayerRoles.Faction"/>.
+            </summary>
+            <param name="faction">The <see cref="T:PlayerRoles.Faction"/> to get influence.</param>
+            <returns>Get the faction influence..</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Respawn.SetInfluence(PlayerRoles.Faction,System.Single)">
+            <summary>
+            Set influence to a given <see cref="T:PlayerRoles.Faction"/>.
+            </summary>
+            <param name="faction">The <see cref="T:PlayerRoles.Faction"/> to set influence.</param>
+            <param name="influence">The amount of influence to set.</param>
+        </member>
         <member name="M:Exiled.API.Features.Respawn.ForceWave(PlayerRoles.Faction,System.Boolean)">
             <summary>
             Starts the spawn sequence of the given <see cref="T:PlayerRoles.Faction"/>.
@@ -16716,6 +17554,11 @@
         <member name="P:Exiled.API.Features.Roles.FpcRole.ClientRelativePosition">
             <summary>
             Gets or sets the player's relative position as perceived by the client.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.FpcRole.Gravity">
+            <summary>
+            Gets or sets the player's gravity.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Roles.FpcRole.IsFallDamageEnable">
@@ -16900,6 +17743,9 @@
             <summary>
             Gets the game <see cref="T:PlayerRoles.HumanRole"/>.
             </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.HumanRole.HumeShieldModule">
+            <inheritdoc/>
         </member>
         <member name="M:Exiled.API.Features.Roles.HumanRole.GetArmorEfficacy(HitboxType)">
             <summary>
@@ -18457,6 +19303,11 @@
             Gets or sets the warning time seconds.
             </summary>
         </member>
+        <member name="P:Exiled.API.Features.Roles.Scp3114Role.NextDanceType">
+            <summary>
+            Gets or sets the next bound dance.
+            </summary>
+        </member>
         <member name="P:Exiled.API.Features.Roles.Scp3114Role.DanceType">
             <summary>
             Gets or sets the bound dance.
@@ -18484,6 +19335,17 @@
             </summary>
             <param name="alreadySpawned">The List of Roles already spawned.</param>
             <returns>The Spawn Chance.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Roles.Scp3114Role.StartDancing(Exiled.API.Enums.DanceType)">
+            <summary>
+            SCP-3114 starts dancing.
+            </summary>
+            <param name="danceType">The dance you want to do.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Roles.Scp3114Role.StopDancing">
+            <summary>
+            Stops the SCP-3114 from Dancing.
+            </summary>
         </member>
         <member name="T:Exiled.API.Features.Roles.Scp939Role">
             <summary>
@@ -18998,7 +19860,12 @@
             Factory method to create and add a <see cref="T:Exiled.API.Features.Room"/> component to a Transform.
             We can add parameters to be set privately here.
             </summary>
-            <param name="roomGameObject">The Game Object to attach the Room component to.</param>
+            <param name="baseRoom">The Game Object to attach the Room component to.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Room.InternalCreate">
+            <summary>
+            Factory method to complete all element inside a Room.
+            </summary>
         </member>
         <member name="T:Exiled.API.Features.Round">
             <summary>
@@ -19194,6 +20061,95 @@
             Gets or sets a value indicating whether this corpse will trigger animation.
             </summary>
         </member>
+        <member name="T:Exiled.API.Features.Scp559">
+            <summary>
+            Represents a cake.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Features.Scp559.CakeToWrapper">
+            <summary>
+            <see cref="T:System.Collections.Generic.Dictionary`2"/> <see cref="T:Scp559Cake"/> to <see cref="T:Exiled.API.Features.Scp559"/>.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Scp559.#ctor(Scp559Cake)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Scp559"/> class.
+            </summary>
+            <param name="cakeBase">The <see cref="T:Scp559Cake"/> instance.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Scp559.List">
+            <summary>
+            Gets the list with all <see cref="T:Exiled.API.Features.Scp559"/> instances.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Scp559.PopulatedRooms">
+            <summary>
+            Gets a <see cref="T:System.Collections.Generic.Dictionary`2"/> with rooms and amount of people in them.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Scp559.SpawnPositions">
+            <summary>
+            Gets a <see cref="T:System.Collections.Generic.Dictionary`2"/> with spawnpoint in rooms.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Scp559.AvailableSpawnpoints">
+            <summary>
+            Gets the list of all available spawnpoints.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Scp559.PedestalOffset">
+            <summary>
+            Gets or sets offset for spawning near pedestals.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Scp559.Base">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.API.Features.Scp559.RemainingSlices">
+            <summary>
+            Gets or sets how many slices are still on cake.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Scp559.IsSpawned">
+            <summary>
+            Gets or sets a value indicating whether or not cake is spawned.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Scp559.RemainingTime">
+            <summary>
+            Gets or sets the time how much cake will still be usable.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Scp559.RespawnTime">
+            <summary>
+            Gets or sets the minimum required time for cake to spawn.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Scp559.Position">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Scp559.Get(Scp559Cake)">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Scp559"/> by it's game instance.
+            </summary>
+            <param name="cake">Game instance.</param>
+            <returns><see cref="T:Exiled.API.Features.Scp559"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Scp559.Get(System.Func{Exiled.API.Features.Scp559,System.Boolean})">
+            <summary>
+            Gets the <see cref="T:System.Collections.Generic.IEnumerable`1"/> of SCP-559 which matches the predicate.
+            </summary>
+            <param name="predicate">Predicate to match.</param>
+            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/> of SCP-559.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Scp559.TryGetSpawnpoint(UnityEngine.Vector3@,System.Boolean@)">
+            <summary>
+            Tries to get available spawn point for SCP-559.
+            </summary>
+            <param name="pos">Position of spawn.</param>
+            <param name="pedestal">Will be pedestal also spawned.</param>
+            <returns><see langword="true"/> if position was found. Otherwise, <see langword="false"/>.</returns>
+        </member>
         <member name="T:Exiled.API.Features.Scp914">
             <summary>
             A set of tools to modify SCP-914's behaviour.
@@ -19284,6 +20240,67 @@
             </summary>
             <param name="player"><see cref="T:Exiled.API.Features.Player"/> who interacts with Scp914.</param>
             <param name="code"><see cref="T:Scp914.Scp914InteractCode"/> Interact code.</param>
+        </member>
+        <member name="T:Exiled.API.Features.Scp956">
+            <summary>
+            A wrapper for <see cref="T:Scp956Pinata"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Scp956.Singleton">
+            <summary>
+            Gets the <see cref="T:Scp956Pinata"/> instance.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Scp956.IsSpawned">
+            <summary>
+            Gets or sets a value indicating whether or not SCP-956 is spawned.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Scp956.Position">
+            <summary>
+            Gets or sets current position.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Scp956.InitPos">
+            <summary>
+            Gets or sets initial position.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Scp956.Rotation">
+            <summary>
+            Gets or sets current rotation.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Scp956.InitRotation">
+            <summary>
+            Gets or sets initial rotation.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Scp956.IsFlying">
+            <summary>
+            Gets or sets a value indicating whether or not SCP-956 is flying.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Scp956.CurrentTarget">
+            <summary>
+            Gets or sets current target of an SCP.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Scp956.IsCapybara">
+            <summary>
+            Gets or sets a value indicating whether or not SCP-956 should look like a capybara.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Scp956.AvailableZones">
+            <summary>
+            Gets or sets zones where SCP-956 can spawn.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Scp956.SpawnBehindTarget(Exiled.API.Features.Player)">
+            <summary>
+            Spawns behind the specified target.
+            </summary>
+            <param name="target">Player to spawn. If <paramref name="target"/> is <see langword="null"/>, will be chosen random.</param>
         </member>
         <member name="T:Exiled.API.Features.Server">
             <summary>
@@ -20060,12 +21077,17 @@
         </member>
         <member name="P:Exiled.API.Features.Toys.Light.LightShape">
             <summary>
-            Gets or sets a value indicating whether the light should cause shadows from other objects.
+            Gets or sets the shape that the Light emits.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Toys.Light.LightType">
             <summary>
-            Gets or sets a value indicating whether the light should cause shadows from other objects.
+            Gets or sets the type of light the Light emits.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Toys.Light.ShadowType">
+            <summary>
+            Gets or sets the type of shadows the light casts.
             </summary>
         </member>
         <member name="M:Exiled.API.Features.Toys.Light.Create(System.Nullable{UnityEngine.Vector3},System.Nullable{UnityEngine.Vector3},System.Nullable{UnityEngine.Vector3},System.Boolean)">
@@ -20388,6 +21410,11 @@
             Within this range, volume will not decrease with proximity.
             </value>
         </member>
+        <member name="P:Exiled.API.Features.Toys.Speaker.ControllerId">
+            <summary>
+            Gets or sets the controller ID of speaker.
+            </summary>
+        </member>
         <member name="M:Exiled.API.Features.Toys.Speaker.Create(System.Nullable{UnityEngine.Vector3},System.Nullable{UnityEngine.Vector3},System.Nullable{UnityEngine.Vector3},System.Boolean)">
             <summary>
             Creates a new <see cref="T:Exiled.API.Features.Toys.Speaker"/>.
@@ -20397,6 +21424,21 @@
             <param name="scale">The scale of the <see cref="T:Exiled.API.Features.Toys.Speaker"/>.</param>
             <param name="spawn">Whether the <see cref="T:Exiled.API.Features.Toys.Speaker"/> should be initially spawned.</param>
             <returns>The new <see cref="T:Exiled.API.Features.Toys.Speaker"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Toys.Speaker.Play(VoiceChat.Networking.AudioMessage,System.Collections.Generic.IEnumerable{Exiled.API.Features.Player})">
+            <summary>
+            Plays audio through this speaker.
+            </summary>
+            <param name="message">An <see cref="T:VoiceChat.Networking.AudioMessage"/> instance.</param>
+            <param name="targets">Targets who will hear the audio. If <c>null</c>, audio will be sent to all players.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Toys.Speaker.Play(System.Byte[],System.Nullable{System.Int32},System.Collections.Generic.IEnumerable{Exiled.API.Features.Player})">
+            <summary>
+            Plays audio through this speaker.
+            </summary>
+            <param name="samples">Audio samples.</param>
+            <param name="length">The length of the samples array.</param>
+            <param name="targets">Targets who will hear the audio. If <c>null</c>, audio will be sent to all players.</param>
         </member>
         <member name="T:Exiled.API.Features.Warhead">
             <summary>
@@ -20421,6 +21463,11 @@
         <member name="P:Exiled.API.Features.Warhead.Lever">
             <summary>
             Gets the <see cref="T:UnityEngine.GameObject"/> of the warhead lever.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Warhead.DeadmanSwitchEnabled">
+            <summary>
+            Gets or sets a value indicating whether DeadmanSwitch detonation is enabled.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Warhead.AutoDetonate">
@@ -20491,6 +21538,11 @@
         <member name="M:Exiled.API.Features.Warhead.CloseBlastDoors">
             <summary>
             Closes the surface blast doors.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Warhead.OpenBlastDoors">
+            <summary>
+            Open the surface blast doors.
             </summary>
         </member>
         <member name="M:Exiled.API.Features.Warhead.TriggerDoors(System.Boolean)">
