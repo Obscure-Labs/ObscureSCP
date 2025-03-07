@@ -21,6 +21,8 @@ using ObscureLabs.Configs;
 using UnityEngine;
 using YamlDotNet.Serialization;
 using ObscureLabs.Modules.Default;
+using ObscureLabs.Modules;
+using System.Linq;
 
 namespace ObscureLabs
 {
@@ -82,6 +84,7 @@ namespace ObscureLabs
             ModulesManager.AddModule(new CustomItemSpawner());
             ModulesManager.AddModule(new RemoteKeycard());
             ModulesManager.AddModule(new LightHandler());
+            ModulesManager.AddModule(new Lobby());
 
             RegisterEvents();
         }
@@ -221,7 +224,7 @@ namespace ObscureLabs
                 }
             }
         }
-        
+
         private void OnLeft(LeftEventArgs ev)
         {
             Manager.SendJoinLeave(ev.Player, true);
@@ -238,5 +241,7 @@ namespace ObscureLabs
         {
             ev.Player.Scale = new Vector3(1, 1, 1);
         }
+
+
     }
 }
