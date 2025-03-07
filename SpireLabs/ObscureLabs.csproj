@@ -126,6 +126,7 @@
     <Compile Include="API\Enums\EventRoundType.cs" />
     <Compile Include="API\Features\Module.cs" />
     <Compile Include="API\Features\ModulesManager.cs" />
+    <Compile Include="Commands\Admins\ModuleControls.cs" />
     <Compile Include="Configs\HintConfig.cs" />
     <Compile Include="Configs\OverrideConfig.cs" />
     <Compile Include="Extensions\PlayerExtension.cs" />
@@ -147,9 +148,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Commands\Admins\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
