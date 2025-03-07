@@ -20,13 +20,11 @@ using MapEditorReborn.Commands.ModifyingCommands.Position;
 using MapEditorReborn.Commands.ModifyingCommands.Rotation;
 using Mirror;
 using static HarmonyLib.Code;
-using Exiled.API.Enums;
-using Exiled.API.Features.Pickups.Projectiles;
-using Exiled.API.Features;
-using System.Diagnostics;
+
 using LabApi.Features.Wrappers;
 using Room = Exiled.API.Features.Room;
-
+using Player = Exiled.API.Features.Player;
+using UnityEngine;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
@@ -34,15 +32,16 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
     {
         public void Start()
         {
-
+            Debug.Log("Powerup script attached to object");
         }
         public void Update()
         {
 
         }
-        private void OnTriggerEnter(Collider other)
+        private void CollisionEnter(Collision other)
         {
-            ((Powerup)Plugin.Instance._modules.GetModule("Powerup")).PowerupTriggerEnter(other);
+            ((Powerup)Plugin.Instance._modules.GetModule("Powerup")).PowerupTriggerEnter(other.collider, gameObject);
+            Debug.Log("Collider hit");
         }
     }
 
@@ -59,7 +58,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         public override bool Enable()
         {
-            Exiled.Events.Handlers.Server.WaitingForPlayers += OnWaitingForPlayers;
+            Exiled.Events.Handlers.Server.RoundStarted += OnRoundStarted;
 
             Log.Info("Enabling Powerup Module");
             return base.Enable();
@@ -68,13 +67,17 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         public override bool Disable()
         {
-            Exiled.Events.Handlers.Server.WaitingForPlayers -= OnWaitingForPlayers;
+            Exiled.Events.Handlers.Server.RoundStarted -= OnRoundStarted;
             return base.Disable();
         }
 
-        public void PowerupTriggerEnter(Collider other)
+        public void PowerupTriggerEnter(Collider other, GameObject trigger)
         {
-
+            UnityEngine.Debug.Log("Triggering Enter");
+            pickups.Remove(trigger);
+            trigger.GetComponent<Primitive>().UnSpawn();
+            Player player = Player.Get(trigger.GetComponent<Player>());
+            player.ApplyRandomEffect();
         }
 
         private void SpawnPowerup(Room room)
@@ -82,16 +85,17 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             Log.Info("bentation");
             Primitive cube = Primitive.Create(PrimitiveType.Cube, new Vector3(room.transform.position.x, room.transform.position.y + 0.5f, room.transform.position.z), Vector3.zero, Vector3.one, false);
             cube.Flags = PrimitiveFlags.Collidable | PrimitiveFlags.Visible;
-            cube.Color = new Color(2550, 0, 2550, 0.1f);
+            cube.Color = new Color(255, 0, 255, 0.7f);
             cube.Scale = Vector3.one / 2f;
             Rigidbody rb = cube.Base.gameObject.AddComponent<Rigidbody>();
             rb.useGravity = false;
-            cube.Base.gameObject.GetComponent<Collider>().isTrigger = true;
+            cube.Collidable = false;
+            cube.Base.gameObject.AddComponent<MeshCollider>().isTrigger = true; ;
             cube.Base.gameObject.AddComponent<PowerUpScript>();
             cube.Spawn();
 
         }
-        private void OnWaitingForPlayers()
+        private void OnRoundStarted()
         {
             Log.Info("Map Generated");
 

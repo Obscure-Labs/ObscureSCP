@@ -11,6 +11,8 @@ using Exiled.API.Features;
 using LabApi.Events.Arguments.ServerEvents;
 using System.Linq;
 using Exiled.API.Extensions;
+using System.Collections.Generic;
+using MEC;
 namespace ObscureLabs.Modules
 {
     internal class Lobby : Module
@@ -23,6 +25,7 @@ namespace ObscureLabs.Modules
         public Room room = Room.List.GetRandomValue();
         public override bool Enable()
         {
+
             Exiled.Events.Handlers.Server.WaitingForPlayers += WaitingForPlayers;
             LabApi.Events.Handlers.ServerEvents.RoundStarting += RoundStarting;
             Exiled.Events.Handlers.Player.Joined += PlayerJoin;
@@ -108,26 +111,42 @@ namespace ObscureLabs.Modules
                 {
                     Manager.SendHint(ev.Player, "You have been sent to the pregame lobby, Waiting for players!", 5);
                     ev.Player.RoleManager.ServerSetRole(RoleTypeId.Tutorial, RoleChangeReason.RemoteAdmin, RoleSpawnFlags.None);
-                    //ev.Player.Teleport(room.transform.position);
-                    
+                    ev.Player.Teleport(room.transform.position + (Vector3.up / 2));
+
                 }
             }
-            return;
+
+
         }
 
-        
-        public void WaitingForPlayers()
+        public IEnumerator<float> Hint()
+        {
+            while (Round.IsLobby)
+            {
+
+                foreach (Player p in Player.List)
+                {
+                    Manager.SendHint(p, $"Waiting for players: {Player.List.Count()} - {Round.LobbyWaitingTime}", 1f);
+                }
+                yield return Timing.WaitForSeconds(1f);
+            }
+        }
+
+            public void WaitingForPlayers()
         {
             GameObject.Find("StartRound").transform.localScale = Vector3.zero;
+
+            Timing.RunCoroutine(Hint());
             foreach (Player p in Player.List)
             {
+
                 if (p != null && p.Role.Type == RoleTypeId.Spectator)
                 {
                     Log.Info(room.name);
                     Log.Info("AA");
                     Manager.SendHint(p, "You have been sent to the pregame lobby, Waiting for players!", 5);
                     p.RoleManager.ServerSetRole(RoleTypeId.Tutorial, RoleChangeReason.RemoteAdmin, RoleSpawnFlags.None);
-                    p.Teleport(room.Position);
+                    p.Teleport(room.transform.position + (Vector3.up / 2));
                 }
             }
         }

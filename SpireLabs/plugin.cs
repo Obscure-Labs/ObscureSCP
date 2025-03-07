@@ -87,6 +87,7 @@ namespace ObscureLabs
             _modules.AddModule(new RemoteKeycard());
             _modules.AddModule(new LightHandler());
             _modules.AddModule(new Lobby());
+            _modules.AddModule(new Powerup());
 
             RegisterEvents();
         }
