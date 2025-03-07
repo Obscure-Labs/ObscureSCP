@@ -3,23 +3,23 @@ using System.Linq;
 
 namespace ObscureLabs.API.Features
 {
-    public static class ModulesManager
+    public class ModulesManager
     {
-        private static List<Module> _moduleList = new();
+        private List<Module> _moduleList = new();
 
-        public static List<Module> Modules => _moduleList;
+        public List<Module> Modules => _moduleList;
 
-        public static Module GetModule(string name)
+        public Module GetModule(string name)
         {
             return _moduleList.FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
         }
 
-        public static void AddModule(Module module)
+        public void AddModule(Module module)
         {
             _moduleList.Add(module);
         }
 
-        public static void Clear()
+        public void Clear()
         {
             _moduleList.Clear();
         }

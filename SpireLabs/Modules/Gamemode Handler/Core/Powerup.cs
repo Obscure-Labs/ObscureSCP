@@ -42,7 +42,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         }
         private void OnTriggerEnter(Collider other)
         {
-            Powerup.PowerupUsed(gameObject);
+            ((Powerup)Plugin.Instance._modules.GetModule("Powerup")).PowerupTriggerEnter(other);
         }
     }
 
@@ -60,7 +60,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         public override bool Enable()
         {
             Exiled.Events.Handlers.Server.WaitingForPlayers += OnWaitingForPlayers;
-            
+
             Log.Info("Enabling Powerup Module");
             return base.Enable();
 
@@ -72,9 +72,9 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             return base.Disable();
         }
 
-        public static void PowerupUsed(GameObject g)
+        public void PowerupTriggerEnter(Collider other)
         {
-            
+
         }
 
         private void SpawnPowerup(Room room)

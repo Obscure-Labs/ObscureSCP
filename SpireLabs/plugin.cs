@@ -30,6 +30,8 @@ namespace ObscureLabs
     {
         public static Plugin Instance { get; private set; }
 
+        public ModulesManager _modules { get; set; }
+
         public static string SpireConfigLocation { get; private set; }
 
         public static string[] file;
@@ -49,7 +51,7 @@ namespace ObscureLabs
         public override void OnEnabled()
         {
             Instance = this;
-
+            _modules = new ModulesManager();
             CustomItem.RegisterItems();
 
             Log.SendRaw("[ObscureLabs]\n\r\n .d8888b.           d8b                 .d8888b.   .d8888b.  8888888b.  \r\nd88P  Y88b          Y8P                d88P  Y88b d88P  Y88b 888   Y88b \r\nY88b.                                  Y88b.      888    888 888    888 \r\n \"Y888b.   88888b.  888 888d888 .d88b.  \"Y888b.   888        888   d88P \r\n    \"Y88b. 888 \"88b 888 888P\"  d8P  Y8b    \"Y88b. 888        8888888P\"  \r\n      \"888 888  888 888 888    88888888      \"888 888    888 888        \r\nY88b  d88P 888 d88P 888 888    Y8b.    Y88b  d88P Y88b  d88P 888        \r\n \"Y8888P\"  88888P\"  888 888     \"Y8888  \"Y8888P\"   \"Y8888P\"  888        \r\n           888                                                          \r\n           888                                                          \r\n           888                                                          \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n", color: ConsoleColor.DarkMagenta);
@@ -71,7 +73,7 @@ namespace ObscureLabs
 
         public override void OnDisabled()
         {
-            ModulesManager.Clear();
+            _modules.Clear();
 
             Log.Info("Spire Labs has been disabled!");
             base.OnDisabled();
@@ -79,12 +81,12 @@ namespace ObscureLabs
 
         public void PopulateModules()
         {
-            ModulesManager.AddModule(new HudController());
-            ModulesManager.AddModule(new MvpSystem());
-            ModulesManager.AddModule(new CustomItemSpawner());
-            ModulesManager.AddModule(new RemoteKeycard());
-            ModulesManager.AddModule(new LightHandler());
-            ModulesManager.AddModule(new Lobby());
+            _modules.AddModule(new HudController());
+            _modules.AddModule(new MvpSystem());
+            _modules.AddModule(new CustomItemSpawner());
+            _modules.AddModule(new RemoteKeycard());
+            _modules.AddModule(new LightHandler());
+            _modules.AddModule(new Lobby());
 
             RegisterEvents();
         }
@@ -113,7 +115,7 @@ namespace ObscureLabs
             Exiled.Events.Handlers.Player.Verified += OnVerified;
             Exiled.Events.Handlers.Player.Dying += OnDying;
 
-            foreach (Module m in ModulesManager.Modules)
+            foreach (Module m in _modules.Modules)
             {
                 if (m.IsInitializeOnStart == true)
                 {
@@ -211,12 +213,12 @@ namespace ObscureLabs
 
         private void OnRestarting()
         {
-            foreach (Module m in ModulesManager.Modules)
+            foreach (Module m in _modules.Modules)
             {
                 m.Disable();
             }
 
-            foreach (Module m in ModulesManager.Modules)
+            foreach (Module m in _modules.Modules)
             {
                 if (m.IsInitializeOnStart == true)
                 {
