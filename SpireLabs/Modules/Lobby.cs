@@ -126,7 +126,7 @@ namespace ObscureLabs.Modules
 
                 foreach (Player p in Player.List)
                 {
-                    Manager.SendHint(p, $"Waiting for players: {Player.List.Count()} - {Round.LobbyWaitingTime}", 1f);
+                    Manager.SendHint(p, $"Waiting for players: {Player.List.Count()} - {Round.LobbyWaitingTime}", 2f);
                 }
                 yield return Timing.WaitForSeconds(1f);
             }
