@@ -40,9 +40,9 @@ namespace ObscureLabs
 
         public override string Author => "ImIsaacTbh & ImKevin";
 
-        public override Version Version { get; } = new Version(2, 0, 2);
+        public override Version Version { get; } = new Version(3, 0, 0);
 
-        public override Version RequiredExiledVersion { get; } = new Version(8, 0, 1);
+        public override Version RequiredExiledVersion { get; } = new Version(9, 0, 0);
 
         public OverrideConfig overrideConfigs { get; set; }
 
@@ -55,16 +55,16 @@ namespace ObscureLabs
             CustomItem.RegisterItems();
 
             Log.SendRaw("[ObscureLabs]\n\r\n .d8888b.           d8b                 .d8888b.   .d8888b.  8888888b.  \r\nd88P  Y88b          Y8P                d88P  Y88b d88P  Y88b 888   Y88b \r\nY88b.                                  Y88b.      888    888 888    888 \r\n \"Y888b.   88888b.  888 888d888 .d88b.  \"Y888b.   888        888   d88P \r\n    \"Y88b. 888 \"88b 888 888P\"  d8P  Y8b    \"Y88b. 888        8888888P\"  \r\n      \"888 888  888 888 888    88888888      \"888 888    888 888        \r\nY88b  d88P 888 d88P 888 888    Y8b.    Y88b  d88P Y88b  d88P 888        \r\n \"Y8888P\"  88888P\"  888 888     \"Y8888  \"Y8888P\"   \"Y8888P\"  888        \r\n           888                                                          \r\n           888                                                          \r\n           888                                                          \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n", color: ConsoleColor.DarkMagenta);
-            if (Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Obscure/"))
+            if (Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/EXILED/Configs/Obscure/"))
             {
-                SpireConfigLocation = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Obscure/";
+                SpireConfigLocation = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/EXILED/Configs/Obscure/";
             }
             else
             {
                 Log.Info("Making Spire Config Folder");
-                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Obscure/");
-                SpireConfigLocation = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Obscure/";
-                File.WriteAllText(SpireConfigLocation + "lines.txt", "CHANGE ME IN :  [EXILEDCONIG]\\Obscure/lines.txt");
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/EXILED/Configs/Obscure/");
+                SpireConfigLocation = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/EXILED/Configs/Obscure/";
+                File.WriteAllText(SpireConfigLocation + "lines.txt", "CHANGE ME IN :  [EXILEDCONIG]/Obscure/lines.txt");
             }
             PopulateModules();
             FetchOverrides();

@@ -1,4 +1,6 @@
-﻿using System.CodeDom.Compiler;
+﻿using System;
+using System.CodeDom;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,7 +15,7 @@ namespace ObscureLabs.API.Features
 
         public List<Module> Modules => _moduleList;
 
-        public List<FileInfo> ModuleFiles { get; private set; }
+        public List<FileInfo> ModuleFiles { get; private set; } = new List<FileInfo>();
 
         public Module GetModule(string name)
         {
@@ -50,12 +52,31 @@ namespace ObscureLabs.API.Features
                         LabApi.Features.Console.Logger.Info($"New module found: {file.Name}. Attempting Compilation...");
                         string outputFile = $"{Plugin.SpireConfigLocation}/Modules/Compiled/{file.Name.Replace(".cs", ".dll")}";
                         CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
-                        CompilerResults results = provider.CompileAssemblyFromFile(new CompilerParameters()
+                        var pars = new CompilerParameters()
                         {
                             GenerateExecutable = false,
                             OutputAssembly = outputFile,
-                            GenerateInMemory = false,
-                        }, file.FullName);
+                            GenerateInMemory = false
+                        };
+
+                        pars.ReferencedAssemblies.Add("System.dll");
+                        pars.ReferencedAssemblies.Add("System.Core.dll");
+                        pars.ReferencedAssemblies.Add("/home/container/SCPSL_Data/Managed/LabApi.dll");
+                        foreach (var f in Directory.EnumerateFiles(
+                                     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+                                     "/EXILED/Plugins/"))
+                        {
+                            pars.ReferencedAssemblies.Add(f);
+                        }
+                        foreach (var f in Directory.EnumerateFiles(
+                                     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+                                     "/EXILED/Plugins/dependencies/"))
+                        {
+                            pars.ReferencedAssemblies.Add(f);
+                        }
+
+                        CompilerResults results = provider.CompileAssemblyFromFile(pars, file.FullName);
+
                         if(results.Errors.Count > 0)
                         {
                             LabApi.Features.Console.Logger.Error($"Failed to compile module {file.Name}");
@@ -86,8 +107,6 @@ namespace ObscureLabs.API.Features
                     {
                         LabApi.Features.Console.Logger.Info($"Module removed: {file.Name}");
                         _moduleList.Remove(_moduleList.FirstOrDefault(x => x.Name == file.Name.Replace(".cs", "")));
-                        File.Delete(Directory.EnumerateFiles($"{Plugin.SpireConfigLocation}/Modules/Compiled/")
-                            .FirstOrDefault(x => x == file.FullName.Replace(".cs", ".dll")));
                     }
                 }
                 ModuleFiles = tempModuleFiles;

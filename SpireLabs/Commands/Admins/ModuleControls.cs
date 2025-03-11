@@ -26,7 +26,7 @@ namespace ObscureLabs.Commands.Admins
             }
 
             string action = arguments.At(0);
-            string moduleName = arguments.At(1) ?? null;
+            string moduleName = arguments.Count > 1 ? arguments.At(1) : null;
 
             if (moduleName != null)
             {
@@ -92,20 +92,6 @@ namespace ObscureLabs.Commands.Admins
                             return true;
                         }
                     }
-                    case "debug":
-                    {
-
-                    
-                        var module = Plugin.Instance._modules.GetModule(moduleName);
-                        if (module == null)
-                        {
-                            response = $"Module {moduleName} not found.";
-                            return true;
-                        }
-
-                        response = $"Module {moduleName} debug info:\nName: {module.Name}\nIsInitializeOnStart: {module.IsInitializeOnStart}\nState: NOT YET IMPLEMENTED.";
-                        return true;
-                    }
                 }
             }
             else
@@ -122,10 +108,16 @@ namespace ObscureLabs.Commands.Admins
 
                         return true;
                     }
+                    case "refresh":
+                    {
+                        Plugin.Instance._modules.RefreshModuleFolder();
+                        response = "Module folder refreshed.";
+                        return true;
+                    }
                 }
             }
 
-            response = $"Invalid action. Send the following to a developer in ObscureLabs.\n\nAction={action}\nModule={moduleName}\nPlugin instance version: {Plugin.Instance.Version}\nResponse from ModuleManager: {Plugin.Instance._modules.GetModule(moduleName).Name ?? "Module invalid. Error elsewhere."}";
+            response = $"Invalid action. Send the following to a developer in ObscureLabs.\n\nAction={action}\nModule={moduleName ?? "null"}\nPlugin instance version: {Plugin.Instance.Version}\nResponse from ModuleManager: {Plugin.Instance._modules.GetModule(moduleName).Name ?? "Module invalid. Error elsewhere."}";
             return false;
         }
     }
