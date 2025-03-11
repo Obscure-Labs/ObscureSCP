@@ -55,6 +55,17 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             routine = Timing.RunCoroutine(GlowManager());
         }
 
+        public void CreateLight(Pickup i, Color color)
+        {
+            Light light = Light.Create(i.Position, new Vector3(90, 0, 0), Vector3.one, false, Color.red);
+            light.Intensity = 2f;
+            light.Range = 0.5f;
+            light.LightType = LightType.Point;
+            light.ShadowType = LightShadows.Soft;
+            light.Base.gameObject.transform.SetParent(i.GameObject.transform);
+            light.Spawn();
+        }
+
         public IEnumerator<float> GlowManager()
         {
             while (true)
@@ -64,14 +75,39 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                 {
                     if (!GlowingPickups.Contains(i))
                     {
-                        Light light = Light.Create(i.Position, new Vector3(90, 0, 0), Vector3.one, false, Color.red);
-                        light.Intensity = 2f;
-                        light.Range = 0.5f;
-                        light.LightType = LightType.Point;
-                        light.ShadowType = LightShadows.Soft;
-                        light.Color = Color.magenta;
-                        light.Spawn();
-                        light.Base.gameObject.transform.SetParent(i.GameObject.transform);
+                        switch (ItemRarityAPI.GetRarity(i.Type))
+                        { 
+                            case Rarity.None:
+                                { 
+                                    break;
+                                }
+                            case Rarity.Common:
+                                {
+                                    CreateLight(i, Color.white);
+                                    break;
+                                }
+                            case Rarity.Uncommon:
+                                {
+                                    CreateLight(i, Color.green);
+                                    break;
+                                }
+                            case Rarity.Rare:
+                                {
+                                    CreateLight(i, Color.cyan);
+                                    break;
+                                }
+                            case Rarity.Legendary:
+                                {
+                                    CreateLight(i, Color.yellow);
+                                    break;
+                                }
+                            case Rarity.Obscure:
+                                {
+                                    CreateLight(i, Color.magenta);
+                                    break;
+                                }
+
+                        }
                         GlowingPickups.Add(i);
                     }
                 }
