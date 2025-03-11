@@ -11,6 +11,8 @@ using Room = Exiled.API.Features.Room;
 using Player = Exiled.API.Features.Player;
 using Light = Exiled.API.Features.Toys.Light;
 using Exiled.API.Extensions;
+using UnityEngine.PlayerLoop;
+using UnityEngine.Rendering;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
@@ -21,7 +23,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             //idk if debug.log works tbh it should but just incase northwood moment
             LabApi.Features.Console.Logger.Info("Powerup script attached to object");
 
-            gameObject.tag = "";
         }
         public void Update()
         {
@@ -33,6 +34,23 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                 LabApi.Features.Console.Logger.Info("Collider Hit");
                 ((Powerup)Plugin.Instance._modules.GetModule("Powerup")).PowerupTriggerEnter(other, this.gameObject);
             }
+        }
+    }
+
+    public class PowerUpAnimate : MonoBehaviour
+    {
+        public Vector3 origin;
+        public void Start()
+        {
+            origin = transform.position;
+        }
+
+        public void Update()
+        {
+            var sin = Mathf.Sin(Time.time);
+            if (sin < 0) sin *= -1;
+            gameObject.transform.position = new Vector3(transform.position.x, Mathf.Lerp(origin.y - 0.35f, origin.y, sin), transform.position.z);
+            gameObject.GetComponent<PrimitiveObjectToy>().NetworkRotation = Quaternion.Euler(0, Mathf.LerpAngle(0, 360, Time.time), 0);
         }
     }
 
@@ -58,6 +76,17 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         public override bool Disable()
         {
+            foreach (GameObject gameObject in pickups)
+            {
+                foreach (Transform g in gameObject.GetComponentsInChildren<Transform>())
+                {
+                    NetworkServer.Destroy(g.gameObject);
+                }
+                GameObject.Destroy(gameObject);
+
+            }
+            pickups.Clear();
+
             Exiled.Events.Handlers.Server.RoundStarted -= OnRoundStarted;
             return base.Disable();
         }
@@ -90,7 +119,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         private void SpawnPowerup(Room room)
         {
             GameObject container = new GameObject();
-            Vector3 pos = new Vector3(room.transform.position.x, room.transform.position.y + 1f, room.transform.position.z);
+            Vector3 pos = new Vector3(room.transform.position.x, room.transform.position.y + 0.5f, room.transform.position.z);
             container.transform.position = pos;
 
             BoxCollider collider = container.gameObject.AddComponent<BoxCollider>();
@@ -105,19 +134,23 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
             Primitive cube = Primitive.Create(PrimitiveType.Cube, container.transform.position, Vector3.zero, Vector3.one / 2, false);
             cube.Flags = PrimitiveFlags.Collidable | PrimitiveFlags.Visible;
-            cube.Color = Color.yellow;
+            
+            cube.Color = new Color(1f, 47f / 51f, 0.0156862754f, 0.75f);
             cube.Scale = Vector3.one / 2f;
             cube.Collidable = false;
+            cube.Base.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.On;
             cube.Base.GetComponent<MeshRenderer>().receiveShadows = true;
 
             Light light = Light.Create(new Vector3(room.transform.position.x, room.transform.position.y + 2f, room.transform.position.z), new Vector3(90, 0, 0), Vector3.one, false, Color.red);
             light.Intensity = 10f;
             light.Range = 10f;
             light.LightType = LightType.Spot;
-            light.ShadowType = LightShadows.Soft;
+            light.ShadowStrength = 100;
+            light.ShadowType = LightShadows.Hard;
             light.Color = Color.yellow * 5;
 
             container.gameObject.AddComponent<PowerUpScript>();
+            cube.Base.gameObject.AddComponent<PowerUpAnimate>();
 
             light.Base.gameObject.transform.SetParent(container.transform, false);
             light.Base.gameObject.transform.position = pos;
