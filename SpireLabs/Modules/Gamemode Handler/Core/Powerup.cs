@@ -117,7 +117,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             light.ShadowType = LightShadows.Soft;
             light.Color = Color.yellow * 5;
 
-
             container.gameObject.AddComponent<PowerUpScript>();
 
             light.Base.gameObject.transform.SetParent(container.transform, false);

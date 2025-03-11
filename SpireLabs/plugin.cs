@@ -88,6 +88,7 @@ namespace ObscureLabs
             _modules.AddModule(new LightHandler());
             _modules.AddModule(new Lobby());
             _modules.AddModule(new Powerup());
+            _modules.AddModule(new ItemGlow());
 
             RegisterEvents();
         }
