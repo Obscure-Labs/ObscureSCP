@@ -13,7 +13,19 @@ namespace ObscureLabs.API.Features
     {
         public static Rarity GetRarity(ItemType type)
         {
-            return ((ItemRarityModule)Plugin.Instance._modules.GetModule("ItemRarityModule"))._itemRarityData.Find(x => x.Type == type).Rarity;
+            Rarity r;
+            try
+            {
+                r = ((ItemRarityModule)Plugin.Instance._modules.GetModule("ItemRarity"))._itemRarityData.FirstOrDefault(x => x.Type == type).Rarity;
+            }
+            catch(Exception e)
+            {
+                Log.Error(e.Message);
+                Log.Warn(e.StackTrace);
+                Log.Error(type);
+                r = Rarity.None;
+            }
+            return r;
         }
     }
     public class ItemRarityModule : Module
@@ -54,6 +66,10 @@ namespace ObscureLabs.API.Features
             }
             LabApi.Features.Console.Logger.Info("ItemRarity enabled");
             _itemRarityData = _deserializer.Deserialize<List<ItemRarityData>>(System.IO.File.ReadAllText(Plugin.SpireConfigLocation + "itemRarities.yaml"));
+            foreach(var i in _itemRarityData)
+            {
+               Log.Info(i.Type.ToString() + " " + i.Rarity.ToString());
+            }
         }
     }
 

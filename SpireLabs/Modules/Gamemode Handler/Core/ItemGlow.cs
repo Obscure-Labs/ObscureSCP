@@ -57,7 +57,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         public void CreateLight(Pickup i, Color color)
         {
-            Light light = Light.Create(i.Position, new Vector3(90, 0, 0), Vector3.one, false, Color.red);
+            Light light = Light.Create(i.Position, new Vector3(90, 0, 0), Vector3.one, false, color);
             light.Intensity = 2f;
             light.Range = 0.5f;
             light.LightType = LightType.Point;
