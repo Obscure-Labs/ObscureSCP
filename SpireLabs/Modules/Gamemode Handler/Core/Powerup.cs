@@ -1,34 +1,16 @@
 ﻿using Exiled.API.Features;
-using Exiled.API.Features.Doors;
-using Exiled.API.Features.Spawn;
 using Exiled.API.Features.Toys;
-using Exiled.Events.EventArgs.Player;
-using Exiled.Events.Handlers;
-using LabApi.Events.Arguments.ServerEvents;
 using ObscureLabs.API.Features;
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using Exiled.API;
-using Exiled.Events;
 using AdminToys;
-using MapEditorReborn.Commands.ModifyingCommands.Position;
-using MapEditorReborn.Commands.ModifyingCommands.Rotation;
 using Mirror;
-using static HarmonyLib.Code;
-
-using LabApi.Features.Wrappers;
 using Room = Exiled.API.Features.Room;
 using Player = Exiled.API.Features.Player;
 using Light = Exiled.API.Features.Toys.Light;
-using UnityEngine;
-using MapEditorReborn.Commands.ModifyingCommands.Scale;
 using Exiled.API.Extensions;
-using Exiled.CustomRoles.Commands;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
@@ -38,10 +20,11 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         {
             //idk if debug.log works tbh it should but just incase northwood moment
             LabApi.Features.Console.Logger.Info("Powerup script attached to object");
+
+            gameObject.tag = "";
         }
         public void Update()
         {
-            gameObject.GetComponent<Rigidbody>().AddTorque(new Vector3(0.1f, 0, 0.1f));
         }
         private void OnTriggerEnter(Collider other)
         {
@@ -50,8 +33,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                 LabApi.Features.Console.Logger.Info("Collider Hit");
                 ((Powerup)Plugin.Instance._modules.GetModule("Powerup")).PowerupTriggerEnter(other, this.gameObject);
             }
-
-
         }
     }
 
@@ -84,47 +65,79 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         public void PowerupTriggerEnter(Collider other, GameObject trigger)
         {
             var itemList = Enum.GetValues(typeof(ItemType)).ToArray<ItemType>();
+            int index = pickups.IndexOf(trigger);
+
             LabApi.Features.Console.Logger.Info("Triggered Event");
+
             pickups.Remove(trigger.gameObject);
-            Log.Info($"Object: {trigger.gameObject.name}");
+
+            Log.Debug($"Pickup Object: {trigger.gameObject.name} in index of: {index}");
             Player player = Player.Get(other);
             var randomitem = new System.Random();
             player.AddItem(itemList.ElementAt(randomitem.Next(0, itemList.Count() + 1)));
-            pickups.Remove(trigger);
-            NetworkServer.Destroy(trigger.gameObject);
-            Log.Warn($"There are: {pickups.Count()} pickups left!");
 
+            foreach (Transform g in trigger.gameObject.GetComponentsInChildren<Transform>())
+            {
+                NetworkServer.Destroy(g.gameObject);
+            }
+
+            Log.Warn($"Destroyed: {trigger.gameObject.name}");
+            GameObject.Destroy(trigger.gameObject);
+
+            Log.Warn($"There are: {pickups.Count()} pickups left!");
         }
 
         private void SpawnPowerup(Room room)
         {
-            Log.Info("bentation");
-            Primitive cube = Primitive.Create(PrimitiveType.Cube, new Vector3(room.transform.position.x, room.transform.position.y + 1f, room.transform.position.z), Vector3.zero, Vector3.one, false);
-            Light light = Light.Create(new Vector3(room.transform.position.x, room.transform.position.y + 1f, room.transform.position.z), Vector3.zero, Vector3.one, false, Color.red);
-            light.Color = cube.Color = new Color(10f, 0, 10f, 0.01f);
-            light.Intensity = 50f;
-            light.Range = 15f;
-            light.LightType = LightType.Spot;
-            light.ShadowType = LightShadows.Soft;
-            light.Base.gameObject.transform.SetParent(cube.Base.transform, true);
-            light.Base.gameObject.transform.localPosition = Vector3.zero;
-            cube.Flags = PrimitiveFlags.Collidable | PrimitiveFlags.Visible;
-            cube.Color = new Color(100f, 0, 100f, 0.25f);
-            cube.Scale = Vector3.one / 2f;
-            Rigidbody rb = cube.Base.gameObject.AddComponent<Rigidbody>();
+            GameObject container = new GameObject();
+            Vector3 pos = new Vector3(room.transform.position.x, room.transform.position.y + 1f, room.transform.position.z);
+            container.transform.position = pos;
+
+            BoxCollider collider = container.gameObject.AddComponent<BoxCollider>();
+            collider.size = Vector3.one / 2;
+            collider.isTrigger = true;
+
+            Rigidbody rb = container.gameObject.AddComponent<Rigidbody>();
             rb.mass = 0f;
             rb.drag = 0f;
             rb.angularDrag = 0f;
-
             rb.useGravity = false;
-            cube.Collidable = false;
-            BoxCollider collider = cube.Base.gameObject.AddComponent<BoxCollider>();
-            collider.size = cube.Scale;
-            collider.isTrigger = true;
-            cube.Spawn();
-            cube.Base.gameObject.AddComponent<PowerUpScript>();
-            pickups.Add(cube.Base.gameObject);
 
+            Primitive cube = Primitive.Create(PrimitiveType.Cube, container.transform.position, Vector3.zero, Vector3.one / 2, false);
+            cube.Flags = PrimitiveFlags.Collidable | PrimitiveFlags.Visible;
+            cube.Color = Color.yellow;
+            cube.Scale = Vector3.one / 2f;
+            cube.Collidable = false;
+            cube.Base.GetComponent<MeshRenderer>().receiveShadows = true;
+
+            Light light = Light.Create(new Vector3(room.transform.position.x, room.transform.position.y + 2f, room.transform.position.z), Vector3.zero, Vector3.one, false, Color.red);
+            light.Intensity = 10f;
+            light.Range = 10f;
+            light.LightType = LightType.Spot;
+            light.ShadowType = LightShadows.Soft;
+            light.Color = Color.yellow * 5;
+
+
+            container.gameObject.AddComponent<PowerUpScript>();
+
+            light.Base.gameObject.transform.SetParent(container.transform, false);
+            light.Base.gameObject.transform.position = pos;
+            cube.Base.gameObject.transform.SetParent(container.transform, false);
+            cube.Base.gameObject.transform.position = pos + Vector3.up / 2;
+
+            Quaternion rot = Quaternion.Euler(90, 0, 0);
+            light.Base.NetworkRotation.Set(rot.x, rot.y, rot.z, rot.w);
+
+            light.Base.transform.position += (Vector3.up * 2);
+            light.Spawn();
+            cube.Spawn();
+
+
+            pickups.Add(container.gameObject);
+            container.gameObject.name = $"{pickups.Count -1}_container";
+            cube.Base.gameObject.name = $"{pickups.Count -1}_cube";
+            light.Base.gameObject.name = $"{pickups.Count -1}_light";
+            Log.Info($"Spawned powerup of index: {pickups.Count() -1}");
         }
         private void OnRoundStarted()
         {

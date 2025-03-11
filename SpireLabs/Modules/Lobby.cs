@@ -13,6 +13,10 @@ using System.Linq;
 using Exiled.API.Extensions;
 using System.Collections.Generic;
 using MEC;
+using System;
+using Exiled.API.Features.Roles;
+using HumanRole = Exiled.API.Features.Roles.HumanRole;
+using CommandSystem.Commands.Console;
 namespace ObscureLabs.Modules
 {
     internal class Lobby : Module
@@ -35,6 +39,8 @@ namespace ObscureLabs.Modules
             Exiled.Events.Handlers.Player.InteractingDoor += Interact;
 
             return base.Enable();
+
+            
         }
 
         public override bool Disable()
@@ -102,6 +108,7 @@ namespace ObscureLabs.Modules
                 p.RoleManager.ServerSetRole(RoleTypeId.Spectator, RoleChangeReason.None);
                 p.Transform.position = Vector3.zero;
             }
+            base.Disable();
         }
         public void PlayerJoin(JoinedEventArgs ev)
         {
@@ -145,7 +152,7 @@ namespace ObscureLabs.Modules
                     Log.Info(room.name);
                     Log.Info("AA");
                     Manager.SendHint(p, "You have been sent to the pregame lobby, Waiting for players!", 5);
-                    p.RoleManager.ServerSetRole(RoleTypeId.Tutorial, RoleChangeReason.RemoteAdmin, RoleSpawnFlags.None);
+                    p.RoleManager.ServerSetRole(RoleTypeId.ClassD, RoleChangeReason.RemoteAdmin, RoleSpawnFlags.None);
                     p.Teleport(room.transform.position + (Vector3.up / 2));
                 }
             }
