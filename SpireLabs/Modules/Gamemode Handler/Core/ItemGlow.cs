@@ -24,8 +24,11 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         public override bool IsInitializeOnStart => true;
 
+        public CoroutineHandle routine;
+
         public override bool Enable()
         {
+            routine = new CoroutineHandle();
             Exiled.Events.Handlers.Server.RoundStarted += RoundStart;
             Exiled.Events.Handlers.Player.PickingUpItem += PickingUpItem;
             return base.Enable();
@@ -35,6 +38,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         {
             Exiled.Events.Handlers.Server.RoundStarted -= RoundStart;
             Exiled.Events.Handlers.Player.PickingUpItem -= PickingUpItem;
+            Timing.KillCoroutines(routine);
             return base.Disable();
         }
 
@@ -48,7 +52,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         public void RoundStart()
         {
-            Timing.RunCoroutine(GlowManager());
+            routine = Timing.RunCoroutine(GlowManager());
         }
 
         public IEnumerator<float> GlowManager()

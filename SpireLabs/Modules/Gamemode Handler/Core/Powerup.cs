@@ -11,6 +11,7 @@ using Room = Exiled.API.Features.Room;
 using Player = Exiled.API.Features.Player;
 using Light = Exiled.API.Features.Toys.Light;
 using Exiled.API.Extensions;
+using MEC;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
@@ -130,11 +131,24 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
 
             pickups.Add(container.gameObject);
-            container.gameObject.name = $"{pickups.Count -1}_container";
-            cube.Base.gameObject.name = $"{pickups.Count -1}_cube";
-            light.Base.gameObject.name = $"{pickups.Count -1}_light";
-            Log.Info($"Spawned powerup of index: {pickups.Count() -1}");
+            container.gameObject.name = $"{pickups.Count - 1}_container";
+            cube.Base.gameObject.name = $"{pickups.Count - 1}_cube";
+            light.Base.gameObject.name = $"{pickups.Count - 1}_light";
+            Log.Info($"Spawned powerup of index: {pickups.Count() - 1}");
+            //Timing.RunCoroutine(TestRoutine(cube.Base.gameObject));
         }
+
+        //private IEnumerator<float> TestRoutine(GameObject g)
+        //{
+        //    yield return Timing.WaitForOneFrame;
+        //    Log.Info($"Coroutine Started");
+        //    //g.GetComponents(typeof(Component)).ToList().ForEach(x => Log.Info(x.GetType().ToString()));
+        //    while (true)
+        //    {
+        //        g.GetComponent<AdminToys.PrimitiveObjectToy>().transform.SetPositionAndRotation(g.GetComponent<AdminToys.PrimitiveObjectToy>().transform.position, Quaternion.Euler(new Vector3(0, g.GetComponent<AdminToys.PrimitiveObjectToy>().NetworkRotation.y + 1f, 0)));
+        //        yield return Timing.WaitForSeconds(0.1f);
+        //    }
+        //}
         private void OnRoundStarted()
         {
             Log.Info("Map Generated");

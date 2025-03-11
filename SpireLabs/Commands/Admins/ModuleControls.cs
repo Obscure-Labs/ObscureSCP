@@ -21,7 +21,7 @@ namespace ObscureLabs.Commands.Admins
             if (arguments.Count == 0)
             {
                 response =
-                    "Usage: module <enable/disable/restart> <module name>\nModule name is case sensitive.\nExample: module restart LightHandler";
+                    "Usage: module <enable/disable/restart/reload> <module name>\nModule name is case sensitive.\nExample: module restart LightHandler";
                 return true;
             }
 
@@ -91,6 +91,12 @@ namespace ObscureLabs.Commands.Admins
                             response = $"Module {moduleName} failed to restart.";
                             return true;
                         }
+                    }
+                    case "reload":
+                    {
+                        Plugin.Instance._modules.ReloadModule(moduleName);
+                        response = "Modules reloaded.";
+                        return true;
                     }
                 }
             }

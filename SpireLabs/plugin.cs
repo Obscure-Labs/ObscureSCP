@@ -23,6 +23,7 @@ using YamlDotNet.Serialization;
 using ObscureLabs.Modules.Default;
 using ObscureLabs.Modules;
 using System.Linq;
+using ObscureLabs.API.Features;
 
 namespace ObscureLabs
 {
@@ -89,7 +90,7 @@ namespace ObscureLabs
             _modules.AddModule(new Lobby());
             _modules.AddModule(new Powerup());
             _modules.AddModule(new ItemGlow());
-
+            _modules.AddModule(new ItemRarityModule());
             RegisterEvents();
         }
 

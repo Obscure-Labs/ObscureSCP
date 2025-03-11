@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using Mono.CompilerServices.SymbolWriter;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ObscureLabs.API.Features
 {
@@ -30,6 +31,71 @@ namespace ObscureLabs.API.Features
         public void Clear()
         {
             _moduleList.Clear();
+        }
+
+        public void ReloadModule(string moduleName)
+        {
+            var module = GetModule(moduleName);
+            if (module == null)
+            {
+                LabApi.Features.Console.Logger.Error($"Module {moduleName} not found.");
+                return;
+            }
+
+            module.Disable();
+
+            if (ModuleFiles.FirstOrDefault(x => x.Name.Contains(moduleName)) is var file && file != null )
+            {
+                LabApi.Features.Console.Logger.Info($"New module found: {file.Name}. Attempting Compilation...");
+                string outputFile = $"{Plugin.SpireConfigLocation}/Modules/Compiled/{file.Name.Replace(".cs", ".dll")}";
+                CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
+                var pars = new CompilerParameters()
+                {
+                    GenerateExecutable = false,
+                    OutputAssembly = outputFile,
+                    GenerateInMemory = false
+                };
+
+                pars.ReferencedAssemblies.Add("System.dll");
+                pars.ReferencedAssemblies.Add("System.Core.dll");
+                pars.ReferencedAssemblies.Add("/home/container/SCPSL_Data/Managed/LabApi.dll");
+                foreach (var f in Directory.EnumerateFiles(
+                             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+                             "/EXILED/Plugins/"))
+                {
+                    pars.ReferencedAssemblies.Add(f);
+                }
+                foreach (var f in Directory.EnumerateFiles(
+                             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+                             "/EXILED/Plugins/dependencies/"))
+                {
+                    pars.ReferencedAssemblies.Add(f);
+                }
+
+                CompilerResults results = provider.CompileAssemblyFromFile(pars, file.FullName);
+
+                if (results.Errors.Count > 0)
+                {
+                    LabApi.Features.Console.Logger.Error($"Failed to compile module {file.Name}");
+                    foreach (CompilerError error in results.Errors)
+                    {
+                        LabApi.Features.Console.Logger.Error($"Error: {error.ErrorText} at line {error.Line}");
+                    }
+                }
+                else
+                {
+                    LabApi.Features.Console.Logger.Info($"Module compiled successfully: {file.Name}");
+                    Assembly assembly = Assembly.LoadFile(outputFile);
+                    foreach (var type in assembly.GetTypes())
+                    {
+                        if (type.IsSubclassOf(typeof(Module)))
+                        {
+                            Module mod = (Module)assembly.CreateInstance(type.FullName);
+                            AddModule(mod);
+                        }
+                    }
+                }
+            }
         }
 
         public void RefreshModuleFolder()
@@ -95,7 +161,6 @@ namespace ObscureLabs.API.Features
                                 {
                                     Module module = (Module)assembly.CreateInstance(type.FullName);
                                     AddModule(module);
-                                    module.Enable();
                                 }
                             }
                         }

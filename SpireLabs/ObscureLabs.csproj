@@ -124,6 +124,7 @@
     <Compile Include="API\Data\PlayerData.cs" />
     <Compile Include="API\Data\RoleData.cs" />
     <Compile Include="API\Enums\EventRoundType.cs" />
+    <Compile Include="API\Features\ItemRarity.cs" />
     <Compile Include="API\Features\Module.cs" />
     <Compile Include="API\Features\ModulesManager.cs" />
     <Compile Include="Commands\Admins\ModuleControls.cs" />
