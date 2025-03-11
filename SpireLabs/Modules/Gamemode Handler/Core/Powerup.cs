@@ -110,7 +110,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             cube.Collidable = false;
             cube.Base.GetComponent<MeshRenderer>().receiveShadows = true;
 
-            Light light = Light.Create(new Vector3(room.transform.position.x, room.transform.position.y + 2f, room.transform.position.z), Vector3.zero, Vector3.one, false, Color.red);
+            Light light = Light.Create(new Vector3(room.transform.position.x, room.transform.position.y + 2f, room.transform.position.z), new Vector3(90, 0, 0), Vector3.one, false, Color.red);
             light.Intensity = 10f;
             light.Range = 10f;
             light.LightType = LightType.Spot;
@@ -124,9 +124,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             light.Base.gameObject.transform.position = pos;
             cube.Base.gameObject.transform.SetParent(container.transform, false);
             cube.Base.gameObject.transform.position = pos + Vector3.up / 2;
-
-            Quaternion rot = Quaternion.Euler(90, 0, 0);
-            light.Base.NetworkRotation.Set(rot.x, rot.y, rot.z, rot.w);
 
             light.Base.transform.position += (Vector3.up * 2);
             light.Spawn();
