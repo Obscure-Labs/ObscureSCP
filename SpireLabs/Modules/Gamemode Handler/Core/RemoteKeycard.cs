@@ -61,27 +61,26 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         private void OnInteractingDoor(InteractingDoorEventArgs ev)
         {
-            try
-            {
+            Log.Info("Interacting door");
                 if (ev.Player.HasKeycardPermission(ev.Door.RequiredPermissions.RequiredPermissions) &&
-                    !ev.Door.IsLocked) 
+                    !ev.Door.IsLocked)
                 {
                     ev.IsAllowed = true;
+                    ev.Door.IsOpen = !ev.Door.IsOpen;
+
                 }
-            }
-            catch (Exception e)
-            {
-                Log.Error($"Error in {nameof(OnInteractingDoor)}: {e}");
-            }
+                else { Log.Warn("Smth wrong"); }
         }
 
         private void OnInteractinglocker(InteractingLockerEventArgs ev)
         {
 #pragma warning disable CS0618
-            if (ev.Player.HasKeycardPermission((KeycardPermissions)ev.InteractingChamber.RequiredPermissions));
+            if (ev.Player.HasKeycardPermission((KeycardPermissions)ev.InteractingChamber.RequiredPermissions)) ;
 #pragma warning restore CS0618
             {
                 ev.IsAllowed = true;
+                ev.InteractingChamber.IsOpen = !ev.InteractingChamber.IsOpen;
+                
             }
         }
 
@@ -90,6 +89,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             if (ev.Player.Items.Any(i => i is Keycard k && k.Base.Permissions.HasFlag(Interactables.Interobjects.DoorUtils.KeycardPermissions.AlphaWarhead)))
             {
                 ev.IsAllowed = true;
+
             }
         }
 
@@ -99,7 +99,9 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                     i is Keycard k &&
                     k.Base.Permissions.HasFlag(Interactables.Interobjects.DoorUtils.KeycardPermissions.ArmoryLevelTwo)))
             {
+
                 ev.IsAllowed = true;
+                ev.Generator.IsOpen = !ev.Generator.IsOpen;
             }
         }
 

@@ -63,6 +63,7 @@ namespace ObscureLabs.Modules
             }
             else
             {
+                Debug.Log("Why is this triggering");
                 return;
             }
         }

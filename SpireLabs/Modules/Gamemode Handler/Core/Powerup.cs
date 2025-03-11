@@ -151,7 +151,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
             container.gameObject.AddComponent<PowerUpScript>();
             cube.Base.gameObject.AddComponent<PowerUpAnimate>();
-
+            light.Base.gameObject.AddComponent<PowerUpAnimate>();
             light.Base.gameObject.transform.SetParent(container.transform, false);
             light.Base.gameObject.transform.position = pos;
             cube.Base.gameObject.transform.SetParent(container.transform, false);

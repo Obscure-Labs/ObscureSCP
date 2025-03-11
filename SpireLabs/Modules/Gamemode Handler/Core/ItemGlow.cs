@@ -83,17 +83,17 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                                 }
                             case Rarity.Common:
                                 {
-                                    CreateLight(i, Color.white);
+                                    CreateLight(i, new Color(0.3f, 0.3f, 0.3f));
                                     break;
                                 }
                             case Rarity.Uncommon:
                                 {
-                                    CreateLight(i, Color.green);
+                                    CreateLight(i, new Color(0, 0.4f, 0));
                                     break;
                                 }
                             case Rarity.Rare:
                                 {
-                                    CreateLight(i, Color.cyan);
+                                    CreateLight(i, new Color(0, 0.65f, 1f));
                                     break;
                                 }
                             case Rarity.Legendary:
