@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using Mono.CompilerServices.SymbolWriter;
+using System.Reflection;
 
 namespace ObscureLabs.API.Features
 {
@@ -8,6 +12,8 @@ namespace ObscureLabs.API.Features
         private List<Module> _moduleList = new();
 
         public List<Module> Modules => _moduleList;
+
+        public List<FileInfo> ModuleFiles { get; private set; }
 
         public Module GetModule(string name)
         {
@@ -22,6 +28,74 @@ namespace ObscureLabs.API.Features
         public void Clear()
         {
             _moduleList.Clear();
+        }
+
+        public void RefreshModuleFolder()
+        {
+            var files = Directory.EnumerateFiles($"{Plugin.SpireConfigLocation}/Modules/");
+            List<FileInfo> tempModuleFiles = new List<FileInfo>();
+            foreach(var file in files)
+            {
+                if (file.EndsWith(".cs"))
+                {
+                    tempModuleFiles.Add(new FileInfo(file));
+                }
+            }
+            if (tempModuleFiles.Count != ModuleFiles.Count)
+            {
+                foreach (var file in tempModuleFiles)
+                {
+                    if (!ModuleFiles.Contains(file))
+                    {
+                        LabApi.Features.Console.Logger.Info($"New module found: {file.Name}. Attempting Compilation...");
+                        string outputFile = $"{Plugin.SpireConfigLocation}/Modules/Compiled/{file.Name.Replace(".cs", ".dll")}";
+                        CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
+                        CompilerResults results = provider.CompileAssemblyFromFile(new CompilerParameters()
+                        {
+                            GenerateExecutable = false,
+                            OutputAssembly = outputFile,
+                            GenerateInMemory = false,
+                        }, file.FullName);
+                        if(results.Errors.Count > 0)
+                        {
+                            LabApi.Features.Console.Logger.Error($"Failed to compile module {file.Name}");
+                            foreach (CompilerError error in results.Errors)
+                            {
+                                LabApi.Features.Console.Logger.Error($"Error: {error.ErrorText} at line {error.Line}");
+                            }
+                        }
+                        else
+                        {
+                            LabApi.Features.Console.Logger.Info($"Module compiled successfully: {file.Name}");
+                            Assembly assembly = Assembly.LoadFile(outputFile);
+                            foreach (var type in assembly.GetTypes())
+                            {
+                                if (type.IsSubclassOf(typeof(Module)))
+                                {
+                                    Module module = (Module)assembly.CreateInstance(type.FullName);
+                                    AddModule(module);
+                                    module.Enable();
+                                }
+                            }
+                        }
+                    }
+                }
+                foreach (var file in ModuleFiles)
+                {
+                    if (!tempModuleFiles.Contains(file))
+                    {
+                        LabApi.Features.Console.Logger.Info($"Module removed: {file.Name}");
+                        _moduleList.Remove(_moduleList.FirstOrDefault(x => x.Name == file.Name.Replace(".cs", "")));
+                        File.Delete(Directory.EnumerateFiles($"{Plugin.SpireConfigLocation}/Modules/Compiled/")
+                            .FirstOrDefault(x => x == file.FullName.Replace(".cs", ".dll")));
+                    }
+                }
+                ModuleFiles = tempModuleFiles;
+            }
+            else
+            {
+                ModuleFiles = tempModuleFiles;
+            }
         }
     }
 }
