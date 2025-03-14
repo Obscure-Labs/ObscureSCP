@@ -13,6 +13,8 @@ using InventorySystem;
 using InventorySystem.Items.Keycards;
 using KeycardPermissions = Interactables.Interobjects.DoorUtils.KeycardPermissions;
 using Interactables.Interobjects.DoorUtils;
+using LabApi.Events;
+using LabApi.Events.Arguments.PlayerEvents;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
@@ -42,7 +44,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         public override bool Enable()
         {
             Exiled.Events.Handlers.Player.InteractingDoor += OnInteractingDoor;
-            Exiled.Events.Handlers.Player.InteractingLocker += OnInteractinglocker;
+            //Exiled.Events.Handlers.Player.InteractingLocker += OnInteractinglocker;
+            LabApi.Events.Handlers.PlayerEvents.InteractingLocker += OnInteractingLabLocker;
             Exiled.Events.Handlers.Player.ActivatingWarheadPanel += OnInteractingWarhead;
             Exiled.Events.Handlers.Player.UnlockingGenerator += OnInteractGenerator;
             base.Enable();
@@ -52,37 +55,73 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         public override bool Disable()
         {
             Exiled.Events.Handlers.Player.InteractingDoor -= OnInteractingDoor;
-            Exiled.Events.Handlers.Player.InteractingLocker -= OnInteractinglocker;
+            //Exiled.Events.Handlers.Player.InteractingLocker -= OnInteractinglocker;
+            LabApi.Events.Handlers.PlayerEvents.InteractingLocker -= OnInteractingLabLocker;
             Exiled.Events.Handlers.Player.ActivatingWarheadPanel -= OnInteractingWarhead;
             Exiled.Events.Handlers.Player.UnlockingGenerator -= OnInteractGenerator;
             base.Disable();
             return true;
         }
 
+        private void OnInteractingLabLocker(PlayerInteractingLockerEventArgs ev)
+        {
+            Log.Info("Lab locker interacted with");
+            if(ev.Player.Items.Where(x => x.Category == ItemCategory.Keycard).FirstOrDefault(x => x.Base is KeycardItem k && k.Permissions.HasFlag(ev.Chamber.RequiredPermissions)) != null)
+            {
+                Log.Info("suitable keycard found");
+                ev.CanOpen = true;
+                ev.IsAllowed = true;
+            }
+            //if(ev.Player.Items.Where(x => x is LabApi.Features.Wrappers.KeycardItem keycard && keycard.Base.Permissions.HasFlag(ev.Chamber.RequiredPermissions)).First() != null)
+            //{
+            //    ev.CanOpen = true;
+            //    ev.IsAllowed = true;
+            //}
+            //if(ev.Player.CurrentItem.Base is KeycardItem keycard && keycard.Permissions.HasFlag(ev.Chamber.RequiredPermissions))
+            //{
+            //    ev.CanOpen = true;
+            //    ev.IsAllowed = true;
+            //}
+        }
+
         private void OnInteractingDoor(InteractingDoorEventArgs ev)
         {
             Log.Info("Interacting door");
-                if (ev.Player.HasKeycardPermission(ev.Door.RequiredPermissions.RequiredPermissions) &&
+            if (ev.Door.IsKeycardDoor)
+            {
+                if(ev.Player.CurrentItem is Keycard keycard && keycard.Permissions.HasFlag(ev.Door.RequiredPermissions.RequiredPermissions) && !ev.Door.IsLocked)
+                {
+                    ev.Door.IsOpen = !ev.Door.IsOpen;
+                    ev.IsAllowed = true;
+                }
+                else if (ev.Player.HasKeycardPermission(ev.Door.RequiredPermissions.RequiredPermissions) &&
                     !ev.Door.IsLocked)
                 {
-                    ev.IsAllowed = true;
                     ev.Door.IsOpen = !ev.Door.IsOpen;
-
+                    ev.IsAllowed = true;
                 }
-                else { Log.Warn("Smth wrong"); }
-        }
-
-        private void OnInteractinglocker(InteractingLockerEventArgs ev)
-        {
-#pragma warning disable CS0618
-            if (ev.Player.HasKeycardPermission((KeycardPermissions)ev.InteractingChamber.RequiredPermissions)) ;
-#pragma warning restore CS0618
-            {
-                ev.IsAllowed = true;
-                ev.InteractingChamber.IsOpen = !ev.InteractingChamber.IsOpen;
-                
+                else
+                {
+                    ev.Door.PlaySound(DoorBeepType.PermissionDenied);
+                }
             }
         }
+
+        //private void OnInteractinglocker(InteractingLockerEventArgs ev)
+        //{
+        //    Log.Info("Interacting locker");
+        //    //Log.Info($"Interacting with locker with perms {ev.InteractingChamber.RequiredPermissions}");
+        //    //Log.Info($"Player has keycard permissions: {((Keycard)ev.Player.Items.FirstOrDefault(x => x.IsKeycard)).Permissions}");
+        //    Log.Info($"\n Check: {ev.Player.Items.Where(x => x.IsKeycard).FirstOrDefault(x => x is Keycard k && k.Permissions.HasFlag(ev.InteractingChamber.RequiredPermissions)) != null}");
+        //    if (ev.Player.Items.Where(x => x is Keycard keycard && keycard.Permissions.HasFlag(ev.InteractingChamber.RequiredPermissions)).First() != null)
+        //    {
+        //        ev.IsAllowed = true;
+        //    }
+        //    if (ev.Player.CurrentItem is Keycard keycard && keycard.Permissions.HasFlag(ev.InteractingChamber.RequiredPermissions))
+        //    {
+        //        ev.IsAllowed = true;
+        //    }
+        //}
 
         private void OnInteractingWarhead(ActivatingWarheadPanelEventArgs ev)
         {
