@@ -15,21 +15,49 @@ using UnityEngine;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
+    public class FlipResult
+    {
+        public string Name { get; set; }
+        public Func<Exiled.API.Features.Player, bool> Func { get; set; }
+    }
+
     public class CoinFlip : Module
     {
         public override string Name => "CoinFlip";
 
         public override bool IsInitializeOnStart => true;
 
-        public List<string> _bad = new List<string>()
+        public List<FlipResult> _goodResults = new List<FlipResult>()
         {
-            "_antiGravity",
-            "_explode"
+            new FlipResult()
+            {
+                Name = "RandomItem",
+                Func = (Player) =>
+                {
+
+                    return true;
+                }
+            },
         };
-        public List<string> _good = new List<string>() 
+
+        public List<FlipResult> _badResults = new List<FlipResult>()
         {
-            "_randomItem",
-            "_heal"
+            new FlipResult()
+            {
+                Name = "Antigravity",
+                Func = (Player) =>
+                {
+                    return true;
+                }
+            },
+            new FlipResult()
+            {
+                Name = "Explode",
+                Func = (Player) =>
+                {
+                    return true;
+                }
+            }
         };
 
         private int _goodThreshold = 60;
@@ -51,30 +79,18 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         {
             int chance = UnityEngine.Random.Range(0, 100);
             bool result = chance >= _goodThreshold ? true : false;
-            string outcome;
+            FlipResult outcome;
 
             if (result)
             {
-                outcome = _good.ElementAt(UnityEngine.Random.Range(0, _good.Count()));
+                outcome = _goodResults.ElementAt(UnityEngine.Random.Range(0, _goodResults.Count()));
             }
             else
             {
-                outcome = _bad.ElementAt(UnityEngine.Random.Range(0, _good.Count()));
+                outcome = _badResults.ElementAt(UnityEngine.Random.Range(0, _badResults.Count()));
             }
 
-            switch (outcome)
-            {
-                case "_antigravity":
-                    {
-                        break;
-                    }
-                case "_explode":
-                    {
-                        ev.Player.Explode();
-                        break;
-                    }
-
-            }
+            outcome.Func.Invoke(ev.Player);
 
         }
     }
