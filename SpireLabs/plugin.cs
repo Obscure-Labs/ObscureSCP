@@ -91,6 +91,7 @@ namespace ObscureLabs
             _modules.AddModule(new Powerup());
             _modules.AddModule(new ItemGlow());
             _modules.AddModule(new ItemRarityModule());
+            _modules.AddModule(new CoinFlip());
             RegisterEvents();
         }
 

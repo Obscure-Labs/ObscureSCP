@@ -163,12 +163,12 @@ namespace SpireLabs.GUI
 
         public static IEnumerator<float> SendHintCoroutine(Player player, string hint, float time)
         {
-            var localHint = hint;
-            HudHandler.hint[player.Id] = hint;
+            var localHint = $"{hint}@{Guid.NewGuid()}";
+            HudHandler.hint[player.Id] = localHint;
 
             yield return Timing.WaitForSeconds(time);
 
-            if (player.CurrentHint.Content.Contains(localHint))
+            if (player.CurrentHint.Content.Contains(localHint.Split('@')[1]))
             {
                 HudHandler.hint[player.Id] = string.Empty;
             }
@@ -207,11 +207,17 @@ namespace SpireLabs.GUI
                     string s = "<align=center><size=32>";
 
                     #region lines
-
-                    s += $"\t\n"; //0
-                    s += $"\t\n"; //1 (TOP OF SCREEN)
                     try
                     {
+                        if (hint[p.Id] != string.Empty)
+                        {
+                            s += $"{hint[p.Id].Split('@')[1]}\n"; //0
+                        }
+                        else
+                        {
+                            s += $"\t\n"; //0
+                        }
+                        s += $"\t\n"; //1 (TOP OF SCREEN)
                         if (hint[p.Id] == string.Empty)
                         {
                             s += $"\t\n"; //2
@@ -220,32 +226,33 @@ namespace SpireLabs.GUI
                         }
                         else
                         {
-                            if (hint[p.Id].Split(char.Parse("\n")).Length == 0 || hint[p.Id].Length < 70)
+                            var localHint = hint[p.Id].Split('@')[0];
+                            if (localHint.Split(char.Parse("\n")).Length == 0 || localHint.Length < 70)
                             {
-                                s += $"{hint[p.Id]}\n"; //2
+                                s += $"{localHint}\n"; //2
                                 s += $"\t\n"; //3
                                 s += $"\t\n"; //4
                             }
-                            else if (hint[p.Id].Split(char.Parse("\n")).Length == 1 ||
-                                     hint[p.Id].Length > 70 && hint[p.Id].Length < 140)
+                            else if (localHint.Split(char.Parse("\n")).Length == 1 ||
+                                     localHint.Length > 70 && localHint.Length < 140)
                             {
-                                string[] split = hint[p.Id].Split(char.Parse("\n"));
+                                string[] split = localHint.Split(char.Parse("\n"));
                                 s += $"{split[0]}\n"; //2
                                 s += $"{split[1]}\n"; //3
                                 s += $"\t\n"; //4
                             }
-                            else if (hint[p.Id].Split(char.Parse("\n")).Length == 2 || hint[p.Id].Length > 140)
+                            else if (localHint.Split(char.Parse("\n")).Length == 2 || localHint.Length > 140)
                             {
-                                string[] split = hint[p.Id].Split(char.Parse("\n"));
+                                string[] split = localHint.Split(char.Parse("\n"));
                                 s += $"{split[0]}\n"; //2
                                 s += $"{split[1]}\n"; //3
                                 s += $"{split[2]}\n"; //4
                             }
                         }
                     }
-                    catch
+                    catch(Exception ex)
                     {
-                        //Log.Error($"Error: {ex}");
+                        Log.Error($"Skill issue detected: {ex}");
                     }
                     Log.Debug("Got past hints");
                     s += $"\t\n"; //5
@@ -437,12 +444,12 @@ namespace SpireLabs.GUI
 
                     s += "</align></size>";
                     Log.Debug("What the fuck");
-                    yield return Timing.WaitForSeconds(0.5f);
+                    yield return Timing.WaitForSeconds(0.1f);
 
                     Log.Debug("Completed Message");
                     if (p.IsAlive)
                     {
-                        p.ShowHint(s, 0.85f);
+                        p.ShowHint(s, 0.125f);
                     }
 
                     Log.Debug("Shown Hint");
