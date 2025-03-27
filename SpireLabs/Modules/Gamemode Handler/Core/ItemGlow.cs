@@ -14,6 +14,7 @@ using Pickup = Exiled.API.Features.Pickups.Pickup;
 using Light = Exiled.API.Features.Toys.Light;
 using MEC;
 using Exiled.Events.EventArgs.Player;
+using AdminToys;
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
     internal class ItemGlow : Module
@@ -44,6 +45,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         public void PickingUpItem(PickingUpItemEventArgs ev)
         {
+            
             if (GlowingPickups.Contains(ev.Pickup))
             {
                 GlowingPickups.Remove(ev.Pickup);
@@ -54,6 +56,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         {
             routine = Timing.RunCoroutine(GlowManager());
         }
+
 
         public void CreateLight(Pickup i, Color color)
         {
