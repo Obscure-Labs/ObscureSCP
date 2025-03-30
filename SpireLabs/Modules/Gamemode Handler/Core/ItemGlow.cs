@@ -15,6 +15,8 @@ using Light = Exiled.API.Features.Toys.Light;
 using MEC;
 using Exiled.Events.EventArgs.Player;
 using AdminToys;
+using Exiled.CustomItems.API.Features;
+using Exiled.API.Features.Pickups.Projectiles;
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
     internal class ItemGlow : Module
@@ -74,10 +76,21 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             while (true)
             {
                 yield return Timing.WaitForOneFrame;
+
                 foreach (Pickup i in Pickup.List)
                 {
+                    if (i.Is<Projectile>(out _)) { continue; }
+
                     if (!GlowingPickups.Contains(i))
                     {
+
+                        GlowingPickups.Add(i);
+                        if (CustomItem.TryGet(i, out var item))
+                        {
+                            CreateLight(i, Color.magenta);
+                            continue;
+                        }
+
                         switch (ItemRarityAPI.GetRarity(i.Type))
                         { 
                             case Rarity.None:
@@ -111,7 +124,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                                 }
 
                         }
-                        GlowingPickups.Add(i);
+
                     }
                 }
             }

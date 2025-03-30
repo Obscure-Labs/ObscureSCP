@@ -2,6 +2,7 @@
 using Exiled.API.Extensions;
 using Exiled.API.Features;
 using Exiled.API.Features.Pickups;
+using LabApi.Events.Arguments.ServerEvents;
 using MEC;
 using ObscureLabs.API.Features;
 using System.Collections.Generic;
@@ -29,17 +30,17 @@ namespace ObscureLabs.Items
         public static CustomItemSpawningData[] WeaponList { get; set; } =
         {
             new(CustomItem.Get((uint)1), 0, 1), // sniper
-            new(CustomItem.Get((uint)3), 0, 1), // grenade launcher
+            //new(CustomItem.Get((uint)3), 0, 1), // grenade launcher
             new(CustomItem.Get((uint)5), 0, 3), // ER16
            // new(CustomItem.Get((uint)6), 0, 1) // Particle Collapser
         };
 
         public static CustomItemSpawningData[] ItemList { get; set; } =
         {
-            new(CustomItem.Get((uint)2), 0, 3), // ClusterHE
-            new(CustomItem.Get((uint)7), 0, 5), // ClusterFlash
-            new(CustomItem.Get((uint)0), 0, 10), // EssentialOils
-            new(CustomItem.Get((uint)4), 0, 10), // NovaGrenade
+            //new(CustomItem.Get((uint)2), 0, 3), // ClusterHE
+            //new(CustomItem.Get((uint)7), 0, 5), // ClusterFlash
+            //new(CustomItem.Get((uint)0), 0, 10), // EssentialOils
+            //new(CustomItem.Get((uint)4), 0, 10), // NovaGrenade
             new(CustomItem.Get((uint)12),0, 2), // S-NAV
             //new(CustomItem.Get((uint)9), 0, 1) // BallNade
         };
@@ -55,19 +56,19 @@ namespace ObscureLabs.Items
 
         public override bool Enable()
         {
-            Exiled.Events.Handlers.Map.Generated += OnMapGenerated;
+            LabApi.Events.Handlers.ServerEvents.MapGenerated += OnMapGenerated;
 
             return base.Enable();
         }
 
         public override bool Disable()
         {
-            Exiled.Events.Handlers.Map.Generated -= OnMapGenerated;
+            LabApi.Events.Handlers.ServerEvents.MapGenerated -= OnMapGenerated;
 
             return base.Disable();
         }
 
-        public static void OnMapGenerated()
+        public static void OnMapGenerated(MapGeneratedEventArgs ev)
         {
             Log.Info("Running custom item spawner for vanilla round");
             Timing.RunCoroutine(GunSpawnCoroutine());
@@ -103,7 +104,7 @@ namespace ObscureLabs.Items
 
                     if (targetItem.Type.IsWeapon() && spawn > 30 && spawn < 65)
                     {
-                        continue;
+                        
                         var weaponToSpawn = WeaponList.ElementAt(UnityEngine.Random.Range(0, WeaponList.Count()));
                         Pickup pickup = null;
 
@@ -112,12 +113,13 @@ namespace ObscureLabs.Items
                             pickup = weaponToSpawn.item.Spawn(targetItem.Transform.position);
                             pickup.Rotation = targetItem.Transform.rotation;
                             weaponToSpawn.count++;
-                            Log.Info($"Made new item in {room.Type}");
+                            Log.Info($"Made new {weaponToSpawn.item.Id} in {room.Type}");
                             yield return Timing.WaitForOneFrame;
                             targetItem.Destroy();
                             Log.Warn($"Removed original item in {room.Type}");
                             break;
                         }
+                        continue;
                     }
 
                     if (!targetItem.Type.IsWeapon() && !targetItem.Type.IsKeycard() && spawn > 30 && spawn < 65)
@@ -130,11 +132,12 @@ namespace ObscureLabs.Items
                             pickup = itemToSpawn.item.Spawn(targetItem.Transform.position);
                             pickup.Rotation = targetItem.Transform.rotation;
                             itemToSpawn.count++;
-                            Log.Info($"Made new item in {room.Type}");
+                            Log.Info($"Made new {itemToSpawn.item.Id} in {room.Type}");
                             yield return Timing.WaitForOneFrame;
                             targetItem.Destroy();
                             Log.Warn($"Removed original item in {room.Type}");
                         }
+                        continue ;
                     }
                 }
             }

@@ -1,5 +1,6 @@
 ﻿using Exiled.API.Features;
 using Exiled.API.Features.Items;
+using Exiled.CustomItems.API.Features;
 using LabApi.Features.Wrappers;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace ObscureLabs.API.Features
             {
                 r = ((ItemRarityModule)Plugin.Instance._modules.GetModule("ItemRarity"))._itemRarityData.FirstOrDefault(x => x.Type == type).Rarity;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Log.Error(e.Message);
                 Log.Warn(e.StackTrace);
@@ -68,7 +69,7 @@ namespace ObscureLabs.API.Features
             _itemRarityData = _deserializer.Deserialize<List<ItemRarityData>>(System.IO.File.ReadAllText(Plugin.SpireConfigLocation + "itemRarities.yaml"));
             foreach(var i in _itemRarityData)
             {
-               Log.Info(i.Type.ToString() + " " + i.Rarity.ToString());
+               Log.Debug(i.Type.ToString() + " " + i.Rarity.ToString());
             }
         }
     }
