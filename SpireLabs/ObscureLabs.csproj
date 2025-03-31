@@ -134,7 +134,12 @@
     <Compile Include="Hud\HudController.cs" />
     <Compile Include="Hud\HudHandler.cs" />
     <Compile Include="Hud\Manager.cs" />
+    <Compile Include="Items\AttachmentFix.cs" />
     <Compile Include="Items\CustomItemSpawner.cs" />
+    <Compile Include="Items\LaserGun.cs" />
+    <Compile Include="Items\ParticleCollapser.cs" />
+    <Compile Include="Items\SNAV.cs" />
+    <Compile Include="Items\SniperRifle.cs" />
     <Compile Include="Modules\Default\LightHandler.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\CoinFlip.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\ItemGlow.cs" />
@@ -142,6 +147,9 @@
     <Compile Include="Modules\Gamemode Handler\Core\Powerup.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\RemoteKeycard.cs" />
     <Compile Include="Configs\Config.cs" />
+    <Compile Include="Modules\Gamemode Handler\Core\SCP Rebalances\SCP049.cs" />
+    <Compile Include="Modules\Gamemode Handler\Core\SCP Rebalances\SCP106.cs" />
+    <Compile Include="Modules\Gamemode Handler\Core\SCP Rebalances\SCP173.cs" />
     <Compile Include="Modules\Lobby.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

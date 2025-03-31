@@ -21,6 +21,13 @@ using ObscureLabs.Modules;
 using Exiled.API.Features.Core.UserSettings;
 using TMPro;
 using UserSettings.ServerSpecific;
+using System.Linq;
+using ObscureLabs.API.Features;
+using Exiled.Events.Handlers;
+using ObscureLabs.Modules.Gamemode_Handler.Core.SCP_Rebalances;
+using Exiled.API.Features;
+using Player = Exiled.API.Features.Player;
+using Cassie = Exiled.API.Features.Cassie;
 
 namespace ObscureLabs
 {
@@ -79,16 +86,27 @@ namespace ObscureLabs
 
         public void PopulateModules()
         {
+
+            //- Core Utils -//
             _modules.AddModule(new HudController());
             _modules.AddModule(new MvpSystem());
             _modules.AddModule(new CustomItemSpawner());
             _modules.AddModule(new RemoteKeycard());
             _modules.AddModule(new LightHandler());
             _modules.AddModule(new Lobby());
+            _modules.AddModule(new ItemRarityModule());
+
+            //- Gameplay Utils -//
             _modules.AddModule(new Powerup());
             _modules.AddModule(new ItemGlow());
-            _modules.AddModule(new ItemRarityModule());
+
+
+            //- Mechanics and Features -//
             _modules.AddModule(new CoinFlip());
+            _modules.AddModule(new AttachmentFix());
+            _modules.AddModule(new SCP106());
+            _modules.AddModule(new SCP173());
+
             RegisterEvents();
         }
 
@@ -248,8 +266,7 @@ namespace ObscureLabs
             //{
             //    Log.Warn($"{Player.Get(p).Nickname} has aspect ratio : {p.aspectRatioSync.AspectRatio} : and their status is now {s.Version}");
             //};
-
-            Manager.SendHint(ev.Player, $"{ev.Player.DisplayNickname}", 3);
+            //Manager.SendHint(ev.Player, $"{ev.Player.DisplayNickname}", 3);
             Manager.SendJoinLeave(ev.Player, false);
             foreach (Player p in Player.List) { Log.Info($"Playername: {p.Nickname} joined with ID: {p.Id}"); }
         }
