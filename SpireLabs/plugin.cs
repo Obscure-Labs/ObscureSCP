@@ -4,10 +4,7 @@ using Exiled.API.Features.Doors;
 using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Player;
 using Exiled.Loader;
-using HarmonyLib;
 using MEC;
-using ObscureLabs.API.Data;
-using ObscureLabs.API.Enums;
 using ObscureLabs.API.Features;
 using ObscureLabs.Items;
 using ObscureLabs.Modules.Gamemode_Handler.Core;
@@ -19,11 +16,11 @@ using System.Collections.Generic;
 using System.IO;
 using ObscureLabs.Configs;
 using UnityEngine;
-using YamlDotNet.Serialization;
 using ObscureLabs.Modules.Default;
 using ObscureLabs.Modules;
-using System.Linq;
-using ObscureLabs.API.Features;
+using Exiled.API.Features.Core.UserSettings;
+using TMPro;
+using UserSettings.ServerSpecific;
 
 namespace ObscureLabs
 {
@@ -118,7 +115,6 @@ namespace ObscureLabs
             Exiled.Events.Handlers.Player.Left += OnLeft;
             Exiled.Events.Handlers.Player.Verified += OnVerified;
             Exiled.Events.Handlers.Player.Dying += OnDying;
-
             foreach (Module m in _modules.Modules)
             {
                 if (m.IsInitializeOnStart == true)
@@ -236,8 +232,23 @@ namespace ObscureLabs
             Manager.SendJoinLeave(ev.Player, true);
         }
 
+        public static UserTextInputSetting XresInput = new UserTextInputSetting(0, "Resolution X", "1920", 4, TMP_InputField.ContentType.IntegerNumber, "Used for UI Scaling");
+        public static UserTextInputSetting YresInput = new UserTextInputSetting(1, "Resolution Y", "1080", 4, TMP_InputField.ContentType.IntegerNumber, "Used for UI Scaling");
+
+        public static List<ServerSpecificSettingBase> settings = new List<ServerSpecificSettingBase>
+            {
+                XresInput.Base,
+                YresInput.Base
+            };
+
         private void OnVerified(VerifiedEventArgs ev)
         {
+            //ServerSpecificSettingsSync.SendToPlayer(ev.Player.ReferenceHub, settings.ToArray());
+            //ServerSpecificSettingsSync.ServerOnStatusReceived += (p, s) =>
+            //{
+            //    Log.Warn($"{Player.Get(p).Nickname} has aspect ratio : {p.aspectRatioSync.AspectRatio} : and their status is now {s.Version}");
+            //};
+
             Manager.SendHint(ev.Player, $"{ev.Player.DisplayNickname}", 3);
             Manager.SendJoinLeave(ev.Player, false);
             foreach (Player p in Player.List) { Log.Info($"Playername: {p.Nickname} joined with ID: {p.Id}"); }

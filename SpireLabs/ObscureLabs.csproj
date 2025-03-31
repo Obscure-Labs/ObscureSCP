@@ -45,10 +45,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\refs\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp-Publicized, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ExMod.Exiled.9.6.0-beta3\lib\net48\Assembly-CSharp-Publicized.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="AudioPlayer">
       <HintPath>..\refs\AudioPlayer.dll</HintPath>
     </Reference>
@@ -101,6 +97,9 @@
     <Reference Include="UncomplicatedCustomRoles">
       <HintPath>..\refs\UncomplicatedCustomRoles.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>..\refs\Unity.TextMeshPro.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\refs\UnityEngine.dll</HintPath>
@@ -127,6 +126,7 @@
     <Compile Include="API\Features\ItemRarity.cs" />
     <Compile Include="API\Features\Module.cs" />
     <Compile Include="API\Features\ModulesManager.cs" />
+    <Compile Include="Commands\Admins\Dummy.cs" />
     <Compile Include="Commands\Admins\ModuleControls.cs" />
     <Compile Include="Configs\HintConfig.cs" />
     <Compile Include="Configs\OverrideConfig.cs" />

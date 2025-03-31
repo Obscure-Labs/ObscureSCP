@@ -13,6 +13,9 @@ using Light = Exiled.API.Features.Toys.Light;
 using Exiled.API.Extensions;
 using UnityEngine.PlayerLoop;
 using UnityEngine.Rendering;
+using PlayerRoles.FirstPersonControl.NetworkMessages;
+using PlayerRoles.Visibility;
+using LiteNetLib4Mirror.Open.Nat;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
@@ -166,6 +169,13 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             container.gameObject.name = $"{pickups.Count - 1}_container";
             cube.Base.gameObject.name = $"{pickups.Count - 1}_cube";
             light.Base.gameObject.name = $"{pickups.Count - 1}_light";
+            foreach(Player p in Player.List)
+            {
+                if(p.Id % 2 == 0)
+                {
+                    p.Connection.Send(new ObjectHideMessage { netId = cube.Base.netId});
+                }
+            }
             Log.Info($"Spawned powerup of index: {pickups.Count() - 1}");
 
         }

@@ -73,6 +73,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             {
                 if(!Player.IsInventoryFull)
                 {
+#warning gives a grenade
                     Player.AddItem(Keycard.List.GetRandomValue().Type);
                 }
                 else
@@ -89,7 +90,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             }),
             new("Heal", "You are fully healed!", (Player) =>
             {
-                Player.Heal(Player.MaxHealth, true);
+                Player.Heal(Player.MaxHealth, false);
                 return true;
             }),
             new("AmmoFountain", "<color=purple><u>AMMO FOUNTAIN</u></color>", (Player) =>
@@ -314,13 +315,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                 {
                     if (Vector3.Distance(p.Position, player.Position) <= 5f)
                     {
-                        if (Physics.Raycast(new Ray(p.Position, player.Position), out RaycastHit hit, 5f))
-                        {
-                            if (hit.collider.gameObject.GetComponent<Exiled.API.Features.Player>() != null)
-                            {
-                                player.Heal(5, true);
-                            }
-                        }
+                        player.Heal(5, true);
                     }
                 }
                 yield return Timing.WaitForSeconds(0.1f);

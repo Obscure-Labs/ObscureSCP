@@ -135,7 +135,7 @@ namespace SpireLabs.GUI
                     }
                 }
 
-                deadPlayer.ShowHint(s, 0.85f);
+                deadPlayer.ShowHint(s, 0.25f);
             }
             catch
             {
@@ -344,6 +344,13 @@ namespace SpireLabs.GUI
                     {
                         s += $"<align=left>\t</align>\n"; //19
                         s += $"<align=left>\t</align>\n"; //19
+                        //string effect = string.Empty;
+                        //for (float i = 0; i < 200 * p.ReferenceHub.aspectRatioSync.AspectRatio; i++)
+                        //{
+                        //    effect += "A";
+                        //}
+                        //s += $"placeholder{effect}\n"; //21
+                        //s += $"\t\n"; //19
                     }
                     else
                     {
@@ -449,14 +456,14 @@ namespace SpireLabs.GUI
                     Log.Debug("Completed Message");
                     if (p.IsAlive)
                     {
-                        p.ShowHint(s, 0.125f);
+                        p.ShowHint(s, 0.15f);
                     }
 
                     Log.Debug("Shown Hint");
                 }
                 else if (!Round.IsLobby && !p.IsAlive)
                 {
-                    yield return Timing.WaitForSeconds(0.5f);
+                    yield return Timing.WaitForSeconds(0.2f);
                     SendDead(p);
                     Log.Debug($"Sending Dead Message to : {p.DisplayNickname}");
                 }
