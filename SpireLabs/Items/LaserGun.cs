@@ -106,24 +106,17 @@ namespace ObscureLabs.Items
             projectile.Scale = new Vector3(0.035f, 0.07f, 0.035f);
             projectile.Collidable = false;
 
-            Light light = Light.Create(projectile.Position, new Vector3(90, 0, 0), Vector3.one, false, Color.red);
-            light.Intensity = 5f;
-            light.Range = 0.5f;
-            light.LightType = LightType.Point;
-            light.Color = Color.red * 5;
-            light.Base.transform.SetParent(projectile.Base.transform);
-            light.Spawn();
             projectile.Spawn();
-            Timing.RunCoroutine(ShootCoroutine(projectile, light, ev));
+            Timing.RunCoroutine(ShootCoroutine(projectile, ev));
         }
 
-        private IEnumerator<float> ShootCoroutine(Primitive primitive, Light light, ShootingEventArgs ev)
+        private IEnumerator<float> ShootCoroutine(Primitive primitive, ShootingEventArgs ev)
         {
             yield return Timing.WaitForOneFrame;
             //projectile.Position = ev.Player.Transform.position + new Vector3(0.45f, 0.7f, 0f);
             primitive.Position = ev.Player.Transform.position + ev.Player.Transform.forward.normalized + (ev.Player.Transform.up.normalized * 0.5f);
 
-            Timing.RunCoroutine(ProjectiveMovementCoroutine(primitive, light, ev.Player.CameraTransform.forward, ev.Player, primitive.Position));
+            Timing.RunCoroutine(ProjectiveMovementCoroutine(primitive, ev.Player.CameraTransform.forward, ev.Player, primitive.Position));
 
             yield return Timing.WaitForSeconds(0.1f);
 
@@ -132,7 +125,7 @@ namespace ObscureLabs.Items
         }
 
 
-        private IEnumerator<float> ProjectiveMovementCoroutine(Primitive primitive, Light light, Vector3 direction, Player owner, Vector3 startPosition)
+        private IEnumerator<float> ProjectiveMovementCoroutine(Primitive primitive, Vector3 direction, Player owner, Vector3 startPosition)
         {
             while (primitive.Base.gameObject.activeSelf)
             {
@@ -140,7 +133,6 @@ namespace ObscureLabs.Items
                 {
                     primitive.Base.gameObject.SetActive(false);
                     primitive.UnSpawn();
-                    light.UnSpawn();
                 }
 
                 Exiled.API.Features.Toys.Primitive g = primitive;
@@ -159,13 +151,11 @@ namespace ObscureLabs.Items
                             {
                                 primitive.Base.gameObject.SetActive(false);
                                 primitive.UnSpawn();
-                                light.UnSpawn();
 
                             }
 
                             primitive.Base.gameObject.SetActive(false);
                             primitive.UnSpawn();
-                            light.UnSpawn();
                         }
                     }
 
@@ -197,7 +187,6 @@ namespace ObscureLabs.Items
 
                             primitive.Base.gameObject.SetActive(false);
                             primitive.UnSpawn();
-                            light.UnSpawn();
                             Log.Info(Vector3.Distance(startPosition, player2.Position));
                         }
 
@@ -208,7 +197,6 @@ namespace ObscureLabs.Items
                     if (player2 == owner || player2.Role.Team == owner.Role.Team)
                     {
                         primitive.UnSpawn();
-                        light.UnSpawn();
                     }
                 }
 

@@ -59,7 +59,8 @@ namespace ObscureLabs.Items
         {
             base.OnAcquired(player, item, displayMessage);
             Manager.SendHint(player, "S-NAV ver1.0.1: \n", 5.0f);
-            Timing.RunCoroutine(Snav(player, item));
+            Timing.CallDelayed(5f, () => { Timing.RunCoroutine(Snav(player, item)); });
+
         }
 
         private void Equipped(ChangedItemEventArgs ev)
@@ -83,10 +84,10 @@ namespace ObscureLabs.Items
                 string yep = _nearbySCPs.ToString();
                 while (player.Items.Contains(item))
                 {
-                    yield return Timing.WaitForSeconds(1f);
+                    yield return Timing.WaitForSeconds(0f);
                     if (_nearbySCPs.Count < 1)
                     {
-                        Manager.SendHint(player, "No SCP Subjects Nearby! ", 1.0f);
+                        Manager.SendHint(player, "No SCP Subjects Nearby! ", 2f);
                     }
 
 
@@ -94,7 +95,7 @@ namespace ObscureLabs.Items
                     foreach (Exiled.API.Features.Player pl in Exiled.API.Features.Player.List)
                     {
                         float relative = UnityEngine.Vector3.Distance(pl.Position, player.Position);
-                        yield return Timing.WaitForSeconds(0.25f);
+                        yield return Timing.WaitForOneFrame;
 
 
                         _nearbySCPs = _nearbySCPs.OrderBy(x => x.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
@@ -125,16 +126,11 @@ namespace ObscureLabs.Items
                                 {
                                     break;
                                 }
-                                if (_nearbySCPs.ElementAt(i).Value < 10f)
-                                {
-                                    hint += $"{_nearbySCPs.ElementAt(i).Key.ToString()}: <10m \t";
-                                }
-                                else
-                                {
-                                    hint += $"{_nearbySCPs.ElementAt(i).Key.ToString()}: {(int)(_nearbySCPs.ElementAt(i).Value)}m\t";
-                                }
+ 
+                                hint += $"{_nearbySCPs.ElementAt(i).Key.ToString()}: {(int)(_nearbySCPs.ElementAt(i).Value)}m\t";
+                                
                             }
-                            Manager.SendHint(player, hint, 1.5f);
+                            Manager.SendHint(player, hint, 1f);
 
 
 
