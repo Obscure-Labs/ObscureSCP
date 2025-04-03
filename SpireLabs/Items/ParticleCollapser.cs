@@ -63,10 +63,10 @@ namespace ObscureLabs.Items
         };
 
             protected override void SubscribeEvents()
-            {
-
-                Exiled.Events.Handlers.Player.ChangedItem += OnChangedItem;
-                base.SubscribeEvents();
+        {
+            
+            Exiled.Events.Handlers.Player.ChangedItem += OnChangedItem;
+            base.SubscribeEvents();
             }
 
             protected override void UnsubscribeEvents()
@@ -74,7 +74,7 @@ namespace ObscureLabs.Items
                 base.UnsubscribeEvents();
             }
 
-
+        
         protected override void OnShot(ShotEventArgs ev)
             {
                 base.OnShot(ev);

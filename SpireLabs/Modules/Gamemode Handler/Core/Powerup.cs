@@ -169,13 +169,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             container.gameObject.name = $"{pickups.Count - 1}_container";
             cube.Base.gameObject.name = $"{pickups.Count - 1}_cube";
             light.Base.gameObject.name = $"{pickups.Count - 1}_light";
-            foreach(Player p in Player.List)
-            {
-                if(p.Id % 2 == 0)
-                {
-                    p.Connection.Send(new ObjectHideMessage { netId = cube.Base.netId});
-                }
-            }
             Log.Info($"Spawned powerup of index: {pickups.Count() - 1}");
 
         }

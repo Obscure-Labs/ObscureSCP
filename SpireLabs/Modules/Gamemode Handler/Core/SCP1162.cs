@@ -13,6 +13,7 @@ using ObscureLabs.API.Features;
 using PlayerRoles;
 using SpireSCP.GUI.API.Features;
 using UnityEngine;
+using static InventorySystem.Items.Firearms.ShotEvents.ShotEventManager;
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
     internal class Scp1162 : Module
@@ -23,11 +24,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         private List<CustomItem> _customitemlist = new()
         {
             CustomItem.Get((uint)2), // ClusterHE
-            CustomItem.Get((uint)7), // ClusterFlash
-            CustomItem.Get((uint)0), // EssentialOils
             CustomItem.Get((uint)4), // NovaGrenade
             CustomItem.Get((uint)1), // sniper
-            CustomItem.Get((uint)3), // grenade launcher
             CustomItem.Get((uint)5), // ER16
             CustomItem.Get((uint)6), // Particle Collapser
         };

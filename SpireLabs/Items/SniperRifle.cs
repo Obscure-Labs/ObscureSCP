@@ -38,7 +38,7 @@ namespace ObscureLabs.Items
         };
         public override uint Id { get; set; } = 1;
 
-        public override float Damage { get; set; } = 200f;
+        public override float Damage { get; set; } = 0f;
 
         public override float Weight { get; set; } = 2f;
 
@@ -57,7 +57,7 @@ namespace ObscureLabs.Items
         protected override void SubscribeEvents()
         {
             Exiled.Events.Handlers.Player.ChangedItem += OnChangedItem;
-            Exiled.Events.Handlers.Player.Shot += OnShot;
+
 
             base.SubscribeEvents();
         }
@@ -65,7 +65,7 @@ namespace ObscureLabs.Items
         protected override void UnsubscribeEvents()
         {
             Exiled.Events.Handlers.Player.ChangedItem -= OnChangedItem;
-            Exiled.Events.Handlers.Player.Shot -= OnShot;
+
 
             base.UnsubscribeEvents();
         }
@@ -91,8 +91,13 @@ namespace ObscureLabs.Items
             
         }
 
-        private void OnShot(ShotEventArgs ev)
+        protected override void OnShot(ShotEventArgs ev)
         {
+
+
+            ev.CanHurt = false;
+            ev.Firearm.Damage = 0f;
+
             ev.Firearm.PrimaryMagazine.AmmoType = AmmoType.Ammo44Cal;
             if (ev.Player == null || ev.Player.CurrentItem == null)
                 return;
@@ -101,20 +106,22 @@ namespace ObscureLabs.Items
             {
                 return;
             }
-            ev.CanHurt = false;
-            
+
+
             if (ev.Target == null) { return; }
             if (ev.Target.IsHuman)
             {
                 Log.Info($"hitbox was: {ev.Hitbox.HitboxType.ToString()}");
                 if (ev.Hitbox.HitboxType == HitboxType.Headshot)
                 {
-                    ev.Target.Hurt(ev.Player, 150f, DamageType.Revolver, null);
+                    Log.Info("Was headshot");
+                    ev.Target.Hurt(ev.Player, 150f, DamageType.Custom, null);
                     ev.Player.ShowHitMarker(4f);
                 }
                 else
                 {
-                    ev.Target.Hurt(ev.Player, 75f, DamageType.Revolver, null);
+                    Log.Info("Was not headshot");
+                    ev.Target.Hurt(ev.Player, 75f, DamageType.Custom, null);
                     ev.Player.ShowHitMarker();
                 }
             }
@@ -123,7 +130,7 @@ namespace ObscureLabs.Items
                 Log.Info($"hitbox was: {ev.Hitbox.HitboxType.ToString()}");
                 Log.Info("Player was not human");
                 ev.Player.ShowHitMarker();
-                ev.Target.Hurt(ev.Player, 200f, DamageType.Revolver, null);
+                ev.Target.Hurt(ev.Player, 200f, DamageType.Custom, null);
             }
         }
     }

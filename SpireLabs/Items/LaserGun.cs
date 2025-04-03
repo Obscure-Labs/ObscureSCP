@@ -24,7 +24,7 @@ namespace ObscureLabs.Items
     {
         public static int trueAmmo = 30;
 
-        public override float Damage { get; set; } = 1f;
+        public override float Damage { get; set; } = 0f;
 
         public override string Name { get; set; } = "MTF-ER16-SR";
 
@@ -187,7 +187,6 @@ namespace ObscureLabs.Items
 
                             primitive.Base.gameObject.SetActive(false);
                             primitive.UnSpawn();
-                            Log.Info(Vector3.Distance(startPosition, player2.Position));
                         }
 
 

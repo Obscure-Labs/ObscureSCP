@@ -44,6 +44,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         public override bool Enable()
         {
             Exiled.Events.Handlers.Player.InteractingDoor += OnInteractingDoor;
+            Exiled.Events.Handlers.Player.ThrownProjectile += Gnade;
             //Exiled.Events.Handlers.Player.InteractingLocker += OnInteractinglocker;
             LabApi.Events.Handlers.PlayerEvents.InteractingLocker += OnInteractingLabLocker;
             Exiled.Events.Handlers.Player.ActivatingWarheadPanel += OnInteractingWarhead;
@@ -55,6 +56,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         public override bool Disable()
         {
             Exiled.Events.Handlers.Player.InteractingDoor -= OnInteractingDoor;
+            Exiled.Events.Handlers.Player.ThrownProjectile -= Gnade;
             //Exiled.Events.Handlers.Player.InteractingLocker -= OnInteractinglocker;
             LabApi.Events.Handlers.PlayerEvents.InteractingLocker -= OnInteractingLabLocker;
             Exiled.Events.Handlers.Player.ActivatingWarheadPanel -= OnInteractingWarhead;
@@ -63,6 +65,10 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             return true;
         }
 
+        private void Gnade(ThrownProjectileEventArgs e)
+        {
+            Log.Info("Grenade thrown");
+        }
         private void OnInteractingLabLocker(PlayerInteractingLockerEventArgs ev)
         {
             Log.Info("Lab locker interacted with");
