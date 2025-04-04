@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Exiled.API.Enums;
 using Exiled.API.Extensions;
+using Exiled.API.Features.Pools;
 
 namespace SpireLabs.GUI
 {
@@ -75,21 +76,8 @@ namespace SpireLabs.GUI
                 }
 
                 s += $"\t\n"; //5
-                s +=
-                    $"<align=right><size=24><color=#7F7FFF>NTF Tickets: <color=#fff>{(Respawn.TryGetTokens(SpawnableFaction.NtfWave, out int pNTFTokens) ? pNTFTokens : "Error Fetching Tokens")}<color=#fff>\n"; //6
-                s +=
-                    $"<align=right><size=24><color=#090>CHAOS Tickets: <color=#fff>{(Respawn.TryGetTokens(SpawnableFaction.ChaosWave, out int pChaosTokens) ? pChaosTokens : "Error Fetching Tokens")}<color=#fff>\n"; //6.5
-                s += $"<align=right><size=24>Round Time: {Round.ElapsedTime.Minutes:00}:{Round.ElapsedTime.Seconds:00}\n"; //7
-
-                if (Warhead.IsDetonated)
-                {
-                    s +=
-                        $"<align=right><size=24><color=#7F7FFF>NTF Tickets: <color=#fff>{(Respawn.TryGetTokens(SpawnableFaction.NtfWave, out int NTFTokens) ? NTFTokens : "Error Fetching Tokens")}<color=#fff>\n"; //6
-                    s +=
-                        $"<align=right><size=24><color=#090>CHAOS Tickets: <color=#fff>{(Respawn.TryGetTokens(SpawnableFaction.ChaosWave, out int ChaosTokens) ? ChaosTokens : "Error Fetching Tokens")}<color=#fff>\n"; //6.5
-                    s +=
-                        $"<align=right><size=24>Round Time: {Round.ElapsedTime.Minutes:00}:{Round.ElapsedTime.Seconds:00}\n"; //7
-
+                s += $"\t\n"; //6
+                s += $"<size=8>\t\n<size=32>"; //7
                     if (Warhead.IsDetonated)
                     {
                         s +=
@@ -110,23 +98,13 @@ namespace SpireLabs.GUI
                         s +=
                             $"<align=right><size=24>Warhead Status: <color=#2986cc>Disarmed<color=#fff>\n</size><size=32>"; //7.5
                     }
-                }
-                else
-                {
-                    s +=
-                        $"<align=right><size=24>Warhead Status: <color=#2986cc>Disarmed<color=#fff>\n</size><size=32>"; //7.5
-                }
 
                 //thats is not good too
                 for (var i = 9; i < 38; i++)
                 {
-                    if (i == 27)
+                    if (i == 29)
                     {
-                        s += $"<size=16><align=center>Respawning in: PLACEHOLDER\n\t</size><size=32>\n"; /*{( - DateTime.UtcNow).Minutes:00}:{(Respawn.NextTeamTime - DateTime.UtcNow).Seconds:00}\n\t</size><size=32>\n";*/
-                    }
-                    else if (i == 29)
-                    {
-                        s += $"<size=16><color=#3a5fcf>OBSCURE</color><color=#88d4ff>LABS</color>\n";
+                        s += $"<align=center><size=16><color=#3a5fcf>OBSCURE</color><color=#88d4ff>LABS</color>\n";
                         s += $"<color=#ffffff>DISCORD.GG/58TaSJbyJm</color></size>\n";
                     }
                     else
@@ -226,27 +204,25 @@ namespace SpireLabs.GUI
                         }
                         else
                         {
+                            s += $"<size=0>\t\n<size=32>"; //0
                             var localHint = hint[p.Id].Split('@')[0];
-                            if (localHint.Split(char.Parse("\n")).Length == 0 || localHint.Length < 70)
+                            if (localHint.Split(char.Parse("\n")) is string[] wtf && wtf.Count() == 1)
                             {
-                                s += $"{localHint}\n"; //2
+                                s += $"{wtf[0]}\n"; //2
                                 s += $"\t\n"; //3
                                 s += $"\t\n"; //4
                             }
-                            else if (localHint.Split(char.Parse("\n")).Length == 1 ||
-                                     localHint.Length > 70 && localHint.Length < 140)
+                            else if (localHint.Split(char.Parse("\n")) is string[] wtf1 && wtf1.Count() == 2)
                             {
-                                string[] split = localHint.Split(char.Parse("\n"));
-                                s += $"{split[0]}\n"; //2
-                                s += $"{split[1]}\n"; //3
+                                s += $"{wtf1[0]}\n"; //2
+                                s += $"{wtf1[1]}\n"; //3    
                                 s += $"\t\n"; //4
                             }
-                            else if (localHint.Split(char.Parse("\n")).Length == 2 || localHint.Length > 140)
+                            else if (localHint.Split(char.Parse("\n")) is string[] wtf2 && wtf2.Count() == 3)
                             {
-                                string[] split = localHint.Split(char.Parse("\n"));
-                                s += $"{split[0]}\n"; //2
-                                s += $"{split[1]}\n"; //3
-                                s += $"{split[2]}\n"; //4
+                                s += $"{wtf2[0]}\n"; //2
+                                s += $"{wtf2[1]}\n"; //3
+                                s += $"{wtf2[2]}\n"; //4
                             }
                         }
                     }

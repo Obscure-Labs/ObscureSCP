@@ -21,13 +21,10 @@ using ObscureLabs.Modules;
 using Exiled.API.Features.Core.UserSettings;
 using TMPro;
 using UserSettings.ServerSpecific;
-using System.Linq;
-using ObscureLabs.API.Features;
-using Exiled.Events.Handlers;
 using ObscureLabs.Modules.Gamemode_Handler.Core.SCP_Rebalances;
-using Exiled.API.Features;
 using Player = Exiled.API.Features.Player;
 using Cassie = Exiled.API.Features.Cassie;
+using UserSettings.ControlsSettings;
 
 namespace ObscureLabs
 {
@@ -50,6 +47,10 @@ namespace ObscureLabs
         public override Version RequiredExiledVersion { get; } = new Version(9, 0, 0);
 
         public OverrideConfig overrideConfigs { get; set; }
+        public List<KeyCode> KeybindList { get; set; } = new List<KeyCode>
+        {
+            KeyCode.H
+        };
 
         //private Harmony _harmony;
 
@@ -58,7 +59,10 @@ namespace ObscureLabs
             Instance = this;
             _modules = new ModulesManager();
             CustomItem.RegisterItems();
-
+            foreach(var key in KeybindList)
+            {
+                keybinds.Add(new KeybindSetting(keybinds.Count+1, key.ToString(), key));
+            }
             Log.SendRaw("[ObscureLabs]\n\r\n .d8888b.           d8b                 .d8888b.   .d8888b.  8888888b.  \r\nd88P  Y88b          Y8P                d88P  Y88b d88P  Y88b 888   Y88b \r\nY88b.                                  Y88b.      888    888 888    888 \r\n \"Y888b.   88888b.  888 888d888 .d88b.  \"Y888b.   888        888   d88P \r\n    \"Y88b. 888 \"88b 888 888P\"  d8P  Y8b    \"Y88b. 888        8888888P\"  \r\n      \"888 888  888 888 888    88888888      \"888 888    888 888        \r\nY88b  d88P 888 d88P 888 888    Y8b.    Y88b  d88P Y88b  d88P 888        \r\n \"Y8888P\"  88888P\"  888 888     \"Y8888  \"Y8888P\"   \"Y8888P\"  888        \r\n           888                                                          \r\n           888                                                          \r\n           888                                                          \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n", color: ConsoleColor.DarkMagenta);
             if (Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/EXILED/Configs/Obscure/"))
             {
@@ -251,14 +255,9 @@ namespace ObscureLabs
             Manager.SendJoinLeave(ev.Player, true);
         }
 
-        public static UserTextInputSetting XresInput = new UserTextInputSetting(0, "Resolution X", "1920", 4, TMP_InputField.ContentType.IntegerNumber, "Used for UI Scaling");
-        public static UserTextInputSetting YresInput = new UserTextInputSetting(1, "Resolution Y", "1080", 4, TMP_InputField.ContentType.IntegerNumber, "Used for UI Scaling");
-
-        public static List<ServerSpecificSettingBase> settings = new List<ServerSpecificSettingBase>
-            {
-                XresInput.Base,
-                YresInput.Base
-            };
+        //public static UserTextInputSetting XresInput = new UserTextInputSetting(0, "Resolution X", "1920", 4, TMP_InputField.ContentType.IntegerNumber, "Used for UI Scaling");
+        //public static UserTextInputSetting YresInput = new UserTextInputSetting(1, "Resolution Y", "1080", 4, TMP_InputField.ContentType.IntegerNumber, "Used for UI Scaling");
+        public static List<KeybindSetting> keybinds = new List<KeybindSetting>();
 
         private void OnVerified(VerifiedEventArgs ev)
         {

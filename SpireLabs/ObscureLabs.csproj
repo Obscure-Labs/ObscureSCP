@@ -150,6 +150,7 @@
     <Compile Include="Modules\Gamemode Handler\Core\SCP Rebalances\SCP049.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\SCP Rebalances\SCP106.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\SCP Rebalances\SCP173.cs" />
+    <Compile Include="Modules\Gamemode Handler\Core\SCP1162.cs" />
     <Compile Include="Modules\Lobby.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -161,7 +161,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                 Timing.CallDelayed(10f, () => {LabApi.Features.Wrappers.Player.Get(Player.NetworkIdentity).Gravity = oldGrav; });
                 return true;
             }),
-            new("Death", "You rolled <color=gray><u>DEATH</u></color>", (Player) =>
+            new("Death", "You rolled <color=#767676><u>DEATH</u></color>", (Player) =>
             {
                 
                 return true;

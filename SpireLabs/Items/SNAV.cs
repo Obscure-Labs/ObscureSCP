@@ -58,7 +58,7 @@ namespace ObscureLabs.Items
         protected override void OnAcquired(Exiled.API.Features.Player player, Item item, bool displayMessage)
         {
             base.OnAcquired(player, item, displayMessage);
-            Manager.SendHint(player, "S-NAV ver1.0.1: \n", 5.0f);
+            Manager.SendHint(player, "S-NAV ver1.0.1:", 5.0f);
             Timing.CallDelayed(5f, () => { Timing.RunCoroutine(Snav(player, item)); });
 
         }
