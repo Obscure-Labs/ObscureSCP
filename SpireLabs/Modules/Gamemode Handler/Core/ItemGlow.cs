@@ -1,22 +1,13 @@
-﻿using Exiled.API.Features;
-using Exiled.API.Features.Items;
-using Exiled.API.Features.Pickups;
-using GameCore;
-using LabApi.Features.Wrappers;
-using ObscureLabs.API.Features;
-using System;
+﻿using ObscureLabs.API.Features;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using Pickup = Exiled.API.Features.Pickups.Pickup;
 using Light = Exiled.API.Features.Toys.Light;
 using MEC;
 using Exiled.Events.EventArgs.Player;
-using AdminToys;
 using Exiled.CustomItems.API.Features;
-using Exiled.API.Features.Pickups.Projectiles;
+using Projectile = Exiled.API.Features.Pickups.Projectiles.Projectile;
+
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
     internal class ItemGlow : Module
@@ -27,11 +18,11 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         public override bool IsInitializeOnStart => true;
 
-        public CoroutineHandle routine;
+        public CoroutineHandle Routine;
 
         public override bool Enable()
         {
-            routine = new CoroutineHandle();
+            Routine = new CoroutineHandle();
             Exiled.Events.Handlers.Server.RoundStarted += RoundStart;
             Exiled.Events.Handlers.Player.PickingUpItem += PickingUpItem;
             return base.Enable();
@@ -41,7 +32,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         {
             Exiled.Events.Handlers.Server.RoundStarted -= RoundStart;
             Exiled.Events.Handlers.Player.PickingUpItem -= PickingUpItem;
-            Timing.KillCoroutines(routine);
+            Timing.KillCoroutines(Routine);
             return base.Disable();
         }
 
@@ -56,7 +47,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         public void RoundStart()
         {
-            routine = Timing.RunCoroutine(GlowManager());
+            Routine = Timing.RunCoroutine(GlowManager());
         }
 
 
@@ -85,6 +76,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                     {
 
                         GlowingPickups.Add(i);
+                        #pragma warning disable 
+                        // ReSharper disable once UnusedVariable
                         if (CustomItem.TryGet(i, out var item))
                         {
                             CreateLight(i, Color.magenta);
@@ -128,7 +121,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                     }
                 }
             }
-
+            // ReSharper disable once IteratorNeverReturns
         }
     }
 }

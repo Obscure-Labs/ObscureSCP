@@ -1,16 +1,8 @@
-﻿using ObscureLabs.API.Data;
-using ObscureLabs.API.Features;
-using RelativePositioning;
+﻿using ObscureLabs.API.Features;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Exiled.API;
-using Utf8Json.Resolvers.Internal;
 using Exiled.Events.EventArgs.Player;
-using Discord;
-using ServerOutput;
 using UnityEngine;
 using Exiled.API.Features;
 using Exiled.API.Extensions;
@@ -20,7 +12,6 @@ using Exiled.API.Features.Items;
 using Exiled.API.Features.Pickups;
 using Exiled.API.Enums;
 using InventorySystem.Items.Usables.Scp330;
-using PlayerRoles.FirstPersonControl.Thirdperson.Subcontrollers;
 using PlayerRoles;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
@@ -235,6 +226,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         public override bool Disable()
         {
+            Exiled.Events.Handlers.Player.FlippingCoin -= CoinFlipEvent;
             return base.Disable();
         }
 

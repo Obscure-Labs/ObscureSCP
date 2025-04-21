@@ -11,13 +11,13 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core.SCP_Rebalances
 
         public override bool Enable()
         {
-            Exiled.Events.Handlers.Scp106.Attacking += Attacking;
+            //Exiled.Events.Handlers.Scp106.Attacking += Attacking;
             return base.Enable();
         }
 
         public override bool Disable()
         {
-            Exiled.Events.Handlers.Scp106.Attacking -= Attacking;
+            //Exiled.Events.Handlers.Scp106.Attacking -= Attacking;
             return base.Disable();
         }
 

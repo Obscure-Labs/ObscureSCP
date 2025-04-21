@@ -11,6 +11,7 @@ using SpireSCP.GUI.API.Features;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using InventorySystem.Items.Firearms;
 using UnityEngine;
 
 namespace ObscureLabs.Items
@@ -76,14 +77,16 @@ namespace ObscureLabs.Items
 
         
         protected override void OnShot(ShotEventArgs ev)
+        {
+            base.OnShot(ev);
+            if (((ParticleDisruptor)ev.Firearm.Base)._actionModule._modeSelector.SingleShotSelected)
             {
-                base.OnShot(ev);
+                #warning add functionality here
+            }
             if (ev.Player.CurrentItem is Exiled.API.Features.Items.Firearm firearm)
             {
                 ev.CanHurt = false;
-
                 Timing.RunCoroutine(EnergyBurstCoroutine(ev));
-
             }
         }
 

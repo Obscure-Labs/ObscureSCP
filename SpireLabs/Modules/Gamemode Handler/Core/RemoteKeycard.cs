@@ -1,19 +1,10 @@
 ﻿using ObscureLabs.API.Features;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CustomPlayerEffects;
 using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.API.Features.Items;
 using Exiled.Events.EventArgs.Player;
-using InventorySystem;
 using InventorySystem.Items.Keycards;
-using KeycardPermissions = Interactables.Interobjects.DoorUtils.KeycardPermissions;
-using Interactables.Interobjects.DoorUtils;
-using LabApi.Events;
 using LabApi.Events.Arguments.PlayerEvents;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
@@ -21,25 +12,25 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
     public static class Extensions
     {
 
-        public static bool HasKeycardPermission(
-            this Player player,
-            KeycardPermissions permissions,
-            bool requiresAllPermissions = false)
-        {
-            if (player.IsEffectActive<AmnesiaVision>())
-                return false;
-
-            return requiresAllPermissions
-                ? player.Items.Any(item => item is Keycard keycard && keycard.Base.Permissions.HasFlag(permissions))
-                : player.Items.Any(item => item is Keycard keycard && (keycard.Base.Permissions & permissions) != 0);
-        }
+        // public static bool HasKeycardPermission(
+        //     this Player player,
+        //     KeycardPermissions permissions,
+        //     bool requiresAllPermissions = false)
+        // {
+        //     if (player.IsEffectActive<AmnesiaVision>())
+        //         return false;
+        //
+        //     return requiresAllPermissions
+        //         ? player.Items.Any(item => item is Keycard keycard && keycard.Base.Permissions.HasFlag(permissions))
+        //         : player.Items.Any(item => item is Keycard keycard && (keycard.Base.Permissions & permissions) != 0);
+        // }
     }
 
     public class RemoteKeycard : Module
     {
         public override string Name => "RemoteKeycard";
 
-        public override bool IsInitializeOnStart => true;
+        public override bool IsInitializeOnStart => false;
 
         public override bool Enable()
         {
@@ -100,12 +91,13 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                     ev.Door.IsOpen = !ev.Door.IsOpen;
                     ev.IsAllowed = true;
                 }
-                else if (ev.Player.HasKeycardPermission(ev.Door.RequiredPermissions.RequiredPermissions) &&
-                    !ev.Door.IsLocked)
-                {
-                    ev.Door.IsOpen = !ev.Door.IsOpen;
-                    ev.IsAllowed = true;
-                }
+                // else if(ev.Player.Items.Where(x => x is Keycard))
+                // else if (ev.Player.HasKeycardPermission(ev.Door.RequiredPermissions.RequiredPermissions) &&
+                //     !ev.Door.IsLocked)
+                // {
+                //     ev.Door.IsOpen = !ev.Door.IsOpen;
+                //     ev.IsAllowed = true;
+                // }
                 else
                 {
                     ev.Door.PlaySound(DoorBeepType.PermissionDenied);
