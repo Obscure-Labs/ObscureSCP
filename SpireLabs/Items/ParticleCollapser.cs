@@ -79,15 +79,8 @@ namespace ObscureLabs.Items
         protected override void OnShot(ShotEventArgs ev)
         {
             base.OnShot(ev);
-            if (((ParticleDisruptor)ev.Firearm.Base)._actionModule._modeSelector.SingleShotSelected)
-            {
-                #warning add functionality here
-            }
-            if (ev.Player.CurrentItem is Exiled.API.Features.Items.Firearm firearm)
-            {
-                ev.CanHurt = false;
-                Timing.RunCoroutine(EnergyBurstCoroutine(ev));
-            }
+            ev.CanHurt = false;
+            Timing.RunCoroutine(EnergyBurstCoroutine(ev));
         }
 
             private void OnChangedItem(ChangedItemEventArgs ev)
@@ -147,7 +140,7 @@ namespace ObscureLabs.Items
                     if (player1.Role.Side != ev.Player.Role.Side)
                     {
                         ev.Player.ShowHitMarker();
-                        player1.Hurt(250, DamageType.Explosion);
+                        player1.Hurt(150, DamageType.Explosion);
                         player1.EnableEffect(EffectType.Burned, 30, true);
                     }
                 }

@@ -35,7 +35,7 @@ namespace ObscureLabs.Modules.Default
         {
             Lift.List.Where(x => x.Name.Contains("Gate")).ToList().Where(x => x.CurrentLevel == 1).ToList().ForEach(x => x.TryStart(0, true));
             yield return Timing.WaitForSeconds(7f);
-            Room.Get(ZoneType.Surface).First().Color = new UnityEngine.Color(0f, 0f, 0f);
+            //Room.Get(ZoneType.Surface).First().Color = new UnityEngine.Color(0f, 0f, 0f);
         }
     }
 }

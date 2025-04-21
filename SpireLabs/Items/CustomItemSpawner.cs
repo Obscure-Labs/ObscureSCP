@@ -29,16 +29,16 @@ namespace ObscureLabs.Items
 
         public static CustomItemSpawningData[] WeaponList { get; set; } =
         {
-            new(CustomItem.Get((uint)1), 0, 1), // Sniper
+            new(CustomItem.Get((uint)1), 0, 2), // Sniper
             new(CustomItem.Get((uint)5), 0, 3), // Lasergun
-            new(CustomItem.Get((uint)6), 0, 1) // Particle Collapser
+            new(CustomItem.Get((uint)6), 0, 2) // Particle Collapser
         };
 
         public static CustomItemSpawningData[] ItemList { get; set; } =
         {
             new(CustomItem.Get((uint)2), 0, 3), // ClusterHE
-            new(CustomItem.Get((uint)4), 0, 10), // NovaGrenade
-            new(CustomItem.Get((uint)12),0, 2), // S-NAV
+            new(CustomItem.Get((uint)4), 0, 3), // NovaGrenade
+            new(CustomItem.Get((uint)12),0, 5), // S-NAV
         };
 
         private static readonly ItemType[] _blacklistedItems = new[]

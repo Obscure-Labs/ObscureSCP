@@ -131,12 +131,22 @@ namespace ObscureLabs.Modules
         {
             while (Round.IsLobby)
             {
-
-                foreach (Player p in Player.List)
+                if (!Round.IsLobbyLocked)
                 {
-                    Manager.SendHint(p, $"Waiting for players: {Player.List.Count()} - {Round.LobbyWaitingTime}", 2f);
+                    foreach (Player p in Player.List)
+                    {
+                        Manager.SendHint(p, $"Waiting for players: {Player.List.Count()} - {Round.LobbyWaitingTime}", 2f);
+                    }
                 }
-                yield return Timing.WaitForSeconds(1f);
+                else
+                {
+                    foreach (Player p in Player.List)
+                    {
+                        Manager.SendHint(p, $"Waiting for players: {Player.List.Count()} - WAITING PAUSED", 2f);
+                    }
+                }
+
+                    yield return Timing.WaitForSeconds(1f);
             }
         }
 
