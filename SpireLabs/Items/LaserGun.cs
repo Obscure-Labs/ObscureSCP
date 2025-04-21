@@ -16,6 +16,7 @@ using Server = Exiled.API.Features.Server;
 using Item = Exiled.API.Features.Items.Item;
 using Door = Exiled.API.Features.Doors.Door;
 using Exiled.API.Features.Toys;
+using SpireSCP.GUI.API.Features;
 
 namespace ObscureLabs.Items
 {
@@ -69,15 +70,21 @@ namespace ObscureLabs.Items
 
         protected override void SubscribeEvents()
         {
+            Exiled.Events.Handlers.Player.ChangedItem += ChangedItem;
             base.SubscribeEvents();
         }
 
         protected override void UnsubscribeEvents()
         {
+            Exiled.Events.Handlers.Player.ChangedItem -= ChangedItem;
             base.UnsubscribeEvents();
         }
 
-
+        private void ChangedItem(ChangedItemEventArgs ev)
+        {
+            if (!Check(ev.Item)) return;
+            Manager.SendHint(ev.Player, "You equipped the <b>MTF-ER16-SR</b> \nThis weapon shoots bright projectiles that burn targets \nand has infinite ammo.", 3.0f);
+        }
 
         protected override void OnAcquired(Player player, Item item, bool displayMessage)
         {

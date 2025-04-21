@@ -58,7 +58,7 @@ namespace ObscureLabs.Items
         protected override void OnAcquired(Exiled.API.Features.Player player, Item item, bool displayMessage)
         {
             base.OnAcquired(player, item, displayMessage);
-            Manager.SendHint(player, "S-NAV ver1.0.1:", 5.0f);
+            Manager.SendHint(player, "<color=yellow>S-NAV ver1.0.1</color>", 5.0f);
             Timing.CallDelayed(5f, () => { Timing.RunCoroutine(Snav(player, item)); });
 
         }
@@ -87,7 +87,7 @@ namespace ObscureLabs.Items
                     yield return Timing.WaitForSeconds(0f);
                     if (_nearbySCPs.Count < 1)
                     {
-                        Manager.SendHint(player, "No SCP Subjects Nearby! ", 2f);
+                        Manager.SendHint(player, "<color=#1cfc03>No SCP Subjects Nearby!</color>", 2f);
                     }
 
 
@@ -127,7 +127,7 @@ namespace ObscureLabs.Items
                                     break;
                                 }
  
-                                hint += $"{_nearbySCPs.ElementAt(i).Key.ToString()}: {(int)(_nearbySCPs.ElementAt(i).Value)}m\t";
+                                hint += $"<color=red>{_nearbySCPs.ElementAt(i).Key.ToString()}: {(int)(_nearbySCPs.ElementAt(i).Value)}m\t</color>";
                                 
                             }
                             Manager.SendHint(player, hint, 1f);

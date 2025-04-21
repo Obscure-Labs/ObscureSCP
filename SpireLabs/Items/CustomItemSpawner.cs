@@ -2,10 +2,12 @@
 using Exiled.API.Extensions;
 using Exiled.API.Features;
 using Exiled.API.Features.Pickups;
+using Exiled.CustomItems.API.Features;
 using LabApi.Events.Arguments.ServerEvents;
 using MEC;
 using ObscureLabs.API.Features;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using CustomItem = Exiled.CustomItems.API.Features.CustomItem;
 
@@ -101,7 +103,7 @@ namespace ObscureLabs.Items
 
                     if (targetItem.Type.IsWeapon() && spawn > 30 && spawn < 65)
                     {
-                        
+
                         var weaponToSpawn = WeaponList.ElementAt(UnityEngine.Random.Range(0, WeaponList.Count()));
                         Pickup pickup = null;
 
@@ -134,9 +136,18 @@ namespace ObscureLabs.Items
                             targetItem.Destroy();
                             Log.Debug($"Removed original item in {room.Type}");
                         }
-                        continue ;
+                        continue;
                     }
                 }
+            }
+
+            foreach (CustomItemSpawningData i in WeaponList)
+            {
+                Log.Info($"Spawned {i.count} of {CustomItem.Get(i.item.Id).Name}");
+            }
+            foreach (CustomItemSpawningData i in ItemList)
+            {
+                Log.Info($"Spawned {i.count} of {CustomItem.Get(i.item.Id).Name}");
             }
         }
     }

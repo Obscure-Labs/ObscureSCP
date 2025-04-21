@@ -23,8 +23,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
     {
         public void Start()
         {
-            //idk if debug.log works tbh it should but just incase northwood moment
-            LabApi.Features.Console.Logger.Info("Powerup script attached to object");
 
         }
         public void Update()

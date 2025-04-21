@@ -2,6 +2,7 @@
 using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Item;
 using ObscureLabs.API.Features;
+using SpireSCP.GUI.API.Features;
 using System.Linq;
 
 namespace ObscureLabs.Items
@@ -29,6 +30,7 @@ namespace ObscureLabs.Items
         private void OnChangingAttachments(ChangingAttachmentsEventArgs ev)
         {
             ev.IsAllowed = !CustomItem.TryGet(ev.Player.CurrentItem, out _);
+            Manager.SendHint(ev.Player, "<color=red>You are not allowed to change attachments on this weapon</color>", 5f);
         }
     }
 }

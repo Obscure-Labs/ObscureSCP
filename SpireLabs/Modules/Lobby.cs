@@ -59,7 +59,10 @@ namespace ObscureLabs.Modules
 
         public void PickingUpItem(PickingUpItemEventArgs ev)
         {
-            ev.IsAllowed = false;
+            if (Round.IsLobby)
+            {
+                ev.IsAllowed = false;
+            }
         }
 
 

@@ -6,6 +6,7 @@ using Exiled.API.Features.Pickups.Projectiles;
 using Exiled.API.Features.Spawn;
 using Exiled.Events.EventArgs.Player;
 using MEC;
+using SpireSCP.GUI.API.Features;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -52,10 +53,12 @@ namespace ObscureLabs.Items
 
         protected override void SubscribeEvents()
         {
+            Exiled.Events.Handlers.Player.ChangedItem += OnChangedItem;
             base.SubscribeEvents();
         }
         protected override void UnsubscribeEvents()
         {
+            Exiled.Events.Handlers.Player.ChangedItem -= OnChangedItem;
             base.UnsubscribeEvents();
         }
 
@@ -65,6 +68,12 @@ namespace ObscureLabs.Items
             g.MaxRadius = 15f;
             g.ScpDamageMultiplier = 2f;
             Timing.RunCoroutine(GrenadeLightCoroutine(ev));
+        }
+
+        private void OnChangedItem(ChangedItemEventArgs ev)
+        {
+            if (!Check(ev.Item)) return;
+            Manager.SendHint(ev.Player, "You equipped the <b>Nova Grenade</b> \n <b>This will implode with a shining bright light.</b>.", 3.0f);
         }
 
         private IEnumerator<float> GrenadeLightCoroutine(ThrownProjectileEventArgs ev)
