@@ -72,7 +72,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         {
             Exiled.Events.Handlers.Server.RoundStarted += OnRoundStarted;
 
-            Log.Info("Enabling Powerup Module");
             return base.Enable();
 
         }
@@ -99,8 +98,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             var itemList = Enum.GetValues(typeof(ItemType)).ToArray<ItemType>();
             int index = pickups.IndexOf(trigger);
 
-            LabApi.Features.Console.Logger.Info("Triggered Event");
-
             pickups.Remove(trigger.gameObject);
 
             Log.Debug($"Pickup Object: {trigger.gameObject.name} in index of: {index}");
@@ -113,10 +110,10 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                 NetworkServer.Destroy(g.gameObject);
             }
 
-            Log.Warn($"Destroyed: {trigger.gameObject.name}");
+            Log.Debug($"Destroyed: {trigger.gameObject.name}");
             GameObject.Destroy(trigger.gameObject);
 
-            Log.Warn($"There are: {pickups.Count()} pickups left!");
+            Log.Debug($"There are: {pickups.Count()} pickups left!");
         }
 
         private void SpawnPowerup(Room room)
@@ -169,7 +166,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             container.gameObject.name = $"{pickups.Count - 1}_container";
             cube.Base.gameObject.name = $"{pickups.Count - 1}_cube";
             light.Base.gameObject.name = $"{pickups.Count - 1}_light";
-            Log.Info($"Spawned powerup of index: {pickups.Count() - 1}");
+            Log.Debug($"Spawned powerup of index: {pickups.Count() - 1}");
 
         }
         private void OnRoundStarted()
