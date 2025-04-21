@@ -140,6 +140,7 @@
     <Compile Include="Items\AttachmentFix.cs" />
     <Compile Include="Items\ClusterHE.cs" />
     <Compile Include="Items\CustomItemSpawner.cs" />
+    <Compile Include="Items\EssentialOils.cs" />
     <Compile Include="Items\LaserGun.cs" />
     <Compile Include="Items\NovaGrenade.cs" />
     <Compile Include="Items\ParticleCollapser.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="Modules\Gamemode Handler\Core\RemoteKeycard.cs" />
     <Compile Include="Configs\Config.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\RoundEndPVP.cs" />
+    <Compile Include="Modules\Gamemode Handler\Core\SCP Rebalances\HealthOverride.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\SCP Rebalances\SCP049.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\SCP Rebalances\SCP106.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\SCP Rebalances\SCP173.cs" />

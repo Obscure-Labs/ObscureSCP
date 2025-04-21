@@ -29,13 +29,14 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         public override bool Disable()
         {
             Exiled.Events.Handlers.Server.RoundEnded -= RoundEnd;
+            LabApi.Features.Wrappers.Server.FriendlyFire = false;
             return base.Disable();
         }
 
 
         public void RoundEnd(RoundEndedEventArgs ev)
         {
-            Server.FriendlyFire = true;
+            LabApi.Features.Wrappers.Server.FriendlyFire = true;
         }
     }
 }

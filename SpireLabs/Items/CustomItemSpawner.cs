@@ -31,7 +31,7 @@ namespace ObscureLabs.Items
         {
             new(CustomItem.Get((uint)1), 0, 2), // Sniper
             new(CustomItem.Get((uint)5), 0, 3), // Lasergun
-            new(CustomItem.Get((uint)6), 0, 2) // Particle Collapser
+            new(CustomItem.Get((uint)6), 0, 2)  // Particle Collapser
         };
 
         public static CustomItemSpawningData[] ItemList { get; set; } =
@@ -39,6 +39,7 @@ namespace ObscureLabs.Items
             new(CustomItem.Get((uint)2), 0, 3), // ClusterHE
             new(CustomItem.Get((uint)4), 0, 3), // NovaGrenade
             new(CustomItem.Get((uint)12),0, 5), // S-NAV
+            new(CustomItem.Get((uint)0), 0, 6)  // Essential Oils
         };
 
         private static readonly ItemType[] _blacklistedItems = new[]
@@ -66,7 +67,7 @@ namespace ObscureLabs.Items
 
         public static void OnMapGenerated(MapGeneratedEventArgs ev)
         {
-            Log.Info("Running custom item spawner for vanilla round");
+            Log.Debug("Running custom item spawner for vanilla round");
             Timing.RunCoroutine(GunSpawnCoroutine());
         }
 
@@ -109,10 +110,10 @@ namespace ObscureLabs.Items
                             pickup = weaponToSpawn.item.Spawn(targetItem.Transform.position);
                             pickup.Rotation = targetItem.Transform.rotation;
                             weaponToSpawn.count++;
-                            Log.Info($"Made new {weaponToSpawn.item.Id} in {room.Type}");
+                            Log.Debug($"Made new {weaponToSpawn.item.Id} in {room.Type}");
                             yield return Timing.WaitForOneFrame;
                             targetItem.Destroy();
-                            Log.Warn($"Removed original item in {room.Type}");
+                            Log.Debug($"Removed original item in {room.Type}");
                             break;
                         }
                         continue;
@@ -128,10 +129,10 @@ namespace ObscureLabs.Items
                             pickup = itemToSpawn.item.Spawn(targetItem.Transform.position);
                             pickup.Rotation = targetItem.Transform.rotation;
                             itemToSpawn.count++;
-                            Log.Info($"Made new {itemToSpawn.item.Id} in {room.Type}");
+                            Log.Debug($"Made new {itemToSpawn.item.Id} in {room.Type}");
                             yield return Timing.WaitForOneFrame;
                             targetItem.Destroy();
-                            Log.Warn($"Removed original item in {room.Type}");
+                            Log.Debug($"Removed original item in {room.Type}");
                         }
                         continue ;
                     }

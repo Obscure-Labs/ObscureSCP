@@ -37,7 +37,7 @@ namespace ObscureLabs.Modules
             Exiled.Events.Handlers.Player.InteractingElevator += InteractLift;
             Exiled.Events.Handlers.Player.InteractingLocker += InteractLocker;
             Exiled.Events.Handlers.Player.InteractingDoor += Interact;
-
+            Exiled.Events.Handlers.Player.PickingUpItem += PickingUpItem;
             return base.Enable();
 
             
@@ -52,8 +52,16 @@ namespace ObscureLabs.Modules
             Exiled.Events.Handlers.Player.Joined -= PlayerJoin;
             LabApi.Events.Handlers.ServerEvents.MapGenerated -= MapGenerated;
             LabApi.Events.Handlers.ServerEvents.RoundStarting -= RoundStarting;
+            Exiled.Events.Handlers.Player.PickingUpItem -= PickingUpItem;
             return base.Disable();
         }
+
+
+        public void PickingUpItem(PickingUpItemEventArgs ev)
+        {
+            ev.IsAllowed = false;
+        }
+
 
         public void Interact(InteractingDoorEventArgs ev)
         {
@@ -106,6 +114,7 @@ namespace ObscureLabs.Modules
         {
             foreach (Player p in Player.List)
             {
+                p.IsGodModeEnabled = false;
                 p.RoleManager.ServerSetRole(RoleTypeId.Spectator, RoleChangeReason.None);
                 p.Transform.position = Vector3.zero;
             }
@@ -131,7 +140,7 @@ namespace ObscureLabs.Modules
         {
             while (Round.IsLobby)
             {
-                if (!Round.IsLobbyLocked)
+                if (Round.LobbyWaitingTime > -1f)
                 {
                     foreach (Player p in Player.List)
                     {
@@ -142,7 +151,7 @@ namespace ObscureLabs.Modules
                 {
                     foreach (Player p in Player.List)
                     {
-                        Manager.SendHint(p, $"Waiting for players: {Player.List.Count()} - WAITING PAUSED", 2f);
+                        Manager.SendHint(p, $"Waiting for players: {Player.List.Count()}", 2f);
                     }
                 }
 
@@ -160,11 +169,9 @@ namespace ObscureLabs.Modules
 
                 if (p != null && p.Role.Type == RoleTypeId.Spectator)
                 {
-                    Log.Info(room.name);
-                    Log.Info("AA");
-                    Manager.SendHint(p, "You have been sent to the pregame lobby, Waiting for players!", 5);
                     p.RoleManager.ServerSetRole(RoleTypeId.ClassD, RoleChangeReason.RemoteAdmin, RoleSpawnFlags.None);
                     p.Teleport(room.transform.position + (Vector3.up / 2));
+                    p.IsGodModeEnabled = true;
                 }
             }
         }

@@ -25,6 +25,7 @@ using ObscureLabs.Modules.Gamemode_Handler.Core.SCP_Rebalances;
 using Player = Exiled.API.Features.Player;
 using Cassie = Exiled.API.Features.Cassie;
 using UserSettings.ControlsSettings;
+using ObscureLabs.SpawnSystem;
 
 namespace ObscureLabs
 {
@@ -99,11 +100,11 @@ namespace ObscureLabs
             _modules.AddModule(new LightHandler());
             _modules.AddModule(new Lobby());
             _modules.AddModule(new ItemRarityModule());
+            _modules.AddModule(new HealthOverride());
 
             //- Gameplay Utils -//
             _modules.AddModule(new Powerup());
             _modules.AddModule(new ItemGlow());
-
 
             //- Mechanics and Features -//
             _modules.AddModule(new CoinFlip());
