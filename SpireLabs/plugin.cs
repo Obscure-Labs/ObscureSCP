@@ -4,16 +4,10 @@ using Exiled.API.Features.Doors;
 using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Player;
 using Exiled.Loader;
-using HarmonyLib;
 using MEC;
-using ObscureLabs.API.Data;
-using ObscureLabs.API.Enums;
 using ObscureLabs.API.Features;
-using ObscureLabs.Gamemode_Handler;
 using ObscureLabs.Items;
 using ObscureLabs.Modules.Gamemode_Handler.Core;
-using ObscureLabs.Modules.Gamemode_Handler.Minigames;
-using ObscureLabs.SpawnSystem;
 using PlayerRoles;
 using SpireLabs.GUI;
 using SpireSCP.GUI.API.Features;
@@ -22,8 +16,16 @@ using System.Collections.Generic;
 using System.IO;
 using ObscureLabs.Configs;
 using UnityEngine;
-using YamlDotNet.Serialization;
 using ObscureLabs.Modules.Default;
+using ObscureLabs.Modules;
+using Exiled.API.Features.Core.UserSettings;
+using TMPro;
+using UserSettings.ServerSpecific;
+using ObscureLabs.Modules.Gamemode_Handler.Core.SCP_Rebalances;
+using Player = Exiled.API.Features.Player;
+using Cassie = Exiled.API.Features.Cassie;
+using UserSettings.ControlsSettings;
+using ObscureLabs.SpawnSystem;
 
 namespace ObscureLabs
 {
@@ -31,50 +33,48 @@ namespace ObscureLabs
     {
         public static Plugin Instance { get; private set; }
 
+        public ModulesManager _modules { get; set; }
+
         public static string SpireConfigLocation { get; private set; }
 
-        public static EventRoundType EventRoundType { get; internal set; }
-
         public static string[] file;
-
-        public static string LastPlayerId;
-
-        public static List<PlayerPrimitiveData> Objects = new();
-
-        public static bool IsActiveEventround = false;
 
         public override string Name => "Obscure Labs";
 
         public override string Author => "ImIsaacTbh & ImKevin";
 
-        public override Version Version { get; } = new Version(2, 0, 2);
+        public override Version Version { get; } = new Version(3, 0, 0);
 
-        public override Version RequiredExiledVersion { get; } = new Version(8, 0, 1);
-
-        public ItemConfigs.ItemConfig ItemConfigs { get; private set; } = null!;
+        public override Version RequiredExiledVersion { get; } = new Version(9, 0, 0);
 
         public OverrideConfig overrideConfigs { get; set; }
+        public List<KeyCode> KeybindList { get; set; } = new List<KeyCode>
+        {
+            KeyCode.H
+        };
 
-        private Harmony _harmony;
+        //private Harmony _harmony;
 
         public override void OnEnabled()
         {
             Instance = this;
-
-            LoadItems();
+            _modules = new ModulesManager();
             CustomItem.RegisterItems();
-
-            Log.SendRaw("[ObscureLabs]\n\r\n .d8888b.           d8b                 .d8888b.   .d8888b.  8888888b.  \r\nd88P  Y88b          Y8P                d88P  Y88b d88P  Y88b 888   Y88b \r\nY88b.                                  Y88b.      888    888 888    888 \r\n \"Y888b.   88888b.  888 888d888 .d88b.  \"Y888b.   888        888   d88P \r\n    \"Y88b. 888 \"88b 888 888P\"  d8P  Y8b    \"Y88b. 888        8888888P\"  \r\n      \"888 888  888 888 888    88888888      \"888 888    888 888        \r\nY88b  d88P 888 d88P 888 888    Y8b.    Y88b  d88P Y88b  d88P 888        \r\n \"Y8888P\"  88888P\"  888 888     \"Y8888  \"Y8888P\"   \"Y8888P\"  888        \r\n           888                                                          \r\n           888                                                          \r\n           888                                                          \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n", color: ConsoleColor.DarkMagenta);
-            if (Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Obscure/"))
+            foreach(var key in KeybindList)
             {
-                SpireConfigLocation = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Obscure/";
+                keybinds.Add(new KeybindSetting(keybinds.Count+1, key.ToString(), key));
+            }
+            Log.SendRaw("[ObscureLabs]\n\r\n .d8888b.           d8b                 .d8888b.   .d8888b.  8888888b.  \r\nd88P  Y88b          Y8P                d88P  Y88b d88P  Y88b 888   Y88b \r\nY88b.                                  Y88b.      888    888 888    888 \r\n \"Y888b.   88888b.  888 888d888 .d88b.  \"Y888b.   888        888   d88P \r\n    \"Y88b. 888 \"88b 888 888P\"  d8P  Y8b    \"Y88b. 888        8888888P\"  \r\n      \"888 888  888 888 888    88888888      \"888 888    888 888        \r\nY88b  d88P 888 d88P 888 888    Y8b.    Y88b  d88P Y88b  d88P 888        \r\n \"Y8888P\"  88888P\"  888 888     \"Y8888  \"Y8888P\"   \"Y8888P\"  888        \r\n           888                                                          \r\n           888                                                          \r\n           888                                                          \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n", color: ConsoleColor.DarkMagenta);
+            if (Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/EXILED/Configs/Obscure/"))
+            {
+                SpireConfigLocation = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/EXILED/Configs/Obscure/";
             }
             else
             {
                 Log.Info("Making Spire Config Folder");
-                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Obscure/");
-                SpireConfigLocation = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EXILED\\Configs\\Obscure/";
-                File.WriteAllText(SpireConfigLocation + "lines.txt", "CHANGE ME IN :  [EXILEDCONIG]\\Obscure/lines.txt");
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/EXILED/Configs/Obscure/");
+                SpireConfigLocation = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/EXILED/Configs/Obscure/";
+                File.WriteAllText(SpireConfigLocation + "lines.txt", "CHANGE ME IN :  [EXILEDCONIG]/Obscure/lines.txt");
             }
             PopulateModules();
             FetchOverrides();
@@ -83,7 +83,7 @@ namespace ObscureLabs
 
         public override void OnDisabled()
         {
-            ModulesManager.Clear();
+            _modules.Clear();
 
             Log.Info("Spire Labs has been disabled!");
             base.OnDisabled();
@@ -91,29 +91,33 @@ namespace ObscureLabs
 
         public void PopulateModules()
         {
-            ModulesManager.AddModule(new HudController());
-            ModulesManager.AddModule(new MvpSystem());
-            ModulesManager.AddModule(new CorruptGuard());
-            ModulesManager.AddModule(new DamageModifiers());
-            ModulesManager.AddModule(new CoinFlip());
-            ModulesManager.AddModule(new TheNut());
-            ModulesManager.AddModule(new Profiles());
-            ModulesManager.AddModule(new IDThief());
-            ModulesManager.AddModule(new Larry());
-            ModulesManager.AddModule(new GamemodeHandler());
-            ModulesManager.AddModule(new MapInteractions());
-            ModulesManager.AddModule(new Chaos());
-            ModulesManager.AddModule(new Scp3114());
-            ModulesManager.AddModule(new Doctor());
-            ModulesManager.AddModule(new CustomItemSpawner());
-            ModulesManager.AddModule(new HealthOverride());
-            ModulesManager.AddModule(new Scp1162());
-            ModulesManager.AddModule(new RemoteKeycard());
-            ModulesManager.AddModule(new Scp914Handler());
-            ModulesManager.AddModule(new ReconnectRecovery());
-            ModulesManager.AddModule(new TeamHandler());
-            ModulesManager.AddModule(new TDM());
-            ModulesManager.AddModule(new LightHandler());
+
+            //- Core Utils -//
+            _modules.AddModule(new HudController());
+            _modules.AddModule(new MvpSystem());
+            _modules.AddModule(new CustomItemSpawner());
+            _modules.AddModule(new RemoteKeycard());
+            _modules.AddModule(new LightHandler());
+            _modules.AddModule(new Lobby());
+            _modules.AddModule(new ItemRarityModule());
+            _modules.AddModule(new HealthOverride());
+
+            //- Gameplay Utils -//
+            _modules.AddModule(new Powerup());
+            _modules.AddModule(new ItemGlow());
+
+            //- Mechanics and Features -//
+            _modules.AddModule(new CoinFlip());
+            _modules.AddModule(new AttachmentFix());
+
+            _modules.AddModule(new Scp1162());
+            _modules.AddModule(new SCP106());
+            _modules.AddModule(new SCP173());
+            _modules.AddModule(new Scp049());
+
+            _modules.AddModule(new Scp914Handler());
+
+            _modules.AddModule(new RoundEndPVP());
 
             RegisterEvents();
         }
@@ -141,8 +145,7 @@ namespace ObscureLabs
             Exiled.Events.Handlers.Player.Left += OnLeft;
             Exiled.Events.Handlers.Player.Verified += OnVerified;
             Exiled.Events.Handlers.Player.Dying += OnDying;
-
-            foreach (Module m in ModulesManager.Modules)
+            foreach (Module m in _modules.Modules)
             {
                 if (m.IsInitializeOnStart == true)
                 {
@@ -156,30 +159,11 @@ namespace ObscureLabs
             }
         }
 
-        private void LoadItems()
-        {
-            if (!Directory.Exists(SpireConfigLocation + "/CustomItems/"))
-                Directory.CreateDirectory(SpireConfigLocation + "/CustomItems/");
-            string filePath = SpireConfigLocation + "/CustomItems/global.yml";
-            if (!File.Exists(filePath))
-            {
-                ItemConfigs = new ItemConfigs.ItemConfig();
-                File.WriteAllText(filePath, Loader.Serializer.Serialize(ItemConfigs));
-            }
-            else
-            {
-                ItemConfigs = Loader.Deserializer.Deserialize<ItemConfigs.ItemConfig>(File.ReadAllText(filePath));
-                File.WriteAllText(filePath, Loader.Serializer.Serialize(ItemConfigs));
-            }
-
-        }
-
         private void OnRoundStarted()
         {
             Timing.KillCoroutines("flockerRoutine");
             Timing.KillCoroutines("lockRoutine");
             Timing.KillCoroutines("chaosChecker");
-            Timing.RunCoroutine(ChaosCounter.ChaosUpdateCoroutine(), "chaosChecker");
 
             Log.Info("Round has started!");
             Timing.RunCoroutine(OnLockAnnouncement(), "lockRoutine");
@@ -259,14 +243,12 @@ namespace ObscureLabs
 
         private void OnRestarting()
         {
-            foreach (Module m in ModulesManager.Modules)
+            foreach (Module m in _modules.Modules)
             {
                 m.Disable();
             }
 
-            Timing.KillCoroutines("juggerwave");
-
-            foreach (Module m in ModulesManager.Modules)
+            foreach (Module m in _modules.Modules)
             {
                 if (m.IsInitializeOnStart == true)
                 {
@@ -275,19 +257,23 @@ namespace ObscureLabs
             }
         }
 
-        private void OnPlayerLeave(LeftEventArgs ev)
-        {
-            Log.Info($"Player count is now: \"{Player.List.Count}\"");
-        }
-
         private void OnLeft(LeftEventArgs ev)
         {
             Manager.SendJoinLeave(ev.Player, true);
         }
 
+        //public static UserTextInputSetting XresInput = new UserTextInputSetting(0, "Resolution X", "1920", 4, TMP_InputField.ContentType.IntegerNumber, "Used for UI Scaling");
+        //public static UserTextInputSetting YresInput = new UserTextInputSetting(1, "Resolution Y", "1080", 4, TMP_InputField.ContentType.IntegerNumber, "Used for UI Scaling");
+        public static List<KeybindSetting> keybinds = new List<KeybindSetting>();
+
         private void OnVerified(VerifiedEventArgs ev)
         {
-            Manager.SendHint(ev.Player, $"{ev.Player.DisplayNickname}", 3);
+            //ServerSpecificSettingsSync.SendToPlayer(ev.Player.ReferenceHub, settings.ToArray());
+            //ServerSpecificSettingsSync.ServerOnStatusReceived += (p, s) =>
+            //{
+            //    Log.Warn($"{Player.Get(p).Nickname} has aspect ratio : {p.aspectRatioSync.AspectRatio} : and their status is now {s.Version}");
+            //};
+            //Manager.SendHint(ev.Player, $"{ev.Player.DisplayNickname}", 3);
             Manager.SendJoinLeave(ev.Player, false);
             foreach (Player p in Player.List) { Log.Info($"Playername: {p.Nickname} joined with ID: {p.Id}"); }
         }
@@ -296,5 +282,7 @@ namespace ObscureLabs
         {
             ev.Player.Scale = new Vector3(1, 1, 1);
         }
+
+
     }
 }

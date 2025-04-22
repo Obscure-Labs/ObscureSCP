@@ -4,7 +4,9 @@ using ObscureLabs.API.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Exiled.API.Enums;
 using Exiled.API.Extensions;
+using Exiled.API.Features.Pools;
 
 namespace SpireLabs.GUI
 {
@@ -68,48 +70,41 @@ namespace SpireLabs.GUI
                         }
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     //Log.Error($"Error: {ex}");
                 }
 
                 s += $"\t\n"; //5
-                s +=
-                    $"<align=right><size=24><color=#7F7FFF>NTF Tickets: <color=#fff>{(int)Respawn.NtfTickets}<color=#fff>\n"; //6
-                s +=
-                    $"<align=right><size=24><color=#090>CHAOS Tickets: <color=#fff>{(int)Respawn.ChaosTickets}<color=#fff>\n"; //6.5
-                s += $"<align=right><size=24>Round Time: {Round.ElapsedTime.Minutes:00}:{Round.ElapsedTime.Seconds:00}\n"; //7
-
-                if (Warhead.IsDetonated)
-                {
-                    s +=
-                        $"<align=right><size=24>Warhead Status: <color=#c00>Detonated<color=#fff>\n</size><size=32>"; //7.5
-                }
-                else if (Warhead.IsInProgress)
-                {
-                    s +=
-                        $"<align=right><size=24>Warhead Status: <color=#b45f06>In Progress<color=#fff>\n</size><size=32>"; //7.5
-                }
-                else if (Warhead.LeverStatus)
-                {
-                    s += $"<align=right><size=24>Warhead Status: <color=#090>Armed<color=#fff>\n</size><size=32>"; //7.5
-                }
-                else
-                {
-                    s +=
-                        $"<align=right><size=24>Warhead Status: <color=#2986cc>Disarmed<color=#fff>\n</size><size=32>"; //7.5
-                }
+                s += $"\t\n"; //6
+                s += $"<size=8>\t\n<size=32>"; //7
+                    if (Warhead.IsDetonated)
+                    {
+                        s +=
+                            $"<align=right><size=24>Warhead Status: <color=#c00>Detonated<color=#fff>\n</size><size=32>"; //7.5
+                    }
+                    else if (Warhead.IsInProgress)
+                    {
+                        s +=
+                            $"<align=right><size=24>Warhead Status: <color=#b45f06>In Progress<color=#fff>\n</size><size=32>"; //7.5
+                    }
+                    else if (Warhead.LeverStatus)
+                    {
+                        s +=
+                            $"<align=right><size=24>Warhead Status: <color=#090>Armed<color=#fff>\n</size><size=32>"; //7.5
+                    }
+                    else
+                    {
+                        s +=
+                            $"<align=right><size=24>Warhead Status: <color=#2986cc>Disarmed<color=#fff>\n</size><size=32>"; //7.5
+                    }
 
                 //thats is not good too
                 for (var i = 9; i < 38; i++)
                 {
-                    if (i == 27)
+                    if (i == 29)
                     {
-                        s += $"<size=16><align=center>Respawning in: {(Respawn.NextTeamTime - DateTime.UtcNow).Minutes:00}:{(Respawn.NextTeamTime - DateTime.UtcNow).Seconds:00}\n\t</size><size=32>\n";
-                    }
-                    else if (i == 29)
-                    {
-                        s += $"<size=16><color=#3a5fcf>OBSCURE</color><color=#88d4ff>LABS</color>\n";
+                        s += $"<align=center><size=16><color=#3a5fcf>OBSCURE</color><color=#88d4ff>LABS</color>\n";
                         s += $"<color=#ffffff>DISCORD.GG/58TaSJbyJm</color></size>\n";
                     }
                     else
@@ -118,9 +113,9 @@ namespace SpireLabs.GUI
                     }
                 }
 
-                deadPlayer.ShowHint(s, 0.85f);
+                deadPlayer.ShowHint(s, 0.25f);
             }
-            catch (Exception e)
+            catch
             {
                 //Log.Warn($"Error: {e}");
             }
@@ -146,12 +141,12 @@ namespace SpireLabs.GUI
 
         public static IEnumerator<float> SendHintCoroutine(Player player, string hint, float time)
         {
-            var localHint = hint;
-            HudHandler.hint[player.Id] = hint;
+            var localHint = $"{hint}@{Guid.NewGuid()}";
+            HudHandler.hint[player.Id] = localHint;
 
             yield return Timing.WaitForSeconds(time);
 
-            if (player.CurrentHint.Content.Contains(localHint))
+            if (player.CurrentHint.Content.Contains(localHint.Split('@')[1]))
             {
                 HudHandler.hint[player.Id] = string.Empty;
             }
@@ -170,7 +165,6 @@ namespace SpireLabs.GUI
         internal static IEnumerator<float> displayGUI(Player p)
         {
             Log.Debug($"Displaying GUI FOR {p.DisplayNickname}");
-            bool pp = true;
             hint[p.Id] = string.Empty;
             yield return Timing.WaitForSeconds(5f);
             Log.Debug("Displaying GUI");
@@ -191,11 +185,17 @@ namespace SpireLabs.GUI
                     string s = "<align=center><size=32>";
 
                     #region lines
-
-                    s += $"\t\n"; //0
-                    s += $"\t\n"; //1 (TOP OF SCREEN)
                     try
                     {
+                        if (hint[p.Id] != string.Empty)
+                        {
+                            s += $"{hint[p.Id].Split('@')[1]}\n"; //0
+                        }
+                        else
+                        {
+                            s += $"\t\n"; //0
+                        }
+                        s += $"\t\n"; //1 (TOP OF SCREEN)
                         if (hint[p.Id] == string.Empty)
                         {
                             s += $"\t\n"; //2
@@ -204,32 +204,31 @@ namespace SpireLabs.GUI
                         }
                         else
                         {
-                            if (hint[p.Id].Split(char.Parse("\n")).Length == 0 || hint[p.Id].Length < 70)
+                            s += $"<size=0>\t\n<size=32>"; //0
+                            var localHint = hint[p.Id].Split('@')[0];
+                            if (localHint.Split(char.Parse("\n")) is string[] wtf && wtf.Count() == 1)
                             {
-                                s += $"{hint[p.Id]}\n"; //2
+                                s += $"{wtf[0]}\n"; //2
                                 s += $"\t\n"; //3
                                 s += $"\t\n"; //4
                             }
-                            else if (hint[p.Id].Split(char.Parse("\n")).Length == 1 ||
-                                     hint[p.Id].Length > 70 && hint[p.Id].Length < 140)
+                            else if (localHint.Split(char.Parse("\n")) is string[] wtf1 && wtf1.Count() == 2)
                             {
-                                string[] split = hint[p.Id].Split(char.Parse("\n"));
-                                s += $"{split[0]}\n"; //2
-                                s += $"{split[1]}\n"; //3
+                                s += $"{wtf1[0]}\n"; //2
+                                s += $"{wtf1[1]}\n"; //3    
                                 s += $"\t\n"; //4
                             }
-                            else if (hint[p.Id].Split(char.Parse("\n")).Length == 2 || hint[p.Id].Length > 140)
+                            else if (localHint.Split(char.Parse("\n")) is string[] wtf2 && wtf2.Count() == 3)
                             {
-                                string[] split = hint[p.Id].Split(char.Parse("\n"));
-                                s += $"{split[0]}\n"; //2
-                                s += $"{split[1]}\n"; //3
-                                s += $"{split[2]}\n"; //4
+                                s += $"{wtf2[0]}\n"; //2
+                                s += $"{wtf2[1]}\n"; //3
+                                s += $"{wtf2[2]}\n"; //4
                             }
                         }
                     }
                     catch(Exception ex)
                     {
-                        //Log.Error($"Error: {ex}");
+                        Log.Error($"Skill issue detected: {ex}");
                     }
                     Log.Debug("Got past hints");
                     s += $"\t\n"; //5
@@ -321,6 +320,13 @@ namespace SpireLabs.GUI
                     {
                         s += $"<align=left>\t</align>\n"; //19
                         s += $"<align=left>\t</align>\n"; //19
+                        //string effect = string.Empty;
+                        //for (float i = 0; i < 200 * p.ReferenceHub.aspectRatioSync.AspectRatio; i++)
+                        //{
+                        //    effect += "A";
+                        //}
+                        //s += $"placeholder{effect}\n"; //21
+                        //s += $"\t\n"; //19
                     }
                     else
                     {
@@ -421,19 +427,19 @@ namespace SpireLabs.GUI
 
                     s += "</align></size>";
                     Log.Debug("What the fuck");
-                    yield return Timing.WaitForSeconds(0.5f);
+                    yield return Timing.WaitForSeconds(0.1f);
 
                     Log.Debug("Completed Message");
                     if (p.IsAlive)
                     {
-                        p.ShowHint(s, 0.85f);
+                        p.ShowHint(s, 0.15f);
                     }
 
                     Log.Debug("Shown Hint");
                 }
                 else if (!Round.IsLobby && !p.IsAlive)
                 {
-                    yield return Timing.WaitForSeconds(0.5f);
+                    yield return Timing.WaitForSeconds(0.2f);
                     SendDead(p);
                     Log.Debug($"Sending Dead Message to : {p.DisplayNickname}");
                 }

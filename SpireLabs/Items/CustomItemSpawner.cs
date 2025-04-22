@@ -2,9 +2,12 @@
 using Exiled.API.Extensions;
 using Exiled.API.Features;
 using Exiled.API.Features.Pickups;
+using Exiled.CustomItems.API.Features;
+using LabApi.Events.Arguments.ServerEvents;
 using MEC;
 using ObscureLabs.API.Features;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using CustomItem = Exiled.CustomItems.API.Features.CustomItem;
 
@@ -12,21 +15,33 @@ namespace ObscureLabs.Items
 {
     public class CustomItemSpawner : Module
     {
-        public static CustomItem[] WeaponList { get; } =
+        public class CustomItemSpawningData
         {
-            CustomItem.Get((uint)1), // sniper
-            CustomItem.Get((uint)3), // grenade launcher
-            CustomItem.Get((uint)5), // ER16
-            CustomItem.Get((uint)6), // Particle Collapser
+            public CustomItemSpawningData(CustomItem item, int count, int limit)
+            {
+                this.item = item;
+                this.count = count;
+                this.limit = limit;
+            }
+
+            public CustomItem item { get; set; }
+            public int count { get; set; }
+            public int limit { get; set; }
+        }
+
+        public static CustomItemSpawningData[] WeaponList { get; set; } =
+        {
+            new(CustomItem.Get((uint)1), 0, 2), // Sniper
+            new(CustomItem.Get((uint)5), 0, 3), // Lasergun
+            new(CustomItem.Get((uint)6), 0, 2)  // Particle Collapser
         };
 
-        public static CustomItem[] ItemList { get; } =
+        public static CustomItemSpawningData[] ItemList { get; set; } =
         {
-            CustomItem.Get((uint)2), // ClusterHE
-            CustomItem.Get((uint)7), // ClusterFlash
-            CustomItem.Get((uint)0), // EssentialOils
-            CustomItem.Get((uint)4), // NovaGrenade
-            CustomItem.Get((uint)4), // S-NAV
+            new(CustomItem.Get((uint)2), 0, 3), // ClusterHE
+            new(CustomItem.Get((uint)4), 0, 3), // NovaGrenade
+            new(CustomItem.Get((uint)12),0, 5), // S-NAV
+            new(CustomItem.Get((uint)0), 0, 6)  // Essential Oils
         };
 
         private static readonly ItemType[] _blacklistedItems = new[]
@@ -40,48 +55,26 @@ namespace ObscureLabs.Items
 
         public override bool Enable()
         {
-            Exiled.Events.Handlers.Map.Generated += OnMapGenerated;
+            LabApi.Events.Handlers.ServerEvents.MapGenerated += OnMapGenerated;
 
             return base.Enable();
         }
 
         public override bool Disable()
         {
-            Exiled.Events.Handlers.Map.Generated -= OnMapGenerated;
+            LabApi.Events.Handlers.ServerEvents.MapGenerated -= OnMapGenerated;
 
             return base.Disable();
         }
 
-        public static void OnMapGenerated()
+        public static void OnMapGenerated(MapGeneratedEventArgs ev)
         {
-            Log.Info("Running custom item spawner for vanilla round");
+            Log.Debug("Running custom item spawner for vanilla round");
             Timing.RunCoroutine(GunSpawnCoroutine());
         }
 
-        public static IEnumerator<float> GunSpawnCoroutine() // Simple code to replace pickup item in a room with a custom item pickup
+        public static IEnumerator<float> GunSpawnCoroutine()
         {
-            var ER16 = 0;
-            var glLauncher = 0;
-            var particleCollapser = 0;
-            var sniper = 0;
-            var essentialOils = 0;
-            var clusterFlash = 0;
-            var clusterHE = 0;
-            var novaGrenade = 0;
-            var snav = 0;
-
-            // limits
-
-            var ER16_l = 3;
-            var glLauncher_l = 1;
-            var particleCollapser_l = 1;
-            var sniper_l = 1;
-            var essentialOils_l = 10;
-            var clusterFlash_l = 5;
-            var clusterHE_l = 3;
-            var novaGrenade_l = 10;
-            var snav_l = 2;
-
             yield return Timing.WaitForOneFrame;
 
             foreach (var room in Room.List)
@@ -100,8 +93,7 @@ namespace ObscureLabs.Items
 
                 foreach (var targetItem in room.Pickups.ToList())
                 {
-                    var spawn = UnityEngine.Random.Range(0, 85);
-
+                    var spawn = UnityEngine.Random.Range(15, 85);
                     yield return Timing.WaitForOneFrame;
 
                     if (_blacklistedItems.Contains(targetItem.Type))
@@ -109,159 +101,54 @@ namespace ObscureLabs.Items
                         continue;
                     }
 
-                    if (targetItem is null)
+                    if (targetItem.Type.IsWeapon() && spawn > 30 && spawn < 65)
                     {
-                        Log.Warn("item was for some reason null!?");
+
+                        var weaponToSpawn = WeaponList.ElementAt(UnityEngine.Random.Range(0, WeaponList.Count()));
+                        Pickup pickup = null;
+
+                        if (weaponToSpawn.count < weaponToSpawn.limit)
+                        {
+                            pickup = weaponToSpawn.item.Spawn(targetItem.Transform.position);
+                            pickup.Rotation = targetItem.Transform.rotation;
+                            weaponToSpawn.count++;
+                            Log.Debug($"Made new {weaponToSpawn.item.Id} in {room.Type}");
+                            yield return Timing.WaitForOneFrame;
+                            targetItem.Destroy();
+                            Log.Debug($"Removed original item in {room.Type}");
+                            break;
+                        }
+                        continue;
                     }
-                    else
+
+                    if (!targetItem.Type.IsWeapon() && !targetItem.Type.IsKeycard() && spawn > 30 && spawn < 65)
                     {
-                        if (targetItem.Type.IsWeapon() && spawn > 30 && spawn < 65)
+                        var itemToSpawn = ItemList.ElementAt(UnityEngine.Random.Range(0, ItemList.Count()));
+                        Pickup pickup = null;
+
+                        if (itemToSpawn.count < itemToSpawn.limit)
                         {
-                            var weaponToSpawn = WeaponList.ElementAt(UnityEngine.Random.Range(0, WeaponList.Count()));
-                            Pickup pickup = null;
-
-                            if (weaponToSpawn == CustomItem.Get((uint)1)) // Sniper 
-                            {
-                                if (sniper < sniper_l)
-                                {
-                                    pickup = weaponToSpawn.Spawn(targetItem.Transform.position);
-                                    pickup.Rotation = targetItem.Transform.rotation;
-                                    sniper++;
-                                    Log.Info($"Made new item in {room.Type}");
-                                    yield return Timing.WaitForOneFrame;
-                                    targetItem.Destroy();
-                                    Log.Warn($"Removed original item in {room.Type}");
-                                    break;
-                                }
-                            }
-                            else if (weaponToSpawn == CustomItem.Get((uint)3)) // Grenade Launcher
-                            {
-                                if (glLauncher < glLauncher_l)
-                                {
-                                    pickup = weaponToSpawn.Spawn(targetItem.Transform.position);
-                                    pickup.Rotation = targetItem.Transform.rotation;
-                                    glLauncher++;
-                                    Log.Info($"Made new item in {room.Type}");
-                                    yield return Timing.WaitForOneFrame;
-                                    targetItem.Destroy();
-                                    Log.Warn($"Removed original item in {room.Type}");
-                                    break;
-                                }
-                            }
-                            else if (weaponToSpawn == CustomItem.Get((uint)5)) // ER16
-                            {
-                                if (ER16 < ER16_l)
-                                {
-                                    pickup = weaponToSpawn.Spawn(targetItem.Transform.position);
-                                    pickup.Rotation = targetItem.Transform.rotation;
-                                    ER16++;
-                                    Log.Info($"Made new item in {room.Type}");
-                                    targetItem.Destroy();
-                                    Log.Warn($"Removed original item in {room.Type}");
-                                    break;
-                                }
-                            }
-                            else if (weaponToSpawn == CustomItem.Get((uint)6)) // Particle Collapser
-                            {
-                                if (particleCollapser < particleCollapser_l)
-                                {
-                                    pickup = weaponToSpawn.Spawn(targetItem.Transform.position);
-                                    pickup.Rotation = targetItem.Transform.rotation;
-                                    particleCollapser++;
-                                    Log.Info($"Made new item in {room.Type}");
-                                    yield return Timing.WaitForOneFrame;
-                                    targetItem.Destroy();
-                                    Log.Warn($"Removed original item in {room.Type}");
-                                    break;
-                                }
-                            }
+                            pickup = itemToSpawn.item.Spawn(targetItem.Transform.position);
+                            pickup.Rotation = targetItem.Transform.rotation;
+                            itemToSpawn.count++;
+                            Log.Debug($"Made new {itemToSpawn.item.Id} in {room.Type}");
+                            yield return Timing.WaitForOneFrame;
+                            targetItem.Destroy();
+                            Log.Debug($"Removed original item in {room.Type}");
                         }
-
-                        if (!targetItem.Type.IsWeapon() && !targetItem.Type.IsKeycard() && spawn > 30 && spawn < 65)
-                        {
-                            var itemToSpawn = ItemList.ElementAt(UnityEngine.Random.Range(0, ItemList.Count()));
-                            Pickup pickup = null;
-                            if (itemToSpawn == CustomItem.Get((uint)2)) // ClusterHE 
-                            {
-                                if (clusterHE < clusterHE_l)
-                                {
-                                    pickup = itemToSpawn.Spawn(targetItem.Transform.position);
-                                    pickup.Rotation = targetItem.Transform.rotation;
-
-                                    clusterHE++;
-                                    Log.Info($"Made new item in {room.Type}");
-                                    yield return Timing.WaitForOneFrame;
-                                    targetItem.Destroy();
-                                    Log.Warn($"Removed original item in {room.Type}");
-                                    break;
-                                }
-                            }
-                            else if (itemToSpawn == CustomItem.Get((uint)7)) // ClusterFlash
-                            {
-                                if (clusterFlash < clusterFlash_l)
-                                {
-                                    pickup = itemToSpawn.Spawn(targetItem.Transform.position);
-                                    pickup.Rotation = targetItem.Transform.rotation;
-                                    clusterFlash++;
-                                    Log.Info($"Made new item in {room.Type}");
-                                    yield return Timing.WaitForOneFrame;
-                                    targetItem.Destroy();
-                                    Log.Warn($"Removed original item in {room.Type}");
-
-
-                                    break;
-                                }
-                            }
-                            else if (itemToSpawn == CustomItem.Get((uint)5)) // EsssentialOils
-                            {
-                                if (essentialOils < essentialOils_l)
-                                {
-                                    pickup = itemToSpawn.Spawn(targetItem.Transform.position);
-                                    pickup.Rotation = targetItem.Transform.rotation;
-                                    essentialOils++;
-                                    Log.Info($"Made new item in {room.Type}");
-                                    yield return Timing.WaitForOneFrame;
-                                    targetItem.Destroy();
-                                    Log.Warn($"Removed original item in {room.Type}");
-
-                                    break;
-                                }
-                            }
-                            else if (itemToSpawn == CustomItem.Get((uint)6)) // NovaGrenade
-                            {
-                                if (novaGrenade < novaGrenade_l)
-                                {
-                                    pickup = itemToSpawn.Spawn(targetItem.Transform.position);
-                                    pickup.Rotation = targetItem.Transform.rotation;
-                                    novaGrenade++;
-                                    Log.Info($"Made new item in {room.Type}");
-                                    yield return Timing.WaitForOneFrame;
-                                    targetItem.Destroy();
-                                    Log.Warn($"Removed original item in {room.Type}");
-
-                                    break;
-                                }
-                            }
-                            else if (itemToSpawn == CustomItem.Get((uint)12)) // S-NAV
-                            {
-                                if (snav < snav_l)
-                                {
-                                    pickup = itemToSpawn.Spawn(targetItem.Transform.position);
-                                    pickup.Rotation = targetItem.Transform.rotation;
-                                    snav++;
-                                    Log.Info($"Made new item in {room.Type}");
-                                    yield return Timing.WaitForOneFrame;
-                                    targetItem.Destroy();
-                                    Log.Warn($"Removed original item in {room.Type}");
-
-                                    break;
-                                }
-                            }
-                        }
+                        continue;
                     }
                 }
+            }
+
+            foreach (CustomItemSpawningData i in WeaponList)
+            {
+                Log.Info($"Spawned {i.count} of {CustomItem.Get(i.item.Id).Name}");
+            }
+            foreach (CustomItemSpawningData i in ItemList)
+            {
+                Log.Info($"Spawned {i.count} of {CustomItem.Get(i.item.Id).Name}");
             }
         }
     }
 }
-
