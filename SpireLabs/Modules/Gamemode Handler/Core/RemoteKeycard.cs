@@ -1,4 +1,4 @@
-﻿using ObscureLabs.API.Features;
+using ObscureLabs.API.Features;
 using System.Linq;
 using Exiled.API.Enums;
 using Exiled.API.Features;
