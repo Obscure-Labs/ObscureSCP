@@ -9,10 +9,14 @@ using LabApi.Events.Arguments.PlayerEvents;
 using Exiled.API.Features.Doors;
 using System.Runtime.InteropServices;
 using Exiled.API.Extensions;
+using Exiled.API.Features.Lockers;
 using Exiled.Events.Handlers;
+using Interactables.Interobjects.DoorUtils;
+using MapGeneration.Distributors;
 using Mirror;
 using Item = Exiled.API.Features.Items.Item;
 using SpireSCP.GUI.API.Features;
+using KeycardItem = LabApi.Features.Wrappers.KeycardItem;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
@@ -25,7 +29,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         public override bool Enable()
         {
-            LabApi.Events.Handlers.PlayerEvents.InteractingLocker += OnInteractingLabLocker;
+            //LabApi.Events.Handlers.PlayerEvents.InteractingLocker += OnInteractingLabLocker;
+            Exiled.Events.Handlers.Player.InteractingLocker += OnInteractingLocker;
             //Exiled.Events.Handlers.Player.ActivatingWarheadPanel += OnInteractingWarhead;
             LabApi.Events.Handlers.PlayerEvents.UnlockingWarheadButton += OnInteractingWarhead;
             Exiled.Events.Handlers.Player.UnlockingGenerator += OnInteractGenerator;
@@ -36,7 +41,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         public override bool Disable()
         {
-            LabApi.Events.Handlers.PlayerEvents.InteractingLocker -= OnInteractingLabLocker;
+            //LabApi.Events.Handlers.PlayerEvents.InteractingLocker -= OnInteractingLabLocker;
+            Exiled.Events.Handlers.Player.InteractingLocker -= OnInteractingLocker;
             //Exiled.Events.Handlers.Player.ActivatingWarheadPanel -= OnInteractingWarhead;
             LabApi.Events.Handlers.PlayerEvents.UnlockingWarheadButton += OnInteractingWarhead;
             Exiled.Events.Handlers.Player.UnlockingGenerator -= OnInteractGenerator;
@@ -45,68 +51,75 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             return true;
         }
 
-        private void OnInteractingLabLocker(PlayerInteractingLockerEventArgs ev)
+        private void OnInteractingLocker(InteractingLockerEventArgs ev)
         {
-            Log.Debug("Lab locker interacted with");
-            if (ev.Player.Items.Where(x => x.Category == ItemCategory.Keycard).FirstOrDefault(x => x.Base is KeycardItem k && k.Permissions.HasFlag(ev.Chamber.RequiredPermissions)) != null)
+            if (ev.Player.Items.Any(x =>
+                    x is Keycard k && k.Permissions.HasFlag(ev.InteractingChamber.RequiredPermissions.RemoveFlags(KeycardPermissions.ScpOverride))))
             {
-                Log.Debug("suitable keycard found");
-                ev.CanOpen = true;
+                ev.IsAllowed = true;
             }
         }
-
+        
+        // private void OnInteractingLabLocker(PlayerInteractingLockerEventArgs ev)
+        // {
+        //     Log.Debug("Lab locker interacted with");
+        //     if (ev.Player.Items.Any(x => x is KeycardItem k && k.Base.GetPermissions(ev.)))
+        //     {
+        //         Log.Debug("suitable keycard found"); 
+        //         ev.CanOpen = true;
+        //     }
+        // }
+        
         private void OnInteractingDoor(InteractingDoorEventArgs ev)
         {
             Log.Debug("Interacting door");
             if (ev.Door.IsKeycardDoor)
             {
-                foreach (Item item in ev.Player.Items.ToList())
+                if (ev.Player.Items.Any(x => x is Keycard k && k.Permissions.HasFlag(ev.Door.KeycardPermissions.RemoveFlags(KeycardPermissions.ScpOverride))) && !ev.Door.IsLocked)
                 {
-                    if (item.Base is not KeycardItem keycard)
-                    {
-                        continue;
-                    }
-
-                    if (keycard.Permissions.HasFlag(ev.Door.RequiredPermissions.RequiredPermissions.RemoveFlags(Interactables.Interobjects.DoorUtils.KeycardPermissions.ScpOverride)))
-                    {
-                        ev.IsAllowed = true;
-                        break;
-                    }
-                    else
-                    {
-                        Log.Warn($"{keycard.name} does not have permission: {ev.Door.RequiredPermissions.RequiredPermissions}, keycard only has {keycard.Permissions.ToString()}");
-                    }
+                    ev.IsAllowed = true;
                 }
-                ev.Door.PlaySound(DoorBeepType.PermissionDenied);
+                else
+                {
+                    ev.Door.PlaySound(DoorBeepType.PermissionDenied);
+                }
             }
         }
 
         private void OnInteractingWarhead(PlayerUnlockingWarheadButtonEventArgs ev)
         {
             Log.Debug("Warhead");
-            foreach (LabApi.Features.Wrappers.Item item in ev.Player.Items.ToList())
+            if (((Exiled.API.Features.Player)ev.Player).Items.Any(x => x is Keycard k && k.Permissions.HasFlag(KeycardPermissions.AlphaWarhead)))
             {
-                if (item.Base is not KeycardItem keycard)
-                {
-                    Log.Debug($"{item.Type.ToString()} is not a keycard");
-                    continue;
-                }
-
-                if (keycard.Permissions.HasFlag(Interactables.Interobjects.DoorUtils.KeycardPermissions.AlphaWarhead))
-                {
-                    if (ev.Player.CurrentItem != item)
-                    {
-                        ev.IsAllowed = true;
-                        Log.Debug($"{keycard.name} DOES have the right permission");
-                    }
-
-                }
-                else
-                {
-                    Log.Debug($"{keycard.name} does not have the right permission");
-                    Log.Debug($"Keycard has the following permissions: \n{keycard.Permissions.ToString()}");
-                }
+                ev.IsAllowed = true;
             }
+            else
+            {
+                ev.IsAllowed = false;
+            }
+            // foreach (LabApi.Features.Wrappers.Item item in ev.Player.Items.ToList())
+            // {
+            //     if (item.Base is not KeycardItem keycard)
+            //     {
+            //         Log.Debug($"{item.Type.ToString()} is not a keycard");
+            //         continue;
+            //     }
+            //
+            //     if (keycard.Permissions.HasFlag(Interactables.Interobjects.DoorUtils.KeycardPermissions.AlphaWarhead))
+            //     {
+            //         if (ev.Player.CurrentItem != item)
+            //         {
+            //             ev.IsAllowed = true;
+            //             Log.Debug($"{keycard.name} DOES have the right permission");
+            //         }
+            //
+            //     }
+            //     else
+            //     {
+            //         Log.Debug($"{keycard.name} does not have the right permission");
+            //         Log.Debug($"Keycard has the following permissions: \n{keycard.Permissions.ToString()}");
+            //     }
+            // }
             
         }
 
@@ -115,20 +128,28 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         {
 
             Log.Debug("Gemeratpr");
-            foreach (Item item in ev.Player.Items.ToList())
+            if (ev.Player.Items.Any(x => x is Keycard k && k.Permissions.HasFlag(KeycardPermissions.ArmoryLevelTwo)))
             {
-                if (item.Base is not KeycardItem keycard)
-                {
-                    continue;
-                }
-
-                if (keycard.Permissions.HasFlag(Interactables.Interobjects.DoorUtils.KeycardPermissions.ArmoryLevelTwo))
-                {
-                    ev.IsAllowed = true;
-                    
-                    break;
-                }
+                ev.IsAllowed = true;
             }
+            else
+            {
+                ev.IsAllowed = false;
+            }
+            // foreach (Item item in ev.Player.Items.ToList())
+            // {
+            //     if (item.Base is not KeycardItem keycard)
+            //     {
+            //         continue;
+            //     }
+            //
+            //     if (keycard.Permissions.HasFlag(Interactables.Interobjects.DoorUtils.KeycardPermissions.ArmoryLevelTwo))
+            //     {
+            //         ev.IsAllowed = true;
+            //         
+            //         break;
+            //     }
+            // }
         }
     }
 }

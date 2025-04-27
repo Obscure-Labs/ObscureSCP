@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Exiled.API.Enums;
 using UncomplicatedCustomRoles.Manager;
 using Exiled.API.Features;
 using Exiled.API.Features.Core.StateMachine;
+using Exiled.API.Features.Items;
 using stat = ObscureLabs.API.Enums.StatisticType.stat;
 
 namespace ObscureLabs.Extensions
@@ -14,6 +16,11 @@ namespace ObscureLabs.Extensions
     {
         private static Dictionary<Player, Dictionary<string, object>> _playerData = new Dictionary<Player, Dictionary<string, object>>();
 
+        public static bool HasPermission(this Exiled.API.Features.Player p, KeycardPermissions perms)
+        {
+            return p.Items.Any(x => x is Keycard k && k.Permissions.HasFlag(perms));
+        }
+        
         public static T GetData<T>(this Player player, string variableName)
         {
             if (!_playerData.ContainsKey(player))

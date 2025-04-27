@@ -17,6 +17,8 @@ using System;
 using Exiled.API.Features.Roles;
 using HumanRole = Exiled.API.Features.Roles.HumanRole;
 using CommandSystem.Commands.Console;
+using MapGeneration;
+
 namespace ObscureLabs.Modules
 {
     internal class Lobby : Module
@@ -26,7 +28,7 @@ namespace ObscureLabs.Modules
         
         public override bool IsInitializeOnStart => true;
 
-        public Room room = Room.List.GetRandomValue();
+        public LabApi.Features.Wrappers.Room room = LabApi.Features.Wrappers.Room.List.GetRandomValue();
         public override bool Enable()
         {
 
@@ -105,12 +107,17 @@ namespace ObscureLabs.Modules
 
         public void MapGenerated(MapGeneratedEventArgs ev)
         {
-            room = Room.List.GetRandomValue();
+            room = LabApi.Features.Wrappers.Room.List.GetRandomValue();
             if (room == null)
             {
-                room = Room.Get(RoomType.LczClassDSpawn);
+                LabApi.Features.Wrappers.Room.Get(RoomName.LczClassDSpawn);
             }
-            Log.Info(room.name);
+            // room = Room.List.GetRandomValue();
+            // if (room == null)
+            // {
+            //     room = Room.Get(RoomType.LczClassDSpawn);
+            // }
+            // Log.Info(room.name);
 
         }
         public void RoundStarting(RoundStartingEventArgs args)
@@ -130,9 +137,9 @@ namespace ObscureLabs.Modules
                 if (ev.Player != null)
                 {
                     Manager.SendHint(ev.Player, "You have been sent to the pregame lobby, Waiting for players!", 5);
-                    ev.Player.IsGodModeEnabled = true;
+                    // ev.Player.IsGodModeEnabled = true;
                     ev.Player.RoleManager.ServerSetRole(RoleTypeId.Tutorial, RoleChangeReason.RemoteAdmin, RoleSpawnFlags.None);
-                    ev.Player.Teleport(room.transform.position + (Vector3.up / 2));
+                    ev.Player.Teleport(room.Position + (Vector3.up / 2));
 
                 }
             }
@@ -174,7 +181,7 @@ namespace ObscureLabs.Modules
                 if (p != null && p.Role.Type == RoleTypeId.Spectator)
                 {
                     p.RoleManager.ServerSetRole(RoleTypeId.ClassD, RoleChangeReason.RemoteAdmin, RoleSpawnFlags.None);
-                    p.Teleport(room.transform.position + (Vector3.up / 2));
+                    p.Teleport(room.Position + (Vector3.up / 2));
                     p.IsGodModeEnabled = true;
                 }
             }

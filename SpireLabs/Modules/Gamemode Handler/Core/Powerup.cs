@@ -114,22 +114,24 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             Log.Debug($"There are: {pickups.Count()} pickups left!");
         }
 
-        private void SpawnPowerup(Room room)
+        private void SpawnPowerup(LabApi.Features.Wrappers.Room room)
         {
             GameObject container = new GameObject();
-            Vector3 pos = new Vector3(room.transform.position.x, room.transform.position.y + 0.5f, room.transform.position.z);
+            // Vector3 pos = new Vector3(room.Transform.position.x, room.Transform.position.y + 0.5f,
+            //     room.Transform.position.z);
+            Vector3 pos = new Vector3(room.Position.x,
+                room.Position.y + 0.5f, room.Position.z);
             container.transform.position = pos;
-
             BoxCollider collider = container.gameObject.AddComponent<BoxCollider>();
             collider.size = Vector3.one / 2;
             collider.isTrigger = true;
-
+            
             Rigidbody rb = container.gameObject.AddComponent<Rigidbody>();
             rb.mass = 0f;
             rb.drag = 0f;
             rb.angularDrag = 0f;
             rb.useGravity = false;
-
+            
             Primitive cube = Primitive.Create(PrimitiveType.Cube, container.transform.position, Vector3.zero, Vector3.one / 2, false);
             cube.Flags = PrimitiveFlags.Collidable | PrimitiveFlags.Visible;
             
@@ -138,39 +140,39 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             cube.Collidable = false;
             cube.Base.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.On;
             cube.Base.GetComponent<MeshRenderer>().receiveShadows = true;
-
-            Light light = Light.Create(new Vector3(room.transform.position.x, room.transform.position.y + 2f, room.transform.position.z), new Vector3(90, 0, 0), Vector3.one, false, Color.red);
+            
+            Light light = Light.Create(new Vector3(0, 2f, 0), new Vector3(90, 0, 0), Vector3.one, false, Color.red);
             light.Intensity = 10f;
             light.Range = 10f;
             light.LightType = LightType.Spot;
             light.ShadowStrength = 100;
             light.ShadowType = LightShadows.Hard;
             light.Color = Color.yellow * 5;
-
+            
             container.gameObject.AddComponent<PowerUpScript>();
             cube.Base.gameObject.AddComponent<PowerUpAnimate>();
             light.Base.gameObject.AddComponent<PowerUpAnimate>();
             light.Base.gameObject.transform.SetParent(container.transform, false);
             light.Base.gameObject.transform.position = pos;
             cube.Base.gameObject.transform.SetParent(container.transform, false);
-            cube.Base.gameObject.transform.position = pos + Vector3.up / 2;
-
-            light.Base.transform.position += (Vector3.up * 2);
+            cube.Base.gameObject.transform.position = Vector3.up / 2;
+            
             light.Spawn();
             cube.Spawn();
-
+            
 
             pickups.Add(container.gameObject);
             container.gameObject.name = $"{pickups.Count - 1}_container";
             cube.Base.gameObject.name = $"{pickups.Count - 1}_cube";
             light.Base.gameObject.name = $"{pickups.Count - 1}_light";
+            
             Log.Debug($"Spawned powerup of index: {pickups.Count() - 1}");
 
         }
         private void OnRoundStarted()
         {
             Log.Info("Map Generated");
-            List<Room> rooms = Room.List.ToList();
+            List<LabApi.Features.Wrappers.Room> rooms = LabApi.Features.Wrappers.Room.List.ToList();
             for (int i = 0; i < maxPickups; i++)
             {
                 var selectedRoom = rooms.GetRandomValue();

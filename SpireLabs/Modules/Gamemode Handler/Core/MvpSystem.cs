@@ -10,6 +10,8 @@ using ObscureLabs.API.Features;
 using SpireSCP.GUI.API.Features;
 using System.Collections.Generic;
 using System.Linq;
+using Exiled.API.Enums;
+using LabApi.Events.Arguments.PlayerEvents;
 using Player = Exiled.API.Features.Player;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
@@ -21,7 +23,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         public override string Name => "MVPSystem";
 
-        public override bool IsInitializeOnStart => false;
+        public override bool IsInitializeOnStart => true;
 
         public override bool Enable()
         {
@@ -30,7 +32,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             Exiled.Events.Handlers.Player.Died += OnKillingPlayer;
             Exiled.Events.Handlers.Player.UnlockingGenerator += OnUnlockingGenerator;
             Exiled.Events.Handlers.Server.RoundEnded += OnEndingRound;
-            Exiled.Events.Handlers.Player.EscapingPocketDimension += OnEscapingPocketDimension;
+            LabApi.Events.Handlers.PlayerEvents.LeavingPocketDimension += OnEscapingPocketDimension;
+            //Exiled.Events.Handlers.Player.EscapingPocketDimension += OnEscapingPocketDimension;
             Exiled.Events.Handlers.Player.ActivatingWarheadPanel += OnActivatingWarheadPanel;
             Exiled.Events.Handlers.Scp096.AddingTarget += OnAddingTarget;
 
@@ -45,7 +48,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             Exiled.Events.Handlers.Player.Died -= OnKillingPlayer;
             Exiled.Events.Handlers.Player.UnlockingGenerator -= OnUnlockingGenerator;
             Exiled.Events.Handlers.Server.RoundEnded -= OnEndingRound;
-            Exiled.Events.Handlers.Player.EscapingPocketDimension -= OnEscapingPocketDimension;
+            LabApi.Events.Handlers.PlayerEvents.LeavingPocketDimension -= OnEscapingPocketDimension;
+            //Exiled.Events.Handlers.Player.EscapingPocketDimension -= OnEscapingPocketDimension;
             Exiled.Events.Handlers.Player.ActivatingWarheadPanel -= OnActivatingWarheadPanel;
             Exiled.Events.Handlers.Scp096.AddingTarget -= OnAddingTarget;
 
@@ -72,7 +76,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         private void OnActivatingWarheadPanel(ActivatingWarheadPanelEventArgs ev)
         {
-            if (!ev.Player.Items.Any(item => item is Keycard keycard && keycard.Base.Permissions.HasFlag(KeycardPermissions.AlphaWarhead) || !Round.InProgress)) { return; }
+            if(!ev.Player.Items.Any(item => item is Keycard keycard && keycard.Permissions.HasFlag(KeycardPermissions.AlphaWarhead) || !Round.InProgress)) { return; }
+            //if (!ev.Player.Items.Any(item => item is Keycard keycard && keycard.Base.Permissions.HasFlag(KeycardPermissions.AlphaWarhead) || !Round.InProgress)) { return; }
             else if (!WarheadPanelUnlocked)
             {
                 WarheadPanelUnlocked = true;
@@ -82,9 +87,9 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         }
 
-        private void OnEscapingPocketDimension(EscapingPocketDimensionEventArgs ev)
+        private void OnEscapingPocketDimension(PlayerLeavingPocketDimensionEventArgs ev)
         {
-            Timing.RunCoroutine(AddXpToPlayer(ev.Player, 3, "Escaping The Pocket Dimension"));
+            if(ev.IsSuccessful) Timing.RunCoroutine(AddXpToPlayer(ev.Player, 3, "Escaping The Pocket Dimension"));
         }
 
         private void OnEscaping(EscapingEventArgs ev)
@@ -107,7 +112,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         private void OnUnlockingGenerator(UnlockingGeneratorEventArgs ev)
         {
-            if (ev.Player.Items.Any(item => item is Keycard keycard && keycard.Base.Permissions.HasFlag(KeycardPermissions.ArmoryLevelTwo)))
+            if (ev.Player.Items.Any(item => item is Keycard keycard && keycard.Permissions.HasFlag(KeycardPermissions.ArmoryLevelTwo)))
             {
                 Timing.RunCoroutine(AddXpToPlayer(ev.Player, 2, "Unlocking Generator"));
             }

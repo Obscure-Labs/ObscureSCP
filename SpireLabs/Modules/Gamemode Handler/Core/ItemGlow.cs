@@ -67,7 +67,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             while (true)
             {
                 yield return Timing.WaitForOneFrame;
-
+                
                 foreach (Pickup i in Pickup.List)
                 {
                     if (i.Is<Projectile>(out _)) { continue; }

@@ -704,6 +704,16 @@
             Gets the <see cref="T:Exiled.API.Features.Items.Item" /> triggering the event.
             </summary>
         </member>
+        <member name="T:Exiled.Events.EventArgs.Interfaces.IMicroHIDEvent">
+            <summary>
+            Event args used for all <see cref="T:Exiled.API.Features.Items.MicroHid" /> related events.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Interfaces.IMicroHIDEvent.MicroHID">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Items.MicroHid" /> triggering the event.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.EventArgs.Interfaces.IPickupEvent">
             <summary>
             Event args used for all <see cref="T:Exiled.API.Features.Pickups.Pickup" /> related events.
@@ -1047,6 +1057,41 @@
             Gets or sets a value indicating whether the Jailbird can be charged.
             </summary>
         </member>
+        <member name="T:Exiled.Events.EventArgs.Item.DisruptorFiringEventArgs">
+            <summary>
+            Contains all information before a pickup <see cref="F:ItemType.ParticleDisruptor"/> shoot while on the ground.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Item.DisruptorFiringEventArgs.#ctor(Exiled.API.Features.Pickups.Pickup,Exiled.API.Features.Player,InventorySystem.Items.Firearms.Modules.DisruptorActionModule.FiringState,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Item.DisruptorFiringEventArgs"/> class.
+            </summary>
+            <param name="disruptor"><inheritdoc cref="P:Exiled.Events.EventArgs.Item.DisruptorFiringEventArgs.Pickup"/></param>
+            <param name="attacker"><inheritdoc cref="P:Exiled.Events.EventArgs.Item.DisruptorFiringEventArgs.Attacker"/></param>
+            <param name="state"><inheritdoc cref="P:Exiled.Events.EventArgs.Item.DisruptorFiringEventArgs.State"/></param>
+            <param name="isAllowed"><inheritdoc cref="P:Exiled.Events.EventArgs.Item.DisruptorFiringEventArgs.IsAllowed"/></param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Item.DisruptorFiringEventArgs.IsAllowed">
+            <summary>
+            Gets or Sets a value indicating whether the disruptor shoot and the ground.
+            <remarks>The client will still see all effects, like sounds and shoot.</remarks>
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Item.DisruptorFiringEventArgs.Attacker">
+            <summary>
+            Gets or Sets whether is the attacker.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Item.DisruptorFiringEventArgs.State">
+            <summary>
+            Gets the state of the weapon.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Item.DisruptorFiringEventArgs.Pickup">
+            <summary>
+            Gets the pickup who shot the bullet.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.EventArgs.Item.KeycardInteractingEventArgs">
             <summary>
             Contains all information before a keycard interacts with a door.
@@ -1310,7 +1355,7 @@
             Contains all information before C.A.S.S.I.E announces an SCP termination.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Map.AnnouncingScpTerminationEventArgs.#ctor(Exiled.API.Features.Player,PlayerStatsSystem.DamageHandlerBase,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Map.AnnouncingScpTerminationEventArgs.#ctor(Exiled.API.Features.Player,PlayerStatsSystem.DamageHandlerBase)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Map.AnnouncingScpTerminationEventArgs" /> class.
             </summary>
@@ -1319,9 +1364,6 @@
             </param>
             <param name="damageHandlerBase">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Map.AnnouncingScpTerminationEventArgs.DamageHandler" />
-            </param>
-            <param name="isAllowed">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Map.AnnouncingScpTerminationEventArgs.IsAllowed" />
             </param>
         </member>
         <member name="P:Exiled.Events.EventArgs.Map.AnnouncingScpTerminationEventArgs.Role">
@@ -1776,6 +1818,43 @@
             Gets or sets a value indicating whether the item can be spawned.
             </summary>
         </member>
+        <member name="T:Exiled.Events.EventArgs.Map.SpawningRoomConnectorEventArgs">
+            <summary>
+            Contains all information before spawning the connector between rooms.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Map.SpawningRoomConnectorEventArgs.#ctor(MapGeneration.RoomConnectors.Spawners.RoomConnectorSpawnpointBase,MapGeneration.RoomConnectors.SpawnableRoomConnectorType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Map.SpawningRoomConnectorEventArgs" /> class.
+            </summary>
+            <param name="roomConnectorSpawnpointBase">The RoomConnectorSpawnpointBase.</param>
+            <param name="connectorType">The connector type the game is trying to spawn.</param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Map.SpawningRoomConnectorEventArgs.RoomConnectorSpawnpoint">
+            <summary>
+            Gets the RoomConnectorSpawnpointBase.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Map.SpawningRoomConnectorEventArgs.RoomForward">
+            <summary>
+            Gets the Room forward of the Connector.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Map.SpawningRoomConnectorEventArgs.RoomBackward">
+            <summary>
+            Gets the Room Backward of the Connector.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Map.SpawningRoomConnectorEventArgs.ConnectorType">
+            <summary>
+            Gets or sets which Connector the game should spawn.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Map.SpawningRoomConnectorEventArgs.IsAllowed">
+            <summary>
+            Gets or sets a value indicating whether the connector can be spawned.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.EventArgs.Map.SpawningTeamVehicleEventArgs">
             <summary>
             Contains all information before the server spawns a team's respawn vehicle.
@@ -1835,7 +1914,7 @@
             Contains all information before a player filps the switch to a generator.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.ActivatingGeneratorEventArgs.#ctor(Exiled.API.Features.Player,MapGeneration.Distributors.Scp079Generator,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Player.ActivatingGeneratorEventArgs.#ctor(Exiled.API.Features.Player,MapGeneration.Distributors.Scp079Generator)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.ActivatingGeneratorEventArgs" /> class.
             </summary>
@@ -1844,9 +1923,6 @@
             </param>
             <param name="generator">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.ActivatingGeneratorEventArgs.Generator" />
-            </param>
-            <param name="isAllowed">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.ActivatingGeneratorEventArgs.IsAllowed" />
             </param>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.ActivatingGeneratorEventArgs.IsAllowed">
@@ -2642,13 +2718,12 @@
             Contains all information before a player closes a generator.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.ClosingGeneratorEventArgs.#ctor(Exiled.API.Features.Player,MapGeneration.Distributors.Scp079Generator,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Player.ClosingGeneratorEventArgs.#ctor(Exiled.API.Features.Player,MapGeneration.Distributors.Scp079Generator)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.ClosingGeneratorEventArgs" /> class.
             </summary>
             <param name="player">The player who's closing the generator.</param>
             <param name="generator">The <see cref="T:MapGeneration.Distributors.Scp079Generator" /> instance.</param>
-            <param name="isAllowed">Indicates whether the generator can be closed.</param>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.ClosingGeneratorEventArgs.IsAllowed">
             <summary>
@@ -3433,19 +3508,51 @@
             Gets or sets a value indicating whether the player should be affected by the environmental hazard.
             </summary>
         </member>
+        <member name="T:Exiled.Events.EventArgs.Player.ExplodingMicroHIDEventArgs">
+            <summary>
+            Contains all information before the micro hid explode.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Player.ExplodingMicroHIDEventArgs.#ctor(InventorySystem.Items.MicroHID.MicroHIDItem,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.ExplodingMicroHIDEventArgs" /> class.
+            </summary>
+            <param name="item"><inheritdoc cref="P:Exiled.Events.EventArgs.Player.ExplodingMicroHIDEventArgs.Item"/></param>
+            <param name="isAllowed">Whether the Micro HID can explode the player or not.</param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.ExplodingMicroHIDEventArgs.Item">
+            <summary>
+            Gets the item.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.ExplodingMicroHIDEventArgs.Player">
+            <summary>
+            Gets the player in owner of the item.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.ExplodingMicroHIDEventArgs.MicroHID">
+            <summary>
+            Gets MicroHid item.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.ExplodingMicroHIDEventArgs.IsAllowed">
+            <summary>
+            Gets or sets a value indicating whether the player can explode the micro HID.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.EventArgs.Player.FailingEscapePocketDimensionEventArgs">
             <summary>
             Contains all information before a player dies from walking through an incorrect exit in the pocket dimension.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.FailingEscapePocketDimensionEventArgs.#ctor(PocketDimensionTeleport,Exiled.API.Features.Player,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Player.FailingEscapePocketDimensionEventArgs.#ctor(PocketDimensionTeleport,ReferenceHub,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.FailingEscapePocketDimensionEventArgs" /> class.
             </summary>
             <param name="pocketDimensionTeleport">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.FailingEscapePocketDimensionEventArgs.Teleporter" />
             </param>
-            <param name="player">
+            <param name="hub">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.FailingEscapePocketDimensionEventArgs.Player" />
             </param>
             <param name="isAllowed">
@@ -3594,6 +3701,32 @@
         <member name="P:Exiled.Events.EventArgs.Player.HealingEventArgs.IsAllowed">
             <inheritdoc/>
         </member>
+        <member name="T:Exiled.Events.EventArgs.Player.HitEventArgs">
+            <summary>
+            Contains all information after player sends an attack as an SCP.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Player.HitEventArgs.#ctor(Exiled.API.Features.Player,PlayerRoles.PlayableScps.Subroutines.AttackResult,System.Collections.Generic.HashSet{ReferenceHub})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.HitEventArgs"/> class.
+            </summary>
+            <param name="player"> <inheritdoc cref="P:Exiled.Events.EventArgs.Player.HitEventArgs.Player"/></param>
+            <param name="result"> the result of the attack.</param>
+            <param name="playerHits"> the list of players who are getting hit.</param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.HitEventArgs.Player">
+            <inheritdoc />
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.HitEventArgs.Result">
+            <summary>
+            Gets the attack result for the server.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.HitEventArgs.PlayersAffected">
+            <summary>
+            Gets the attack result for the server.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.EventArgs.Player.HurtEventArgs">
             <summary>
             Contains all information before a player gets damaged.
@@ -3693,7 +3826,7 @@
             Contains all information before a player interacts with a door.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.InteractingDoorEventArgs.#ctor(Exiled.API.Features.Player,Interactables.Interobjects.DoorUtils.DoorVariant,System.Byte,System.Boolean,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Player.InteractingDoorEventArgs.#ctor(Exiled.API.Features.Player,Interactables.Interobjects.DoorUtils.DoorVariant,System.Byte,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.InteractingDoorEventArgs" /> class.
             </summary>
@@ -3708,9 +3841,6 @@
             </param>
             <param name="isAllowed">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.InteractingDoorEventArgs.IsAllowed" />
-            </param>
-            <param name="canInteract">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.InteractingDoorEventArgs.CanInteract" />
             </param>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.InteractingDoorEventArgs.CanInteract">
@@ -4209,12 +4339,50 @@
         <member name="P:Exiled.Events.EventArgs.Player.MakingNoiseEventArgs.IsAllowed">
             <inheritdoc/>
         </member>
+        <member name="T:Exiled.Events.EventArgs.Player.MicroHIDOpeningDoorEventArgs">
+            <summary>
+            Contains all information before the micro opens a doors.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Player.MicroHIDOpeningDoorEventArgs.#ctor(InventorySystem.Items.MicroHID.MicroHIDItem,Interactables.Interobjects.DoorUtils.DoorVariant,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.MicroHIDOpeningDoorEventArgs"/> class.
+            </summary>
+            <param name="item"><inheritdoc cref="P:Exiled.Events.EventArgs.Player.MicroHIDOpeningDoorEventArgs.Item"/></param>
+            <param name="isAllowed">Whether the Micro HID can open the door or not.</param>
+            <param name="door"><inheritdoc cref="P:Exiled.Events.EventArgs.Player.MicroHIDOpeningDoorEventArgs.Door"/></param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.MicroHIDOpeningDoorEventArgs.Item">
+            <summary>
+            Gets the item.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.MicroHIDOpeningDoorEventArgs.Player">
+            <summary>
+            Gets the player in owner of the item.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.MicroHIDOpeningDoorEventArgs.MicroHID">
+            <summary>
+            Gets MicroHid item.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.MicroHIDOpeningDoorEventArgs.Door">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Features.Doors.Door"/> instance.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.MicroHIDOpeningDoorEventArgs.IsAllowed">
+            <summary>
+            Gets or sets a value indicating whether the player can explode the micro HID.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.EventArgs.Player.OpeningGeneratorEventArgs">
             <summary>
             Contains all information before a player opens a generator.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.OpeningGeneratorEventArgs.#ctor(Exiled.API.Features.Player,MapGeneration.Distributors.Scp079Generator,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Player.OpeningGeneratorEventArgs.#ctor(Exiled.API.Features.Player,MapGeneration.Distributors.Scp079Generator)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.OpeningGeneratorEventArgs" /> class.
             </summary>
@@ -4223,9 +4391,6 @@
             </param>
             <param name="generator">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.OpeningGeneratorEventArgs.Generator" />
-            </param>
-            <param name="isAllowed">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.OpeningGeneratorEventArgs.IsAllowed" />
             </param>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.OpeningGeneratorEventArgs.IsAllowed">
@@ -4690,7 +4855,7 @@
             Contains all information before a player searches a Pickup.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.SearchingPickupEventArgs.#ctor(Exiled.API.Features.Player,InventorySystem.Items.Pickups.ItemPickupBase,InventorySystem.Searching.SearchSession,InventorySystem.Searching.SearchCompletor,System.Single)">
+        <member name="M:Exiled.Events.EventArgs.Player.SearchingPickupEventArgs.#ctor(Exiled.API.Features.Player,InventorySystem.Items.Pickups.ItemPickupBase,InventorySystem.Searching.SearchSession,InventorySystem.Searching.PickupSearchCompletor,System.Single)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.SearchingPickupEventArgs" /> class.
             </summary>
@@ -4761,7 +4926,7 @@
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.SendingAdminChatMessageEventsArgs.IsAllowed">
             <summary>
-            Gets or sets a value indicating whether the pickup can be searched.
+            Gets or sets a value indicating whether the message will be sent to other.
             </summary>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.SendingAdminChatMessageEventsArgs.Message">
@@ -4944,7 +5109,7 @@
             Contains all information after a player has fired a weapon.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.ShotEventArgs.#ctor(InventorySystem.Items.Firearms.Modules.HitscanHitregModuleBase,UnityEngine.RaycastHit,InventorySystem.Items.Firearms.Firearm,IDestructible)">
+        <member name="M:Exiled.Events.EventArgs.Player.ShotEventArgs.#ctor(InventorySystem.Items.Firearms.Modules.HitscanHitregModuleBase,UnityEngine.RaycastHit,InventorySystem.Items.Firearms.Firearm,IDestructible,System.Single)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.ShotEventArgs"/> class.
             </summary>
@@ -4952,6 +5117,7 @@
             <param name="hitInfo">Raycast hit info.</param>
             <param name="firearm">The firearm used.</param>
             <param name="destructible">The IDestructible that was hit. Can be null.</param>
+            <param name="damage"><inheritdoc cref="P:Exiled.Events.EventArgs.Player.ShotEventArgs.Damage"/></param>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.ShotEventArgs.Player">
             <summary>
@@ -5264,13 +5430,12 @@
             Contains all information before a player turns off a generator.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.StoppingGeneratorEventArgs.#ctor(Exiled.API.Features.Player,MapGeneration.Distributors.Scp079Generator,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Player.StoppingGeneratorEventArgs.#ctor(Exiled.API.Features.Player,MapGeneration.Distributors.Scp079Generator)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.StoppingGeneratorEventArgs" /> class.
             </summary>
             <param name="player">The player who's flipping the switch.</param>
             <param name="generator">The <see cref="T:MapGeneration.Distributors.Scp079Generator" /> instance.</param>
-            <param name="isAllowed">Indicates whether the switch of the generator can be flipped.</param>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.StoppingGeneratorEventArgs.IsAllowed">
             <summary>
@@ -7245,7 +7410,7 @@
             Contains all information after SCP-1344 status changing.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Scp1344.ChangedStatusEventArgs.#ctor(Exiled.API.Features.Items.Item,InventorySystem.Items.Usables.Scp1344.Scp1344Status)">
+        <member name="M:Exiled.Events.EventArgs.Scp1344.ChangedStatusEventArgs.#ctor(InventorySystem.Items.ItemBase,InventorySystem.Items.Usables.Scp1344.Scp1344Status)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Scp1344.ChangedStatusEventArgs" /> class.
             </summary>
@@ -7280,7 +7445,7 @@
             Contains all information before SCP-1344 status changing.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Scp1344.ChangingStatusEventArgs.#ctor(Exiled.API.Features.Items.Item,InventorySystem.Items.Usables.Scp1344.Scp1344Status,InventorySystem.Items.Usables.Scp1344.Scp1344Status,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Scp1344.ChangingStatusEventArgs.#ctor(InventorySystem.Items.ItemBase,InventorySystem.Items.Usables.Scp1344.Scp1344Status,InventorySystem.Items.Usables.Scp1344.Scp1344Status,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Scp1344.ChangingStatusEventArgs" /> class.
             </summary>
@@ -7665,12 +7830,15 @@
             Contains all information before an Scp-173 uses breakneck speeds.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Scp173.UsingBreakneckSpeedsEventArgs.#ctor(Exiled.API.Features.Player,System.Boolean)">
+        <member name="M:Exiled.Events.EventArgs.Scp173.UsingBreakneckSpeedsEventArgs.#ctor(Exiled.API.Features.Player,System.Boolean,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Scp173.UsingBreakneckSpeedsEventArgs" /> class.
             </summary>
             <param name="player">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Scp173.UsingBreakneckSpeedsEventArgs.Player" />
+            </param>
+            <param name="isActivationRequested">
+            <inheritdoc cref="P:Exiled.Events.EventArgs.Scp173.UsingBreakneckSpeedsEventArgs.IsActivationRequested" />
             </param>
             <param name="isAllowed">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Scp173.UsingBreakneckSpeedsEventArgs.IsAllowed" />
@@ -7679,6 +7847,11 @@
         <member name="P:Exiled.Events.EventArgs.Scp173.UsingBreakneckSpeedsEventArgs.IsAllowed">
             <summary>
             Gets or sets a value indicating whether the player can use breakneck speeds.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp173.UsingBreakneckSpeedsEventArgs.IsActivationRequested">
+            <summary>
+            Gets a value indicating whether the player is attempting to activate breakneck speeds.
             </summary>
         </member>
         <member name="P:Exiled.Events.EventArgs.Scp173.UsingBreakneckSpeedsEventArgs.Player">
@@ -9733,6 +9906,23 @@
             </summary>
             <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Cassie.SendingCassieMessageEventArgs" /> instance.</param>
         </member>
+        <member name="T:Exiled.Events.Handlers.Internal.AdminToyList">
+            <summary>
+            Handles adding and removing from <see cref="P:Exiled.API.Features.Toys.AdminToy.List"/>.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Internal.AdminToyList.OnAddedAdminToys(AdminToys.AdminToyBase)">
+            <summary>
+            Called after a ragdoll is spawned. Hooked to <see cref="E:AdminToys.AdminToyBase.OnAdded"/>.
+            </summary>
+            <param name="adminToy">The spawned ragdoll.</param>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Internal.AdminToyList.OnRemovedAdminToys(AdminToys.AdminToyBase)">
+            <summary>
+            Called before a ragdoll is destroyed. Hooked to <see cref="E:AdminToys.AdminToyBase.OnRemoved"/>.
+            </summary>
+            <param name="adminToy">The destroyed ragdoll.</param>
+        </member>
         <member name="T:Exiled.Events.Handlers.Internal.ClientStarted">
             <summary>
             Handles on client started event.
@@ -9891,8 +10081,21 @@
         </member>
         <member name="P:Exiled.Events.Handlers.Item.ChangingMicroHIDPickupState">
             <summary>
-            Invoked before a<see cref="T:Exiled.API.Features.Pickups.MicroHIDPickup"/> state is changed.
+            Invoked before a <see cref="T:Exiled.API.Features.Pickups.MicroHIDPickup"/> state is changed.
             </summary>
+        </member>
+        <member name="P:Exiled.Events.Handlers.Item.DisruptorFiring">
+            <summary>
+            Invoked before a <see cref="F:ItemType.ParticleDisruptor"/> firing while on the ground.
+            <remarks>The client will still see all effects, like sounds and shoot.</remarks>
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Item.OnDisruptorFiring(Exiled.Events.EventArgs.Item.DisruptorFiringEventArgs)">
+            <summary>
+            Called before a <see cref="F:ItemType.ParticleDisruptor"/> firing while on the ground.
+            WARNING: Client still receive the shoot sound AND the ammo is still removed. (even if <see cref="P:Exiled.Events.EventArgs.Item.DisruptorFiringEventArgs.IsAllowed"/> = false).
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Item.DisruptorFiringEventArgs"/> instance.</param>
         </member>
         <member name="M:Exiled.Events.Handlers.Item.OnChangingAmmo(Exiled.Events.EventArgs.Item.ChangingAmmoEventArgs)">
             <summary>
@@ -10032,6 +10235,11 @@
             Invoked after a pickup is destroyed.
             </summary>
         </member>
+        <member name="P:Exiled.Events.Handlers.Map.SpawningRoomConnector">
+            <summary>
+            Invoked before a room connector spawns.
+            </summary>
+        </member>
         <member name="P:Exiled.Events.Handlers.Map.SpawningTeamVehicle">
             <summary>
             Invoked before a team vehicle is spawned.
@@ -10148,6 +10356,12 @@
             </summary>
             <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Map.PickupDestroyedEventArgs"/> instance.</param>
         </member>
+        <member name="M:Exiled.Events.Handlers.Map.OnSpawningRoomConnector(Exiled.Events.EventArgs.Map.SpawningRoomConnectorEventArgs)">
+            <summary>
+            Invoked before a room connector spawns.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Map.SpawningRoomConnectorEventArgs"/> instance.</param>
+        </member>
         <member name="M:Exiled.Events.Handlers.Map.OnSpawningTeamVehicle(Exiled.Events.EventArgs.Map.SpawningTeamVehicleEventArgs)">
             <summary>
             Invoked before a team vehicle is spawned.
@@ -10169,6 +10383,11 @@
         <member name="T:Exiled.Events.Handlers.Player">
             <summary>
             Player related events.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.Handlers.Player.Hit">
+            <summary>
+            Invoked after a player triggers the attack as an SCP.
             </summary>
         </member>
         <member name="P:Exiled.Events.Handlers.Player.PreAuthenticating">
@@ -10726,6 +10945,16 @@
         <member name="P:Exiled.Events.Handlers.Player.ChangingDisruptorMode">
             <summary>
             Invoked before disruptor's mode is changed.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.Handlers.Player.ExplodingMicroHID">
+            <summary>
+            Invoked before the player explode with the micro HID.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.Handlers.Player.MicroHIDOpeningDoor">
+            <summary>
+            Invoked before the micro HID opens a door.
             </summary>
         </member>
         <member name="P:Exiled.Events.Handlers.Player.DrinkingCoffee">
@@ -11386,6 +11615,18 @@
             </summary>
             <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Player.ChangingDisruptorModeEventArgs"/> instance.</param>
         </member>
+        <member name="M:Exiled.Events.Handlers.Player.OnExplodingMicroHID(Exiled.Events.EventArgs.Player.ExplodingMicroHIDEventArgs)">
+            <summary>
+            Called before disruptor's mode is changed.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Player.ExplodingMicroHIDEventArgs"/> instance.</param>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Player.OnMicroHIDOpeningDoor(Exiled.Events.EventArgs.Player.MicroHIDOpeningDoorEventArgs)">
+            <summary>
+            Called before the micro HID opens a door.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Player.ChangingDisruptorModeEventArgs"/> instance.</param>
+        </member>
         <member name="M:Exiled.Events.Handlers.Player.OnDrinkingCoffee(Exiled.Events.EventArgs.Player.DrinkingCoffeeEventArgs)">
             <summary>
             Called before player interacts with coffee cup.
@@ -11397,6 +11638,12 @@
             Called before pre-authenticating a <see cref="T:Exiled.API.Features.Player"/>.
             </summary>
             <param name="ev"><The cref="T:Exiled.Events.EventArgs.Player.PreAuthenticatingEventArgs"/> instance.</param>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Player.OnHit(Exiled.Events.EventArgs.Player.HitEventArgs)">
+            <summary>
+            Called after a player triggers the melee attack as an SCP.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Player.HitEventArgs"/> instance.</param>
         </member>
         <member name="T:Exiled.Events.Handlers.Scp049">
             <summary>
@@ -12715,6 +12962,11 @@
             Adds the <see cref="P:Exiled.Events.Handlers.Item.ChangingAttachments" /> event.
             </summary>
         </member>
+        <member name="T:Exiled.Events.Patches.Events.Item.DisruptorFiring">
+            <summary>
+            Patches <see cref="M:InventorySystem.Items.Firearms.Extensions.DisruptorWorldmodelActionExtension.ServerFire"/>. Adds the <see cref="T:Exiled.Events.Patches.Events.Item.DisruptorFiring"/> event.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.Patches.Events.Item.JailbirdPatch">
             <summary>
             Patches
@@ -12855,8 +13107,20 @@
         </member>
         <member name="T:Exiled.Events.Patches.Events.Map.SpawningItem">
             <summary>
-            Patches <see cref="M:MapGeneration.Distributors.ItemDistributor.SpawnPickup(InventorySystem.Items.Pickups.ItemPickupBase)" />.
+            Patches <see cref="M:MapGeneration.Distributors.ItemDistributor.ServerRegisterPickup(InventorySystem.Items.Pickups.ItemPickupBase,System.String)" />.
             Adds the <see cref="P:Exiled.Events.Handlers.Map.SpawningItem" /> event.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Events.Map.SpawningRoomConnector">
+            <summary>
+            Patches <see cref="M:MapGeneration.RoomConnectors.Spawners.RoomConnectorSpawnpointBase.Spawn(MapGeneration.RoomConnectors.SpawnableRoomConnectorType)"/>.
+            Adds the <see cref="M:Exiled.Events.Handlers.Map.OnSpawningRoomConnector(Exiled.Events.EventArgs.Map.SpawningRoomConnectorEventArgs)"/> event.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Events.Map.SpawningRoomConnectorFix">
+            <summary>
+            Patches <see cref="M:MapGeneration.SeedSynchronizer.GenerateLevel(System.Boolean)"/>.
+            Adds the <see cref="M:Exiled.Events.Handlers.Map.OnSpawningRoomConnector(Exiled.Events.EventArgs.Map.SpawningRoomConnectorEventArgs)"/> event.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Events.Map.SpawningTeamVehicle">
@@ -12873,7 +13137,7 @@
         </member>
         <member name="T:Exiled.Events.Patches.Events.Player.ActivatingWarheadPanel">
             <summary>
-            Patch the <see cref="M:PlayerInteract.UserCode_CmdSwitchAWButton" />.
+            Patch the <see cref="M:AlphaWarheadActivationPanel.ServerInteractKeycard(ReferenceHub)" />.
             Adds the <see cref="P:Exiled.Events.Handlers.Player.ActivatingWarheadPanel" /> event.
             </summary>
         </member>
@@ -13106,6 +13370,12 @@
             Adds the <see cref="P:Exiled.Events.Handlers.Player.ExitingEnvironmentalHazard"/> event.
             </summary>
         </member>
+        <member name="T:Exiled.Events.Patches.Events.Player.ExplodingMicroHID">
+            <summary>
+            Patches <see cref="M:InventorySystem.Items.MicroHID.Modules.ChargeFireModeModule.ServerExplode"/>.
+            Adds the <see cref="P:Exiled.Events.Handlers.Player.ExplodingMicroHID" /> event.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.Patches.Events.Player.FailingEscapePocketDimension">
             <summary>
             Patches <see cref="M:PocketDimensionTeleport.Kill(PocketDimensionTeleport,ReferenceHub)" />.
@@ -13127,6 +13397,12 @@
             the <see cref="P:Exiled.Events.Handlers.Player.Healed" /> events.
             </summary>
         </member>
+        <member name="T:Exiled.Events.Patches.Events.Player.Hit">
+            <summary>
+            Patches ScpAttackAbilityBase.ServerPerformAttack
+            to add <see cref="P:Exiled.Events.Handlers.Player.Hit" /> event.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.Patches.Events.Player.Hurting">
             <summary>
             Patches <see cref="M:PlayerStatsSystem.PlayerStats.DealDamage(PlayerStatsSystem.DamageHandlerBase)" />.
@@ -13143,6 +13419,11 @@
             <summary>
             Patches <see cref="M:Interactables.Interobjects.DoorUtils.DoorVariant.ServerInteract(ReferenceHub,System.Byte)" />.
             Adds the <see cref="P:Exiled.Events.Handlers.Player.InteractingDoor" /> event.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Events.Player.ChangeNWLogic">
+            <summary>
+            Patches <see cref="M:Interactables.Interobjects.DoorUtils.DoorVariant.TryResolveLock(ReferenceHub,System.Boolean@)" />.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Events.Player.InteractingElevator">
@@ -13229,6 +13510,12 @@
             <summary>
             Patches <see cref="M:PlayerRoles.FirstPersonControl.Thirdperson.AnimatedCharacterModel.PlayFootstep"/>
             to add <see cref="P:Exiled.Events.Handlers.Player.MakingNoise"/> event.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Events.Player.MicroHIDOpeningDoor">
+            <summary>
+            Patches <see cref="M:InventorySystem.Items.MicroHID.Modules.ChargeFireModeModule.HandlePotentialDoor(Interactables.InteractableCollider)"/>.
+            Adds the <see cref="T:Exiled.Events.Patches.Events.Player.MicroHIDOpeningDoor" /> event.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Events.Player.PickingUp330">
@@ -13322,7 +13609,7 @@
         </member>
         <member name="T:Exiled.Events.Patches.Events.Player.SearchingPickupEvent">
             <summary>
-            Patches <see cref="M:InventorySystem.Searching.SearchCoordinator.ReceiveRequestUnsafe(System.Nullable{InventorySystem.Searching.SearchSession}@,InventorySystem.Searching.SearchCompletor@)" />.
+            Patches <see cref="M:InventorySystem.Searching.SearchCoordinator.ReceiveRequestUnsafe(System.Nullable{InventorySystem.Searching.SearchSession}@,InventorySystem.Searching.ISearchCompletor@)" />.
             Adds the <see cref="P:Exiled.Events.Handlers.Player.SearchingPickup" /> event.
             </summary>
         </member>
@@ -13352,9 +13639,15 @@
             Adds the <see cref="P:Exiled.Events.Handlers.Player.Shooting" /> events.
             </summary>
         </member>
-        <member name="T:Exiled.Events.Patches.Events.Player.Shot">
+        <member name="T:Exiled.Events.Patches.Events.Player.ShotTarget">
             <summary>
-            Patches <see cref="M:InventorySystem.Items.Firearms.Modules.HitscanHitregModuleBase.ServerPerformHitscan(UnityEngine.Ray,System.Single@)" />.
+            Patches <see cref="M:InventorySystem.Items.Firearms.Modules.HitscanHitregModuleBase.ServerApplyDestructibleDamage(InventorySystem.Items.Firearms.Modules.Misc.DestructibleHitPair,InventorySystem.Items.Firearms.Modules.Misc.HitscanResult)" />.
+            Adds the <see cref="P:Exiled.Events.Handlers.Player.Shot" /> event.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Events.Player.ShotMiss">
+            <summary>
+            Patches <see cref="M:InventorySystem.Items.Firearms.Modules.HitscanHitregModuleBase.ServerAppendPrescan(UnityEngine.Ray,InventorySystem.Items.Firearms.Modules.Misc.HitscanResult)" />.
             Adds the <see cref="P:Exiled.Events.Handlers.Player.Shot" /> event.
             </summary>
         </member>
@@ -13838,7 +14131,7 @@
         </member>
         <member name="T:Exiled.Events.Patches.Events.Scp330.DroppingCandy">
             <summary>
-            Patches the <see cref="M:InventorySystem.Items.Usables.Scp330.Scp330NetworkHandler.ServerSelectMessageReceived(Mirror.NetworkConnection,InventorySystem.Items.Usables.Scp330.SelectScp330Message)" /> method to add the
+            Patches the <see cref="M:InventorySystem.Items.Usables.Scp330.Scp330NetworkHandler.ServerDropCandy(InventorySystem.Items.Usables.Scp330.Scp330Bag,System.Int32)" /> method to add the
             <see cref="P:Exiled.Events.Handlers.Scp330.DroppingScp330" /> event.
             </summary>
         </member>
@@ -14038,11 +14331,6 @@
             <summary>
             Patches <see cref="M:AlphaWarheadController.CancelDetonation(ReferenceHub)" />.
             Adds the <see cref="P:Exiled.Events.Handlers.Warhead.Stopping" /> event.
-            </summary>
-        </member>
-        <member name="T:Exiled.Events.Patches.Fixes.ArmorDropPatch">
-            <summary>
-            Patches <see cref="M:InventorySystem.Items.Armor.BodyArmorUtils.RemoveEverythingExceedingLimits(InventorySystem.Inventory,InventorySystem.Items.Armor.BodyArmor,System.Boolean,System.Boolean)"/> to fix https://git.scpslgame.com/northwood-qa/scpsl-bug-reporting/-/issues/230 bug.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Fixes.Fix106RegenerationWithScp244">
