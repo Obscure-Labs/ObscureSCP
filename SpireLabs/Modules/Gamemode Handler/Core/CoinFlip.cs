@@ -13,6 +13,8 @@ using Exiled.API.Features.Pickups;
 using Exiled.API.Enums;
 using InventorySystem.Items.Usables.Scp330;
 using PlayerRoles;
+using Exiled.API.Features.Doors;
+using System.Runtime.Remoting.Metadata;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
@@ -51,7 +53,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             }),
             new("AddHp50", "You gained <color=green>50</color> HP!", (Player) =>
             {
-                Player.Heal(50, true);
+                Player.Heal(50, false);
                 return true;
             }),
             new("SpeedBoost5", "You gained a <color=blue><u>5 second speed boost!</u></color>", (Player) =>
@@ -154,7 +156,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             }),
             new("Death", "You rolled <color=#767676><u>DEATH</u></color>", (Player) =>
             {
-                
+                Player.Vaporize();
                 return true;
             }),
             new("GrenadeFountain", "<color=red><u>GRENADE FOUNTAIN</u></color>", (Player) =>
@@ -180,8 +182,23 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             }),
             new("Flashbang", "THINK FAST CHUCKLENUTS", (Player) =>
             {
-                Player.EnableEffect(EffectType.Flashed, 5f);
-                Player.ChangeEffectIntensity(EffectType.Flashed, 1, 5f);
+                for (int i = 0; i < 5; i++)
+                {
+                    FlashGrenade grenade = (FlashGrenade)Item.Create(ItemType.GrenadeFlash);
+                    grenade.FuseTime = UnityEngine.Random.Range(0, 100) / 100f * 1.5f;
+                    grenade.SpawnActive(Player.Transform.position, null);
+                }
+                return true;
+            }),
+            new("Loud", "WAAAAAAAAAAAAAAAAAAAAAAAH", (Player) =>
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    foreach (Door d in Door.List)
+                    {
+                        Timing.CallDelayed(UnityEngine.Random.Range(0.01f, 1f), () => d.PlaySound(DoorBeepType.PermissionDenied));
+                    }
+                }
                 return true;
             }),
             new("RandRoom", "You find yourself in a random room...", (Player) =>
@@ -307,7 +324,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                 {
                     if (Vector3.Distance(p.Position, player.Position) <= 5f)
                     {
-                        player.Heal(5, true);
+                        player.Heal(5, false);
                     }
                 }
                 yield return Timing.WaitForSeconds(0.1f);

@@ -130,6 +130,7 @@ namespace ObscureLabs.Modules
                 if (ev.Player != null)
                 {
                     Manager.SendHint(ev.Player, "You have been sent to the pregame lobby, Waiting for players!", 5);
+                    ev.Player.IsGodModeEnabled = true;
                     ev.Player.RoleManager.ServerSetRole(RoleTypeId.Tutorial, RoleChangeReason.RemoteAdmin, RoleSpawnFlags.None);
                     ev.Player.Teleport(room.transform.position + (Vector3.up / 2));
 
