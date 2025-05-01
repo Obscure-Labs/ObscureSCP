@@ -34,7 +34,8 @@ namespace ObscureLabs.Items
             new(CustomItem.Get((uint)1), 0, 2), // Sniper
             new(CustomItem.Get((uint)5), 0, 3), // Lasergun
             new(CustomItem.Get((uint)6), 0, 2),  // Particle Collapser
-            new(CustomItem.Get((uint)13), 0, 3) // Super Capybara
+            new(CustomItem.Get((uint)13), 0, 3), // Super Capybara
+            new(CustomItem.Get((uint)14), 0, 2) // MediGun
         };
 
         public static CustomItemSpawningData[] ItemList { get; set; } =
@@ -144,11 +145,11 @@ namespace ObscureLabs.Items
 
             foreach (CustomItemSpawningData i in WeaponList)
             {
-                Log.Info($"Spawned {i.count} of {CustomItem.Get(i.item.Id).Name}");
+                Log.Warn($"Spawned {i.count} of {CustomItem.Get(i.item.Id).Name}");
             }
             foreach (CustomItemSpawningData i in ItemList)
             {
-                Log.Info($"Spawned {i.count} of {CustomItem.Get(i.item.Id).Name}");
+                Log.Warn($"Spawned {i.count} of {CustomItem.Get(i.item.Id).Name}");
             }
         }
     }

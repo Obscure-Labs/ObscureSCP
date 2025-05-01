@@ -13,12 +13,13 @@ using System.Linq;
 using Exiled.API.Enums;
 using LabApi.Events.Arguments.PlayerEvents;
 using Player = Exiled.API.Features.Player;
+using UnityEngine;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
     public class MvpSystem : Module
     {
-        private List<PlayerData> _playerData = new();
+        private static List<PlayerData> _playerData = new();
         private static bool WarheadPanelUnlocked = false;
 
         public override string Name => "MVPSystem";
@@ -71,7 +72,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                 return;
             }
 
-            Timing.RunCoroutine(AddXpToPlayer(ev.Player, 1, "Had a player look at your face..."));
+            AddXpToPlayer(ev.Player, 1, "Had a player look at your face...");
         }
 
         private void OnActivatingWarheadPanel(ActivatingWarheadPanelEventArgs ev)
@@ -81,7 +82,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             else if (!WarheadPanelUnlocked)
             {
                 WarheadPanelUnlocked = true;
-                Timing.RunCoroutine(AddXpToPlayer(ev.Player, 7, "Opening The Warhead Panel"));
+                AddXpToPlayer(ev.Player, 7, "Opening The Warhead Panel");
             }
             else { return; }
 
@@ -89,7 +90,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         private void OnEscapingPocketDimension(PlayerLeavingPocketDimensionEventArgs ev)
         {
-            if(ev.IsSuccessful) Timing.RunCoroutine(AddXpToPlayer(ev.Player, 3, "Escaping The Pocket Dimension"));
+            if(ev.IsSuccessful) AddXpToPlayer(ev.Player, 3, "Escaping The Pocket Dimension");
         }
 
         private void OnEscaping(EscapingEventArgs ev)
@@ -101,12 +102,12 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
             if (ev.Player.IsCuffed)
             {
-                Timing.RunCoroutine(AddXpToPlayer(ev.Player.Cuffer, 5, "Recruiting Another Player"));
-                Timing.RunCoroutine(AddXpToPlayer(ev.Player, 2, "Escaping as a prisoner"));
+                AddXpToPlayer(ev.Player.Cuffer, 5, "Recruiting Another Player");
+                AddXpToPlayer(ev.Player, 2, "Escaping as a prisoner");
             }
             else
             {
-                Timing.RunCoroutine(AddXpToPlayer(ev.Player, 3, "Escaping Facility"));
+                AddXpToPlayer(ev.Player, 3, "Escaping Facility");
             }
         }
 
@@ -114,7 +115,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         {
             if (ev.Player.Items.Any(item => item is Keycard keycard && keycard.Permissions.HasFlag(KeycardPermissions.ArmoryLevelTwo)))
             {
-                Timing.RunCoroutine(AddXpToPlayer(ev.Player, 2, "Unlocking Generator"));
+                AddXpToPlayer(ev.Player, 2, "Unlocking Generator");
             }
             else
             {
@@ -131,11 +132,12 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
             if (ev.Player.IsScp)
             {
-                Timing.RunCoroutine(AddXpToPlayer(ev.Attacker, 12, $"Killing SCP Player: {ev.Player.DisplayNickname}"));
+                AddXpToPlayer(ev.Attacker, 12, $"Killing SCP Player: {ev.Player.DisplayNickname}");
+
             }
             else
             {
-                Timing.RunCoroutine(AddXpToPlayer(ev.Attacker, 5, $"Killing Player: {ev.Player.DisplayNickname}"));
+                AddXpToPlayer(ev.Attacker, 5, $"Killing Player: {ev.Player.DisplayNickname}");
             }
 
         }
@@ -204,14 +206,13 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             }
         }
 
-        public IEnumerator<float> AddXpToPlayer(Player player, int xp, string reason)
+        public static void AddXpToPlayer(Player player, int xp, string reason)
         {
-            yield return Timing.WaitForOneFrame;
             if (player is null || reason is null)
             {
-                yield break;
+                return;
             }
-
+            Debug.Log("Added xp to player");
             _playerData.FirstOrDefault(x => x.Player.Id == player.Id).Xp += xp;
             Manager.SendHint(player, $"You Gained <color=green><u>{xp} MVP points</u></color> for: <color=yellow>{reason}</color>\nYou currently have: <color=green><u>{_playerData.FirstOrDefault(x => x.Player.Id == player.Id).Xp} MVP points</u></color>", 5);
         }
