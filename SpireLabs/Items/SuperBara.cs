@@ -28,12 +28,12 @@ using UnityEngine.Windows.WebCam;
 
 namespace ObscureLabs.Items
 {
-    [CustomItem(ItemType.GrenadeHE)]
-    public class SuperCapybara : Exiled.CustomItems.API.Features.CustomGrenade
+    [CustomItem(ItemType.GunCom45)]
+    public class SuperCapybara : Exiled.CustomItems.API.Features.CustomWeapon
     {
         public override string Name { get; set; } = "Super Capybara";
 
-        public override uint Id { get; set; } = 420;
+        public override uint Id { get; set; } = 13;
 
         public override string Description { get; set; } = "\t";
 
@@ -51,10 +51,6 @@ namespace ObscureLabs.Items
                 }
             },
         };
-
-        public override bool ExplodeOnCollision { get; set; } = false;
-
-        public override float FuseTime { get; set; } = 999f;
 
         public List<ReferenceHub> HiddenPlayers = new List<ReferenceHub>();
         public List<ReferenceHub> Dummies = new List<ReferenceHub>();
@@ -89,14 +85,11 @@ namespace ObscureLabs.Items
             }
             
         }
-        
-        protected override void OnThrownProjectile(ThrownProjectileEventArgs ev)
-        {
-            ExplosionGrenadeProjectile g = ev.Projectile as ExplosionGrenadeProjectile;
-            g.Base.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-            g.Base.gameObject.SetActive(false);
-            g.Base.transform.position = Vector3.zero;
 
+        protected override void OnShooting(ShootingEventArgs ev)
+        {
+            ev.IsAllowed = false;
+            ev.Firearm.Destroy();
             var npc = Npc.Spawn("\t" + ev.Player.DisplayNickname + "\t", ev.Player.Role.Type,
                 ev.Player.Transform.position);
             npc.Transform.rotation = ev.Player.Transform.rotation;
@@ -105,7 +98,7 @@ namespace ObscureLabs.Items
             HiddenPlayers.Add(ev.Player.ReferenceHub);
 
             var capybara = PrefabHelper.Spawn(PrefabType.CapybaraToy, ev.Player.Position, ev.Player.Rotation);
-            capybara.AddComponent<CapybaraScript>().owner = ev.Player;
+            //capybara.AddComponent<CapybaraScript>().owner = ev.Player;
             capybara.AddComponent<BoxCollider>().transform.localScale = Vector3.one;
 
             try
@@ -119,26 +112,46 @@ namespace ObscureLabs.Items
             }
             
             Timing.RunCoroutine(RunCapybara(ev.Player, npc, capybara, ev.Player.Transform.position));
-            base.OnThrownProjectile(ev);
         }
         
         private IEnumerator<float> RunCapybara(Player p, Npc dummy, GameObject capybara, Vector3 oldPos)
         {
+            DateTime endTime = DateTime.Now.AddSeconds(10);
             var oldGrav = LabApi.Features.Wrappers.Player.Get(p.ReferenceHub).Gravity;
             LabApi.Features.Wrappers.Player.Get(p.ReferenceHub).Gravity = Vector3.zero;
-            for(int i = 0; i < 1000; i++)
+            while(DateTime.Now < endTime)
             {
                 yield return Timing.WaitForOneFrame;
-                capybara.transform.position += p.CameraTransform.forward.normalized*0.1f;
+                capybara.transform.position += p.CameraTransform.forward.normalized*0.15f;
                 capybara.transform.rotation = p.CameraTransform.rotation;
                 capybara.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                if(Physics.Raycast(capybara.transform.position+capybara.transform.forward.normalized * 0.1f, capybara.transform.forward, out var hit, 1f))
+                {
+                    if(Player.Get(hit.collider) != p)
+                    {
+                        var grenade = (ExplosiveGrenade)Item.Create(ItemType.GrenadeHE, p);
+                        grenade.FuseTime = 0;
+                        grenade.ScpDamageMultiplier = 1.25f;
+                        grenade.MaxRadius = 50;
+
+                        grenade.SpawnActive(new Vector3(capybara.transform.position.x + 0.5f, capybara.transform.position.y, capybara.transform.position.z), p);
+                        grenade.SpawnActive(new Vector3(capybara.transform.position.x + 0.25f, capybara.transform.position.y, capybara.transform.position.z + 0.5f), p);
+                        grenade.SpawnActive(new Vector3(capybara.transform.position.x + 0.25f, capybara.transform.position.y, capybara.transform.position.z - 0.5f), p);
+                        break;
+                    }
+                }
+
                 p.Teleport(capybara.transform.position + -p.CameraTransform.forward*0.1f);
             }
             LabApi.Features.Wrappers.Player.Get(p.ReferenceHub).Gravity = oldGrav;
             p.Scale = Vector3.one;
             p.Teleport(oldPos);
+            HiddenPlayers.Remove(p.ReferenceHub);
+            Capybaras.Remove(capybara);
+            Dummies.Remove(dummy.ReferenceHub);
             NetworkServer.Destroy(capybara); 
             dummy.Destroy();
+
         }
         
         
@@ -183,30 +196,21 @@ namespace ObscureLabs.Items
         }
     }
 }
-
-public class CapybaraScript : MonoBehaviour
-{
-    public Player owner;
-    public void Start()
-    {
-        Log.Info("Capybara Created");
-    }
-
-    public void OnCollisionEnter(Collider other)
-    {
-        Log.Info("Capybara Crashed into something");
-        if (Player.Get(other) == owner) return;
-
-
-        var grenade = (ExplosiveGrenade)Item.Create(ItemType.GrenadeHE);
-        grenade.FuseTime = 0;
-        grenade.ScpDamageMultiplier = 1.25f;
-        grenade.MaxRadius = 50;
-
-        grenade.SpawnActive(new Vector3(this.transform.position.x + 0.5f, this.transform.position.y, this.transform.position.z));
-        grenade.SpawnActive(new Vector3(this.transform.position.x + 0.25f, this.transform.position.y, this.transform.position.z + 0.5f));
-        grenade.SpawnActive(new Vector3(this.transform.position.x + 0.25f, this.transform.position.y, this.transform.position.z - 0.5f));
-
-        SuperCapybara.DestroyCapybara(gameObject);
-    }
-}
+//
+// public class CapybaraScript : MonoBehaviour
+// {
+//     public Player owner;
+//     public void Start()
+//     {
+//         Log.Info("Capybara Created");
+//     }
+//
+//     public void OnCollisionEnter(Collider other)
+//     {
+//         Log.Info("Capybara Crashed into something");
+//         if (Player.Get(other) == owner) return;
+//         
+//
+//         SuperCapybara.DestroyCapybara(gameObject);
+//     }
+// }

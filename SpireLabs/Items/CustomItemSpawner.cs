@@ -33,7 +33,8 @@ namespace ObscureLabs.Items
         {
             new(CustomItem.Get((uint)1), 0, 2), // Sniper
             new(CustomItem.Get((uint)5), 0, 3), // Lasergun
-            new(CustomItem.Get((uint)6), 0, 2)  // Particle Collapser
+            new(CustomItem.Get((uint)6), 0, 2),  // Particle Collapser
+            new(CustomItem.Get((uint)13), 0, 3) // Super Capybara
         };
 
         public static CustomItemSpawningData[] ItemList { get; set; } =
