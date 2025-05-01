@@ -150,6 +150,7 @@
     <Compile Include="Items\SuperBara.cs" />
     <Compile Include="Modules\Default\LightHandler.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\CoinFlip.cs" />
+    <Compile Include="Modules\Gamemode Handler\Core\EffectController.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\EmotionRandomiser.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\ItemGlow.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\MvpSystem.cs" />
@@ -163,6 +164,8 @@
     <Compile Include="Modules\Gamemode Handler\Core\SCP Rebalances\SCP173.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\SCP1162.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\Scp914.cs" />
+    <Compile Include="Modules\Gamemode Handler\StatusEffects\Burning.cs" />
+    <Compile Include="Modules\Gamemode Handler\StatusEffects\LightHeaded.cs" />
     <Compile Include="Modules\Lobby.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

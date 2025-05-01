@@ -1,9 +1,12 @@
 ﻿using Exiled.API.Enums;
+using Exiled.API.Features;
 using Exiled.API.Features.Attributes;
 using Exiled.API.Features.Spawn;
 using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Player;
+using ObscureLabs.Modules.Gamemode_Handler.StatusEffects;
 using SpireSCP.GUI.API.Features;
+using System;
 using System.Collections.Generic;
 using Player = Exiled.Events.Handlers.Player;
 namespace ObscureLabs.Items
@@ -71,7 +74,16 @@ namespace ObscureLabs.Items
             {
                 return;
             }
-
+            Log.Info("About to give custom effect");
+            try
+            {
+                ev.Player.EnableEffect(new LightHeaded(), 1, 5f, false);
+                Log.Info("Given custom effect");
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Error giving custom effect: {ex}");
+            }
             Manager.SendHint(ev.Player, "You feel a little odd... maybe you should have read the label", 5.0f);
             ev.Player.EnableEffect(EffectType.BodyshotReduction, 15);
             ev.Player.ChangeEffectIntensity(EffectType.BodyshotReduction, 50, 15);

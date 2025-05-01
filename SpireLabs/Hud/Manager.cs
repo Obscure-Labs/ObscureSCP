@@ -26,6 +26,17 @@ namespace SpireSCP.GUI.API.Features
             Timing.RunCoroutine(HudHandler.SendHintCoroutine(Player, Hint, Time));
         }
 
+        /// <summary>
+        /// Sends a specific player a hint.
+        /// </summary>
+        /// <param name="Player">The Player to send a hint to.</param>
+        /// <param name="Hint">The text to display to that player.</param>
+        /// <param name="Time">The amount of time that hint should be displayed for.</param>
+        public static void SendHint(ReferenceHub referenceHub, string Hint, float Time)
+        {
+            Timing.RunCoroutine(HudHandler.SendHintCoroutine(Player.Get(referenceHub), Hint, Time));
+        }
+
 
         /// <summary>
         /// Sets a global modifier for all players.
