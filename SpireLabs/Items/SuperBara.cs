@@ -21,6 +21,9 @@ using PlayerRoles.FirstPersonControl.NetworkMessages;
 using UnityEngine;
 using UnityEngine.SearchService;
 using Object = UnityEngine.Object;
+using Exiled.CustomItems.API.Features;
+using static UnityEngine.GraphicsBuffer;
+using UnityEngine.Windows.WebCam;
 
 
 namespace ObscureLabs.Items
@@ -90,24 +93,21 @@ namespace ObscureLabs.Items
         protected override void OnThrownProjectile(ThrownProjectileEventArgs ev)
         {
             ExplosionGrenadeProjectile g = ev.Projectile as ExplosionGrenadeProjectile;
-            NetworkServer.Destroy(g.GameObject);
+            g.Base.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+            g.Base.gameObject.SetActive(false);
+            g.Base.transform.position = Vector3.zero;
 
-            var npc = Npc.Spawn(ev.Player.DisplayNickname + "CAPYBARACLONE", ev.Player.Role.Type,
+            var npc = Npc.Spawn("\t" + ev.Player.DisplayNickname + "\t", ev.Player.Role.Type,
                 ev.Player.Transform.position);
             npc.Transform.rotation = ev.Player.Transform.rotation;
-            // var dummy = DummyUtils.SpawnDummy(ev.Player.DisplayNickname + "CAPYBARA");
-            // dummy.transform.position = ev.Player.Transform.position;
-            // dummy.transform.rotation = Quaternion.Euler(0, 0, 0);
 
-            // foreach (Player p in Player.List)
-            // {
-            //     p.ReferenceHub.connectionToClient.Send(new ObjectHideMessage{netId = g.Base.netId});
-            //     if (p != ev.Player) p.ReferenceHub.connectionToClient.Send(new ObjectHideMessage{ netId = ev.Player.NetId });
-            // }
             ev.Player.Scale = new Vector3(0.01f, 0.01f, 0.01f);
             HiddenPlayers.Add(ev.Player.ReferenceHub);
 
             var capybara = PrefabHelper.Spawn(PrefabType.CapybaraToy, ev.Player.Position, ev.Player.Rotation);
+            capybara.AddComponent<CapybaraScript>().owner = ev.Player;
+            capybara.AddComponent<BoxCollider>().transform.localScale = Vector3.one;
+
             try
             {
                 ev.Player.ReferenceHub.connectionToClient.Send(new ObjectHideMessage
@@ -161,8 +161,12 @@ namespace ObscureLabs.Items
             {
                 ev.IsAllowed = false;
             }
+            else
+            {
+                ev.IsAllowed = true;
+            }
         }
-        
+
         private void OnChangedItem(ChangedItemEventArgs ev)
         {
             if (!Check(ev.Item)) return;
@@ -182,13 +186,27 @@ namespace ObscureLabs.Items
 
 public class CapybaraScript : MonoBehaviour
 {
+    public Player owner;
     public void Start()
     {
+        Log.Info("Capybara Created");
     }
 
-    // public void OnTriggerEnter(Collider other)
-    // {
-    //     if (other.gameObject.layer == 8) return;
-    //     SuperCapybara.DestroyCapybara(gameObject);
-    // }
+    public void OnCollisionEnter(Collider other)
+    {
+        Log.Info("Capybara Crashed into something");
+        if (Player.Get(other) == owner) return;
+
+
+        var grenade = (ExplosiveGrenade)Item.Create(ItemType.GrenadeHE);
+        grenade.FuseTime = 0;
+        grenade.ScpDamageMultiplier = 1.25f;
+        grenade.MaxRadius = 50;
+
+        grenade.SpawnActive(new Vector3(this.transform.position.x + 0.5f, this.transform.position.y, this.transform.position.z));
+        grenade.SpawnActive(new Vector3(this.transform.position.x + 0.25f, this.transform.position.y, this.transform.position.z + 0.5f));
+        grenade.SpawnActive(new Vector3(this.transform.position.x + 0.25f, this.transform.position.y, this.transform.position.z - 0.5f));
+
+        SuperCapybara.DestroyCapybara(gameObject);
+    }
 }

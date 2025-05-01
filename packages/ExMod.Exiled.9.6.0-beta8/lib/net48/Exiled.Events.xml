@@ -532,6 +532,7 @@
             <summary>
             Gets or sets a value indicating whether keycard throw can affect basic doors.
             </summary>
+            TODO: Make a poll about removing this config. (unimplemented since 9.6.0-beta7)
         </member>
         <member name="P:Exiled.Events.Config.RecontainScp079IfNoScpsLeft">
             <summary>
@@ -3448,14 +3449,14 @@
             Contains all information before a player escapes the pocket dimension.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.EscapingPocketDimensionEventArgs.#ctor(PocketDimensionTeleport,Exiled.API.Features.Player,UnityEngine.Vector3)">
+        <member name="M:Exiled.Events.EventArgs.Player.EscapingPocketDimensionEventArgs.#ctor(PocketDimensionTeleport,ReferenceHub,UnityEngine.Vector3)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.EscapingPocketDimensionEventArgs" /> class.
             </summary>
             <param name="pocketDimensionTeleport">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.EscapingPocketDimensionEventArgs.Teleporter" />
             </param>
-            <param name="player">
+            <param name="hub">
             <inheritdoc cref="P:Exiled.Events.EventArgs.Player.EscapingPocketDimensionEventArgs.Player" />
             </param>
             <param name="position">

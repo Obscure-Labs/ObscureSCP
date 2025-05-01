@@ -118,6 +118,7 @@ namespace ObscureLabs
             _modules.AddModule(new Scp914Handler());
 
             _modules.AddModule(new RoundEndPVP());
+            _modules.AddModule(new EmotionRandomiser());
 
             RegisterEvents();
         }
