@@ -9,6 +9,7 @@ using MEC;
 using SpireSCP.GUI.API.Features;
 using System.Collections.Generic;
 using System.Linq;
+using PlayerRoles.FirstPersonControl.Thirdperson.Subcontrollers;
 using UnityEngine;
 
 
@@ -74,6 +75,7 @@ namespace ObscureLabs.Items
         {
             if (!Check(ev.Item)) return;
             Manager.SendHint(ev.Player, "You equipped the <b>Nova Grenade</b> \n <b>This will implode with a shining bright light.</b>.", 3.0f);
+            ev.Player.Emotion = EmotionPresetType.Chad;
         }
 
         private IEnumerator<float> GrenadeLightCoroutine(ThrownProjectileEventArgs ev)

@@ -59,6 +59,7 @@ namespace ObscureLabs.Items
         
         protected override void SubscribeEvents()
         {
+            Exiled.Events.Handlers.Player.ChangingItem += OnChangingItem;
             Exiled.Events.Handlers.Player.ChangedItem += OnChangedItem;
             Exiled.Events.Handlers.Player.Died += OnDied;
             Exiled.Events.Handlers.Player.Dying += OnDying;
@@ -66,6 +67,7 @@ namespace ObscureLabs.Items
         }
         protected override void UnsubscribeEvents()
         {
+            Exiled.Events.Handlers.Player.ChangingItem -= OnChangingItem;
             Exiled.Events.Handlers.Player.ChangedItem -= OnChangedItem;
             Exiled.Events.Handlers.Player.Died -= OnDied;
             Exiled.Events.Handlers.Player.Dying -= OnDying;
@@ -150,6 +152,14 @@ namespace ObscureLabs.Items
                     ev.Player.Disconnect();
                     Dummies.Remove(ev.Player.ReferenceHub);
                 }
+            }
+        }
+        
+        private void OnChangingItem(ChangingItemEventArgs ev)
+        {
+            if (HiddenPlayers.Contains(ev.Player.ReferenceHub))
+            {
+                ev.IsAllowed = false;
             }
         }
         
