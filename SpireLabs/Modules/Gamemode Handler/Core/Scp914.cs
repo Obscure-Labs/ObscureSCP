@@ -1,5 +1,6 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Features;
+using Exiled.API.Features.Pickups;
 using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Scp914;
 using MEC;
@@ -57,30 +58,41 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         public void InvItemThrough914(UpgradingInventoryItemEventArgs ev)
         {
-            if (ev.KnobSetting == Scp914.Scp914KnobSetting.VeryFine)
+            ev.IsAllowed = false;
+            var rng = UnityEngine.Random.Range(0, 101);
+            if (ev.KnobSetting == Scp914.Scp914KnobSetting.VeryFine && ev.Item.Type == ItemType.KeycardO5)
             {
-                if (ev.Item.Type == ItemType.KeycardO5)
+                if (rng <= 20f)
                 {
-                    if (UnityEngine.Random.Range(0, 101) <= 20f)
-                    {
-                        ev.Item.Destroy();
-                        _customitemlist.RandomItem().Give(ev.Player);
-                    }
+                    ev.Item.Destroy();
+                    CustomItem.TryGive(ev.Player, _customitemlist.RandomItem().Name);
+
                 }
+
             }
         }
         public void ItemThrough914(UpgradingPickupEventArgs ev)
         {
-            if (ev.KnobSetting == Scp914.Scp914KnobSetting.VeryFine)
+            ev.IsAllowed = false;
+            var rng = UnityEngine.Random.Range(0, 101);
+
+            if (ev.KnobSetting == Scp914.Scp914KnobSetting.VeryFine && ev.Pickup.Type == ItemType.KeycardO5)
             {
-                if (ev.Pickup.Type == ItemType.KeycardO5)
+                if (rng <= 20f)
                 {
-                    if (UnityEngine.Random.Range(0, 101) <= 20f)
-                    {
-                        ev.Pickup.Destroy();
-                        _customitemlist.RandomItem().Spawn(ev.Pickup.Transform.position);
-                    }
+                    ev.Pickup.Destroy();
+                    CustomItem.TrySpawn(_customitemlist.RandomItem().Id, ev.OutputPosition, out Pickup p);
+
                 }
+                else if (rng <= 30 && rng >= 20)
+                {
+                    ev.Pickup.Transform.position = ev.OutputPosition;
+                    ev.Pickup.Clone().Transform.position = ev.OutputPosition;
+                }
+            }
+            else
+            {
+                ev.Pickup.Transform.position = ev.OutputPosition;
             }
         }
 
