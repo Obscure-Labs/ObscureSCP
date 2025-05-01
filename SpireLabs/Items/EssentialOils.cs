@@ -1,4 +1,5 @@
-﻿using Exiled.API.Enums;
+﻿using CustomPlayerEffects;
+using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.API.Features.Attributes;
 using Exiled.API.Features.Spawn;
@@ -74,16 +75,17 @@ namespace ObscureLabs.Items
             {
                 return;
             }
-            Log.Info("About to give custom effect");
-            try
-            {
-                ev.Player.EnableEffect(new LightHeaded(), 1, 5f, false);
-                Log.Info("Given custom effect");
-            }
-            catch (Exception ex)
-            {
-                Log.Error($"Error giving custom effect: {ex}");
-            }
+            //Log.Info("About to give custom effect");
+            //try
+            //{
+            //    StatusEffectBase statusEffectBase = new LightHeaded();
+            //    statusEffectBase.ServerSetState(1, 5, false);
+            //    Log.Info("Given custom effect");
+            //}
+            //catch (Exception ex)
+            //{
+            //    Log.Error($"Error giving custom effect: {ex}");
+            //}
             Manager.SendHint(ev.Player, "You feel a little odd... maybe you should have read the label", 5.0f);
             ev.Player.EnableEffect(EffectType.BodyshotReduction, 15);
             ev.Player.ChangeEffectIntensity(EffectType.BodyshotReduction, 50, 15);

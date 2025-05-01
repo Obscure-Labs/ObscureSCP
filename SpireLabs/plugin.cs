@@ -26,6 +26,8 @@ using Player = Exiled.API.Features.Player;
 using Cassie = Exiled.API.Features.Cassie;
 using UserSettings.ControlsSettings;
 using ObscureLabs.SpawnSystem;
+using HarmonyLib;
+using CustomPlayerEffects;
 
 namespace ObscureLabs
 {
@@ -53,7 +55,26 @@ namespace ObscureLabs
             KeyCode.H
         };
 
-        //private Harmony _harmony;
+        //[HarmonyPatch(typeof(PlayerEffectsController), nameof(PlayerEffectsController.TryGetEffect))]
+        //class Patch
+        //{
+        //    public bool TryGetEffect<T>(out T playerEffect) where T : StatusEffectBase
+        //    {
+        //        StatusEffectBase statusEffectBase;
+        //        if (this._effectsByType.TryGetValue(typeof(T), out statusEffectBase))
+        //        {
+        //            T t = statusEffectBase as T;
+        //            if (t != null)
+        //            {
+        //                playerEffect = t;
+        //                return true;
+        //            }
+        //        }
+        //        playerEffect = default(T);
+        //        return false;
+        //    }
+        //}
+
 
         public override void OnEnabled()
         {
@@ -79,6 +100,7 @@ namespace ObscureLabs
             PopulateModules();
             FetchOverrides();
             Log.Info($"Found Spire Config Folder : \"{SpireConfigLocation}\"");
+            
         }
 
         public override void OnDisabled()

@@ -5,7 +5,7 @@ using SpireSCP.GUI.API.Features;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.StatusEffects
 {
-    internal class LightHeaded : StatusEffectBase
+    public class LightHeaded : StatusEffectBase
     {
         private Vector3 oldGrav;
         public override void Enabled()
