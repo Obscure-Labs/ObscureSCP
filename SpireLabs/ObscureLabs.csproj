@@ -143,6 +143,7 @@
     <Compile Include="Items\CustomItemSpawner.cs" />
     <Compile Include="Items\EssentialOils.cs" />
     <Compile Include="Items\LaserGun.cs" />
+    <Compile Include="Items\MediSmg.cs" />
     <Compile Include="Items\NovaGrenade.cs" />
     <Compile Include="Items\ParticleCollapser.cs" />
     <Compile Include="Items\SNAV.cs" />

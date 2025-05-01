@@ -204,7 +204,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             }
         }
 
-        private IEnumerator<float> AddXpToPlayer(Player player, int xp, string reason)
+        public IEnumerator<float> AddXpToPlayer(Player player, int xp, string reason)
         {
             yield return Timing.WaitForOneFrame;
             if (player is null || reason is null)
