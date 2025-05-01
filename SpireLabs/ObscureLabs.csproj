@@ -142,6 +142,7 @@
     <Compile Include="Items\ParticleCollapser.cs" />
     <Compile Include="Items\SNAV.cs" />
     <Compile Include="Items\SniperRifle.cs" />
+    <Compile Include="Items\SuperBara.cs" />
     <Compile Include="Modules\Default\LightHandler.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\CoinFlip.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\ItemGlow.cs" />
