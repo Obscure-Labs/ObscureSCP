@@ -145,6 +145,7 @@
     <Compile Include="Items\SuperBara.cs" />
     <Compile Include="Modules\Default\LightHandler.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\CoinFlip.cs" />
+    <Compile Include="Modules\Gamemode Handler\Core\EmotionRandomiser.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\ItemGlow.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\MvpSystem.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\Powerup.cs" />
