@@ -99,10 +99,12 @@ namespace ObscureLabs.Items
         }
         private void Shooting(ShootingEventArgs ev)
         {
+            ev.Firearm.AmmoDrain = 0;
             if (ev.ClaimedTarget != null && ev.ClaimedTarget.IsHuman && ev.ClaimedTarget.Health < ev.ClaimedTarget.MaxHealth)
             {
                 Manager.SendHint(ev.Player, $"You have healed {ev.ClaimedTarget.DisplayNickname}!", 3f);
                 AddXP(ev.Player, 1);
+                ev.Player.ShowHitMarker(15f);
                 switch (Level)
                 {
                     case 1:
