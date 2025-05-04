@@ -28,6 +28,7 @@ using UserSettings.ControlsSettings;
 using ObscureLabs.SpawnSystem;
 using HarmonyLib;
 using CustomPlayerEffects;
+using ObscureLabs.Modules.Gamemode_Handler;
 
 namespace ObscureLabs
 {
@@ -115,6 +116,7 @@ namespace ObscureLabs
         {
 
             //- Core Utils -//
+            _modules.AddModule(new GamemodeManager());
             _modules.AddModule(new HudController());
             _modules.AddModule(new MvpSystem());
             _modules.AddModule(new CustomItemSpawner());
@@ -132,6 +134,7 @@ namespace ObscureLabs
             _modules.AddModule(new CoinFlip());
             _modules.AddModule(new AttachmentFix());
 
+            //- SCP Additions and rebalances -//
             _modules.AddModule(new Scp1162());
             _modules.AddModule(new SCP106());
             _modules.AddModule(new SCP173());
@@ -139,6 +142,7 @@ namespace ObscureLabs
 
             _modules.AddModule(new Scp914Handler());
 
+            //- Fun modules -//
             _modules.AddModule(new RoundEndPVP());
             _modules.AddModule(new EmotionRandomiser());
 
@@ -168,18 +172,19 @@ namespace ObscureLabs
             Exiled.Events.Handlers.Player.Left += OnLeft;
             Exiled.Events.Handlers.Player.Verified += OnVerified;
             Exiled.Events.Handlers.Player.Dying += OnDying;
-            foreach (Module m in _modules.Modules)
-            {
-                if (m.IsInitializeOnStart == true)
-                {
-                    m.Enable();
-                }
-                else
-                {
-                    continue;
-                }
 
-            }
+            //foreach (Module m in _modules.Modules)
+            //{
+            //    if (m.IsInitializeOnStart == true)
+            //    {
+            //        m.Enable();
+            //    }
+            //    else
+            //    {
+            //        continue;
+            //    }
+
+            //}
         }
 
         private void OnRoundStarted()
