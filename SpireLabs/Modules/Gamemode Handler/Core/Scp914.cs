@@ -1,5 +1,7 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Features;
+using Exiled.API.Features.Pickups;
+using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Scp914;
 using MEC;
 using ObscureLabs.API.Data;
@@ -8,6 +10,7 @@ using SpireSCP.GUI.API.Features;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -17,20 +20,80 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
     public class Scp914Handler : Module
     {
 
+        private List<CustomItem> _customitemlist = new()
+        {
+            CustomItem.Get((uint)1), // Sniper
+            CustomItem.Get((uint)5), // Lasergun
+            CustomItem.Get((uint)6), // Particle Collapser
+            CustomItem.Get((uint)13), // Super Capybara
+            CustomItem.Get((uint)14),  // MediGun
+            CustomItem.Get((uint)2), // ClusterHE
+            CustomItem.Get((uint)4), // NovaGrenade
+            CustomItem.Get((uint)12), // S-NAV
+            CustomItem.Get((uint)0), // Essential Oils
+
+
+        };
+
         public override string Name => "Scp914Handler";
 
         public override bool IsInitializeOnStart => true;
 
         public override bool Enable()
         {
+            Exiled.Events.Handlers.Scp914.UpgradingInventoryItem += InvItemThrough914;
+            Exiled.Events.Handlers.Scp914.UpgradingPickup += ItemThrough914;
             Exiled.Events.Handlers.Scp914.UpgradingPlayer += PlayerThrough914;
             return base.Enable();
         }
 
         public override bool Disable()
         {
+            Exiled.Events.Handlers.Scp914.UpgradingInventoryItem -= InvItemThrough914;
+            Exiled.Events.Handlers.Scp914.UpgradingPickup -= ItemThrough914;
             Exiled.Events.Handlers.Scp914.UpgradingPlayer -= PlayerThrough914;
             return base.Disable();
+        }
+
+
+        public void InvItemThrough914(UpgradingInventoryItemEventArgs ev)
+        {
+            ev.IsAllowed = false;
+            var rng = UnityEngine.Random.Range(0, 101);
+            if (ev.KnobSetting == Scp914.Scp914KnobSetting.VeryFine && ev.Item.Type == ItemType.KeycardO5)
+            {
+                if (rng <= 20f)
+                {
+                    ev.Item.Destroy();
+                    CustomItem.TryGive(ev.Player, _customitemlist.RandomItem().Name);
+
+                }
+
+            }
+        }
+        public void ItemThrough914(UpgradingPickupEventArgs ev)
+        {
+            ev.IsAllowed = false;
+            var rng = UnityEngine.Random.Range(0, 101);
+
+            if (ev.KnobSetting == Scp914.Scp914KnobSetting.VeryFine && ev.Pickup.Type == ItemType.KeycardO5)
+            {
+                if (rng <= 20f)
+                {
+                    ev.Pickup.Destroy();
+                    CustomItem.TrySpawn(_customitemlist.RandomItem().Id, ev.OutputPosition, out Pickup p);
+
+                }
+                else if (rng <= 30 && rng >= 20)
+                {
+                    ev.Pickup.Transform.position = ev.OutputPosition;
+                    ev.Pickup.Clone().Transform.position = ev.OutputPosition;
+                }
+            }
+            else
+            {
+                ev.Pickup.Transform.position = ev.OutputPosition;
+            }
         }
 
         public void PlayerThrough914(UpgradingPlayerEventArgs ev)

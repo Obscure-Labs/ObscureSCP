@@ -93,7 +93,6 @@ namespace ObscureLabs.Items
             var npc = Npc.Spawn("\t" + ev.Player.DisplayNickname + "\t", ev.Player.Role.Type,
                 ev.Player.Transform.position);
             npc.Transform.rotation = ev.Player.Transform.rotation;
-
             ev.Player.Scale = new Vector3(0.01f, 0.01f, 0.01f);
             HiddenPlayers.Add(ev.Player.ReferenceHub);
 
@@ -116,7 +115,7 @@ namespace ObscureLabs.Items
         
         private IEnumerator<float> RunCapybara(Player p, Npc dummy, GameObject capybara, Vector3 oldPos)
         {
-            DateTime endTime = DateTime.Now.AddSeconds(10);
+            DateTime endTime = DateTime.Now.AddSeconds(25);
             var oldGrav = LabApi.Features.Wrappers.Player.Get(p.ReferenceHub).Gravity;
             LabApi.Features.Wrappers.Player.Get(p.ReferenceHub).Gravity = Vector3.zero;
             while(DateTime.Now < endTime)

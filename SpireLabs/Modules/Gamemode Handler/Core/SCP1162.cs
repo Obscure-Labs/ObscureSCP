@@ -23,11 +23,17 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         private List<CustomItem> _customitemlist = new()
         {
+            CustomItem.Get((uint)1), // Sniper
+            CustomItem.Get((uint)5), // Lasergun
+            CustomItem.Get((uint)6), // Particle Collapser
+            CustomItem.Get((uint)13), // Super Capybara
+            CustomItem.Get((uint)14),  // MediGun
             CustomItem.Get((uint)2), // ClusterHE
             CustomItem.Get((uint)4), // NovaGrenade
-            CustomItem.Get((uint)1), // sniper
-            CustomItem.Get((uint)5), // ER16
-            CustomItem.Get((uint)6), // Particle Collapser
+            CustomItem.Get((uint)12), // S-NAV
+            CustomItem.Get((uint)0), // Essential Oils
+
+
         };
 
         private CoroutineHandle _playerPositionCoroutine;

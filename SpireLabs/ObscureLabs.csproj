@@ -79,15 +79,15 @@
     <Reference Include="LabApi, Version=0.6.0.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>..\packages\ExMod.Exiled.9.6.0-beta8\lib\net48\LabApi.dll</HintPath>
     </Reference>
-    <Reference Include="MapEditorReborn">
-      <HintPath>..\refs\MapEditorReborn.dll</HintPath>
-    </Reference>
     <Reference Include="Mirror, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\refs\Mirror.dll</HintPath>
     </Reference>
     <Reference Include="NorthwoodLib, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ExMod.Exiled.9.6.0-beta8\lib\net48\NorthwoodLib.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectMER">
+      <HintPath>..\refs\ProjectMER.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

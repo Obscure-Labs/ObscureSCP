@@ -20,6 +20,9 @@ using SpireSCP.GUI.API.Features;
 using InventorySystem.Items.Firearms.Modules.Scp127;
 using Mirror;
 using ObscureLabs.Modules.Gamemode_Handler.Core;
+using UnityEngine.Assertions.Must;
+using ObscureLabs.Extensions;
+using ObscureLabs.API.Data;
 
 namespace ObscureLabs.Items
 {
@@ -27,6 +30,7 @@ namespace ObscureLabs.Items
     public class MediSmg : Exiled.CustomItems.API.Features.CustomWeapon
     {
         public static int trueAmmo = 30;
+       
 
         public override float Damage { get; set; } = 0f;
 
@@ -42,6 +46,8 @@ namespace ObscureLabs.Items
 
         public int Experience = 0;
         public int Level = 1;
+
+        
 
         public override SpawnProperties SpawnProperties { get; set; } = new()
         {
@@ -59,7 +65,7 @@ namespace ObscureLabs.Items
         protected override void SubscribeEvents()
         {
             Exiled.Events.Handlers.Player.Shooting += Shooting;
-
+            
             base.SubscribeEvents();
         }
 
@@ -72,7 +78,8 @@ namespace ObscureLabs.Items
 
         protected override void OnChanging(ChangingItemEventArgs ev)
         {
-            Manager.SendHint(ev.Player, $"You just equipped the <color=#77d65a>\"MediGun (Level {Level})\"</color>, Shoot people to heal them and gain XP!", 5f);
+            
+            Manager.SendHint(ev.Player, $"You just equipped the \"MediGun\" \n<color=#77d65a>Level {Level} | {Experience}xp</color> \nShoot people to heal them and gain XP!", 5f);
             base.OnChanging(ev);
         }
 
@@ -80,29 +87,34 @@ namespace ObscureLabs.Items
         private void AddXP(Player player, int xp)
         {
             Experience += xp;
-
+            Manager.SendHint(player, $"<pos=0>Your MediGun has <color=#77d65a>{Experience}xp</color>", 2f);
             if (Experience >= Mathf.Pow(2, Level) * 100)
             {
                 LevelUp(player);
             }
 
-            
+
 
         }
+        
+        
 
         private void LevelUp(Player player)
         {
             Level = Mathf.Clamp(Level, 1, 4);
             Level += 1;
-            Manager.SendHint(player, $"<color=yellow>Your medgun just levelled up to Level {Level}!</color>", 5f);
-            Timing.CallDelayed(5f, () => ((MvpSystem)Plugin.Instance._modules.GetModule("MvpSystem")).AddXpToPlayer(player, 3, "MediGun Level Up"));
+            Manager.SendHint(player, $"<color=yellow>Your MediGun just levelled up to Level {Level}!</color>", 5f);
+            Timing.CallDelayed(5f, () => MvpSystem.AddXpToPlayer(player, 3, "MediGun Level Up"));
         }
+
         private void Shooting(ShootingEventArgs ev)
         {
+            
+            ev.Firearm.AmmoDrain = 0;
             if (ev.ClaimedTarget != null && ev.ClaimedTarget.IsHuman && ev.ClaimedTarget.Health < ev.ClaimedTarget.MaxHealth)
             {
-                Manager.SendHint(ev.Player, $"You have healed {ev.ClaimedTarget.DisplayNickname}!", 3f);
                 AddXP(ev.Player, 1);
+                ev.Player.ShowHitMarker(1500f);
                 switch (Level)
                 {
                     case 1:
@@ -112,19 +124,19 @@ namespace ObscureLabs.Items
                         }
                     case 2:
                         {
-                            if (ev.ClaimedTarget.ArtificialHealth == 0) { ev.ClaimedTarget.AddAhp(10f); }
+                            if (ev.ClaimedTarget.ArtificialHealth <= 25) { ev.ClaimedTarget.ArtificialHealth += 3f; }
                             ev.ClaimedTarget.Heal(4, false);
                             break;
                         }
                     case 3:
                         {
-                            if (ev.ClaimedTarget.ArtificialHealth == 0) { ev.ClaimedTarget.AddAhp(25f); }
+                            if (ev.ClaimedTarget.ArtificialHealth <= 50) { ev.ClaimedTarget.ArtificialHealth += 5f; }
                             ev.ClaimedTarget.Heal(6, false);
                             break;
                         }
                     case 4:
                         {
-                            ev.ClaimedTarget.AddAhp(25f);
+                            if (ev.ClaimedTarget.ArtificialHealth <= 100) { ev.ClaimedTarget.ArtificialHealth += 10f; }
                             ev.ClaimedTarget.Heal(8, false);
                             ev.ClaimedTarget.EnableEffect(EffectType.MovementBoost, 2f, true);
                             ev.ClaimedTarget.ChangeEffectIntensity(EffectType.MovementBoost, 70);
