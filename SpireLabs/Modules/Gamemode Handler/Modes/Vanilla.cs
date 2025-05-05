@@ -44,6 +44,4 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
             return base.Stop();
         }
     }
-    {
-    }
 }
