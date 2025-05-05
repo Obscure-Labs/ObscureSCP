@@ -1,4 +1,5 @@
-﻿using LabApi.Events.Arguments.ServerEvents;
+﻿using Exiled.API.Features;
+using LabApi.Events.Arguments.ServerEvents;
 using ObscureLabs.API.Features;
 using ObscureLabs.Modules.Gamemode_Handler.Modes;
 using System.Linq;
@@ -12,30 +13,17 @@ namespace ObscureLabs.Modules.Gamemode_Handler
         public override bool IsInitializeOnStart => false;
 
         public Gamemode selectedGamemode;
-        public Gamemode[] _gamemodes = { new Vanilla() };
+        public Gamemode[] _gamemodes = { new Vanilla(), new Standard() };
 
         public override bool Enable()
         {
             LabApi.Events.Handlers.ServerEvents.RoundStarted += OnRoundStarted;
             LabApi.Events.Handlers.ServerEvents.RoundEnded += OnRoundEnded;
 
-            if(UnityEngine.Random.RandomRange(0, 101) < 35)
-            {
-                //Selected gamemode round
-                selectedGamemode = _gamemodes[UnityEngine.Random.Range(0, _gamemodes.Count())];
-                if (!selectedGamemode.PreInitialise())
-                {
-                    foreach (var module in Plugin.Instance._modules.Modules)
-                    {
-                        if (module.IsInitializeOnStart)
-                        {
-                            module.Enable();
-                        }
-                    }
-                    this.Disable();
-                }
-            }
-            else
+            //Selected gamemode round
+            selectedGamemode = _gamemodes[UnityEngine.Random.Range(0, _gamemodes.Count())];
+            Log.Warn($"[GamemodeManager] Gamemode {selectedGamemode.Name} was selected.");
+            if (!selectedGamemode.PreInitialise())
             {
                 foreach (var module in Plugin.Instance._modules.Modules)
                 {
@@ -46,6 +34,19 @@ namespace ObscureLabs.Modules.Gamemode_Handler
                 }
                 this.Disable();
             }
+           
+            //else
+            //{
+            //    Log.Warn($"[GamemodeManager] No gamemode was selected.");
+            //    foreach (var module in Plugin.Instance._modules.Modules)
+            //    {
+            //        if (module.IsInitializeOnStart)
+            //        {
+            //            module.Enable();
+            //        }
+            //    }
+            //    this.Disable();
+            //}
             return base.Enable();
         }
 

@@ -173,6 +173,8 @@ namespace ObscureLabs
             Exiled.Events.Handlers.Player.Verified += OnVerified;
             Exiled.Events.Handlers.Player.Dying += OnDying;
 
+            _modules.GetModule("GamemodeManager").Enable();
+
             //foreach (Module m in _modules.Modules)
             //{
             //    if (m.IsInitializeOnStart == true)
