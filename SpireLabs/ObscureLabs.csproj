@@ -167,6 +167,8 @@
     <Compile Include="Modules\Gamemode Handler\Core\SCP1162.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\Scp914.cs" />
     <Compile Include="Modules\Gamemode Handler\GamemodeManager.cs" />
+    <Compile Include="Modules\Gamemode Handler\Mode Specific Modules\InsanityRandomiser.cs" />
+    <Compile Include="Modules\Gamemode Handler\Modes\Insanity.cs" />
     <Compile Include="Modules\Gamemode Handler\Modes\Standard.cs" />
     <Compile Include="Modules\Gamemode Handler\Modes\Vanilla.cs" />
     <Compile Include="Modules\Gamemode Handler\StatusEffects\Burning.cs" />
