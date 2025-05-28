@@ -39,6 +39,8 @@ namespace ObscureLabs.Items
 
         public override float Weight { get; set; } = 0.01f;
 
+        public override byte ClipSize { get; set; } = 1;
+
         public override SpawnProperties SpawnProperties { get; set; } = new()
         {
             Limit = 2,

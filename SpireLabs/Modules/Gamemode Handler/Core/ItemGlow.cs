@@ -7,6 +7,7 @@ using MEC;
 using Exiled.Events.EventArgs.Player;
 using Exiled.CustomItems.API.Features;
 using Projectile = Exiled.API.Features.Pickups.Projectiles.Projectile;
+using Exiled.API.Features.Doors;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
@@ -47,19 +48,23 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         public void RoundStart()
         {
-            Routine = Timing.RunCoroutine(GlowManager());
+            Door.Get(Exiled.API.Enums.DoorType.LczArmory).IsOpen = true;
+
+            Timing.CallDelayed(1f, () => Door.Get(Exiled.API.Enums.DoorType.LczArmory).IsOpen = false);
+            Timing.CallDelayed(1f, () => Routine = Timing.RunCoroutine(GlowManager()));
         }
 
 
         public void CreateLight(Pickup i, Color color)
         {
-            Light light = Light.Create(i.Position, new Vector3(90, 0, 0), Vector3.one, false, color);
+            Light light = Light.Create(i.GameObject.transform.position, new Vector3(90, 0, 0), Vector3.one, false, color);
             light.Intensity = 2f;
             light.Range = 0.5f;
             light.LightType = LightType.Point;
             light.ShadowType = LightShadows.Soft;
-            light.Base.gameObject.transform.SetParent(i.GameObject.transform);
+
             light.Spawn();
+            light.Base.gameObject.transform.parent = i.GameObject.transform;
         }
 
         public IEnumerator<float> GlowManager()
