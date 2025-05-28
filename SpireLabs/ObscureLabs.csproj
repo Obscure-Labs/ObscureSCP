@@ -135,6 +135,7 @@
     <Compile Include="Commands\Admins\ModuleControls.cs" />
     <Compile Include="Configs\HintConfig.cs" />
     <Compile Include="Configs\OverrideConfig.cs" />
+    <Compile Include="Extensions\Item.cs" />
     <Compile Include="Extensions\PlayerExtension.cs" />
     <Compile Include="Hud\HudController.cs" />
     <Compile Include="Hud\HudHandler.cs" />

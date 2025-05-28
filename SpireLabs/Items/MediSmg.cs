@@ -4,34 +4,20 @@ using Exiled.API.Features.Attributes;
 using Exiled.API.Features.Spawn;
 using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Player;
-using InventorySystem.Items.Firearms.Attachments;
 using MEC;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using Light = Exiled.API.Features.Toys.Light;
 using UnityEngine;
 using Player = Exiled.API.Features.Player;
-using Server = Exiled.API.Features.Server;
-using Item = Exiled.API.Features.Items.Item;
-using Door = Exiled.API.Features.Doors.Door;
-using Exiled.API.Features.Toys;
 using SpireSCP.GUI.API.Features;
-using InventorySystem.Items.Firearms.Modules.Scp127;
-using Mirror;
 using ObscureLabs.Modules.Gamemode_Handler.Core;
-using UnityEngine.Assertions.Must;
 using ObscureLabs.Extensions;
-using ObscureLabs.API.Data;
+using Exiled.API.Features.Items;
 
 namespace ObscureLabs.Items
 {
     [CustomItem(ItemType.GunSCP127)]
     public class MediSmg : Exiled.CustomItems.API.Features.CustomWeapon
     {
-        public static int trueAmmo = 30;
-       
-
         public override float Damage { get; set; } = 0f;
 
         public override string Name { get; set; } = "MediGun (SMG)";
@@ -44,10 +30,16 @@ namespace ObscureLabs.Items
 
         public override byte ClipSize { get; set; } = 60;
 
-        public int Experience = 0;
-        public int Level = 1;
-
-        
+        class MediSmgData
+        {
+            public MediSmgData()
+            {
+                Experience = 0;
+                Level = 1;
+            }
+            public int Experience { get; set; }
+            public int Level { get; set; }
+        }  
 
         public override SpawnProperties SpawnProperties { get; set; } = new()
         {
@@ -65,8 +57,15 @@ namespace ObscureLabs.Items
         protected override void SubscribeEvents()
         {
             Exiled.Events.Handlers.Player.Shooting += Shooting;
-            
             base.SubscribeEvents();
+        }
+
+        protected override void OnAcquired(Player player, Item item, bool displayMessage)
+        {
+            if(item.TryGetData("MediSmgData") == null)
+            {
+                item.SetData("MediSmgData", new MediSmgData());
+            }
         }
 
         protected override void UnsubscribeEvents()
@@ -78,44 +77,36 @@ namespace ObscureLabs.Items
 
         protected override void OnChanging(ChangingItemEventArgs ev)
         {
-            
-            Manager.SendHint(ev.Player, $"You just equipped the \"MediGun\" \n<color=#77d65a>Level {Level} | {Experience}xp</color> \nShoot people to heal them and gain XP!", 5f);
+            var data = ev.Item.GetData<MediSmgData>("MediSmgData");
+            Manager.SendHint(ev.Player, $"You just equipped the \"MediGun\" \n<color=#77d65a>Level {data.Level} | {data.Experience}xp</color> \nShoot people to heal them and gain XP!", 5f);
             base.OnChanging(ev);
         }
 
 
         private void AddXP(Player player, int xp)
         {
-            Experience += xp;
-            Manager.SendHint(player, $"<pos=0>Your MediGun has <color=#77d65a>{Experience}xp</color>", 2f);
-            if (Experience >= Mathf.Pow(2, Level) * 100)
+            var data = player.CurrentItem.GetData<MediSmgData>("MediSmgData");
+            data.Experience += xp;
+            Manager.SendHint(player, $"<pos=0>Your MediGun has <color=#77d65a>{data.Experience}xp</color>", 2f);
+            if (data.Experience >= Mathf.Pow(2, data.Level) * 100)
             {
-                LevelUp(player);
+                data.Level = Mathf.Clamp(data.Level, 1, 4);
+                data.Level += 1;
+                Manager.SendHint(player, $"<color=yellow>Your MediGun just levelled up to Level {data.Level}!</color>", 5f);
+                Timing.CallDelayed(5f, () => MvpSystem.AddXpToPlayer(player, 3, "MediGun Level Up"));
             }
-
-
-
-        }
-        
-        
-
-        private void LevelUp(Player player)
-        {
-            Level = Mathf.Clamp(Level, 1, 4);
-            Level += 1;
-            Manager.SendHint(player, $"<color=yellow>Your MediGun just levelled up to Level {Level}!</color>", 5f);
-            Timing.CallDelayed(5f, () => MvpSystem.AddXpToPlayer(player, 3, "MediGun Level Up"));
+            player.CurrentItem.SetData("MediSmgData", data);
         }
 
         private void Shooting(ShootingEventArgs ev)
         {
-            
+            var data = ev.Player.CurrentItem.GetData<MediSmgData>("MediSmgData");
             ev.Firearm.AmmoDrain = 0;
             if (ev.ClaimedTarget != null && ev.ClaimedTarget.IsHuman && ev.ClaimedTarget.Health < ev.ClaimedTarget.MaxHealth)
             {
                 AddXP(ev.Player, 1);
                 ev.Player.ShowHitMarker(1500f);
-                switch (Level)
+                switch (data.Level)
                 {
                     case 1:
                         {
