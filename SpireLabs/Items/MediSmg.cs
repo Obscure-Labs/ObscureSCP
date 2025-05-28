@@ -52,19 +52,19 @@ namespace ObscureLabs.Items
         public override SpawnProperties SpawnProperties { get; set; } = new()
         {
             Limit = 3,
-            DynamicSpawnPoints = new List<DynamicSpawnPoint>();
+            DynamicSpawnPoints = new List<DynamicSpawnPoint>()
         };
 
         protected override void SubscribeEvents()
         {
-            Exiled.Events.Handlers.Player.Shooting += Shooting;
+            Exiled.Events.Handlers.Player.Shot += Shooting;
             
             base.SubscribeEvents();
         }
 
         protected override void UnsubscribeEvents()
         {
-            Exiled.Events.Handlers.Player.Shooting -= Shooting;
+            Exiled.Events.Handlers.Player.Shot -= Shooting;
             base.UnsubscribeEvents();
         }
 
@@ -100,39 +100,40 @@ namespace ObscureLabs.Items
             Timing.CallDelayed(5f, () => MvpSystem.AddXpToPlayer(player, 3, "MediGun Level Up"));
         }
 
-        private void Shooting(ShootingEventArgs ev)
+        private void Shooting(ShotEventArgs ev)
         {
             
             ev.Firearm.AmmoDrain = 0;
-            if (ev.ClaimedTarget != null && ev.ClaimedTarget.IsHuman && ev.ClaimedTarget.Health < ev.ClaimedTarget.MaxHealth)
+            if (ev.Target != null && ev.Target.IsHuman && ev.Target.Health < ev.Target.MaxHealth)
             {
                 AddXP(ev.Player, 1);
                 ev.Player.ShowHitMarker(1500f);
+                
                 switch (Level)
                 {
                     case 1:
                         {
-                            ev.ClaimedTarget.Heal(2, false);
+                            ev.Target.Heal(2, false);
                             break;
                         }
                     case 2:
                         {
-                            if (ev.ClaimedTarget.ArtificialHealth <= 25) { ev.ClaimedTarget.ArtificialHealth += 3f; }
-                            ev.ClaimedTarget.Heal(4, false);
+                            if (ev.Target.ArtificialHealth <= 25) { ev.Target.ArtificialHealth += 3f; }
+                            ev.Target.Heal(4, false);
                             break;
                         }
                     case 3:
                         {
-                            if (ev.ClaimedTarget.ArtificialHealth <= 50) { ev.ClaimedTarget.ArtificialHealth += 5f; }
-                            ev.ClaimedTarget.Heal(6, false);
+                            if (ev.Target.ArtificialHealth <= 50) { ev.Target.ArtificialHealth += 5f; }
+                            ev.Target.Heal(6, false);
                             break;
                         }
                     case 4:
                         {
-                            if (ev.ClaimedTarget.ArtificialHealth <= 100) { ev.ClaimedTarget.ArtificialHealth += 10f; }
-                            ev.ClaimedTarget.Heal(8, false);
-                            ev.ClaimedTarget.EnableEffect(EffectType.MovementBoost, 2f, true);
-                            ev.ClaimedTarget.ChangeEffectIntensity(EffectType.MovementBoost, 70);
+                            if (ev.Target.ArtificialHealth <= 100) { ev.Target.ArtificialHealth += 10f; }
+                            ev.Target.Heal(8, false);
+                            ev.Target.EnableEffect(EffectType.MovementBoost, 2f, true);
+                            ev.Target.ChangeEffectIntensity(EffectType.MovementBoost, 70);
                             break;
                         }
                 }
