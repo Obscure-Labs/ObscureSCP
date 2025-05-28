@@ -52,14 +52,7 @@ namespace ObscureLabs.Items
         public override SpawnProperties SpawnProperties { get; set; } = new()
         {
             Limit = 3,
-            DynamicSpawnPoints = new List<DynamicSpawnPoint>
-            {
-                new()
-                {
-                    Chance = 0,
-                    Location = Exiled.API.Enums.SpawnLocationType.InsideNukeArmory,
-                }
-            },
+            DynamicSpawnPoints = new List<DynamicSpawnPoint>();
         };
 
         protected override void SubscribeEvents()

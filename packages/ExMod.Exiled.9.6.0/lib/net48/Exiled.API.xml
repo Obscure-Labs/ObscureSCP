@@ -45,6 +45,11 @@
             Camera Object toy.
             </summary>
         </member>
+        <member name="F:Exiled.API.Enums.AdminToyType.TextToy">
+            <summary>
+            Text toy.
+            </summary>
+        </member>
         <member name="T:Exiled.API.Enums.AmmoType">
             <summary>
             Ammo types present in the game.
@@ -1316,6 +1321,11 @@
         <member name="F:Exiled.API.Enums.EffectType.Snowed">
             <summary>
             you are snowed.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.EffectType.Scp1344Detected">
+            <summary>
+            <see cref="T:CustomPlayerEffects.Scp1344Detected"/>.
             </summary>
         </member>
         <member name="T:Exiled.API.Enums.ElevatorType">
@@ -18452,36 +18462,6 @@
             Gets all the dead zombies.
             </summary>
         </member>
-        <member name="P:Exiled.API.Features.Roles.Scp049Role.CallAbilityDuration">
-            <summary>
-            Gets or sets how mush time the Call Ability will be effective.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Roles.Scp049Role.CallAbilityBaseCooldown">
-            <summary>
-            Gets or sets the Cooldown of the Call Ability.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Roles.Scp049Role.SenseAbilityBaseCooldown">
-            <summary>
-            Gets or sets the Cooldown of the Sense Ability.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Roles.Scp049Role.SenseAbilityReducedCooldown">
-            <summary>
-            Gets or sets the Cooldown of the Sense Ability when you lost your target.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Roles.Scp049Role.SenseAbilityDuration">
-            <summary>
-            Gets or sets the Cooldown of the Sense Ability when it's failed.
-            </summary>
-        </member>
-        <member name="P:Exiled.API.Features.Roles.Scp049Role.SenseAbilityFailCooldown">
-            <summary>
-            Gets or sets how mush time the Sense Ability will be effective.
-            </summary>
-        </member>
         <member name="P:Exiled.API.Features.Roles.Scp049Role.ResurrectedPlayers">
             <summary>
             Gets all the resurrected players.
@@ -21859,6 +21839,37 @@
             <param name="samples">Audio samples.</param>
             <param name="length">The length of the samples array.</param>
             <param name="targets">Targets who will hear the audio. If <c>null</c>, audio will be sent to all players.</param>
+        </member>
+        <member name="T:Exiled.API.Features.Toys.Text">
+            <summary>
+            A wrapper class for <see cref="T:AdminToys.TextToy"/>.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Toys.Text.#ctor(AdminToys.TextToy)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Toys.Text"/> class.
+            </summary>
+            <param name="speakerToy">The <see cref="T:AdminToys.TextToy"/> of the toy.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Toys.Text.Prefab">
+            <summary>
+            Gets the prefab.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Toys.Text.Base">
+            <summary>
+            Gets the base <see cref="T:AdminToys.TextToy"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Toys.Text.TextFormat">
+            <summary>
+            Gets or sets the Text shown.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Toys.Text.DisplaySize">
+            <summary>
+            Gets or sets the size of the Display Size of the Text.
+            </summary>
         </member>
         <member name="T:Exiled.API.Features.Warhead">
             <summary>
