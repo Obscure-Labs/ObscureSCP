@@ -146,6 +146,7 @@ namespace ObscureLabs
             //- Mechanics and Features -//
             _modules.AddModule(new CoinFlip());
             _modules.AddModule(new AttachmentFix());
+            _modules.AddModule(new SCPsDropItems());
 
             //- SCP Additions and rebalances -//
             _modules.AddModule(new Scp1162());

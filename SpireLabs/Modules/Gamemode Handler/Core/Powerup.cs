@@ -16,6 +16,7 @@ using UnityEngine.Rendering;
 using PlayerRoles.FirstPersonControl.NetworkMessages;
 using PlayerRoles.Visibility;
 using LiteNetLib4Mirror.Open.Nat;
+using Exiled.API.Enums;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
@@ -120,7 +121,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             // Vector3 pos = new Vector3(room.Transform.position.x, room.Transform.position.y + 0.5f,
             //     room.Transform.position.z);
             Vector3 pos = new Vector3(room.Position.x,
-                room.Position.y + 0.5f, room.Position.z);
+                room.Position.y + 1f, room.Position.z);
             container.transform.position = pos;
             BoxCollider collider = container.gameObject.AddComponent<BoxCollider>();
             collider.size = Vector3.one / 2;
@@ -132,7 +133,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             rb.angularDrag = 0f;
             rb.useGravity = false;
             
-            Primitive cube = Primitive.Create(PrimitiveType.Cube, container.transform.position, Vector3.zero, Vector3.one / 2, false);
+            Primitive cube = Primitive.Create(PrimitiveType.Cube, container.gameObject.transform.position, Vector3.zero, Vector3.one / 2, false);
             cube.Flags = PrimitiveFlags.Collidable | PrimitiveFlags.Visible;
             
             cube.Color = new Color(1f, 47f / 51f, 0.0156862754f, 0.75f);
@@ -152,14 +153,15 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             container.gameObject.AddComponent<PowerUpScript>();
             cube.Base.gameObject.AddComponent<PowerUpAnimate>();
             light.Base.gameObject.AddComponent<PowerUpAnimate>();
-            light.Base.gameObject.transform.SetParent(container.transform, false);
-            light.Base.gameObject.transform.position = pos;
-            cube.Base.gameObject.transform.SetParent(container.transform, false);
-            cube.Base.gameObject.transform.position = Vector3.up / 2;
+
             
             light.Spawn();
             cube.Spawn();
-            
+
+            light.Base.gameObject.transform.parent = container.transform;
+            cube.Base.gameObject.transform.parent = container.transform;
+            cube.Base.gameObject.transform.localPosition = container.transform.position;
+            light.Base.gameObject.transform.transform.localPosition = container.transform.position + (Vector3.up * 2);
 
             pickups.Add(container.gameObject);
             container.gameObject.name = $"{pickups.Count - 1}_container";
@@ -167,7 +169,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             light.Base.gameObject.name = $"{pickups.Count - 1}_light";
             
             Log.Debug($"Spawned powerup of index: {pickups.Count() - 1}");
-
         }
         private void OnRoundStarted()
         {
@@ -176,6 +177,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             for (int i = 0; i < maxPickups; i++)
             {
                 var selectedRoom = rooms.GetRandomValue();
+                var SelectedRoomType = Room.Get(selectedRoom.Transform.position).Type;
+
                 SpawnPowerup(selectedRoom);
                 rooms.Remove(selectedRoom);
             }

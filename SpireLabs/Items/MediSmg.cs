@@ -94,6 +94,7 @@ namespace ObscureLabs.Items
 
         private void Shooting(ShotEventArgs ev)
         {
+            if (!Check(ev.Item)) { return; }
             var data = ev.Player.CurrentItem.GetData<MediSmgData>("MediSmgData");
             ev.Firearm.AmmoDrain = 0;
             if (ev.Target != null && ev.Target.IsHuman && ev.Target.Health < ev.Target.MaxHealth)
