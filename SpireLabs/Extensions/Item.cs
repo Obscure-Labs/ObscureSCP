@@ -15,80 +15,80 @@ namespace ObscureLabs.Extensions
 {
     public static class ItemExtensions
     {
-        private static Dictionary<Item, Dictionary<string, object>> _itemData = new Dictionary<Item, Dictionary<string, object>>();
+        private static Dictionary<ushort, Dictionary<string, object>> _itemData = new Dictionary<ushort, Dictionary<string, object>>();
 
         public static T GetData<T>(this Item item, string variableName)
         {
-            if (!_itemData.ContainsKey(item))
+            if (!_itemData.ContainsKey(item.Serial))
             {
                 throw new Exception("item has no data.");
             }
             else
             {
-                if (!_itemData[item].ContainsKey(variableName))
+                if (!_itemData[item.Serial].ContainsKey(variableName))
                 {
                     throw new Exception($"item doesnt have a variable called {variableName}");
                 }
                 else
                 {
-                    return (T)_itemData[item][variableName];
+                    return (T)_itemData[item.Serial][variableName];
                 }
             }
         }
         
         public static object GetData(this Item item, string variableName)
         {
-            if (!_itemData.ContainsKey(item))
+            if (!_itemData.ContainsKey(item.Serial))
             {
                 throw new NullReferenceException();
             }
             else
             {
-                if (!_itemData[item].ContainsKey(variableName))
+                if (!_itemData[item.Serial].ContainsKey(variableName))
                 {
                     throw new NullReferenceException();
                 }
                 else
                 {
-                    return _itemData[item][variableName];
+                    return _itemData[item.Serial][variableName];
                 }
             }
         }
 
         public static object TryGetData(this Item item, string variableName)
         {
-            if (!_itemData.ContainsKey(item))
+            if (!_itemData.ContainsKey(item.Serial))
             {
                 return null;
             }
             else
             {
-                if (!_itemData[item].ContainsKey(variableName))
+                if (!_itemData[item.Serial].ContainsKey(variableName))
                 {
                     return null;
                 }
                 else
                 {
-                    return _itemData[item][variableName];
+                    return _itemData[item.Serial][variableName];
                 }
             }
         }
 
         public static void SetData(this Item item, string variableName, object data)
         {
-            if (!_itemData.ContainsKey(item))
+            if (!_itemData.ContainsKey(item.Serial))
             {
-                _itemData.Add(item, new Dictionary<string, object>() { { variableName, data } });
+                _itemData.Add(item.Serial, new Dictionary<string, object>() { { variableName, data } });
             }
             else
             {
-                if (!_itemData[item].ContainsKey(variableName))
+                if (!_itemData[item.Serial].ContainsKey(variableName))
                 {
-                    _itemData[item].Add(variableName, data);
+                    _itemData[item.Serial].Add(variableName, data);
                 }
                 else
                 {
-                    _itemData[item][variableName] = data;
+                    _itemData[item.Serial][variableName] = data;
                 }
             }
         }
