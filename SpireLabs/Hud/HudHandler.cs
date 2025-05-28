@@ -1,4 +1,4 @@
-using Exiled.API.Features;
+﻿using Exiled.API.Features;
 using MEC;
 using ObscureLabs.API.Data;
 using System;
@@ -411,7 +411,7 @@ namespace SpireLabs.GUI
                     s += $"\t\n"; //27
                     s += $"\t\n"; //28
                     s +=
-                        $"<size=16><color=#3a5fcf>OBSCURE</color><color=#88d4ff>LABS</color>\n"; //29 (BOTTOM OF SCREEN)
+                        $"<size=16><color=#3a5fcf>💎 OBSCURE</color><color=#88d4ff>LABS 💎</color>\n"; //29 (BOTTOM OF SCREEN)
                     s += $"<color=#ffffff>DISCORD.GG/58TaSJbyJm</color></size>\n";
                     s += $"<size=32><color=#ffffff>\t\n"; //30
                     s += $"\t\n"; //31
