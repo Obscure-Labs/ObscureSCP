@@ -58,10 +58,11 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         public void InvItemThrough914(UpgradingInventoryItemEventArgs ev)
         {
-            ev.IsAllowed = false;
+
             var rng = UnityEngine.Random.Range(0, 101);
             if (ev.KnobSetting == Scp914.Scp914KnobSetting.VeryFine && ev.Item.Type == ItemType.KeycardO5)
             {
+                ev.IsAllowed = false;
                 if (rng <= 20f)
                 {
                     ev.Item.Destroy();
@@ -73,11 +74,12 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         }
         public void ItemThrough914(UpgradingPickupEventArgs ev)
         {
-            ev.IsAllowed = false;
-            var rng = UnityEngine.Random.Range(0, 101);
+
 
             if (ev.KnobSetting == Scp914.Scp914KnobSetting.VeryFine && ev.Pickup.Type == ItemType.KeycardO5)
             {
+                ev.IsAllowed = false;
+                var rng = UnityEngine.Random.Range(0, 101);
                 if (rng <= 20f)
                 {
                     ev.Pickup.Destroy();
@@ -89,10 +91,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                     ev.Pickup.Transform.position = ev.OutputPosition;
                     ev.Pickup.Clone().Transform.position = ev.OutputPosition;
                 }
-            }
-            else
-            {
-                ev.Pickup.Transform.position = ev.OutputPosition;
             }
         }
 
