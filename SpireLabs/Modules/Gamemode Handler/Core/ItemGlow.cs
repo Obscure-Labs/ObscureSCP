@@ -24,14 +24,18 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         public override bool Enable()
         {
             Routine = new CoroutineHandle();
-            Exiled.Events.Handlers.Server.RoundStarted += RoundStart;
+
+            Door.Get(Exiled.API.Enums.DoorType.LczArmory).IsOpen = true;
+
+            Timing.CallDelayed(1f, () => Door.Get(Exiled.API.Enums.DoorType.LczArmory).IsOpen = false);
+            Timing.CallDelayed(1f, () => Routine = Timing.RunCoroutine(GlowManager()));
+
             Exiled.Events.Handlers.Player.PickingUpItem += PickingUpItem;
             return base.Enable();
         }
 
         public override bool Disable()
         {
-            Exiled.Events.Handlers.Server.RoundStarted -= RoundStart;
             Exiled.Events.Handlers.Player.PickingUpItem -= PickingUpItem;
             Timing.KillCoroutines(Routine);
             return base.Disable();
@@ -46,13 +50,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             }
         }
 
-        public void RoundStart()
-        {
-            Door.Get(Exiled.API.Enums.DoorType.LczArmory).IsOpen = true;
-
-            Timing.CallDelayed(1f, () => Door.Get(Exiled.API.Enums.DoorType.LczArmory).IsOpen = false);
-            Timing.CallDelayed(1f, () => Routine = Timing.RunCoroutine(GlowManager()));
-        }
 
 
         public void CreateLight(Pickup i, Color color)

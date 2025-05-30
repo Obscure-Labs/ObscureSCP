@@ -13,7 +13,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler
         public override bool IsInitializeOnStart => false;
 
         public Gamemode selectedGamemode;
-        public Gamemode[] _gamemodes = { new Standard() };
+        public Gamemode[] _gamemodes = { new Insanity() };
 
         public override bool Enable()
         {

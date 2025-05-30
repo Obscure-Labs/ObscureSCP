@@ -141,7 +141,7 @@ namespace ObscureLabs
 
             //- Gameplay Utils -//
             _modules.AddModule(new Powerup());
-            _modules.AddModule(new ItemGlow());
+            //_modules.AddModule(new ItemGlow()); Start this inside the gamemodes instead
 
             //- Mechanics and Features -//
             _modules.AddModule(new CoinFlip());

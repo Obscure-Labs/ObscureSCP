@@ -19,9 +19,9 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
 
         };
 
-        public override List<Module> StartModules => new List<Module>
+        public override List<Module> StartModules => new List<Module>()
         {
-            // Add modules that should be started when the round starts
+            new ItemGlow()
         };
 
         public override bool PreInitialise()
