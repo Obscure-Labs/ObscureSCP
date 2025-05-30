@@ -12,7 +12,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
 {
     internal class Standard : Gamemode
     {
-        public override string Name => "Standard";
+        public override string Name => "Standard Mode";
 
         public override List<Module> InitModules => new List<Module>
         {

@@ -9,6 +9,7 @@ using InventorySystem;
 using InventorySystem.Items;
 using JetBrains.Annotations;
 using LabApi.Features.Wrappers;
+using MEC;
 using Mirror;
 using ObscureLabs.API.Features;
 using ObscureLabs.Items;
@@ -57,7 +58,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
 
  
 
-        public override string Name => "Insanity";
+        public override string Name => "Insanity Mode";
         public override List<Module> InitModules => new List<Module>
         {
             //- Core Utils -//
@@ -103,9 +104,9 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
         public override bool Start() // this runs on round start
         {
 
-            TeamAssignment();
-            ItemReplacer();
-            ItemPlacer();
+            Timing.RunCoroutine(ItemPlacer());
+            Timing.RunCoroutine(ItemReplacer());
+            Timing.RunCoroutine(TeamAssignment());
             Server.FriendlyFire = true;
             return base.Start();
         }
@@ -116,11 +117,11 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
         }
 
 
-        public void ItemPlacer()
+        public IEnumerator<float> ItemPlacer()
         {
             foreach (Room r in Room.List)
             {
-
+                yield return Timing.WaitForOneFrame;
                 if (UnityEngine.Random.Range(0, 100) <= 10)
                 {
 
@@ -136,12 +137,13 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
                 }
             }
         }
-        public void ItemReplacer()
+        public IEnumerator<float> ItemReplacer()
         {
             List<Pickup> plist = new List<Pickup>();
             plist.AddRange(Pickup.List);
             foreach (Pickup p in plist)
             {
+                yield return Timing.WaitForOneFrame;
                 if (p == null) { continue; }
                 if (p.Type == ItemType.Coin || p.Category == ItemCategory.Ammo) { continue; }
 
@@ -156,6 +158,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
                 {
                     for (int i = 0; i < 3; i++)
                     {
+                        yield return Timing.WaitForOneFrame;
                         Pickup.CreateAndSpawn(InventoryItemLoader.AvailableItems.Values.GetRandomValue().ItemTypeId, p.Transform.position, p.Transform.rotation);
                     }
                 }
@@ -163,11 +166,13 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
 
             }
         }
-        public void TeamAssignment()
+        public IEnumerator<float> TeamAssignment()
         {
+            yield return Timing.WaitForOneFrame;
             List<Player> pList = new List<Player>();
             foreach (Player p in Player.List)
             {
+
                 if (p.AuthenticationType != Exiled.API.Enums.AuthenticationType.DedicatedServer)
                 {
                     pList.Add(p);
@@ -177,6 +182,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
 
             for (int i = 0; i < pList.Count; i++)
             {
+
                 Player p = pList[i];
                 if (i % 2 == 0)
                 {

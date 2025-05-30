@@ -18,6 +18,7 @@ using Exiled.API.Features.Roles;
 using HumanRole = Exiled.API.Features.Roles.HumanRole;
 using CommandSystem.Commands.Console;
 using MapGeneration;
+using ObscureLabs.Modules.Gamemode_Handler;
 
 namespace ObscureLabs.Modules
 {
@@ -139,7 +140,7 @@ namespace ObscureLabs.Modules
                     Manager.SendHint(ev.Player, "You have been sent to the pregame lobby, Waiting for players!", 5);
                     // ev.Player.IsGodModeEnabled = true;
                     ev.Player.RoleManager.ServerSetRole(RoleTypeId.Tutorial, RoleChangeReason.RemoteAdmin, RoleSpawnFlags.None);
-                    ev.Player.Teleport(room.Position + (Vector3.up / 2));
+                    ev.Player.Teleport(new Vector3(0, 295, -8) + (Vector3.up / 2));
 
                 }
             }
@@ -155,14 +156,19 @@ namespace ObscureLabs.Modules
                 {
                     foreach (Player p in Player.List)
                     {
-                        Manager.SendHint(p, $"Waiting for players: {Player.List.Count()} - {Round.LobbyWaitingTime}", 2f);
+                        Manager.SendHint(p, $"Next Mode: <color=#7df229>{((GamemodeManager)Plugin.Instance._modules.GetModule("GamemodeManager")).selectedGamemode.Name}</color>" +
+                            $"\n<color=#e8ed87>Current players: {Player.List.Count()}</color>" +
+                            $"\nStarting in: <color=#7df229>{Round.LobbyWaitingTime} seconds</color>", 2f);
+
                     }
                 }
                 else
                 {
                     foreach (Player p in Player.List)
                     {
-                        Manager.SendHint(p, $"Waiting for players: {Player.List.Count()}", 2f);
+                        Manager.SendHint(p, $"Next Mode: <color=#7df229>{((GamemodeManager)Plugin.Instance._modules.GetModule("GamemodeManager")).selectedGamemode.Name}</color>" +
+                            $"\n<color=#e8ed87>Current Players: {Player.List.Count()}</color>" +
+                            $"\n<color=red>Waiting Paused...</color>", 2f);
                     }
                 }
 
