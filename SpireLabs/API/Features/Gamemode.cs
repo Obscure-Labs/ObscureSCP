@@ -23,6 +23,7 @@ namespace ObscureLabs.API.Features
                     Log.Error($"[GAMEMODE PREINIT] Module {module.Name} failed to start: {ex}");
                     return false;
                 }
+                Plugin.Instance._modules.AddModule(module);
             }
             return true;
         }
@@ -37,7 +38,8 @@ namespace ObscureLabs.API.Features
                     Log.Error($"[GAMEMODE START] Module {module.Name} failed to start: {ex}");
                     return false;
                 }
-           }
+                Plugin.Instance._modules.AddModule(module);
+            }
            return true;
         }
 
@@ -61,6 +63,7 @@ namespace ObscureLabs.API.Features
                     return false;
                 }
             }
+            Plugin.Instance._modules.Clear();
             return true;
         }
     }
