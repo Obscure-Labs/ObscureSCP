@@ -187,6 +187,8 @@ namespace ObscureLabs
             Exiled.Events.Handlers.Player.Verified += OnVerified;
             Exiled.Events.Handlers.Player.Dying += OnDying;
 
+
+            _modules.GetModule("ItemRarity").Enable();
             _modules.GetModule("GamemodeManager").Enable();
 
             //foreach (Module m in _modules.Modules)

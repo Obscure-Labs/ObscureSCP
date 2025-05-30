@@ -2,6 +2,7 @@
 using Exiled.API.Features.Items;
 using Exiled.CustomItems.API.Features;
 using LabApi.Features.Wrappers;
+using MEC;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,19 +43,19 @@ namespace ObscureLabs.API.Features
 
         public override bool Enable()
         {
-            Exiled.Events.Handlers.Server.WaitingForPlayers += OnWaitingForPlayers;
+            Timing.RunCoroutine(LoadData());
             return base.Enable();
         }
 
         public override bool Disable()
         {
             LabApi.Features.Console.Logger.Info("ItemRarity disabled");
-            Exiled.Events.Handlers.Server.WaitingForPlayers -= OnWaitingForPlayers;
             return base.Disable();
         }
 
-        public void OnWaitingForPlayers()
+        public IEnumerator<float> LoadData()
         {
+            yield return Timing.WaitForSeconds(2);
             if (!System.IO.File.Exists(Plugin.SpireConfigLocation + "itemRarities.yaml"))
             {
                 List<ItemRarityData> tempData = new List<ItemRarityData>();

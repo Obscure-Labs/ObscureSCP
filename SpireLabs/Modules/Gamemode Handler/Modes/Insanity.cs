@@ -1,4 +1,5 @@
 ﻿using Achievements.Handlers;
+using Exiled.API.Enums;
 using Exiled.API.Extensions;
 using Exiled.API.Features;
 using Exiled.API.Features.Items;
@@ -16,6 +17,7 @@ using ObscureLabs.Modules.Gamemode_Handler.Core;
 using ObscureLabs.Modules.Gamemode_Handler.Core.SCP_Rebalances;
 using ObscureLabs.Modules.Gamemode_Handler.Mode_Specific_Modules;
 using ObscureLabs.SpawnSystem;
+using PlayerRoles;
 using SpireLabs.GUI;
 using System;
 using System.Collections.Generic;
@@ -26,6 +28,7 @@ using UnityEngine;
 using Pickup = Exiled.API.Features.Pickups.Pickup;
 using Player = Exiled.API.Features.Player;
 using Room = Exiled.API.Features.Room;
+using Server = Exiled.API.Features.Server;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Modes
 {
@@ -63,7 +66,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
             new RemoteKeycard(),
             new LightHandler(),
             new Lobby(),
-            new ItemRarityModule(),
             new HealthOverride(),
 
             //- Gameplay Utils -//
@@ -89,7 +91,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
         };
         public override List<Module> StartModules => new List<Module>
         {
-            // new ItemGlow(),
+            new ItemGlow(),
             // Add modules that should be started when the round starts
         };
         public override bool PreInitialise()
@@ -104,11 +106,12 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
             TeamAssignment();
             ItemReplacer();
             ItemPlacer();
-
+            Server.FriendlyFire = true;
             return base.Start();
         }
         public override bool Stop()
         {
+            Server.FriendlyFire = false;
             return base.Stop();
         }
 
@@ -185,6 +188,15 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
                 }
                 p.Inventory.ServerAddItem(ItemType.Coin, InventorySystem.Items.ItemAddReason.StartingItem);
                 p.Inventory.ServerAddItem(ItemType.KeycardZoneManager, InventorySystem.Items.ItemAddReason.StartingItem);
+                p.Inventory.ServerAddItem(ItemType.ArmorCombat, InventorySystem.Items.ItemAddReason.StartingItem);
+                p.Inventory.ServerAddAmmo(ItemType.Ammo12gauge, 999);
+                p.Inventory.ServerAddAmmo(ItemType.Ammo44cal, 999);
+                p.Inventory.ServerAddAmmo(ItemType.Ammo556x45, 999);
+                p.Inventory.ServerAddAmmo(ItemType.Ammo762x39, 999);
+                p.Inventory.ServerAddAmmo(ItemType.Ammo9x19, 999);
+                p.EnableEffect(EffectType.DamageReduction, 10f);
+                p.ChangeEffectIntensity(EffectType.DamageReduction, 255, 10f);
+                p.Teleport(RoleTypeId.ClassD.GetRandomSpawnLocation().Position);
             }
         }
     }
