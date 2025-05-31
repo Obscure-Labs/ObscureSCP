@@ -29,6 +29,7 @@ using ObscureLabs.SpawnSystem;
 using HarmonyLib;
 using CustomPlayerEffects;
 using ObscureLabs.Modules.Gamemode_Handler;
+using ObscureLabs.Hud;
 
 namespace ObscureLabs
 {
@@ -138,6 +139,7 @@ namespace ObscureLabs
             _modules.AddModule(new Lobby());
             _modules.AddModule(new ItemRarityModule());
             _modules.AddModule(new HealthOverride());
+            _modules.AddModule(new EffectController());
 
             //- Gameplay Utils -//
             _modules.AddModule(new Powerup());
@@ -187,6 +189,7 @@ namespace ObscureLabs
             Exiled.Events.Handlers.Player.Verified += OnVerified;
             Exiled.Events.Handlers.Player.Dying += OnDying;
 
+            _modules.GetModule("ItemRarity").Enable();
             _modules.GetModule("GamemodeManager").Enable();
 
             //foreach (Module m in _modules.Modules)
@@ -205,6 +208,7 @@ namespace ObscureLabs
 
         private void OnRoundStarted()
         {
+            HudRenderer.fontAsset = TMP_FontAsset.CreateFontAsset(SpireConfigLocation + "scoopFont.otf", "OliversBarney-Regular", 16);
             Timing.KillCoroutines("flockerRoutine");
             Timing.KillCoroutines("lockRoutine");
             Timing.KillCoroutines("chaosChecker");
@@ -283,6 +287,7 @@ namespace ObscureLabs
         private void OnPlayerJoined(JoinedEventArgs ev)
         {
             Log.Info($"Player count is now at: \"{Player.List.Count}\"");
+            Timing.RunCoroutine(HudRenderer.RenderUI(ev.Player.ReferenceHub), "guiRoutine");
         }
 
         private void OnRestarting()

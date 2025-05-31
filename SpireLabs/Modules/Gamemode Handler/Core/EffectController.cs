@@ -1,4 +1,7 @@
-﻿using LabApi.Features.Wrappers;
+﻿using CustomPlayerEffects;
+using Exiled.Events.EventArgs.Player;
+using HarmonyLib;
+using LabApi.Features.Wrappers;
 using ObscureLabs.API.Features;
 using ObscureLabs.Modules.Gamemode_Handler.StatusEffects;
 using System;
@@ -17,13 +20,20 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         public override bool Enable()
         {
             LabApi.Features.Console.Logger.Info("EffectController Loaded");
+            Exiled.Events.Handlers.Player.ActivatingGenerator += Player_ActivatingGenerator;
             return base.Enable();
         }
 
         public override bool Disable()
         {
             LabApi.Features.Console.Logger.Info("EffectController Unloaded");
+            Exiled.Events.Handlers.Player.ActivatingGenerator -= Player_ActivatingGenerator;
             return base.Disable();
         }
-    }
+
+        public void Player_ActivatingGenerator(ActivatingGeneratorEventArgs ev)
+        {
+            ev.Player.ActiveEffects.AddItem(new Burning());
+        }
+    } 
 }
