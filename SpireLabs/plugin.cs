@@ -293,14 +293,15 @@ namespace ObscureLabs
             {
                 m.Disable();
             }
-
-            foreach (Module m in _modules.Modules)
-            {
-                if (m.IsInitializeOnStart == true)
-                {
-                    m.Enable();
-                }
-            }
+            _modules.GetModule("ItemRarity").Enable();
+            _modules.GetModule("GamemodeManager").Enable();
+            //foreach (Module m in _modules.Modules)
+            //{
+            //    if (m.IsInitializeOnStart == true)
+            //    {
+            //        m.Enable();
+            //    }
+            //}
         }
 
         private void OnLeft(LeftEventArgs ev)

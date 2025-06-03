@@ -17,6 +17,7 @@ using PlayerRoles.FirstPersonControl.NetworkMessages;
 using PlayerRoles.Visibility;
 using LiteNetLib4Mirror.Open.Nat;
 using Exiled.API.Enums;
+using CommandSystem.Commands.RemoteAdmin;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
@@ -176,7 +177,12 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             List<LabApi.Features.Wrappers.Room> rooms = LabApi.Features.Wrappers.Room.List.ToList();
             for (int i = 0; i < maxPickups; i++)
             {
-                var selectedRoom = rooms.GetRandomValue();
+            roomGo:
+                if(!rooms.TryGetRandomItem(out var selectedRoom))
+                {
+                    Log.Warn("powerup did an oopsy");
+                    goto roomGo;
+                }
                 var SelectedRoomType = Room.Get(selectedRoom.Transform.position).Type;
 
                 SpawnPowerup(selectedRoom);

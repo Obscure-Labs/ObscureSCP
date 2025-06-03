@@ -17,6 +17,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler
 
         public override bool Enable()
         {
+            selectedGamemode = null;
+
             LabApi.Events.Handlers.ServerEvents.RoundStarted += OnRoundStarted;
             LabApi.Events.Handlers.ServerEvents.RoundEnded += OnRoundEnded;
 
@@ -25,6 +27,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler
             Log.Warn($"[GamemodeManager] Gamemode {selectedGamemode.Name} was selected.");
             if (!selectedGamemode.PreInitialise())
             {
+                Log.Info("Failed to pre-initialise gamemode.");
                 foreach (var module in Plugin.Instance._modules.Modules)
                 {
                     if (module.IsInitializeOnStart)
@@ -54,7 +57,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler
         {
             LabApi.Events.Handlers.ServerEvents.RoundStarted -= OnRoundStarted;
             LabApi.Events.Handlers.ServerEvents.RoundEnded -= OnRoundEnded;
-
+            Log.Info($"[GamemodeManager] Disabling gamemode maanger.");
             return base.Disable();
         }
 
