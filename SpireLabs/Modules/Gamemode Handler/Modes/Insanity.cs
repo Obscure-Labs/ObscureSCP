@@ -71,7 +71,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
 
             //- Gameplay Utils -//
             new Powerup(),
-
+            new MediGunGlow(),
 
             //- Mechanics and Features -//
             new CoinFlip(),
@@ -80,9 +80,10 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
 
             //- SCP Additions and rebalances -//
             new Scp1162(),
-            new SCP106(),
-            new SCP173(),
+            new Scp106(),
+            new Scp173(),
             new Scp049(),
+            new Scp939(),
 
 
             //- Fun modules -//

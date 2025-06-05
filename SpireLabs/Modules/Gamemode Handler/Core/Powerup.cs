@@ -52,7 +52,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             var sin = Mathf.Sin(Time.time);
             if (sin < 0) sin *= -1;
             gameObject.transform.position = new Vector3(transform.position.x, Mathf.Lerp(origin.y - 0.35f, origin.y, sin), transform.position.z);
-            gameObject.GetComponent<PrimitiveObjectToy>().NetworkRotation = Quaternion.Euler(0, Mathf.LerpAngle(0, 360, Time.time), 0);
         }
     }
 

@@ -5,7 +5,7 @@ using SpireSCP.GUI.API.Features;
 using AttackingEventArgs = Exiled.Events.EventArgs.Scp106.AttackingEventArgs;
 namespace ObscureLabs.Modules.Gamemode_Handler.Core.SCP_Rebalances
 {
-    internal class SCP106 : Module
+    internal class Scp106 : Module
     {
         public override string Name => "SCP106";
         public override bool IsInitializeOnStart => true;

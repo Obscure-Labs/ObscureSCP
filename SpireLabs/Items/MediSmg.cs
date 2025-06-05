@@ -30,6 +30,8 @@ namespace ObscureLabs.Items
 
         public override byte ClipSize { get; set; } = 60;
 
+        public static List<Player> MediGunGlowingPlayers = new List<Player>();
+
         class MediSmgData
         {
             public MediSmgData()
@@ -50,7 +52,6 @@ namespace ObscureLabs.Items
         protected override void SubscribeEvents()
         {
             Exiled.Events.Handlers.Player.Shot += Shooting;
-            
             base.SubscribeEvents();
         }
 
@@ -84,7 +85,7 @@ namespace ObscureLabs.Items
             Manager.SendHint(player, $"<pos=0>Your MediGun has <color=#77d65a>{data.Experience}xp</color>", 2f);
             if (data.Experience >= Mathf.Pow(2, data.Level) * 100)
             {
-                data.Level = Mathf.Clamp(data.Level, 1, 4);
+                data.Level = Mathf.Clamp(data.Level, 1, 3);
                 data.Level += 1;
                 Manager.SendHint(player, $"<color=yellow>Your MediGun just levelled up to Level {data.Level}!</color>", 5f);
                 Timing.CallDelayed(5f, () => MvpSystem.AddXpToPlayer(player, 3, "MediGun Level Up"));
@@ -97,35 +98,38 @@ namespace ObscureLabs.Items
             if (!Check(ev.Item)) { return; }
             var data = ev.Player.CurrentItem.GetData<MediSmgData>("MediSmgData");
             ev.Firearm.AmmoDrain = 0;
+
+            if (data.Level == 3)
+            {
+                ev.Player.Heal(4, false);
+                ev.Target.EnableEffect(EffectType.MovementBoost, 1f, false);
+                ev.Target.ChangeEffectIntensity(EffectType.MovementBoost, 70);
+            }
+
             if (ev.Target != null && ev.Target.IsHuman && ev.Target.Health < ev.Target.MaxHealth)
             {
-                AddXP(ev.Player, 1);
+                AddXP(ev.Player, 2);
                 ev.Player.ShowHitMarker(1500f);
                 switch (data.Level)
                 {
                     case 1:
                         {
-                            ev.Target.Heal(2, false);
+                            ev.Target.Heal(4.7f, false);
                             break;
                         }
                     case 2:
                         {
-                            if (ev.Target.ArtificialHealth <= 25) { ev.Target.ArtificialHealth += 3f; }
-                            ev.Target.Heal(4, false);
+                            ev.Target.Heal(4.8f, false);
                             break;
                         }
                     case 3:
                         {
-                            if (ev.Target.ArtificialHealth <= 50) { ev.Target.ArtificialHealth += 5f; }
-                            ev.Target.Heal(6, false);
-                            break;
-                        }
-                    case 4:
-                        {
-                            if (ev.Target.ArtificialHealth <= 100) { ev.Target.ArtificialHealth += 10f; }
-                            ev.Target.Heal(8, false);
-                            ev.Target.EnableEffect(EffectType.MovementBoost, 2f, true);
+                            ev.Target.Heal(20, false);
+                            ev.Target.EnableEffect(EffectType.MovementBoost, 1f, false);
                             ev.Target.ChangeEffectIntensity(EffectType.MovementBoost, 70);
+
+
+
                             break;
                         }
                 }

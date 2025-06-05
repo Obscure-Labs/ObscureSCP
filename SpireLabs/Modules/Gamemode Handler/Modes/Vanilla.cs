@@ -19,8 +19,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
             new RemoteKeycard(),
             new EmotionRandomiser(),
             new Scp049(),
-            new SCP106(),
-            new SCP173(),
+            new Scp106(),
+            new Scp173(),
             new HealthOverride()
         };
 

@@ -29,6 +29,7 @@ using ObscureLabs.SpawnSystem;
 using HarmonyLib;
 using CustomPlayerEffects;
 using ObscureLabs.Modules.Gamemode_Handler;
+using ObscureLabs.Items.Rebalances;
 
 namespace ObscureLabs
 {
@@ -141,18 +142,21 @@ namespace ObscureLabs
 
             //- Gameplay Utils -//
             _modules.AddModule(new Powerup());
+            _modules.AddModule(new MediGunGlow());
             //_modules.AddModule(new ItemGlow()); Start this inside the gamemodes instead
 
             //- Mechanics and Features -//
             _modules.AddModule(new CoinFlip());
             _modules.AddModule(new AttachmentFix());
             _modules.AddModule(new SCPsDropItems());
+            _modules.AddModule(new HidFix());
 
             //- SCP Additions and rebalances -//
             _modules.AddModule(new Scp1162());
-            _modules.AddModule(new SCP106());
-            _modules.AddModule(new SCP173());
+            _modules.AddModule(new Scp106());
+            _modules.AddModule(new Scp173());
             _modules.AddModule(new Scp049());
+            _modules.AddModule(new Scp939());
 
             _modules.AddModule(new Scp914Handler());
 
