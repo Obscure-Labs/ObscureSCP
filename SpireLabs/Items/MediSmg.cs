@@ -83,7 +83,7 @@ namespace ObscureLabs.Items
             var data = player.CurrentItem.GetData<MediSmgData>("MediSmgData");
             data.Experience += xp;
             Manager.SendHint(player, $"<pos=0>Your MediGun has <color=#77d65a>{data.Experience}xp</color>", 2f);
-            if (data.Experience >= Mathf.Pow(2, data.Level) * 50)
+            if (data.Experience >= Mathf.Pow(data.Level, 2) * 100)
             {
                 data.Level = Mathf.Clamp(data.Level, 1, 3);
                 data.Level += 1;
@@ -99,16 +99,10 @@ namespace ObscureLabs.Items
             var data = ev.Player.CurrentItem.GetData<MediSmgData>("MediSmgData");
             ev.Firearm.AmmoDrain = 0;
 
-            if (data.Level == 3)
-            {
-                ev.Player.Heal(4, false);
-                ev.Player.EnableEffect(EffectType.MovementBoost, 1f, false);
-                ev.Player.ChangeEffectIntensity(EffectType.MovementBoost, 70);
-            }
 
             if (ev.Target != null && ev.Target.IsHuman && ev.Target.Health < ev.Target.MaxHealth)
             {
-                AddXP(ev.Player, 2);
+                AddXP(ev.Player, 3);
                 ev.Player.ShowHitMarker(1500f);
                 switch (data.Level)
                 {
@@ -125,9 +119,9 @@ namespace ObscureLabs.Items
                     case 3:
                         {
                             ev.Target.Heal(20, false);
-                            ev.Target.EnableEffect(EffectType.MovementBoost, 1f, false);
-                            ev.Target.ChangeEffectIntensity(EffectType.MovementBoost, 70);
-
+                            ev.Target.EnableEffect(EffectType.MovementBoost, 70, 1f);
+                            ev.Player.Heal(4, false);
+                            ev.Player.EnableEffect(EffectType.MovementBoost, 70, 1f);
 
 
                             break;
