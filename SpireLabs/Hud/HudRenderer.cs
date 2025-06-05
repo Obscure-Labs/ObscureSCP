@@ -1,4 +1,5 @@
-﻿using Exiled.API.Features;
+﻿using Exiled.API.Enums;
+using Exiled.API.Features;
 using MEC;
 using PlayerRoles;
 using System;
@@ -166,14 +167,10 @@ namespace ObscureLabs.Hud
                     }
                     try
                     {
-                        if(effectCount == 0)
-                        {
-                            s += $"<align=left><line-height=0><voffset={170 - (gmdCount * 15)}><size=16><pos={Mathf.RoundToInt(-675 * xScalar)}>{"☐☐☐☐☐"}</pos></size></voffset></line-height></align>";
-                        }
                         foreach (Hint hint in hint[p.PlayerId].Where(x => x.Position == HintPosition.EftInfo))
                         {
-                            if (effectCount >= 5) { break; }
-                            s += $"<align=left><line-height=0><voffset={140 - (gmdCount * 15) - (effectCount * 15)}><size=16><pos={Mathf.RoundToInt(-675 * xScalar)}>{hint.Content}</pos></size></voffset></line-height></align>";
+                            if (effectCount >= 7) { break; }
+                            s += $"<align=left><line-height=0><voffset={140 - (gmdCount * 16) - (effectCount * 16)}><size=16><pos={Mathf.RoundToInt(-675 * xScalar)}>{hint.Content}</pos></size></voffset></line-height></align>";
                             effectCount++;
                         }
                     }
@@ -242,7 +239,14 @@ namespace ObscureLabs.Hud
                     {
                         if (effect.Intensity != 0)
                         {
-                            hint[p.PlayerId].Add(new Hint($"{effect.name} {effect.Intensity} - {Mathf.RoundToInt(effect.TimeLeft)}s", 0, HintPosition.EftInfo));
+                            if (!effectDictionary.TryGetValue(effect.name, out string effectsString))
+                            {
+                                Log.Error($"Effect '{effect.name}' not found in effect dictionary.");
+                            }
+                            else
+                            {
+                                hint[p.PlayerId].Add(new Hint($"{effectsString} x{effect.Intensity} ({Mathf.RoundToInt(effect.TimeLeft)}s)", 0, HintPosition.EftInfo));
+                            }
                         }
                     }
                 }
@@ -253,5 +257,43 @@ namespace ObscureLabs.Hud
                 yield return Timing.WaitForSeconds(0.75f);
             }
         }
+
+        #region effectList
+        public static Dictionary<string, string> effectDictionary = new Dictionary<string, string>
+        {
+            { "Asphyxiated", "<b><color=#95c700>Asphyxiated</color></b>" },
+            { "Bleeding", "<b><color=#750004>Bleeding</color></b>" },
+            { "Blinded", "<b><color=#394380>Blinded</color></b>" },
+            { "Burned", "<b><color=#de831b>Burned</color></b>" },
+            { "Deafened", "<b><color=#4a2700>Deafened</color></b>" },
+            { "Ensnared", "<b><color=#00750e>Ensnared</color></b>" },
+            { "Exhausted", "<b><color=#696969>Exhausted</color></b>>" },
+            { "Flashed", "<b><color=#d6fffd>Flashed</color></b>" },
+            { "Invigorated", "<b><color=green>Invigorated</color></b>" },
+            { "Poisoned", "<b><color=#02521e>Poisoned</color></b>" },
+            { "DamageReduction", "<b><color=#e3b76b>Damage Reduction</color></b>" },
+            { "MovementBoost", "<b><color=#3bafd9>Movement Boost</color></b>" },
+            { "RainbowTaste", "<b><color=#FF0000>R</color><color=#FF7F00>a</color><color=#FFFF00>i</color><color=#7FFF00>n</color><color=#00FF00>b</color><color=#00FF7F>o</color><color=#00FEFF>w</color><color=#007FFF> T</color><color=#0000FF>a</color><color=#7F00FF>s</color><color=#FF00FE>t</color><color=#FF007F>e</color></b>" },
+            { "SeveredHands", "<b><color=red>Severed Hands</color></b>" },
+            { "Stained", "<b><color=#543601>Stained</color></b>" },
+            { "Vitality", "<b><color=#71c788>Vitality</color></b>" },
+            { "Hypothermia", "<b><color=#42e9ff>Hypothermia</color></b>" },
+            { "Scp1853", "<b><color=#c9f59a>SCP1853</color></b>" },
+            { "CardiacArrest", "<b><color=red>Cardiac Arrest</color></b>" },
+            { "AntiScp207", "<b><color=#fa70ff>Anti Scp207</color></b>" },
+            { "Invisible", "<b><color=#540042>Invisible</color></b>" },
+            { "Scp207", "<b><color=#bb80ff>Scp207</color></b>" },
+            { "BodyshotReduction", "<b><color=#c9af3a>Bodyshot Reduction</color></b>" },
+            { "Hemorrhage", "<b><color=#ff0000>Hemorrhage</color></b>" },
+            { "Disabled", "<b><color=#828282>Disabled</color></b>" },
+            { "Corroding", "<b><color=#5e8c60>Corroding</color></b>" },
+            { "Concussed", "<b><color=#5e728c>Concussed</color></b>" },
+            { "Scanned", "<b><color=#ffff00>Scanned</color></b>" },
+            { "Ghostly", "<b><color=#f2f3f5>Ghostly</color></b>" },
+            { "Strangled", "<b><color=#687fad>Strangled</color></b>" },
+            { "SilentWalk", "<b><color=#a9a9a9>Silent Walk</color></b>" },
+            { "Sinkhole", "<b><color=#29362d>Sink Hole</color></b>" }
+        };
+        #endregion
     }
 }
