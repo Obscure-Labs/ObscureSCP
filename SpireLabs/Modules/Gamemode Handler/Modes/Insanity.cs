@@ -1,30 +1,17 @@
-﻿using Achievements.Handlers;
-using Exiled.API.Enums;
+﻿using Exiled.API.Enums;
 using Exiled.API.Extensions;
-using Exiled.API.Features;
-using Exiled.API.Features.Items;
-using Exiled.API.Features.Pickups;
 using Exiled.CustomItems.API.Features;
 using InventorySystem;
-using InventorySystem.Items;
-using JetBrains.Annotations;
-using LabApi.Features.Wrappers;
 using MEC;
-using Mirror;
 using ObscureLabs.API.Features;
 using ObscureLabs.Items;
 using ObscureLabs.Modules.Default;
 using ObscureLabs.Modules.Gamemode_Handler.Core;
 using ObscureLabs.Modules.Gamemode_Handler.Core.SCP_Rebalances;
-using ObscureLabs.Modules.Gamemode_Handler.Mode_Specific_Modules;
 using ObscureLabs.SpawnSystem;
 using PlayerRoles;
 using SpireLabs.GUI;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using Pickup = Exiled.API.Features.Pickups.Pickup;
 using Player = Exiled.API.Features.Player;
@@ -105,14 +92,15 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
         public override bool Start() // this runs on round start
         {
 
-            Timing.RunCoroutine(ItemPlacer());
-            Timing.RunCoroutine(ItemReplacer());
-            Timing.RunCoroutine(TeamAssignment());
+            Timing.RunCoroutine(ItemPlacer(), "insanity");
+            Timing.RunCoroutine(ItemReplacer(), "insanity");
+            Timing.RunCoroutine(TeamAssignment(), "insanity");
             Server.FriendlyFire = true;
             return base.Start();
         }
         public override bool Stop()
         {
+            Timing.KillCoroutines("insanity");
             Server.FriendlyFire = false;
             return base.Stop();
         }

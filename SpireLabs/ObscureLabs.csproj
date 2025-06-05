@@ -132,6 +132,7 @@
     <Compile Include="API\Features\Module.cs" />
     <Compile Include="API\Features\ModulesManager.cs" />
     <Compile Include="Commands\Admins\Dummy.cs" />
+    <Compile Include="Commands\Admins\ForceGamemode.cs" />
     <Compile Include="Commands\Admins\ModuleControls.cs" />
     <Compile Include="Configs\HintConfig.cs" />
     <Compile Include="Configs\OverrideConfig.cs" />
