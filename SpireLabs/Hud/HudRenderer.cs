@@ -178,7 +178,7 @@ namespace ObscureLabs.Hud
                     {
                         Log.Error($"Error rendering effects: {ex.Message}");
                     }
-                    string watermarkText = $"<color=#CD02FF>O</color><color=#BD02FC>b</color><color=#AD02F9>s</color><color=#9D02F6>c</color><color=#8D02F3>u</color><color=#7D02F0>r</color><color=#6D02ED>e</color><color=#5D02EA>L</color><color=#4D02E7>a</color><color=#3D02E4>b</color><color=#2D02E1>s</color>";
+                    string watermarkText = $"<size=16><color=#F932DB>O</color><color=#ED36DD>b</color><color=#E13ADF>s</color><color=#D53EE1>c</color><color=#C942E3>u</color><color=#BD46E5>r</color><color=#B14AE7>e</color><color=#A54EE9>L</color><color=#9952EB>a</color><color=#8D56ED>b</color><color=#815AEF>s</color></size>";
                     s += $"<align=left><line-height=0><voffset={-370}><size=16><pos={600 - (GetStringWidth("ObscureLabs", 16) / 2 / 3)}>{watermarkText}</pos></size></voffset></line-height></align>";
                     s += $"<align=left><line-height=0><voffset={-385}><size=16><pos={600 - (GetStringWidth("chatobscnet'", 16) / 2 / 3)}>{"chat.obsc.net"}</pos></size></voffset></line-height></align>";
                     s += $"<align=left><pos=540><line-height=0><voffset=-9999><size=16>BOTTOMANCHOR</size></voffset></line-height></pos></align>";
@@ -245,7 +245,7 @@ namespace ObscureLabs.Hud
                             }
                             else
                             {
-                                hint[p.PlayerId].Add(new Hint($"{effectsString} x{effect.Intensity} ({Mathf.RoundToInt(effect.TimeLeft)}s)", 0, HintPosition.EftInfo));
+                                hint[p.PlayerId].Add(new Hint($"{effectsString}<size=10>x{effect.Intensity}</size> <color=#8a8a8a>-</color> {Mathf.RoundToInt(effect.TimeLeft)}s", 0, HintPosition.EftInfo));
                             }
                         }
                     }
