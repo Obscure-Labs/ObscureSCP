@@ -84,7 +84,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
                 }
             }
 
-
+            Cassie.Message("pitch_1.10 jam_45_2 yield_10 Red Light", false, false, false);
             Timing.CallDelayed(0.7f, () => { RedLight = true; });
 
             Timing.CallDelayed(10f, () =>
@@ -100,6 +100,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
                 }
 
                 RedLight = false;
+                Cassie.Message("pitch_1.10 jam_45_2 yield_10 Green Light", false, false, false);
                 Manager.setModifier(0, "<color=green>Green Light</color>");
             });
 
@@ -131,7 +132,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
                     foreach (Player p in Player.List)
                     {
 
-                        if (p.Velocity != new Vector3(0, p.Velocity.y, 0) && p.IsJumping == false)
+                        if (p.Velocity != new Vector3(0, p.Velocity.y, 0))
                         {
                             p.Explode();
                             p.Kill(Exiled.API.Enums.DamageType.Recontainment);
