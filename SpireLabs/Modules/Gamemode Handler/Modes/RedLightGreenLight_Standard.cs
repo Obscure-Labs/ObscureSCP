@@ -72,9 +72,10 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
 
         public IEnumerator<float> ChangeLights()
         {
+            yield return Timing.WaitForOneFrame;
+            Manager.setModifier(0, "<color=red>Red Light</color>");
             foreach (Room room in Room.List)
             {
-                yield return Timing.WaitForOneFrame;
                 room.Color = Color.red;
 
                 foreach (Door d in room.Doors)
@@ -83,7 +84,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
                 }
             }
 
-            Timing.CallDelayed(0.7f, () => { RedLight = true; Manager.setModifier(0, "<color=red>Red Light</color>"); });
+
+            Timing.CallDelayed(0.7f, () => { RedLight = true; });
 
             Timing.CallDelayed(10f, () =>
             {
