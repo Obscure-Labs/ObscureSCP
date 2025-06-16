@@ -1,19 +1,17 @@
-﻿using Exiled.API.Enums;
-using Exiled.API.Features;
+﻿using Exiled.API.Features;
+using Exiled.API.Features.Roles;
 using MEC;
-using PlayerRoles;
+using Mirror;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
-using System.Reflection;
-using System.Text;
+using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 using YamlDotNet.Serialization;
 
 namespace ObscureLabs.Hud
@@ -46,6 +44,46 @@ namespace ObscureLabs.Hud
                 }
             });
         }
+
+        public static void SetPermHint(ReferenceHub p, string hint, int slot)
+        {
+            if(!HudRenderer.hint.ContainsKey(p.PlayerId))
+            {
+                HudRenderer.hint[p.PlayerId] = new List<Hint>();
+            }
+            if (HudRenderer.hint[p.PlayerId].Any(x => x.slot == slot))
+            {
+                HudRenderer.hint[p.PlayerId].RemoveAll(x => x.slot == slot);
+            }
+            HudRenderer.hint[p.PlayerId].Add(new Hint(hint, 0f, HintPosition.PmtHint) { slot = slot });
+        }
+
+        public static void SetGmdInfo(ReferenceHub p, string hint, int slot)
+        {
+            if (!HudRenderer.hint.ContainsKey(p.PlayerId))
+            {
+                HudRenderer.hint[p.PlayerId] = new List<Hint>();
+            }
+            if (HudRenderer.hint[p.PlayerId].Any(x => x.slot == slot))
+            {
+                HudRenderer.hint[p.PlayerId].RemoveAll(x => x.slot == slot);
+            }
+            HudRenderer.hint[p.PlayerId].Add(new Hint(hint, 0f, HintPosition.GmdInfo) { slot = slot });
+        }
+
+        public static IEnumerator<float> SendHintCoroutine(ReferenceHub p, string hint, float time, HintPosition position)
+        {
+            HudRenderer.hint[p.PlayerId].RemoveAll(x => x.Position == HintPosition.TmpHint);
+            hint += $"@{Guid.NewGuid()}";
+            if (!HudRenderer.hint.ContainsKey(p.PlayerId))
+            {
+                HudRenderer.hint[p.PlayerId] = new List<Hint>();
+            }
+            HudRenderer.hint[p.PlayerId].Add(new Hint(hint, time, position));
+            yield return Timing.WaitForSeconds(time);
+            HudRenderer.hint[p.PlayerId].RemoveAll(x => x.Content.Contains(hint.Split('@')[1]));
+        }
+
         public enum HintPosition
         {
             TmpHint,
@@ -60,6 +98,7 @@ namespace ObscureLabs.Hud
             public float Time { get; set; }
             public DateTime StartTime { get; set; }
             public HintPosition Position { get; set; }
+            public int slot { get; set; }
             public Hint(string content, float time, HintPosition position)
             {
                 Content = content;
@@ -92,52 +131,40 @@ namespace ObscureLabs.Hud
 
         internal static IEnumerator<float> RenderUI(ReferenceHub p)
         {
-            hint[p.PlayerId] = new(){ new Hint("THIS IS A TEMP HINT", 5000f, HintPosition.TmpHint), new Hint("THIS IS A PERM HINT", 0f, HintPosition.PmtHint), new Hint("THIS IS A GMD INFO HINT", 0f, HintPosition.GmdInfo) };
+            hint[p.PlayerId] = new(){new Hint("THIS IS A PERM HINT", 0f, HintPosition.PmtHint), new Hint("THIS IS A GMD INFO HINT", 0f, HintPosition.GmdInfo) };
             yield return Timing.WaitForSeconds(5f);
             Timing.RunCoroutine(EffectChecker(p));
             Log.Info($"Current aspect ratio is: {p.aspectRatioSync.AspectRatio}");
             while (true)
             {
                 string s = string.Empty;
-                if (Player.Get(p).IsAlive)
+                try
                 {
-                    float xScalar = 1f;
-                    switch (p.aspectRatioSync.AspectRatio.ToString())
-                    {
-                        case "1.777778": // 16:9
-                            xScalar = 0.525f;
-                            break;
-                        case "2.37037": // 21:9
-                            xScalar = 1f;
-                            break;
-                        case "1.333333": // 4:3
-                            xScalar = 0.175f;
-                            break;
-                        case "1.6": // 16:10
-                            xScalar = 0.375f;
-                            break;
+                    //if (Player.Get(p).IsAlive)
+                    //{
+                        float xScalar = 1f;
+                        switch (p.aspectRatioSync.AspectRatio.ToString())
+                        {
+                            case "1.777778": // 16:9
+                                xScalar = 0.525f;
+                                break;
+                            case "2.37037": // 21:9
+                                xScalar = 1f;
+                                break;
+                            case "1.333333": // 4:3
+                                xScalar = 0.175f;
+                                break;
+                            case "1.6": // 16:10
+                                xScalar = 0.375f;
+                                break;
 
-                    }
-                    List<Hint> oldHints = new List<Hint>();
-                    s += $"<align=left><pos=540><line-height=0><voffset=9999><size=16>TOPANCHOR</size></voffset></line-height></pos></align>";
-                    //s += $"<align=left><pos=540><line-height=0><voffset=0><size=16>is center?</size></voffset></line-height></pos></align>";
-                    int effectCount = 0;
-                    int gmdCount = 0;
-                    try
-                    {
+                        }
+                        s += $"<align=left><pos=540><line-height=0><voffset=9999><size=16>TOPANCHOR</size></voffset></line-height></pos></align>";
+                        //s += $"<align=left><pos=540><line-height=0><voffset=0><size=16>is center?</size></voffset></line-height></pos></align>";
+                        int effectCount = 0;
+                        int gmdCount = 0;
                         foreach (Hint hint in hint[p.PlayerId])
                         {
-                            if(hint.Position == HintPosition.EftInfo)
-                            {
-                                continue;
-                            }
-                            if (hint.Position == HintPosition.TmpHint && hint.StartTime.AddSeconds(hint.Time) < DateTime.UtcNow)
-                            {
-                                oldHints.Add(hint);
-                                continue;
-                            }
-
-
                             int vOffset = -69420; // Arbitraty number that would never get used
                             int baseXPos = -69420; // Center position (will be modded based on aspect ratio later)
 
@@ -147,53 +174,103 @@ namespace ObscureLabs.Hud
                                     vOffset = 670;
                                     break;
                                 case HintPosition.PmtHint:
-                                    vOffset = -300;
+                                    vOffset = -300 - (hint.slot*16);
                                     //baseXPos = Mathf.RoundToInt(-675*xScalar); // Slightly off-center for PmtHint
                                     break;
                                 case HintPosition.GmdInfo:
-                                    vOffset = 200 + (gmdCount * 15);
+                                    if(gmdCount >= 4) { continue; } 
+                                    vOffset = 200 + (hint.slot * 16);
                                     baseXPos = Mathf.RoundToInt(-675 * xScalar); // Centered for GmdInfo
                                     gmdCount++;
                                     break;
+                                case HintPosition.EftInfo:
+                                    continue;
+                                    break;
                             }
-                            //s += $"<align=left><line-height=0><voffset=146><size=16><pos=600>{text}</pos></size></voffset></line-height></align>";
-                            s += $"<align=left><line-height=0><voffset={vOffset}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(hint.Content, 16) / 2 / 3) : baseXPos)}>{hint.Content}</pos></size></voffset></line-height></align>";
+                                if (hint.Position == HintPosition.TmpHint)
+                                {
+                                    string nouid = hint.Content.Split('@')[0];
+                                    s += $"<align=left><line-height=0><voffset=2000><size=16>{nouid}</size></voffset></line-height></align>";
+                                    if (nouid.Split(char.Parse("\n")) is string[] wtf && wtf.Count() == 1)
+                                    {
+                                        s += $"<align=left><line-height=0><voffset={vOffset}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf[0], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf[0]}</pos></size></voffset></line-height></align>";
+                                    }
+                                    else if (nouid.Split(char.Parse("\n")) is string[] wtf1 && wtf1.Count() == 2)
+                                    {
+                                        s += $"<align=left><line-height=0><voffset={vOffset}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf1[0], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf1[0]}</pos></size></voffset></line-height></align>";
+                                        s += $"<align=left><line-height=0><voffset={vOffset - 16}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf1[1], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf1[1]}</pos></size></voffset></line-height></align>";
+                                    }
+                                    else if (nouid.Split(char.Parse("\n")) is string[] wtf2 && wtf2.Count() == 3)
+                                    {
+                                        s += $"<align=left><line-height=0><voffset={vOffset}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf2[0], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf2[0]}</pos></size></voffset></line-height></align>";
+                                        s += $"<align=left><line-height=0><voffset={vOffset - 16}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf2[1], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf2[1]}</pos></size></voffset></line-height></align>";
+                                        s += $"<align=left><line-height=0><voffset={vOffset - 32}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf2[2], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf2[2]}</pos></size></voffset></line-height></align>";
+                                    }
+                                }
+                                else
+                                {
+                                    s += $"<align=left><line-height=0><voffset={vOffset}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(hint.Content, 16) / 2 / 3) : baseXPos)}>{hint.Content}</pos></size></voffset></line-height></align>";
+                                }
+                            //if (hint.Position == HintPosition.TmpHint)
+                            //{
+                            //    string[] hintContent = hint.Content.Split('@');
+                            //    Log.Info($"Split hint content: {hintContent[0]}");
+                            //    List<string> splitContent = new List<string>();
+                            //    if (hintContent[0].Contains("\n"))
+                            //    {
+                            //        splitContent = hintContent[0].Split(char.Parse("\n")).ToList();
+                            //    }
+                            //    else
+                            //    {
+                            //        SplitString(hintContent[0], 131);
+                            //    }
+                            //    for (int i = 0; i < splitContent.Count; i++)
+                            //    {
+                            //        if (i >= 3) { break; } // Limit to 2 lines
+                            //        s += $"<align=left><line-height=0><voffset={vOffset - (i * 16)}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(splitContent[i], 16) / 2 / 3) : baseXPos)}>{splitContent[i]}</pos></size></voffset></line-height></align>";
+                            //    }
+                            //}
+                            //else 
+                            //{ 
+                            //    s += $"<align=left><line-height=0><voffset={vOffset}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(hint.Content, 16) / 2 / 3) : baseXPos)}>{hint.Content}</pos></size></voffset></line-height></align>";
+                            //}
                         }
-                        hint[p.PlayerId].RemoveAll(x => oldHints.Contains(x));
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Error($"Error rendering hints: {ex.Message}");
-                    }
-                    try
+                    if (Player.Get(p).IsAlive)
                     {
                         foreach (Hint hint in hint[p.PlayerId].Where(x => x.Position == HintPosition.EftInfo))
                         {
                             if (effectCount >= 7) { break; }
-                            s += $"<align=left><line-height=0><voffset={140 - (gmdCount * 16) - (effectCount * 16)}><size=16><pos={Mathf.RoundToInt(-675 * xScalar)}>{hint.Content}</pos></size></voffset></line-height></align>";
+                            s += $"<align=right><line-height=0><voffset={140 - (gmdCount * 16) - (effectCount * 16)}><size=16><pos={Mathf.RoundToInt(-675 * xScalar)}>{hint.Content}</pos></size></voffset></line-height></align>";
                             effectCount++;
                         }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        Log.Error($"Error rendering effects: {ex.Message}");
+                        if(Player.Get(p).Role is SpectatorRole role)
+                        {
+                            foreach (Hint hint in hint[role.SpectatedPlayer.ReferenceHub.PlayerId].Where(x => x.Position == HintPosition.EftInfo))
+                            {
+                                if (effectCount >= 7) { break; }
+                                s += $"\n<align=right><line-height=0><voffset={140 - (gmdCount * 16) - (effectCount * 16)}><size=16><pos={Mathf.RoundToInt(-675 * xScalar)}>{hint.Content}</pos></size></voffset></line-height></align>";
+                                effectCount++;
+                            }
+                        }
                     }
-                    string watermarkText = $"<size=16><color=#F932DB>O</color><color=#ED36DD>b</color><color=#E13ADF>s</color><color=#D53EE1>c</color><color=#C942E3>u</color><color=#BD46E5>r</color><color=#B14AE7>e</color><color=#A54EE9>L</color><color=#9952EB>a</color><color=#8D56ED>b</color><color=#815AEF>s</color></size>";
-                    s += $"<align=left><line-height=0><voffset={-370}><size=16><pos={600 - (GetStringWidth("ObscureLabs", 16) / 2 / 3)}>{watermarkText}</pos></size></voffset></line-height></align>";
-                    s += $"<align=left><line-height=0><voffset={-385}><size=16><pos={600 - (GetStringWidth("chatobscnet'", 16) / 2 / 3)}>{"chat.obsc.net"}</pos></size></voffset></line-height></align>";
-                    s += $"<align=left><pos=540><line-height=0><voffset=-9999><size=16>BOTTOMANCHOR</size></voffset></line-height></pos></align>";
-
-                    try
-                    {
+                        string watermarkText = $"<color=#F932DB>O</color><color=#ED36DD>b</color><color=#E13ADF>s</color><color=#D53EE1>c</color><color=#C942E3>u</color><color=#BD46E5>r</color><color=#B14AE7>e</color><color=#A54EE9>L</color><color=#9952EB>a</color><color=#8D56ED>b</color><color=#815AEF>s</color>";
+                        //s += $"<align=left><line-height=0><voffset={-385}><size=32><pos={600 - (GetStringWidth("█████████████", 32) / 2 / 3)}><color=#000000><alpha=#AA>█████████████<alpha=#FF></color></pos></size></voffset></line-height></align>";
+                        s += $"<align=left><line-height=0><voffset={-370}><size=20><pos={602 - (GetStringWidth("ObscureLabs", 20) / 2 / 3)}>{watermarkText}</pos></size></voffset></line-height></align>";
+                        s += $"<align=left><line-height=0><voffset={-385}><size=16><pos={600 - (GetStringWidth("CHAT.OBSC.NET'", 16) / 2 / 3)}>{"CHAT.OBSC.NET"}</pos></size></voffset></line-height></align>";
+                        s += $"<align=left><pos=540><line-height=0><voffset=-9999><size=16>BOTTOMANCHOR</size></voffset></line-height></pos></align>";
                         Player.Get(p).SendConsoleMessage(s, Color.white.ToString());
                         Player.Get(p).ShowHint(s, 1f);
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Error($"Error showing hint: {ex.Message}");
-                    }
-                    yield return Timing.WaitForSeconds(0.9f);
+                    //}
                 }
+                catch (Exception ex)
+                {
+                    Log.Error($"Error rendering UI: {ex.Message}");
+                    s = string.Empty; // Reset the string in case of an error
+                }
+                yield return Timing.WaitForSeconds(0.9f);
             }
 
         }
@@ -292,8 +369,20 @@ namespace ObscureLabs.Hud
             { "Ghostly", "<b><color=#f2f3f5>Ghostly</color></b>" },
             { "Strangled", "<b><color=#687fad>Strangled</color></b>" },
             { "SilentWalk", "<b><color=#a9a9a9>Silent Walk</color></b>" },
-            { "Sinkhole", "<b><color=#29362d>Sink Hole</color></b>" }
+            { "Sinkhole", "<b><color=#29362d>Sink Hole</color></b>" },
+            { "Blurred", "<b><color=#a9a9a9>Blurred</color></b>" }
         };
+        #endregion
+        #region string functions
+        public static List<string> SplitString(string s, int n)
+        {
+            List<string> result = new List<string>();
+            for (int i = 0; i < s.Length; i += n)
+            {
+                result.Add(s.Substring(i, Math.Min(n, s.Length - i)));
+            }
+            return result;
+        }
         #endregion
     }
 }

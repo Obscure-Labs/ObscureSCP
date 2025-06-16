@@ -1,5 +1,6 @@
 ﻿using Exiled.API.Features;
 using MEC;
+using ObscureLabs.Hud;
 using SpireLabs.GUI;
 
 namespace SpireSCP.GUI.API.Features
@@ -13,6 +14,7 @@ namespace SpireSCP.GUI.API.Features
         /// <param name="LeaveOrJoin">Use "l" to specify a leave event and "j" to specify a join event</param>
         public static void SendJoinLeave(Player Player, bool isLeave)
         {
+            //Timing.RunCoroutine(HudRenderer.SendHintCoroutine(Player.ReferenceHub, ))
             //Timing.RunCoroutine(HudHandler.SendJoinOrLeaveCoroutine(Player, isLeave));
         }
         /// <summary>
@@ -23,6 +25,7 @@ namespace SpireSCP.GUI.API.Features
         /// <param name="Time">The amount of time that hint should be displayed for.</param>
         public static void SendHint(Player Player, string Hint, float Time)
         {
+            Timing.RunCoroutine(HudRenderer.SendHintCoroutine(Player.ReferenceHub, Hint, Time, HudRenderer.HintPosition.TmpHint));
             //Timing.RunCoroutine(HudHandler.SendHintCoroutine(Player, Hint, Time));
         }
 
@@ -34,6 +37,7 @@ namespace SpireSCP.GUI.API.Features
         /// <param name="Time">The amount of time that hint should be displayed for.</param>
         public static void SendHint(ReferenceHub referenceHub, string Hint, float Time)
         {
+            Timing.RunCoroutine(HudRenderer.SendHintCoroutine(referenceHub, Hint, Time, HudRenderer.HintPosition.TmpHint));
             //Timing.RunCoroutine(HudHandler.SendHintCoroutine(Player.Get(referenceHub), Hint, Time));
         }
 
@@ -45,7 +49,6 @@ namespace SpireSCP.GUI.API.Features
         /// <param name="text">The text to display for that modifier.</param>
         public static void setModifier(int pos, string text)
         {
-            //HudHandler.modifiers[pos] = text;
         }
     }
 }
