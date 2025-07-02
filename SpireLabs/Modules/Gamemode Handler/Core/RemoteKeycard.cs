@@ -54,7 +54,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         private void OnInteractingLocker(InteractingLockerEventArgs ev)
         {
             if (ev.Player.Items.Any(x =>
-                    x is Keycard k && k.Permissions.HasFlag(ev.InteractingChamber.RequiredPermissions.RemoveFlags(KeycardPermissions.ScpOverride))))
+                    x is Keycard k && k.Permissions.HasFlag(ev.InteractingChamber.RequiredPermissions.RemoveFlags(KeycardPermissions.ScpOverride))) && ev.Player.IsHuman)
             {
                 ev.IsAllowed = true;
             }
@@ -73,9 +73,9 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         private void OnInteractingDoor(InteractingDoorEventArgs ev)
         {
             Log.Debug("Interacting door");
-            if (ev.Door.IsKeycardDoor)
+            if (ev.Door.IsKeycardDoor && ev.Door.KeycardPermissions != KeycardPermissions.None)
             {
-                if (ev.Player.Items.Any(x => x is Keycard k && k.Permissions.HasFlag(ev.Door.KeycardPermissions.RemoveFlags(KeycardPermissions.ScpOverride))) && !ev.Door.IsLocked)
+                if (ev.Player.Items.Any(x => x is Keycard k && k.Permissions.HasFlag(ev.Door.KeycardPermissions.RemoveFlags(KeycardPermissions.ScpOverride))) && !ev.Door.IsLocked && ev.Player.IsHuman)
                 {
                     ev.IsAllowed = true;
                 }
@@ -89,7 +89,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         private void OnInteractingWarhead(PlayerUnlockingWarheadButtonEventArgs ev)
         {
             Log.Debug("Warhead");
-            if (((Exiled.API.Features.Player)ev.Player).Items.Any(x => x is Keycard k && k.Permissions.HasFlag(KeycardPermissions.AlphaWarhead)))
+            if (((Exiled.API.Features.Player)ev.Player).Items.Any(x => x is Keycard k && k.Permissions.HasFlag(KeycardPermissions.AlphaWarhead)) && ev.Player.IsHuman)
             {
                 ev.IsAllowed = true;
             }
@@ -128,7 +128,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         {
 
             Log.Debug("Gemeratpr");
-            if (ev.Player.Items.Any(x => x is Keycard k && k.Permissions.HasFlag(KeycardPermissions.ArmoryLevelTwo)))
+            if (ev.Player.Items.Any(x => x is Keycard k && k.Permissions.HasFlag(KeycardPermissions.ArmoryLevelTwo)) && ev.Player.IsHuman)
             {
                 ev.IsAllowed = true;
             }
