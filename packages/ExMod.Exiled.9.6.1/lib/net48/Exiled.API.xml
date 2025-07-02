@@ -3682,13 +3682,14 @@
             <param name="makeNoise">Same on <see cref="M:Exiled.API.Features.Cassie.Message(System.String,System.Boolean,System.Boolean,System.Boolean)"/>'s isNoisy.</param>
             <param name="isSubtitles">Same on <see cref="M:Exiled.API.Features.Cassie.Message(System.String,System.Boolean,System.Boolean,System.Boolean)"/>'s isSubtitles.</param>
         </member>
-        <member name="M:Exiled.API.Extensions.MirrorExtensions.MessageTranslated(Exiled.API.Features.Player,System.String,System.String,System.Boolean,System.Boolean,System.Boolean)">
+        <member name="M:Exiled.API.Extensions.MirrorExtensions.MessageTranslated(Exiled.API.Features.Player,System.String,System.String,System.String,System.Boolean,System.Boolean,System.Boolean)">
             <summary>
             Send CASSIE announcement with custom subtitles for translation that only <see cref="T:Exiled.API.Features.Player"/> can hear and see it.
             </summary>
             <param name="player">Target to send.</param>
             <param name="words">The message to be reproduced.</param>
             <param name="translation">The translation should be show in the subtitles.</param>
+            <param name="customSubtitles">The custom subtitles to show.</param>
             <param name="makeHold">Same on <see cref="M:Exiled.API.Features.Cassie.MessageTranslated(System.String,System.String,System.Boolean,System.Boolean,System.Boolean)"/>'s isHeld.</param>
             <param name="makeNoise">Same on <see cref="M:Exiled.API.Features.Cassie.MessageTranslated(System.String,System.String,System.Boolean,System.Boolean,System.Boolean)"/>'s isNoisy.</param>
             <param name="isSubtitles">Same on <see cref="M:Exiled.API.Features.Cassie.MessageTranslated(System.String,System.String,System.Boolean,System.Boolean,System.Boolean)"/>'s isSubtitles.</param>
@@ -6600,6 +6601,19 @@
             <param name="header"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Header"/></param>
             <param name="onChanged"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.OnChanged"/></param>
         </member>
+        <member name="M:Exiled.API.Features.Core.UserSettings.KeybindSetting.#ctor(System.Int32,System.String,UnityEngine.KeyCode,System.Boolean,System.Boolean,System.String,Exiled.API.Features.Core.UserSettings.HeaderSetting,System.Action{Exiled.API.Features.Player,Exiled.API.Features.Core.UserSettings.SettingBase})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Core.UserSettings.KeybindSetting"/> class.
+            </summary>
+            <param name="id"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Id"/></param>
+            <param name="label"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Label"/></param>
+            <param name="suggested"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.KeybindSetting.KeyCode"/></param>
+            <param name="preventInteractionOnGUI"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.KeybindSetting.PreventInteractionOnGUI"/></param>
+            <param name="allowSpectatorTrigger"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.KeybindSetting.AllowSpectatorTrigger"/></param>
+            <param name="hintDescription"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.HintDescription"/></param>
+            <param name="header"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Header"/></param>
+            <param name="onChanged"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.OnChanged"/></param>
+        </member>
         <member name="M:Exiled.API.Features.Core.UserSettings.KeybindSetting.#ctor(UserSettings.ServerSpecific.SSKeybindSetting)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.API.Features.Core.UserSettings.KeybindSetting"/> class.
@@ -6617,6 +6631,11 @@
         <member name="P:Exiled.API.Features.Core.UserSettings.KeybindSetting.PreventInteractionOnGUI">
             <summary>
             Gets or sets a value indicating whether the interaction is prevented while player is in RA, Settings etc.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.UserSettings.KeybindSetting.AllowSpectatorTrigger">
+            <summary>
+            Gets or sets a value indicating whether the interaction is prevented in spectator roles.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Core.UserSettings.KeybindSetting.KeyCode">
