@@ -125,6 +125,7 @@ namespace ObscureLabs.Modules
         {
             foreach (Player p in Player.List)
             {
+                Map.CleanAllRagdolls();
                 p.IsGodModeEnabled = false;
                 p.RoleManager.ServerSetRole(RoleTypeId.Spectator, RoleChangeReason.None);
                 p.Transform.position = Vector3.zero;

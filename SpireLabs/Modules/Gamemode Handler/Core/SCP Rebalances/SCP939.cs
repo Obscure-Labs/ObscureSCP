@@ -30,6 +30,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core.SCP_Rebalances
 
         private void Attacking(HurtingEventArgs ev)
         {
+            if (ev.Player == null) { return; }
             if (ev.Attacker.Role.Type == PlayerRoles.RoleTypeId.Scp939) { ev.Amount = 60; }
         }
     }
