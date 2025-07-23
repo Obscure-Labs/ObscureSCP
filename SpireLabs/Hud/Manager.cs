@@ -49,6 +49,7 @@ namespace SpireSCP.GUI.API.Features
         /// <param name="text">The text to display for that modifier.</param>
         public static void setModifier(int pos, string text)
         {
+            HudRenderer.SetGlobalGmdInfo(text, pos);
         }
     }
 }
