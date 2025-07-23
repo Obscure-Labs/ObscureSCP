@@ -17,6 +17,7 @@ using Mirror;
 using Item = Exiled.API.Features.Items.Item;
 using SpireSCP.GUI.API.Features;
 using KeycardItem = LabApi.Features.Wrappers.KeycardItem;
+using ObscureLabs.Extensions;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
@@ -54,28 +55,20 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         private void OnInteractingLocker(InteractingLockerEventArgs ev)
         {
             if (ev.Player.Items.Any(x =>
-                    x is Keycard k && k.Permissions.HasFlag(ev.InteractingChamber.RequiredPermissions.RemoveFlags(KeycardPermissions.ScpOverride))))
+                    x is Keycard k && k.Permissions.HasFlag(ev.InteractingChamber.RequiredPermissions.RemoveFlags(KeycardPermissions.ScpOverride))) && ev.Player.IsHuman)
             {
                 ev.IsAllowed = true;
             }
         }
         
-        // private void OnInteractingLabLocker(PlayerInteractingLockerEventArgs ev)
-        // {
-        //     Log.Debug("Lab locker interacted with");
-        //     if (ev.Player.Items.Any(x => x is KeycardItem k && k.Base.GetPermissions(ev.)))
-        //     {
-        //         Log.Debug("suitable keycard found"); 
-        //         ev.CanOpen = true;
-        //     }
-        // }
         
         private void OnInteractingDoor(InteractingDoorEventArgs ev)
         {
-            Log.Debug("Interacting door");
-            if (ev.Door.IsKeycardDoor)
+            if (ev.Door.IsKeycardDoor && ev.Door.KeycardPermissions != KeycardPermissions.None)
             {
-                if (ev.Player.Items.Any(x => x is Keycard k && k.Permissions.HasFlag(ev.Door.KeycardPermissions.RemoveFlags(KeycardPermissions.ScpOverride))) && !ev.Door.IsLocked)
+  
+                
+                if (ev.Player.Items.Any(x => x is Keycard k && k.Permissions.HasFlag(ev.Door.KeycardPermissions.RemoveFlags(KeycardPermissions.ScpOverride))) && ev.Player.IsHuman)
                 {
                     ev.IsAllowed = true;
                 }
@@ -88,8 +81,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         private void OnInteractingWarhead(PlayerUnlockingWarheadButtonEventArgs ev)
         {
-            Log.Debug("Warhead");
-            if (((Exiled.API.Features.Player)ev.Player).Items.Any(x => x is Keycard k && k.Permissions.HasFlag(KeycardPermissions.AlphaWarhead)))
+            if (((Exiled.API.Features.Player)ev.Player).Items.Any(x => x is Keycard k && k.Permissions.HasFlag(KeycardPermissions.AlphaWarhead)) && ev.Player.IsHuman)
             {
                 ev.IsAllowed = true;
             }
@@ -97,38 +89,13 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             {
                 ev.IsAllowed = false;
             }
-            // foreach (LabApi.Features.Wrappers.Item item in ev.Player.Items.ToList())
-            // {
-            //     if (item.Base is not KeycardItem keycard)
-            //     {
-            //         Log.Debug($"{item.Type.ToString()} is not a keycard");
-            //         continue;
-            //     }
-            //
-            //     if (keycard.Permissions.HasFlag(Interactables.Interobjects.DoorUtils.KeycardPermissions.AlphaWarhead))
-            //     {
-            //         if (ev.Player.CurrentItem != item)
-            //         {
-            //             ev.IsAllowed = true;
-            //             Log.Debug($"{keycard.name} DOES have the right permission");
-            //         }
-            //
-            //     }
-            //     else
-            //     {
-            //         Log.Debug($"{keycard.name} does not have the right permission");
-            //         Log.Debug($"Keycard has the following permissions: \n{keycard.Permissions.ToString()}");
-            //     }
-            // }
             
         }
 
 
         private void OnInteractGenerator(UnlockingGeneratorEventArgs ev)
         {
-
-            Log.Debug("Gemeratpr");
-            if (ev.Player.Items.Any(x => x is Keycard k && k.Permissions.HasFlag(KeycardPermissions.ArmoryLevelTwo)))
+            if (ev.Player.Items.Any(x => x is Keycard k && k.Permissions.HasFlag(KeycardPermissions.ArmoryLevelTwo)) && ev.Player.IsHuman)
             {
                 ev.IsAllowed = true;
             }
@@ -136,20 +103,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             {
                 ev.IsAllowed = false;
             }
-            // foreach (Item item in ev.Player.Items.ToList())
-            // {
-            //     if (item.Base is not KeycardItem keycard)
-            //     {
-            //         continue;
-            //     }
-            //
-            //     if (keycard.Permissions.HasFlag(Interactables.Interobjects.DoorUtils.KeycardPermissions.ArmoryLevelTwo))
-            //     {
-            //         ev.IsAllowed = true;
-            //         
-            //         break;
-            //     }
-            // }
         }
     }
 }

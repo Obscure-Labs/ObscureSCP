@@ -316,7 +316,7 @@ namespace SpireLabs.GUI
                     //        s += $"<align=left>\t</align>\n"; //19
                     //    }
                     //}
-                    if (effects[0] == null || (int)effects[0].Duration <= 0)
+                    if (effects[0] == null || (int)effects[0].Duration < 0)
                     {
                         s += $"<align=left>\t</align>\n"; //19
                         s += $"<align=left>\t</align>\n"; //19

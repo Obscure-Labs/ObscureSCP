@@ -13322,7 +13322,7 @@
         </member>
         <member name="T:Exiled.Events.Patches.Events.Player.Interacted">
             <summary>
-            Patches <see cref="M:PlayerInteract.OnInteract" />.
+            Patches <see cref="M:Interactables.InteractionCoordinator.ClientInteract" />.
             Adds the <see cref="P:Exiled.Events.Handlers.Player.Interacted" /> event.
             </summary>
         </member>
@@ -14216,7 +14216,7 @@
         </member>
         <member name="T:Exiled.Events.Patches.Events.Warhead.ChangingLeverStatus">
             <summary>
-            Patches <see cref="M:PlayerInteract.UserCode_CmdUsePanel__AlphaPanelOperations(PlayerInteract.AlphaPanelOperations)" />.
+            Patches <see cref="M:AlphaWarheadNukesitePanel.ServerInteract(ReferenceHub,System.Byte)" />.
             Adds the <see cref="P:Exiled.Events.Handlers.Warhead.ChangingLeverStatus" /> event.
             </summary>
         </member>

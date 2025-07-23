@@ -14,7 +14,7 @@ using UnityEngine;
 using Player = Exiled.API.Features.Player;
 namespace ObscureLabs.Modules.Gamemode_Handler.Core.SCP_Rebalances
 {
-    internal class SCP173 : Module
+    internal class Scp173 : Module
     {
         public override string Name => "SCP173";
         public override bool IsInitializeOnStart => true;

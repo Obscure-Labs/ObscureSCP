@@ -15,6 +15,9 @@ using InventorySystem.Items.Usables.Scp330;
 using PlayerRoles;
 using Exiled.API.Features.Doors;
 using System.Runtime.Remoting.Metadata;
+using CommandSystem.Commands.RemoteAdmin.Doors;
+using System.Runtime.InteropServices;
+using Exiled.API.Interfaces;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
@@ -188,6 +191,14 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                     grenade.FuseTime = UnityEngine.Random.Range(0, 100) / 100f * 1.5f;
                     grenade.SpawnActive(Player.Transform.position, null);
                 }
+                return true;
+            }),
+            new("Low Gravity", "Low Gravity", (Player) =>
+            {
+                Vector3 oldGrav = LabApi.Features.Wrappers.Player.Get(Player.NetworkIdentity).Gravity;
+                LabApi.Features.Wrappers.Player.Get(Player.NetworkIdentity).Gravity *= -0.5f;
+                Timing.CallDelayed(10f, () => {LabApi.Features.Wrappers.Player.Get(Player.NetworkIdentity).Gravity = oldGrav; });
+                return true;
                 return true;
             }),
             new("Loud", "WAAAAAAAAAAAAAAAAAAAAAAAH", (Player) =>

@@ -30,6 +30,7 @@ using HarmonyLib;
 using CustomPlayerEffects;
 using ObscureLabs.Modules.Gamemode_Handler;
 using ObscureLabs.Hud;
+using ObscureLabs.Items.Rebalances;
 
 namespace ObscureLabs
 {
@@ -83,10 +84,10 @@ namespace ObscureLabs
             Instance = this;
             _modules = new ModulesManager();
             CustomItem.RegisterItems();
-            foreach(var key in KeybindList)
-            {
-                keybinds.Add(new KeybindSetting(keybinds.Count+1, key.ToString(), key));
-            }
+            //foreach (var key in KeybindList)
+            //{
+            //    keybinds.Add(new KeybindSetting(keybinds.Count + 1, key.ToString(), key));
+            //}
             //Log.SendRaw("[ObscureLabs]\n\r\n .d8888b.           d8b                 .d8888b.   .d8888b.  8888888b.  \r\nd88P  Y88b          Y8P                d88P  Y88b d88P  Y88b 888   Y88b \r\nY88b.                                  Y88b.      888    888 888    888 \r\n \"Y888b.   88888b.  888 888d888 .d88b.  \"Y888b.   888        888   d88P \r\n    \"Y88b. 888 \"88b 888 888P\"  d8P  Y8b    \"Y88b. 888        8888888P\"  \r\n      \"888 888  888 888 888    88888888      \"888 888    888 888        \r\nY88b  d88P 888 d88P 888 888    Y8b.    Y88b  d88P Y88b  d88P 888        \r\n \"Y8888P\"  88888P\"  888 888     \"Y8888  \"Y8888P\"   \"Y8888P\"  888        \r\n           888                                                          \r\n           888                                                          \r\n           888                                                          \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n                                                                        \r\n", color: ConsoleColor.DarkMagenta);
             Log.SendRaw(@"[ObscureLabs]
 
@@ -143,18 +144,21 @@ namespace ObscureLabs
 
             //- Gameplay Utils -//
             _modules.AddModule(new Powerup());
-            _modules.AddModule(new ItemGlow());
+            _modules.AddModule(new MediGunGlow());
+            //_modules.AddModule(new ItemGlow()); Start this inside the gamemodes instead
 
             //- Mechanics and Features -//
             _modules.AddModule(new CoinFlip());
             _modules.AddModule(new AttachmentFix());
             _modules.AddModule(new SCPsDropItems());
+            _modules.AddModule(new HidFix());
 
             //- SCP Additions and rebalances -//
             _modules.AddModule(new Scp1162());
-            _modules.AddModule(new SCP106());
-            _modules.AddModule(new SCP173());
+            _modules.AddModule(new Scp106());
+            _modules.AddModule(new Scp173());
             _modules.AddModule(new Scp049());
+            _modules.AddModule(new Scp939());
 
             _modules.AddModule(new Scp914Handler());
 
@@ -296,14 +300,15 @@ namespace ObscureLabs
             {
                 m.Disable();
             }
-
-            foreach (Module m in _modules.Modules)
-            {
-                if (m.IsInitializeOnStart == true)
-                {
-                    m.Enable();
-                }
-            }
+            _modules.GetModule("ItemRarity").Enable();
+            _modules.GetModule("GamemodeManager").Enable();
+            //foreach (Module m in _modules.Modules)
+            //{
+            //    if (m.IsInitializeOnStart == true)
+            //    {
+            //        m.Enable();
+            //    }
+            //}
         }
 
         private void OnLeft(LeftEventArgs ev)

@@ -8,6 +8,7 @@ using Exiled.API.Features;
 using Exiled.API.Features.Pickups;
 using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Player;
+using InventorySystem;
 using MEC;
 using ObscureLabs.API.Features;
 using PlayerRoles;
@@ -79,7 +80,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                 player.Hurt(10);
                 pickup.Destroy();
 
-                var randomItemType = Enum.GetValues(typeof(ItemType)).ToArray<ItemType>().GetRandomValue();
+                var randomItemType = InventoryItemLoader.AvailableItems.Values.GetRandomValue().ItemTypeId;
 
                 Pickup.CreateAndSpawn(randomItemType, pickup.Position, pickup.Rotation);
 
