@@ -1,13 +1,11 @@
 ﻿using Exiled.API.Features;
 using Exiled.API.Features.Roles;
 using MEC;
-using Mirror;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TMPro;
@@ -140,8 +138,8 @@ namespace ObscureLabs.Hud
                 string s = string.Empty;
                 try
                 {
-                    //if (Player.Get(p).IsAlive)
-                    //{
+                    if (Player.Get(p).IsAlive)
+                    {
                         float xScalar = 1f;
                         switch (p.aspectRatioSync.AspectRatio.ToString())
                         {
@@ -174,11 +172,11 @@ namespace ObscureLabs.Hud
                                     vOffset = 670;
                                     break;
                                 case HintPosition.PmtHint:
-                                    vOffset = -300 - (hint.slot*16);
+                                    vOffset = -300 - (hint.slot * 16);
                                     //baseXPos = Mathf.RoundToInt(-675*xScalar); // Slightly off-center for PmtHint
                                     break;
                                 case HintPosition.GmdInfo:
-                                    if(gmdCount >= 4) { continue; } 
+                                    if (gmdCount >= 4) { continue; }
                                     vOffset = 200 + (hint.slot * 16);
                                     baseXPos = Mathf.RoundToInt(-675 * xScalar); // Centered for GmdInfo
                                     gmdCount++;
@@ -187,75 +185,40 @@ namespace ObscureLabs.Hud
                                     continue;
                                     break;
                             }
-                                if (hint.Position == HintPosition.TmpHint)
+                            if (hint.Position == HintPosition.TmpHint)
+                            {
+                                string nouid = hint.Content.Split('@')[0];
+                                s += $"<align=left><line-height=0><voffset=2000><size=16>{nouid}</size></voffset></line-height></align>";
+                                if (nouid.Split(char.Parse("\n")) is string[] wtf && wtf.Count() == 1)
                                 {
-                                    string nouid = hint.Content.Split('@')[0];
-                                    s += $"<align=left><line-height=0><voffset=2000><size=16>{nouid}</size></voffset></line-height></align>";
-                                    if (nouid.Split(char.Parse("\n")) is string[] wtf && wtf.Count() == 1)
-                                    {
-                                        s += $"<align=left><line-height=0><voffset={vOffset}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf[0], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf[0]}</pos></size></voffset></line-height></align>";
-                                    }
-                                    else if (nouid.Split(char.Parse("\n")) is string[] wtf1 && wtf1.Count() == 2)
-                                    {
-                                        s += $"<align=left><line-height=0><voffset={vOffset}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf1[0], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf1[0]}</pos></size></voffset></line-height></align>";
-                                        s += $"<align=left><line-height=0><voffset={vOffset - 16}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf1[1], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf1[1]}</pos></size></voffset></line-height></align>";
-                                    }
-                                    else if (nouid.Split(char.Parse("\n")) is string[] wtf2 && wtf2.Count() == 3)
-                                    {
-                                        s += $"<align=left><line-height=0><voffset={vOffset}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf2[0], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf2[0]}</pos></size></voffset></line-height></align>";
-                                        s += $"<align=left><line-height=0><voffset={vOffset - 16}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf2[1], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf2[1]}</pos></size></voffset></line-height></align>";
-                                        s += $"<align=left><line-height=0><voffset={vOffset - 32}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf2[2], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf2[2]}</pos></size></voffset></line-height></align>";
-                                    }
+                                    s += $"<align=left><line-height=0><voffset={vOffset}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf[0], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf[0]}</pos></size></voffset></line-height></align>";
                                 }
-                                else
+                                else if (nouid.Split(char.Parse("\n")) is string[] wtf1 && wtf1.Count() == 2)
                                 {
-                                    s += $"<align=left><line-height=0><voffset={vOffset}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(hint.Content, 16) / 2 / 3) : baseXPos)}>{hint.Content}</pos></size></voffset></line-height></align>";
+                                    s += $"<align=left><line-height=0><voffset={vOffset}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf1[0], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf1[0]}</pos></size></voffset></line-height></align>";
+                                    s += $"<align=left><line-height=0><voffset={vOffset - 16}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf1[1], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf1[1]}</pos></size></voffset></line-height></align>";
                                 }
-                            //if (hint.Position == HintPosition.TmpHint)
-                            //{
-                            //    string[] hintContent = hint.Content.Split('@');
-                            //    Log.Info($"Split hint content: {hintContent[0]}");
-                            //    List<string> splitContent = new List<string>();
-                            //    if (hintContent[0].Contains("\n"))
-                            //    {
-                            //        splitContent = hintContent[0].Split(char.Parse("\n")).ToList();
-                            //    }
-                            //    else
-                            //    {
-                            //        SplitString(hintContent[0], 131);
-                            //    }
-                            //    for (int i = 0; i < splitContent.Count; i++)
-                            //    {
-                            //        if (i >= 3) { break; } // Limit to 2 lines
-                            //        s += $"<align=left><line-height=0><voffset={vOffset - (i * 16)}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(splitContent[i], 16) / 2 / 3) : baseXPos)}>{splitContent[i]}</pos></size></voffset></line-height></align>";
-                            //    }
-                            //}
-                            //else 
-                            //{ 
-                            //    s += $"<align=left><line-height=0><voffset={vOffset}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(hint.Content, 16) / 2 / 3) : baseXPos)}>{hint.Content}</pos></size></voffset></line-height></align>";
-                            //}
+                                else if (nouid.Split(char.Parse("\n")) is string[] wtf2 && wtf2.Count() == 3)
+                                {
+                                    s += $"<align=left><line-height=0><voffset={vOffset}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf2[0], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf2[0]}</pos></size></voffset></line-height></align>";
+                                    s += $"<align=left><line-height=0><voffset={vOffset - 16}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf2[1], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf2[1]}</pos></size></voffset></line-height></align>";
+                                    s += $"<align=left><line-height=0><voffset={vOffset - 32}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf2[2], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf2[2]}</pos></size></voffset></line-height></align>";
+                                }
+                            }
+                            else
+                            {
+                                s += $"<align=left><line-height=0><voffset={vOffset}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(hint.Content, 16) / 2 / 3) : baseXPos)}>{hint.Content}</pos></size></voffset></line-height></align>";
+                            }
                         }
-                    if (Player.Get(p).IsAlive)
-                    {
-                        foreach (Hint hint in hint[p.PlayerId].Where(x => x.Position == HintPosition.EftInfo))
+                        if (Player.Get(p).IsAlive)
                         {
-                            if (effectCount >= 7) { break; }
-                            s += $"<align=right><line-height=0><voffset={140 - (gmdCount * 16) - (effectCount * 16)}><size=16><pos={Mathf.RoundToInt(-675 * xScalar)}>{hint.Content}</pos></size></voffset></line-height></align>";
-                            effectCount++;
-                        }
-                    }
-                    else
-                    {
-                        if(Player.Get(p).Role is SpectatorRole role)
-                        {
-                            foreach (Hint hint in hint[role.SpectatedPlayer.ReferenceHub.PlayerId].Where(x => x.Position == HintPosition.EftInfo))
+                            foreach (Hint hint in hint[p.PlayerId].Where(x => x.Position == HintPosition.EftInfo))
                             {
                                 if (effectCount >= 7) { break; }
-                                s += $"\n<align=right><line-height=0><voffset={140 - (gmdCount * 16) - (effectCount * 16)}><size=16><pos={Mathf.RoundToInt(-675 * xScalar)}>{hint.Content}</pos></size></voffset></line-height></align>";
+                                s += $"<align=right><line-height=0><voffset={140 - (gmdCount * 16) - (effectCount * 16)}><size=16><pos={Mathf.RoundToInt(-675 * xScalar)}>{hint.Content}</pos></size></voffset></line-height></align>";
                                 effectCount++;
                             }
                         }
-                    }
                         string watermarkText = $"<color=#F932DB>O</color><color=#ED36DD>b</color><color=#E13ADF>s</color><color=#D53EE1>c</color><color=#C942E3>u</color><color=#BD46E5>r</color><color=#B14AE7>e</color><color=#A54EE9>L</color><color=#9952EB>a</color><color=#8D56ED>b</color><color=#815AEF>s</color>";
                         //s += $"<align=left><line-height=0><voffset={-385}><size=32><pos={600 - (GetStringWidth("█████████████", 32) / 2 / 3)}><color=#000000><alpha=#AA>█████████████<alpha=#FF></color></pos></size></voffset></line-height></align>";
                         s += $"<align=left><line-height=0><voffset={-370}><size=20><pos={602 - (GetStringWidth("ObscureLabs", 20) / 2 / 3)}>{watermarkText}</pos></size></voffset></line-height></align>";
@@ -263,7 +226,98 @@ namespace ObscureLabs.Hud
                         s += $"<align=left><pos=540><line-height=0><voffset=-9999><size=16>BOTTOMANCHOR</size></voffset></line-height></pos></align>";
                         Player.Get(p).SendConsoleMessage(s, Color.white.ToString());
                         Player.Get(p).ShowHint(s, 1f);
-                    //}
+                        //}
+                    }
+                    else
+                    {
+                        float xScalar = 1f;
+                        switch (p.aspectRatioSync.AspectRatio.ToString())
+                        {
+                            case "1.777778": // 16:9
+                                xScalar = 0.525f;
+                                break;
+                            case "2.37037": // 21:9
+                                xScalar = 1f;
+                                break;
+                            case "1.333333": // 4:3
+                                xScalar = 0.175f;
+                                break;
+                            case "1.6": // 16:10
+                                xScalar = 0.375f;
+                                break;
+
+                        }
+                        s += $"<align=left><pos=540><line-height=0><voffset=9999><size=16>TOPANCHOR</size></voffset></line-height></pos></align>";
+                        //s += $"<align=left><pos=540><line-height=0><voffset=0><size=16>is center?</size></voffset></line-height></pos></align>";
+                        int effectCount = 0;
+                        int gmdCount = 0;
+                        foreach (Hint hint in hint[p.PlayerId])
+                        {
+                            int vOffset = -69420; // Arbitraty number that would never get used
+                            int baseXPos = -69420; // Center position (will be modded based on aspect ratio later)
+
+                            switch (hint.Position)
+                            {
+                                case HintPosition.TmpHint:
+                                    vOffset = 670;
+                                    break;
+                                case HintPosition.PmtHint:
+                                    vOffset = -300 - (hint.slot * 16);
+                                    //baseXPos = Mathf.RoundToInt(-675*xScalar); // Slightly off-center for PmtHint
+                                    break;
+                                case HintPosition.GmdInfo:
+                                    if (gmdCount >= 4) { continue; }
+                                    vOffset = 200 + (hint.slot * 16);
+                                    baseXPos = Mathf.RoundToInt(-675 * xScalar); // Centered for GmdInfo
+                                    gmdCount++;
+                                    break;
+                                case HintPosition.EftInfo:
+                                    continue;
+                                    break;
+                            }
+                            if (hint.Position == HintPosition.TmpHint)
+                            {
+                                string nouid = hint.Content.Split('@')[0];
+                                s += $"<align=right><line-height=0><voffset=2000><size=16>{nouid}</size></voffset></line-height></align>";
+                                if (nouid.Split(char.Parse("\n")) is string[] wtf && wtf.Count() == 1)
+                                {
+                                    s += $"<align=right><line-height=0><voffset={vOffset}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf[0], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf[0]}</pos></size></voffset></line-height></align>";
+                                }
+                                else if (nouid.Split(char.Parse("\n")) is string[] wtf1 && wtf1.Count() == 2)
+                                {
+                                    s += $"<align=right><line-height=0><voffset={vOffset}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf1[0], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf1[0]}</pos></size></voffset></line-height></align>";
+                                    s += $"<align=right><line-height=0><voffset={vOffset - 16}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf1[1], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf1[1]}</pos></size></voffset></line-height></align>";
+                                }
+                                else if (nouid.Split(char.Parse("\n")) is string[] wtf2 && wtf2.Count() == 3)
+                                {
+                                    s += $"<align=right><line-height=0><voffset={vOffset}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf2[0], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf2[0]}</pos></size></voffset></line-height></align>";
+                                    s += $"<align=right><line-height=0><voffset={vOffset - 16}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf2[1], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf2[1]}</pos></size></voffset></line-height></align>";
+                                    s += $"<align=right><line-height=0><voffset={vOffset - 32}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf2[2], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf2[2]}</pos></size></voffset></line-height></align>";
+                                }
+                            }
+                            else
+                            {
+                                s += $"<align=right><line-height=0><voffset={vOffset}><size=16><pos={(600 - (GetStringWidth(hint.Content, 16) / 2 / 3))}>{hint.Content}</pos></size></voffset></line-height></align>";
+                            }
+                        }
+                        if (Player.Get(p).Role is SpectatorRole role)
+                        {
+                            foreach (Hint hint in hint[role.SpectatedPlayer.ReferenceHub.PlayerId].Where(x => x.Position == HintPosition.EftInfo))
+                            {
+                                if (effectCount >= 7) { break; }
+                                s += $"<align=right><line-height=0><voffset={140 - (gmdCount * 16) - (effectCount * 16)}><size=16><pos={Mathf.RoundToInt(675 * xScalar)}>{hint.Content}</pos></size></voffset></line-height></align>";
+                                effectCount++;
+                            }
+                        }
+                        string watermarkText = $"<color=#F932DB>O</color><color=#ED36DD>b</color><color=#E13ADF>s</color><color=#D53EE1>c</color><color=#C942E3>u</color><color=#BD46E5>r</color><color=#B14AE7>e</color><color=#A54EE9>L</color><color=#9952EB>a</color><color=#8D56ED>b</color><color=#815AEF>s</color>";
+                        //s += $"<align=left><line-height=0><voffset={-385}><size=32><pos={600 - (GetStringWidth("█████████████", 32) / 2 / 3)}><color=#000000><alpha=#AA>█████████████<alpha=#FF></color></pos></size></voffset></line-height></align>";
+                        s += $"<align=right><line-height=0><voffset={-370}><size=20><pos={-602 + (GetStringWidth("ObscureLabs", 20) / 2 / 3)}>{watermarkText}</pos></size></voffset></line-height></align>";
+                        s += $"<align=right><line-height=0><voffset={-385}><size=16><pos={-600 + (GetStringWidth("CHAT.OBSC.NET'", 16) / 2 / 3)}>{"CHAT.OBSC.NET"}</pos></size></voffset></line-height></align>";
+                        s += $"<align=right><pos=540><line-height=0><voffset=-9999><size=16>BOTTOMANCHOR</size></voffset></line-height></pos></align>";
+                        Player.Get(p).SendConsoleMessage(s, Color.white.ToString());
+                        Player.Get(p).ShowHint(s, 1f);
+                        //}
+                    }
                 }
                 catch (Exception ex)
                 {
