@@ -172,7 +172,8 @@ namespace ObscureLabs.Hud
                         //s += $"<align=left><pos=540><line-height=0><voffset=0><size=16>is center?</size></voffset></line-height></pos></align>";
                         int effectCount = 0;
                         int gmdCount = 0;
-                        foreach (Hint hint in hint[p.PlayerId])
+                        var hints = new List<Hint>(); hints.AddRange(hint[p.PlayerId]); hints.AddRange(globalHints);
+                        foreach (Hint hint in hints)
                         {
                             int vOffset = -69420; // Arbitraty number that would never get used
                             int baseXPos = -69420; // Center position (will be modded based on aspect ratio later)
@@ -211,9 +212,9 @@ namespace ObscureLabs.Hud
                                 }
                                 else if (nouid.Split(char.Parse("\n")) is string[] wtf2 && wtf2.Count() == 3)
                                 {
-                                    s += $"<align=left><line-height=0><voffset={vOffset}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf2[0], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf2[0]}</pos></size></voffset></line-height></align>";
-                                    s += $"<align=left><line-height=0><voffset={vOffset - 16}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf2[1], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf2[1]}</pos></size></voffset></line-height></align>";
-                                    s += $"<align=left><line-height=0><voffset={vOffset - 32}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf2[2], @"\<.*?\>", ""), 16) / 2 / 3) : baseXPos)}>{wtf2[2]}</pos></size></voffset></line-height></align>";
+                                    s += $"<align=left><line-height=0><voffset={vOffset}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf2[0], @"\<.*?\>", ""), 16)/3 /*/ 1.15*/) /2 : baseXPos)}>{wtf2[0]}</pos></size></voffset></line-height></align>";
+                                    s += $"<align=left><line-height=0><voffset={vOffset - 16}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf2[1], @"\<.*?\>", ""), 16)/3 /*/ 1.15*/) /2 : baseXPos)}>{wtf2[1]}</pos></size></voffset></line-height></align>";
+                                    s += $"<align=left><line-height=0><voffset={vOffset - 32}><size=16><pos={(baseXPos == -69420 ? 600 - (GetStringWidth(Regex.Replace(wtf2[2], @"\<.*?\>", ""), 16)/3 /*/ 1.15*/) /2 : baseXPos)}>{wtf2[2]}</pos></size></voffset></line-height></align>";
                                 }
                             }
                             else
@@ -348,7 +349,7 @@ namespace ObscureLabs.Hud
                 foreach (char c in text)
                 {
                     if (char.IsControl(c)) continue;
-                    float ratio = fontSize / (BaseFontSize * 1.25f);
+                    float ratio = fontSize / (BaseFontSize * 1.35f);
                     float cw = ChWidth.TryGetValue(c, out float charWidth) ? charWidth * ratio : DefaultFontWidth * ratio;
                     //Log.Info("Character: " + c + ", Width: " + cw + ", Ratio: " + ratio);
                     width += cw;
