@@ -30,6 +30,7 @@ namespace ObscureLabs.API.Features
             return r;
         }
     }
+
     public class ItemRarityModule : Module
     {
         public override string Name => "ItemRarity";

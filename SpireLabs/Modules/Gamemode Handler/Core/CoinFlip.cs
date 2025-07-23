@@ -65,7 +65,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                 Player.ChangeEffectIntensity(Exiled.API.Enums.EffectType.MovementBoost, 205, 5f);
                 return true;
             }),
-            new("RandKeycard", "You found a <color=yellow><u>Keycard!</u></color>", (Player) =>
+            new("RandKeycard", "You found a <color=yellow>Keycard!</color>", (Player) =>
             {
                 if(!Player.IsInventoryFull)
                 {
