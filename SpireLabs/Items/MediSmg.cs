@@ -28,7 +28,7 @@ namespace ObscureLabs.Items
 
         public override string Description { get; set; } = "\t";
 
-        public override byte ClipSize { get; set; } = 60;
+        //public override byte ClipSize { get; set; } = 60;
 
         public static List<Player> MediGunGlowingPlayers = new List<Player>();
 
@@ -97,7 +97,7 @@ namespace ObscureLabs.Items
         {
             if (!Check(ev.Item)) { return; }
             var data = ev.Player.CurrentItem.GetData<MediSmgData>("MediSmgData");
-            ev.Firearm.AmmoDrain = 0;
+            //ev.Firearm.AmmoDrain = 0;
 
 
             if (ev.Target != null && ev.Target.IsHuman && ev.Target.Health < ev.Target.MaxHealth)
