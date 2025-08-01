@@ -181,6 +181,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
                 {
                     p.RoleManager.ServerSetRole(PlayerRoles.RoleTypeId.Scientist, PlayerRoles.RoleChangeReason.RoundStart, PlayerRoles.RoleSpawnFlags.UseSpawnpoint);
                 }
+                p.ClearItems();
                 p.Inventory.ServerAddItem(ItemType.Coin, InventorySystem.Items.ItemAddReason.StartingItem);
                 p.Inventory.ServerAddItem(ItemType.KeycardZoneManager, InventorySystem.Items.ItemAddReason.StartingItem);
                 p.Inventory.ServerAddItem(ItemType.ArmorCombat, InventorySystem.Items.ItemAddReason.StartingItem);

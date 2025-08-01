@@ -18,6 +18,7 @@ using Item = Exiled.API.Features.Items.Item;
 using SpireSCP.GUI.API.Features;
 using KeycardItem = LabApi.Features.Wrappers.KeycardItem;
 using ObscureLabs.Extensions;
+using System;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
@@ -66,9 +67,22 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         {
             if (ev.Door.IsKeycardDoor && ev.Door.KeycardPermissions != KeycardPermissions.None)
             {
-  
-                
-                if (ev.Player.Items.Any(x => x is Keycard k && k.Permissions.HasFlag(ev.Door.KeycardPermissions.RemoveFlags(KeycardPermissions.ScpOverride))) && ev.Player.IsHuman)
+
+                foreach (DoorPermissionFlags flag in Enum.GetValues(typeof(DoorPermissionFlags)))
+                {
+                    if (flag == DoorPermissionFlags.None)
+                        continue;
+
+                    if (ev.Door.RequiredPermissions.HasFlag(flag))
+                    {
+                        Log.Info(flag);
+                    }
+                }
+
+
+
+
+                if (ev.Player.Items.Any(x => x is Keycard k && k.Permissions.HasFlag(ev.Door.KeycardPermissions.RemoveFlags(KeycardPermissions.ScpOverride)) && ev.Player.IsHuman))
                 {
                     ev.IsAllowed = true;
                 }
