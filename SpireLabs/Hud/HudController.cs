@@ -28,11 +28,12 @@ namespace SpireLabs.GUI
         public override bool Disable()
         {
             Timing.KillCoroutines("guiRoutine");
-            HudHandler.peenNutMSG = new string[60];
-            HudHandler.killLoop = false;
-            HudHandler.joinLeave = string.Empty;
-            HudHandler.hint = new string[60];
-            HudHandler.modifiers = new string[7];
+#warning THIS IS A TEMPORARY FIX, NEEDS TO BE REPLACED WITH A BETTER SOLUTION
+            //HudHandler.peenNutMSG = new string[60];
+            //HudHandler.killLoop = false;
+            //HudHandler.joinLeave = string.Empty;
+            //HudHandler.hint = new string[60];
+            //HudHandler.modifiers = new string[7];
             Exiled.Events.Handlers.Server.WaitingForPlayers -= OnRestarting;
             Exiled.Events.Handlers.Player.Joined -= OnJoined;
             Exiled.Events.Handlers.Player.Verified -= OnVerified;
@@ -47,49 +48,50 @@ namespace SpireLabs.GUI
 
         private void OnRestarting()
         {
-            HudHandler.peenNutMSG = new string[60];
-            HudHandler.killLoop = false;
-            HudHandler.joinLeave = string.Empty;
-            HudHandler.hint = new string[60];
+            //HudHandler.peenNutMSG = new string[60];
+            //HudHandler.killLoop = false;
+            //HudHandler.joinLeave = string.Empty;
+            //HudHandler.hint = new string[60];
         }
 
         private void OnSpawning(SpawningEventArgs ev)
         {
-            HudHandler.peenNutMSG[ev.Player.Id] = "\t";
+            //.peenNutMSG[ev.Player.Id] = "\t";
         }
 
         private void OnHurt(HurtEventArgs ev)
         {
             if (ev.Player.Role == RoleTypeId.Scp173 && ev.Player.Health < 1000)
             {
-                HudHandler.peenNutMSG[ev.Player.Id] = $"You become enraged.. You can now use breakneck to kill!";
+                //HudHandler.peenNutMSG[ev.Player.Id] = $"You become enraged.. You can now use breakneck to kill!";
             }
         }
 
         private void OnJoined(JoinedEventArgs ev)
         {
             //Debug.Log("GUI HANDLER SAYS: Player joined");
-            Timing.RunCoroutine(HudHandler.displayGUI(ev.Player), "guiRoutine");
+            //Timing.RunCoroutine(HudHandler.displayGUI(ev.Player), "guiRoutine");
         }
 
         private void OnVerified(VerifiedEventArgs ev)
         {
-            Timing.RunCoroutine(HudHandler.SendJoinOrLeaveCoroutine(ev.Player, false));
+            //Timing.RunCoroutine(HudHandler.SendJoinOrLeaveCoroutine(ev.Player, false));
         }
 
         private void OnLeft(LeftEventArgs ev)
         {
-            Timing.RunCoroutine(HudHandler.SendJoinOrLeaveCoroutine(ev.Player, true));
+            //Timing.RunCoroutine(HudHandler.SendJoinOrLeaveCoroutine(ev.Player, true));
         }
 
         private void OnRoundStarted()
         {
-            HudHandler.peenNutMSG = new string[60];
-            HudHandler.killLoop = false;
-            HudHandler.joinLeave = string.Empty;
-            HudHandler.hint = new string[60];
-            HudHandler.startHints();
-            HudHandler.FillPeenNutMessage();
+#warning THIS IS A TEMPORARY FIX, NEEDS TO BE REPLACED WITH A BETTER SOLUTION
+            //HudHandler.peenNutMSG = new string[60];
+            //HudHandler.killLoop = false;
+            //HudHandler.joinLeave = string.Empty;
+            //HudHandler.hint = new string[60];
+            //HudHandler.startHints();
+            //HudHandler.FillPeenNutMessage();
         }
     }
 }

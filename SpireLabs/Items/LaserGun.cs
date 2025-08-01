@@ -83,7 +83,7 @@ namespace ObscureLabs.Items
         private void ChangedItem(ChangedItemEventArgs ev)
         {
             if (!Check(ev.Item)) return;
-            Manager.SendHint(ev.Player, "You equipped the <b>MTF-ER16-SR</b> \nThis weapon shoots bright projectiles that burn targets \nand has infinite ammo.", 3.0f);
+            Manager.SendHint(ev.Player, "You equipped the MTF-ER16-SR \nThis weapon shoots bright projectiles that burn targets \nand has infinite ammo.", 3.0f);
         }
 
         protected override void OnAcquired(Player player, Item item, bool displayMessage)
