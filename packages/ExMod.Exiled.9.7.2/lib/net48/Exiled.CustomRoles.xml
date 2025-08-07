@@ -16,6 +16,13 @@
             <param name="player">The <see cref="T:Exiled.API.Features.Player"/> to check for roles.</param>
             <returns>A <see cref="T:System.Collections.ObjectModel.ReadOnlyCollection`1"/> of all current custom roles.</returns>
         </member>
+        <member name="M:Exiled.CustomRoles.API.Extensions.HasAnyCustomRole(Exiled.API.Features.Player)">
+            <summary>
+            Checks whether the player has any custom role assigned.
+            </summary>
+            <param name="player">The <see cref="T:Exiled.API.Features.Player"/> to check.</param>
+            <returns><c>true</c> if the player has at least one custom role; otherwise, <c>false</c>.</returns>
+        </member>
         <member name="M:Exiled.CustomRoles.API.Extensions.Register(System.Collections.Generic.IEnumerable{Exiled.CustomRoles.API.Features.CustomRole})">
             <summary>
             Registers an <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.CustomRoles.API.Features.CustomRole"/>s.
@@ -491,6 +498,11 @@
         <member name="P:Exiled.CustomRoles.API.Features.CustomRole.AbilityUsage">
             <summary>
             Gets or sets a <see cref="T:System.String"/> for the ability usage help sent to players in the player console.
+            </summary>
+        </member>
+        <member name="P:Exiled.CustomRoles.API.Features.CustomRole.SpawnedPlayers">
+            <summary>
+            Gets or sets the number of players that naturally spawned with this custom role.
             </summary>
         </member>
         <member name="M:Exiled.CustomRoles.API.Features.CustomRole.Get(System.UInt32)">
@@ -1119,8 +1131,14 @@
             </summary>
             <param name="plugin">The <see cref="T:Exiled.CustomRoles.CustomRoles"/> plugin instance.</param>
         </member>
+        <member name="M:Exiled.CustomRoles.Events.PlayerHandlers.OnWaitingForPlayers">
+            <inheritdoc cref="P:Exiled.Events.Handlers.Server.WaitingForPlayers"/>
+        </member>
         <member name="M:Exiled.CustomRoles.Events.PlayerHandlers.OnSpawningRagdoll(Exiled.Events.EventArgs.Player.SpawningRagdollEventArgs)">
             <inheritdoc cref="P:Exiled.Events.Handlers.Player.SpawningRagdoll"/>
+        </member>
+        <member name="M:Exiled.CustomRoles.Events.PlayerHandlers.OnSpawned(Exiled.Events.EventArgs.Player.SpawnedEventArgs)">
+            <inheritdoc cref="P:Exiled.Events.Handlers.Player.Spawning"/>
         </member>
     </members>
 </doc>

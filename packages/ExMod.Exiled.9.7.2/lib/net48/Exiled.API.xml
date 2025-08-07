@@ -93,6 +93,56 @@
             Used by <see cref="F:ItemType.GunRevolver"/>
             </summary>
         </member>
+        <member name="T:Exiled.API.Enums.AspectRatioType">
+            <summary>
+            All available screen aspect ratio types.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.AspectRatioType.Unknown">
+            <summary>
+            Unknown aspect ratio.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.AspectRatioType.Ratio1_1">
+            <summary>
+            1:1 aspect ratio (square screen).
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.AspectRatioType.Ratio3_2">
+            <summary>
+            3:2 aspect ratio.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.AspectRatioType.Ratio4_3">
+            <summary>
+            4:3 aspect ratio (standard definition TVs, older monitors).
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.AspectRatioType.Ratio5_4">
+            <summary>
+            5:4 aspect ratio (some older computer monitors).
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.AspectRatioType.Ratio16_9">
+            <summary>
+            16:9 aspect ratio (modern widescreen displays, HDTV).
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.AspectRatioType.Ratio16_10">
+            <summary>
+            16:10 aspect ratio (common in productivity monitors and laptops).
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.AspectRatioType.Ratio21_9">
+            <summary>
+            21:9 aspect ratio (ultrawide displays).
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.AspectRatioType.Ratio32_9">
+            <summary>
+            32:9 aspect ratio (super ultrawide displays).
+            </summary>
+        </member>
         <member name="T:Exiled.API.Enums.AuthenticationType">
             <summary>
             Players authentication types.
@@ -194,8 +244,7 @@
             Identifiers for types of damage.
             </summary>
             <seealso cref="M:Exiled.API.Features.Player.Hurt(System.Single,Exiled.API.Enums.DamageType,System.String)"/>
-            <seealso cref="M:Exiled.API.Features.Player.Hurt(Exiled.API.Features.Player,System.Single,Exiled.API.Enums.DamageType,Exiled.API.Features.DamageHandlers.DamageHandlerBase.CassieAnnouncement)"/>
-            <seealso cref="M:Exiled.API.Features.Player.Hurt(Exiled.API.Features.Player,System.Single,Exiled.API.Enums.DamageType,Exiled.API.Features.DamageHandlers.DamageHandlerBase.CassieAnnouncement,System.String)"/>
+            <seealso cref="M:Exiled.API.Features.Player.Hurt(Exiled.API.Features.Player,System.Single,Exiled.API.Enums.DamageType,Exiled.API.Features.DamageHandlers.DamageHandlerBase.CassieAnnouncement,System.String,System.Boolean)"/>
             <seealso cref="M:Exiled.API.Features.Player.Kill(Exiled.API.Enums.DamageType,System.String)"/>
         </member>
         <member name="F:Exiled.API.Enums.DamageType.Unknown">
@@ -1326,6 +1375,26 @@
         <member name="F:Exiled.API.Enums.EffectType.Scp1344Detected">
             <summary>
             <see cref="T:CustomPlayerEffects.Scp1344Detected"/>.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.EffectType.Scp1576">
+            <summary>
+            <see cref="T:CustomPlayerEffects.Scp1576"/>.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.EffectType.Lightweight">
+            <summary>
+            <see cref="T:CustomPlayerEffects.Lightweight"/>.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.EffectType.HeavyFooted">
+            <summary>
+            <see cref="T:CustomPlayerEffects.HeavyFooted"/>.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.EffectType.Fade">
+            <summary>
+            <see cref="T:CustomPlayerEffects.Fade"/>.
             </summary>
         </member>
         <member name="T:Exiled.API.Enums.ElevatorType">
@@ -2893,6 +2962,11 @@
             The user will be destroyed.
             </summary>
         </member>
+        <member name="F:Exiled.API.Enums.SpawnReason.RespawnMiniwave">
+            <summary>
+            The player was dead and is respawning in a mini-wave.
+            </summary>
+        </member>
         <member name="F:Exiled.API.Enums.SpawnReason.ItemUsage">
             <summary>
             The user has been spawn by the usage of an Item.
@@ -3138,7 +3212,7 @@
             Check if a <see cref="T:Exiled.API.Enums.DamageType">damage type</see> is caused by a weapon.
             </summary>
             <param name="type">The damage type to be checked.</param>
-            <param name="checkMicro">Indicates whether the MicroHid damage type should be taken into account.</param>
+            <param name="checkNonFirearm">Indicates whether the MicroHid and Jailbird damage type should be taken into account.</param>
             <returns>Returns whether the <see cref="T:Exiled.API.Enums.DamageType"/> is caused by weapon.</returns>
         </member>
         <member name="M:Exiled.API.Extensions.DamageTypeExtensions.IsScp(Exiled.API.Enums.DamageType,System.Boolean)">
@@ -3339,6 +3413,37 @@
             <param name="effect">The <see cref="T:Exiled.API.Enums.EffectType"/>.</param>
             <returns>The <see cref="T:Exiled.API.Enums.EffectCategory"/> representing the effect.</returns>
         </member>
+        <member name="T:Exiled.API.Extensions.FloatExtensions">
+            <summary>
+            A set of extensions for <see cref="T:System.Single"/>.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Extensions.FloatExtensions.GetAspectRatioLabel(System.Single)">
+            <summary>
+            Gets the closest <see cref="T:Exiled.API.Enums.AspectRatioType"/> for a given aspect ratio value.
+            </summary>
+            <param name="ratio">The aspect ratio value to compare.</param>
+            <returns>The closest matching <see cref="T:Exiled.API.Enums.AspectRatioType"/>.</returns>
+        </member>
+        <member name="T:Exiled.API.Extensions.GameObjectExtensions">
+            <summary>
+            A set of extensions for <see cref="T:UnityEngine.GameObject"/>.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Extensions.GameObjectExtensions.GetWorldScale(UnityEngine.GameObject)">
+            <summary>
+            Gets the global scale of a GameObject.
+            </summary>
+            <param name="gameObject">The <see cref="T:UnityEngine.GameObject"/> to check.</param>
+            <returns>The global scale of the provided <see cref="T:UnityEngine.GameObject"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Extensions.GameObjectExtensions.SetWorldScale(UnityEngine.GameObject,UnityEngine.Vector3)">
+            <summary>
+            Sets the global scale of a GameObject.
+            </summary>
+            <param name="gameObject">The <see cref="T:UnityEngine.GameObject"/> to modify.</param>
+            <param name="scale">The new scale.</param>
+        </member>
         <member name="T:Exiled.API.Extensions.ItemExtensions">
             <summary>
             A set of extensions for <see cref="T:ItemType"/>.
@@ -3356,7 +3461,7 @@
             Check if an <see cref="T:ItemType">item</see> is a weapon.
             </summary>
             <param name="type">The item to be checked.</param>
-            <param name="checkMicro">Indicates whether the MicroHID item should be taken into account.</param>
+            <param name="checkNonFirearm">Indicates whether the MicroHID and Jailbird item should be taken into account.</param>
             <returns>Returns whether the <see cref="T:ItemType"/> is a weapon.</returns>
         </member>
         <member name="M:Exiled.API.Extensions.ItemExtensions.IsScp(ItemType)">
@@ -6482,6 +6587,15 @@
             Gets or sets the hold time in seconds.
             </summary>
         </member>
+        <member name="M:Exiled.API.Features.Core.UserSettings.ButtonSetting.UpdateSetting(System.String,System.Single,System.Boolean,System.Predicate{Exiled.API.Features.Player})">
+            <summary>
+            Sends updated values to clients.
+            </summary>
+            <param name="text"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.ButtonSetting.Text"/></param>
+            <param name="holdTime"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.ButtonSetting.HoldTime"/></param>
+            <param name="overrideValue">If false, sends fake values.</param>
+            <param name="filter">Who to send the update to.</param>
+        </member>
         <member name="M:Exiled.API.Features.Core.UserSettings.ButtonSetting.ToString">
             <summary>
             Returns a representation of this <see cref="T:Exiled.API.Features.Core.UserSettings.ButtonSetting"/>.
@@ -6503,6 +6617,21 @@
             <param name="defaultOptionIndex"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.DropdownSetting.DefaultOptionIndex"/></param>
             <param name="dropdownEntryType"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.DropdownSetting.DropdownType"/></param>
             <param name="hintDescription"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.HintDescription"/></param>
+            <param name="header"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Header"/></param>
+            <param name="onChanged"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.OnChanged"/></param>
+        </member>
+        <member name="M:Exiled.API.Features.Core.UserSettings.DropdownSetting.#ctor(System.Int32,System.String,System.Collections.Generic.IEnumerable{System.String},System.Int32,UserSettings.ServerSpecific.SSDropdownSetting.DropdownEntryType,System.String,System.Byte,System.Boolean,Exiled.API.Features.Core.UserSettings.HeaderSetting,System.Action{Exiled.API.Features.Player,Exiled.API.Features.Core.UserSettings.SettingBase})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Core.UserSettings.DropdownSetting"/> class.
+            </summary>
+            <param name="id"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Id"/></param>
+            <param name="label"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Label"/></param>
+            <param name="options"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.DropdownSetting.Options"/></param>
+            <param name="defaultOptionIndex"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.DropdownSetting.DefaultOptionIndex"/></param>
+            <param name="dropdownEntryType"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.DropdownSetting.DropdownType"/></param>
+            <param name="hintDescription"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.HintDescription"/></param>
+            <param name="collectionId"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.CollectionId"/></param>
+            <param name="isServerOnly"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.IsServerOnly"/></param>
             <param name="header"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Header"/></param>
             <param name="onChanged"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.OnChanged"/></param>
         </member>
@@ -6545,6 +6674,22 @@
             Gets or sets a selected option.
             </summary>
         </member>
+        <member name="M:Exiled.API.Features.Core.UserSettings.DropdownSetting.UpdateSetting(System.String[],System.Boolean,System.Predicate{Exiled.API.Features.Player})">
+            <summary>
+            Sends updated values to clients.
+            </summary>
+            <param name="options"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.DropdownSetting.Options"/></param>
+            <param name="overrideValue">If false, sends fake values.</param>
+            <param name="filter">Who to send the update to.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Core.UserSettings.DropdownSetting.UpdateValue(System.Int32,System.Boolean,System.Predicate{Exiled.API.Features.Player})">
+            <summary>
+            If setting is server only, sends updated values to clients.
+            </summary>
+            <param name="selectedIndex"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.DropdownSetting.SelectedIndex"/></param>
+            <param name="overrideValue">If false, sends fake values.</param>
+            <param name="filter">Who to send the update to.</param>
+        </member>
         <member name="M:Exiled.API.Features.Core.UserSettings.DropdownSetting.ToString">
             <summary>
             Gets a string representation of this <see cref="T:Exiled.API.Features.Core.UserSettings.DropdownSetting"/>.
@@ -6563,6 +6708,15 @@
             <param name="name"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Label"/></param>
             <param name="hintDescription"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.HintDescription"/></param>
             <param name="paddling"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.HeaderSetting.ReducedPaddling"/></param>
+        </member>
+        <member name="M:Exiled.API.Features.Core.UserSettings.HeaderSetting.#ctor(System.Int32,System.String,System.String,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Core.UserSettings.HeaderSetting"/> class.
+            </summary>
+            <param name="id"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Id"/></param>
+            <param name="name"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Label"/></param>
+            <param name="hintDescription"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.HintDescription"/></param>
+            <param name="padding"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.HeaderSetting.ReducedPaddling"/></param>
         </member>
         <member name="M:Exiled.API.Features.Core.UserSettings.HeaderSetting.#ctor(UserSettings.ServerSpecific.SSGroupHeader)">
             <summary>
@@ -6611,6 +6765,20 @@
             <param name="preventInteractionOnGUI"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.KeybindSetting.PreventInteractionOnGUI"/></param>
             <param name="allowSpectatorTrigger"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.KeybindSetting.AllowSpectatorTrigger"/></param>
             <param name="hintDescription"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.HintDescription"/></param>
+            <param name="header"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Header"/></param>
+            <param name="onChanged"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.OnChanged"/></param>
+        </member>
+        <member name="M:Exiled.API.Features.Core.UserSettings.KeybindSetting.#ctor(System.Int32,System.String,UnityEngine.KeyCode,System.Boolean,System.Boolean,System.String,System.Byte,Exiled.API.Features.Core.UserSettings.HeaderSetting,System.Action{Exiled.API.Features.Player,Exiled.API.Features.Core.UserSettings.SettingBase})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Core.UserSettings.KeybindSetting"/> class.
+            </summary>
+            <param name="id"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Id"/></param>
+            <param name="label"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Label"/></param>
+            <param name="suggested"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.KeybindSetting.KeyCode"/></param>
+            <param name="preventInteractionOnGUI"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.KeybindSetting.PreventInteractionOnGUI"/></param>
+            <param name="allowSpectatorTrigger"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.KeybindSetting.AllowSpectatorTrigger"/></param>
+            <param name="hintDescription"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.HintDescription"/></param>
+            <param name="collectionId"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.CollectionId"/></param>
             <param name="header"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Header"/></param>
             <param name="onChanged"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.OnChanged"/></param>
         </member>
@@ -6710,6 +6878,25 @@
             <summary>
             Gets or sets the description of this setting.
             </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Core.UserSettings.SettingBase.IsServerOnly">
+            <summary>
+            Gets or sets a value indicating whether the setting receives updates from server (and client stops sending updates).
+            </summary>
+            <remarks>
+            Useful for displaying information, you cannot receive updates from a setting with this enabled.
+            </remarks>
+        </member>
+        <member name="P:Exiled.API.Features.Core.UserSettings.SettingBase.CollectionId">
+            <summary>
+            Gets or sets a value controlling if this setting is shared across servers with <b>same Ip address!</b>. Default value is 255.
+            </summary>
+            <remarks>
+            Settings with this value between 0 and 20 will store the servers Ip (or other unique identifier) instead of port, meaning the client treats a setting between 1.1.1.1:7777 and 1.1.1.1:7778 the same.
+            <br/>
+            <br/>
+            If this value is above 20, the aforementioned behavior will not occur and the setting will behave as normal.
+            </remarks>
         </member>
         <member name="P:Exiled.API.Features.Core.UserSettings.SettingBase.ResponseMode">
             <summary>
@@ -6835,6 +7022,15 @@
             <returns>A <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.API.Features.Core.UserSettings.SettingBase"/> instances that were successfully removed.</returns>
             <remarks>This method is used to unsync settings from players. Using it with <see cref="M:Exiled.API.Features.Core.UserSettings.SettingBase.Register(Exiled.API.Features.Player,System.Collections.Generic.IEnumerable{Exiled.API.Features.Core.UserSettings.SettingBase})"/> provides an opportunity to update synced settings.</remarks>
         </member>
+        <member name="M:Exiled.API.Features.Core.UserSettings.SettingBase.UpdateLabelAndHint(System.String,System.String,System.Boolean,System.Predicate{Exiled.API.Features.Player})">
+            <summary>
+            Sends an updated label and hint to clients.
+            </summary>
+            <param name="label"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Label"/></param>
+            <param name="hint"><inheritdoc cref="T:Exiled.API.Features.Hint"/></param>
+            <param name="overrideValue">If false, sends fake values.</param>
+            <param name="filter">Who to send the update to.</param>
+        </member>
         <member name="M:Exiled.API.Features.Core.UserSettings.SettingBase.ToString">
             <summary>
             Returns a string representation of this <see cref="T:Exiled.API.Features.Core.UserSettings.SettingBase"/>.
@@ -6866,6 +7062,24 @@
             <param name="stringFormat"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SliderSetting.StringFormat"/></param>
             <param name="displayFormat"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SliderSetting.DisplayFormat"/></param>
             <param name="hintDescription"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.HintDescription"/></param>
+        </member>
+        <member name="M:Exiled.API.Features.Core.UserSettings.SliderSetting.#ctor(System.Int32,System.String,System.Single,System.Single,System.Single,System.Boolean,System.String,System.String,System.String,System.Byte,System.Boolean,Exiled.API.Features.Core.UserSettings.HeaderSetting,System.Action{Exiled.API.Features.Player,Exiled.API.Features.Core.UserSettings.SettingBase})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Core.UserSettings.SliderSetting"/> class.
+            </summary>
+            <param name="id"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Id"/></param>
+            <param name="label"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Label"/></param>
+            <param name="minValue"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SliderSetting.MinimumValue"/></param>
+            <param name="maxValue"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SliderSetting.MaximumValue"/></param>
+            <param name="defaultValue"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SliderSetting.DefaultValue"/></param>
+            <param name="isInteger"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SliderSetting.IsInteger"/></param>
+            <param name="stringFormat"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SliderSetting.StringFormat"/></param>
+            <param name="displayFormat"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SliderSetting.DisplayFormat"/></param>
+            <param name="hintDescription"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.HintDescription"/></param>
+            <param name="collectionId"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.CollectionId"/></param>
+            <param name="isServerOnly"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.IsServerOnly"/></param>
+            <param name="header"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Header"/></param>
+            <param name="onChanged"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.OnChanged"/></param>
         </member>
         <member name="M:Exiled.API.Features.Core.UserSettings.SliderSetting.#ctor(UserSettings.ServerSpecific.SSSliderSetting)">
             <summary>
@@ -6915,6 +7129,26 @@
         </member>
         <member name="P:Exiled.API.Features.Core.UserSettings.SliderSetting.Base">
             <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Core.UserSettings.SliderSetting.UpdateSetting(System.Single,System.Single,System.Boolean,System.String,System.String,System.Boolean,System.Predicate{Exiled.API.Features.Player})">
+            <summary>
+            Sends updated values to clients.
+            </summary>
+            <param name="min"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SliderSetting.MinimumValue"/></param>
+            <param name="max"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SliderSetting.MaximumValue"/></param>
+            <param name="isInteger"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SliderSetting.IsInteger"/></param>
+            <param name="stringFormat"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SliderSetting.StringFormat"/></param>
+            <param name="displayFormat"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SliderSetting.DisplayFormat"/></param>
+            <param name="overrideValue">If false, sends fake values.</param>
+            <param name="filter">Who to send the update to.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Core.UserSettings.SliderSetting.UpdateValue(System.Single,System.Boolean,System.Predicate{Exiled.API.Features.Player})">
+            <summary>
+            If setting is server only, sends updated values to clients.
+            </summary>
+            <param name="value"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SliderSetting.SliderValue"/></param>
+            <param name="overrideValue">If false, sends fake values.</param>
+            <param name="filter">Who to send the update to.</param>
         </member>
         <member name="M:Exiled.API.Features.Core.UserSettings.SliderSetting.ToString">
             <summary>
@@ -6987,6 +7221,21 @@
             <param name="header"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Header"/></param>
             <param name="onChanged"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.OnChanged"/></param>
         </member>
+        <member name="M:Exiled.API.Features.Core.UserSettings.TwoButtonsSetting.#ctor(System.Int32,System.String,System.String,System.String,System.Boolean,System.String,System.Byte,System.Boolean,Exiled.API.Features.Core.UserSettings.HeaderSetting,System.Action{Exiled.API.Features.Player,Exiled.API.Features.Core.UserSettings.SettingBase})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Core.UserSettings.TwoButtonsSetting"/> class.
+            </summary>
+            <param name="id"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Id"/></param>
+            <param name="label"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Label"/></param>
+            <param name="firstOption"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.TwoButtonsSetting.FirstOption"/></param>
+            <param name="secondOption"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.TwoButtonsSetting.SecondOption"/></param>
+            <param name="defaultIsSecond"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.TwoButtonsSetting.IsSecondDefault"/></param>
+            <param name="hintDescription"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.HintDescription"/></param>
+            <param name="collectionId"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.CollectionId"/></param>
+            <param name="isServerOnly"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.IsServerOnly"/></param>
+            <param name="header"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Header"/></param>
+            <param name="onChanged"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.OnChanged"/></param>
+        </member>
         <member name="M:Exiled.API.Features.Core.UserSettings.TwoButtonsSetting.#ctor(UserSettings.ServerSpecific.SSTwoButtonsSetting)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.API.Features.Core.UserSettings.TwoButtonsSetting"/> class.
@@ -7021,6 +7270,23 @@
             Gets or sets a label for the second option.
             </summary>
         </member>
+        <member name="M:Exiled.API.Features.Core.UserSettings.TwoButtonsSetting.UpdateSetting(System.String,System.String,System.Boolean,System.Predicate{Exiled.API.Features.Player})">
+            <summary>
+            Sends updated values to clients.
+            </summary>
+            <param name="firstOption"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.TwoButtonsSetting.FirstOption"/></param>
+            <param name="secondOption"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.TwoButtonsSetting.SecondOption"/></param>
+            <param name="overrideValue">If false, sends fake values.</param>
+            <param name="filter">Who to send the update to.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Core.UserSettings.TwoButtonsSetting.UpdateValue(System.Boolean,System.Boolean,System.Predicate{Exiled.API.Features.Player})">
+            <summary>
+            If setting is server only, sends updated values to clients.
+            </summary>
+            <param name="isSecond"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.TwoButtonsSetting.IsSecond"/></param>
+            <param name="overrideValue">If false, sends fake values.</param>
+            <param name="filter">Who to send the update to.</param>
+        </member>
         <member name="M:Exiled.API.Features.Core.UserSettings.TwoButtonsSetting.ToString">
             <summary>
             Returns a representation of this <see cref="T:Exiled.API.Features.Core.UserSettings.ButtonSetting"/>.
@@ -7041,7 +7307,22 @@
             <param name="placeHolder"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.PlaceHolder"/></param>
             <param name="characterLimit"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.CharacterLimit"/></param>
             <param name="contentType"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.ContentType"/></param>
-            /// <param name="hintDescription"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.HintDescription"/></param>
+            <param name="hintDescription"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.HintDescription"/></param>
+        </member>
+        <member name="M:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.#ctor(System.Int32,System.String,System.String,System.Int32,TMPro.TMP_InputField.ContentType,System.String,System.Byte,System.Boolean,Exiled.API.Features.Core.UserSettings.HeaderSetting,System.Action{Exiled.API.Features.Player,Exiled.API.Features.Core.UserSettings.SettingBase})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Core.UserSettings.UserTextInputSetting"/> class.
+            </summary>
+            <param name="id"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Id"/></param>
+            <param name="label"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Label"/></param>
+            <param name="placeHolder"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.PlaceHolder"/></param>
+            <param name="characterLimit"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.CharacterLimit"/></param>
+            <param name="contentType"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.ContentType"/></param>
+            <param name="hintDescription"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.HintDescription"/></param>
+            <param name="collectionId"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.CollectionId"/></param>
+            <param name="isServerOnly"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.IsServerOnly"/></param>
+            <param name="header"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.Header"/></param>
+            <param name="onChanged"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.SettingBase.OnChanged"/></param>
         </member>
         <member name="M:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.#ctor(UserSettings.ServerSpecific.SSPlaintextSetting)">
             <summary>
@@ -7071,6 +7352,30 @@
             <summary>
             Gets or sets a value indicating the max number of characters in the PlainTextSetting.
             </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.RequestClear(System.Predicate{Exiled.API.Features.Player})">
+            <summary>
+            Requests clients TextInputs to be cleared.
+            </summary>
+            <param name="filter">Who to send the request to.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.UpdateSetting(System.String,System.UInt16,TMPro.TMP_InputField.ContentType,System.Boolean,System.Predicate{Exiled.API.Features.Player})">
+            <summary>
+            Sends updated values to clients.
+            </summary>
+            <param name="placeholder"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.PlaceHolder"/></param>
+            <param name="characterLimit"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.CharacterLimit"/></param>
+            <param name="contentType"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.ContentType"/></param>
+            <param name="overrideValue">If false, sends fake values.</param>
+            <param name="filter">Who to send the update to.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.UpdateValue(System.String,System.Boolean,System.Predicate{Exiled.API.Features.Player})">
+            <summary>
+            If setting is server only, sends updated values to clients.
+            </summary>
+            <param name="value"><inheritdoc cref="P:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.Text"/></param>
+            <param name="overrideValue">If false, sends fake values.</param>
+            <param name="filter">Who to send the update to.</param>
         </member>
         <member name="M:Exiled.API.Features.Core.UserSettings.UserTextInputSetting.ToString">
             <summary>
@@ -7456,6 +7761,19 @@
             <summary>
             Allows generic damage to a player.
             </summary>
+        </member>
+        <member name="M:Exiled.API.Features.DamageHandlers.GenericDamageHandler.#ctor(Exiled.API.Features.Player,Exiled.API.Features.Player,System.Single,Exiled.API.Enums.DamageType,Exiled.API.Features.DamageHandlers.DamageHandlerBase.CassieAnnouncement,System.String,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.DamageHandlers.GenericDamageHandler"/> class.
+            Transform input data to custom generic handler.
+            </summary>
+            <param name="player"> Current player (Target). </param>
+            <param name="attacker"> Attacker. </param>
+            <param name="damage"> Damage quantity. </param>
+            <param name="damageType"> Damage type. </param>
+            <param name="cassieAnnouncement"> Custom cassie announcment. </param>
+            <param name="damageText"> Text to provide to player death screen. </param>
+            <param name="overrideCassieForAllRole">Whether to play Cassie for non-SCPs as well.</param>
         </member>
         <member name="M:Exiled.API.Features.DamageHandlers.GenericDamageHandler.#ctor(Exiled.API.Features.Player,Exiled.API.Features.Player,System.Single,Exiled.API.Enums.DamageType,Exiled.API.Features.DamageHandlers.DamageHandlerBase.CassieAnnouncement,System.String)">
             <summary>
@@ -7983,6 +8301,16 @@
         <member name="P:Exiled.API.Features.Doors.Door.RequiredPermissions">
             <summary>
             Gets or sets the required permissions to open the door.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.RequireAllPermissions">
+            <summary>
+            Gets or sets a value indicating whether all required permissions must be present to open the door.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Doors.Door.PermissionsPolicy">
+            <summary>
+            Gets or sets the permissions policy used to determine access to the door.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Doors.Door.Rotation">
@@ -11411,6 +11739,11 @@
             <param name="fullForce">Whether to use full or weak force.</param>
             this.ServerThrow(projectileSettings.StartVelocity, projectileSettings.UpwardsFactor, projectileSettings.StartTorque, startVel);
         </member>
+        <member name="M:Exiled.API.Features.Items.Throwable.CancelThrow">
+            <summary>
+            Cancel the the throws of the item.
+            </summary>
+        </member>
         <member name="M:Exiled.API.Features.Items.Throwable.Clone">
             <summary>
             Clones current <see cref="T:Exiled.API.Features.Items.Throwable"/> object.
@@ -12185,6 +12518,11 @@
         <member name="P:Exiled.API.Features.Map.IsDecontaminationEnabled">
             <summary>
             Gets or sets a value indicating whether decontamination is enabled.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Map.EscapeZones">
+            <summary>
+            Gets the <see cref="F:Escape.EscapeZones"/> that will trigger Escape for player.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Map.AmbientSoundPlayer">
@@ -14696,6 +15034,11 @@
             This property can be used to hide player name elements, such as the player's name, badges, etc.
             </summary>
         </member>
+        <member name="P:Exiled.API.Features.Player.AspectRatio">
+            <summary>
+            Gets the player's current aspect ratio type.
+            </summary>
+        </member>
         <member name="P:Exiled.API.Features.Player.CustomInfo">
             <summary>
             Gets or sets the player's custom player info string. This string is displayed along with the player's <see cref="P:Exiled.API.Features.Player.InfoArea"/>.
@@ -14872,7 +15215,7 @@
         </member>
         <member name="P:Exiled.API.Features.Player.IsJumping">
             <summary>
-            Gets a value indicating whether the player is jumping.
+            Gets or sets a value indicating whether the player is jumping.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Player.IPAddress">
@@ -15793,6 +16136,12 @@
             Resets the <see cref="T:Exiled.API.Features.Player"/>'s stamina.
             </summary>
         </member>
+        <member name="M:Exiled.API.Features.Player.SetScale(UnityEngine.Vector3)">
+            <summary>
+            Sets the scale of a player on the server side.
+            </summary>
+            <param name="scale">The scale to set.</param>
+        </member>
         <member name="M:Exiled.API.Features.Player.SetScale(UnityEngine.Vector3,System.Collections.Generic.IEnumerable{Exiled.API.Features.Player})">
             <summary>
             Sets the scale of a player on the server side.
@@ -15838,6 +16187,17 @@
             <param name="damageType">The <see cref="T:Exiled.API.Enums.DamageType"/> of the damage dealt.</param>
             <param name="cassieAnnouncement">The <see cref="T:Exiled.API.Features.DamageHandlers.DamageHandlerBase.CassieAnnouncement"/> cassie announcement to make if the damage kills the player.</param>
             <param name="deathText"> The <see langword="string"/> death text to appear on <see cref="T:Exiled.API.Features.Player"/> screen. </param>
+        </member>
+        <member name="M:Exiled.API.Features.Player.Hurt(Exiled.API.Features.Player,System.Single,Exiled.API.Enums.DamageType,Exiled.API.Features.DamageHandlers.DamageHandlerBase.CassieAnnouncement,System.String,System.Boolean)">
+            <summary>
+            Hurts the player.
+            </summary>
+            <param name="attacker">The <see cref="T:Exiled.API.Features.Player"/> attacking player.</param>
+            <param name="amount">The <see langword="float"/> amount of damage to deal.</param>
+            <param name="damageType">The <see cref="T:Exiled.API.Enums.DamageType"/> of the damage dealt.</param>
+            <param name="cassieAnnouncement">The <see cref="T:Exiled.API.Features.DamageHandlers.DamageHandlerBase.CassieAnnouncement"/> cassie announcement to make if the damage kills the player.</param>
+            <param name="deathText">The <see langword="string"/> death text to appear on <see cref="T:Exiled.API.Features.Player"/> screen.</param>
+            <param name="overrideCassieForAllRole">Whether to play Cassie for non-SCPs as well.</param>
         </member>
         <member name="M:Exiled.API.Features.Player.Hurt(Exiled.API.Features.Player,System.Single,UnityEngine.Vector3,System.Int32)">
             <summary>
@@ -16300,6 +16660,23 @@
             <param name="message">The message to be shown.</param>
             <param name="duration">The duration the text will be on screen.</param>
         </member>
+        <member name="M:Exiled.API.Features.Player.ShowHint(System.String,Hints.HintEffect[],System.Single)">
+            <summary>
+            Shows a hint to the player with the specified message, hint effects, and duration.
+            </summary>
+            <param name="message">The message to be shown as a hint.</param>
+            <param name="hintEffects">The array of hint effects to apply.</param>
+            <param name="duration">The duration the hint will be displayed, in seconds.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Player.ShowHint(System.String,Hints.HintParameter[],Hints.HintEffect[],System.Single)">
+            <summary>
+            Shows a hint to the player with the specified message, hint parameters, hint effects, and duration.
+            </summary>
+            <param name="message">The message to be shown as a hint.</param>
+            <param name="hintParameters">The array of hint parameters to use.</param>
+            <param name="hintEffects">The array of hint effects to apply.</param>
+            <param name="duration">The duration the hint will be displayed, in seconds.</param>
+        </member>
         <member name="M:Exiled.API.Features.Player.ShowHint(Exiled.API.Features.Hint)">
             <summary>
             Show a hint to the player.
@@ -16603,6 +16980,13 @@
             <param name="efficacy">Percent of incoming damage absorbed by this stat.</param>
             <param name="sustain">The number of seconds to delay the start of the decay.</param>
             <param name="persistant">Whether the process is removed when the value hits 0.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Player.AddRegeneration(System.Single,System.Single)">
+            <summary>
+            Adds a new <see cref="T:InventorySystem.Items.Usables.RegenerationProcess"/> to the player.
+            </summary>
+            <param name="rate">Health points regenerated per second.</param>
+            <param name="duration">Total duration of the regeneration (in seconds).</param>
         </member>
         <member name="M:Exiled.API.Features.Player.AddRegeneration(System.Single,System.Single,System.Single,System.Single,System.Single)">
             <summary>
@@ -17062,6 +17446,11 @@
             A <see cref="T:System.Collections.Generic.Dictionary`2"/> containing all <see cref="T:Exiled.API.Enums.PrefabType"/> and their corresponding <see cref="T:UnityEngine.GameObject"/>.
             </summary>
         </member>
+        <member name="P:Exiled.API.Features.PrefabHelper.PrefabToGameObjectAndComponent">
+            <summary>
+            Gets a <see cref="T:System.Collections.Generic.IReadOnlyDictionary`2"/> of <see cref="T:Exiled.API.Enums.PrefabType"/> and their corresponding <see cref="T:UnityEngine.GameObject"/>.
+            </summary>
+        </member>
         <member name="P:Exiled.API.Features.PrefabHelper.PrefabToGameObject">
             <summary>
             Gets a <see cref="T:System.Collections.Generic.IReadOnlyDictionary`2"/> of <see cref="T:Exiled.API.Enums.PrefabType"/> and their corresponding <see cref="T:UnityEngine.GameObject"/>.
@@ -17238,6 +17627,11 @@
             Gets or sets a value indicating whether this ragdoll has been consumed by an SCP-049-2.
             </summary>
         </member>
+        <member name="P:Exiled.API.Features.Ragdoll.IsSpawned">
+            <summary>
+            Gets a value indicating whether this ragdoll is spawned.
+            </summary>
+        </member>
         <member name="P:Exiled.API.Features.Ragdoll.Room">
             <summary>
             Gets the <see cref="T:Exiled.API.Features.Room"/> the ragdoll is located in.
@@ -17364,13 +17758,32 @@
         </member>
         <member name="M:Exiled.API.Features.Ragdoll.Destroy">
             <summary>
-            Destroys the ragdoll.
+            Destroys the ragdoll immediately.
             </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Ragdoll.Destroy(System.Single)">
+            <summary>
+            Destroys the ragdoll after a specified delay.
+            </summary>
+            <param name="delay">The delay in seconds before the ragdoll is destroyed.</param>
         </member>
         <member name="M:Exiled.API.Features.Ragdoll.Spawn">
             <summary>
-            Spawns the ragdoll.
+            Spawns the ragdoll on the network.
             </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Ragdoll.Spawn(UnityEngine.GameObject)">
+            <summary>
+            Spawns the ragdoll on the network with a specified owner.
+            </summary>
+            <param name="ownerPlayer">The owner of the ragdoll.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Ragdoll.Spawn(Mirror.NetworkConnection,System.Nullable{System.UInt32})">
+            <summary>
+            Spawns the ragdoll on the network with a specified network connection or asset ID.
+            </summary>
+            <param name="ownerConnection">The network connection of the owner.</param>
+            <param name="assetId">The optional asset ID of the ragdoll.</param>
         </member>
         <member name="M:Exiled.API.Features.Ragdoll.UnSpawn">
             <summary>
@@ -17771,11 +18184,26 @@
             </summary>
             <param name="spawnableWaveBase">The <see cref="T:Respawning.Waves.SpawnableWaveBase"/> to spawn.</param>
         </member>
+        <member name="M:Exiled.API.Features.Respawn.PauseWave(Exiled.API.Enums.SpawnableFaction)">
+            <summary>
+            Pauses a specific respawn wave by removing it from the active wave list and adding it to the paused wave list.
+            </summary>
+            <param name="spawnableFaction">The <see cref="T:Exiled.API.Enums.SpawnableFaction"/> representing the wave to pause.</param>
+        </member>
         <member name="M:Exiled.API.Features.Respawn.PauseWaves">
             <summary>
             Pauses respawn waves by removing them from <see cref="F:Respawning.WaveManager.Waves">WaveManager.Waves</see> and storing them in <see cref="P:Exiled.API.Features.Respawn.PausedWaves"/>.
             </summary>
             <!--Beryl said this should work fine but it requires testing-->
+        </member>
+        <member name="M:Exiled.API.Features.Respawn.PauseWaves(System.Collections.Generic.List{Exiled.API.Enums.SpawnableFaction})">
+            <summary>
+            Pauses the specified list of respawn waves by iterating through each wave
+            and pausing it using the <see cref="M:Exiled.API.Features.Respawn.PauseWave(Exiled.API.Enums.SpawnableFaction)"/> method.
+            </summary>
+            <param name="spawnableFactions">
+            A list of <see cref="T:Exiled.API.Enums.SpawnableFaction"/> instances representing the waves to pause.
+            </param>
         </member>
         <member name="M:Exiled.API.Features.Respawn.ResumeWaves">
             <summary>
@@ -17784,12 +18212,30 @@
             <!--Beryl said this should work fine but it requires testing-->
             <remarks>This also clears <see cref="P:Exiled.API.Features.Respawn.PausedWaves"/>.</remarks>
         </member>
+        <member name="M:Exiled.API.Features.Respawn.RestartWave(Exiled.API.Enums.SpawnableFaction)">
+            <summary>
+            Restarts a specific respawn wave by adding it back to the active wave list
+            and removing it from the paused wave list if necessary.
+            </summary>
+            <param name="spawnableFaction">
+            The <see cref="T:Exiled.API.Enums.SpawnableFaction"/> representing the wave to restart.
+            </param>
+        </member>
         <member name="M:Exiled.API.Features.Respawn.RestartWaves">
             <summary>
             Restarts respawn waves by clearing <see cref="F:Respawning.WaveManager.Waves">WaveManager.Waves</see> and filling it with new values..
             </summary>
             <!--Beryl said this should work fine but it requires testing-->
             <remarks>This also clears <see cref="P:Exiled.API.Features.Respawn.PausedWaves"/>.</remarks>
+        </member>
+        <member name="M:Exiled.API.Features.Respawn.RestartWaves(System.Collections.Generic.List{Exiled.API.Enums.SpawnableFaction})">
+            <summary>
+            Restarts the specified respawn waves by iterating through each wave
+            and restarting it using the <see cref="M:Exiled.API.Features.Respawn.RestartWave(Exiled.API.Enums.SpawnableFaction)"/> method.
+            </summary>
+            <param name="spawnableFactions">
+            A list of <see cref="T:Exiled.API.Enums.SpawnableFaction"/> instances representing the waves to restart.
+            </param>
         </member>
         <member name="M:Exiled.API.Features.Respawn.TryGetFactionInfluence(PlayerRoles.Faction,System.Single@)">
             <summary>
@@ -17868,9 +18314,19 @@
             Gets or sets the player's relative position as perceived by the client.
             </summary>
         </member>
+        <member name="P:Exiled.API.Features.Roles.FpcRole.Model">
+            <summary>
+            Gets or sets the <see cref="T:PlayerRoles.FirstPersonControl.Thirdperson.CharacterModel"/> associated with the player.
+            </summary>
+        </member>
         <member name="P:Exiled.API.Features.Roles.FpcRole.Gravity">
             <summary>
             Gets or sets the player's gravity.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Roles.FpcRole.Scale">
+            <summary>
+            Gets or sets the player's scale.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Roles.FpcRole.IsFallDamageEnable">
@@ -18026,6 +18482,12 @@
             Resets the <see cref="T:Exiled.API.Features.Player"/>'s stamina.
             </summary>
             <param name="multipliers">Resets <see cref="P:Exiled.API.Features.Roles.FpcRole.StaminaUsageMultiplier"/> and <see cref="P:Exiled.API.Features.Roles.FpcRole.StaminaRegenMultiplier"/>.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Roles.FpcRole.Jump(System.Nullable{System.Single})">
+            <summary>
+            Makes the player jump using the default or a specified strength.
+            </summary>
+            <param name="jumpStrength">Optional. The strength of the jump. If not provided, the default jump speed for Role is used.</param>
         </member>
         <member name="T:Exiled.API.Features.Roles.HumanRole">
             <summary>
@@ -20755,6 +21217,14 @@
             </summary>
             <seealso cref="M:Exiled.API.Features.Server.RestartRedirect(System.UInt16)"/>
         </member>
+        <member name="M:Exiled.API.Features.Server.Restart(System.Boolean,System.Boolean,ServerStatic.NextRoundAction)">
+            <summary>
+            Restarts the server with specified options.
+            </summary>
+            <param name="fastRestart">Indicates whether the restart should be fast.</param>
+            <param name="overrideRestartAction">Indicates whether to override the default restart action.</param>
+            <param name="restartAction">Specifies the action to perform after the restart.</param>
+        </member>
         <member name="M:Exiled.API.Features.Server.Shutdown">
             <summary>
             Shutdowns the server, disconnects all players.
@@ -20777,6 +21247,15 @@
             <returns><see langword="true"/> if redirection was successful; otherwise, <see langword="false"/>.</returns>
             <remarks>If the returned value is <see langword="false"/>, the server won't restart.</remarks>
         </member>
+        <member name="M:Exiled.API.Features.Server.RestartRedirect(System.UInt16,System.Boolean,System.Boolean,ServerStatic.NextRoundAction)">
+            <summary>
+            Redirects players to a server on another port, restarts the current server.
+            </summary>
+            <param name="redirectPort">The port to redirect players to.</param>
+            <param name="fastRestart">Indicates whether the restart should be fast.</param>
+            <param name="overrideRestartAction">Indicates whether to override the default restart action.</param>
+            <param name="restartAction">Specifies the action to perform after the restart.</param>
+        </member>
         <member name="M:Exiled.API.Features.Server.ShutdownRedirect(System.UInt16)">
             <summary>
             Redirects players to a server on another port, shutdowns the current server.
@@ -20784,6 +21263,14 @@
             <param name="redirectPort">The port to redirect players to.</param>
             <returns><see langword="true"/> if redirection was successful; otherwise, <see langword="false"/>.</returns>
             <remarks>If the returned value is <see langword="false"/>, the server won't shutdown.</remarks>
+        </member>
+        <member name="M:Exiled.API.Features.Server.ShutdownRedirect(System.UInt16,System.Boolean,System.Boolean)">
+            <summary>
+            Redirects players to a server on another port, shutdowns the current server.
+            </summary>
+            <param name="redirectPort">The port to redirect players to.</param>
+            <param name="quit">Indicates whether to terminate the application after shutting down the server.</param>
+            <param name="suppressShutdownBroadcast">Indicates whether to suppress the broadcast notification about the shutdown.</param>
         </member>
         <member name="M:Exiled.API.Features.Server.ExecuteCommand(System.String,CommandSender)">
             <summary>
@@ -21388,7 +21875,7 @@
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.API.Features.Toys.Capybara"/> class.
             </summary>
-            <param name="speakerToy">The <see cref="T:AdminToys.CapybaraToy"/> of the toy.</param>
+            <param name="capybaraToy">The <see cref="T:AdminToys.CapybaraToy"/> of the toy.</param>
         </member>
         <member name="P:Exiled.API.Features.Toys.Capybara.Prefab">
             <summary>
@@ -22481,6 +22968,118 @@
             Returns the Window in a human-readable format.
             </summary>
             <returns>A string containing Window-related data.</returns>
+        </member>
+        <member name="T:Exiled.API.Features.Workstation">
+            <summary>
+            A wrapper class for <see cref="T:InventorySystem.Items.Firearms.Attachments.WorkstationController"/>.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Features.Workstation.WorkstationControllerToWorkstation">
+            <summary>
+            A dictionary mapping <see cref="T:InventorySystem.Items.Firearms.Attachments.WorkstationController"/> to <see cref="T:Exiled.API.Features.Workstation"/>.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Workstation.#ctor(InventorySystem.Items.Firearms.Attachments.WorkstationController)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Workstation"/> class.
+            </summary>
+            <param name="workstationController">The <see cref="T:InventorySystem.Items.Firearms.Attachments.WorkstationController"/> to wrap.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Workstation.List">
+            <summary>
+            Gets a read-only collection of all <see cref="T:Exiled.API.Features.Workstation"/> instances.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Workstation.Base">
+            <summary>
+            Gets the underlying <see cref="T:InventorySystem.Items.Firearms.Attachments.WorkstationController"/> instance.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Workstation.GameObject">
+            <summary>
+            Gets the <see cref="P:Exiled.API.Features.Workstation.GameObject"/> of the workstation.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Workstation.Transform">
+            <summary>
+            Gets the <see cref="P:Exiled.API.Features.Workstation.Transform"/> of the workstation.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Workstation.Room">
+            <summary>
+            Gets the <see cref="P:Exiled.API.Features.Workstation.Room"/> the workstation is located in.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Workstation.Zone">
+            <summary>
+            Gets the <see cref="T:Exiled.API.Enums.ZoneType"/> of the workstation's room.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Workstation.Position">
+            <summary>
+            Gets or sets the position of the workstation.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Workstation.Rotation">
+            <summary>
+            Gets or sets the rotation of the workstation.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Workstation.Status">
+            <summary>
+            Gets or sets the status of the workstation.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Workstation.Stopwatch">
+            <summary>
+            Gets the <see cref="P:Exiled.API.Features.Workstation.Stopwatch"/> used by the workstation.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Workstation.KnownUser">
+            <summary>
+            Gets or sets the player known to be using the workstation.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Workstation.Get(InventorySystem.Items.Firearms.Attachments.WorkstationController)">
+            <summary>
+            Gets a <see cref="T:Exiled.API.Features.Workstation"/> given a <see cref="T:InventorySystem.Items.Firearms.Attachments.WorkstationController"/> instance.
+            </summary>
+            <param name="workstationController">The <see cref="T:InventorySystem.Items.Firearms.Attachments.WorkstationController"/> instance.</param>
+            <returns>The <see cref="T:Exiled.API.Features.Workstation"/> instance.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Workstation.Get(System.Func{Exiled.API.Features.Workstation,System.Boolean})">
+            <summary>
+            Gets all <see cref="T:Exiled.API.Features.Workstation"/> instances that match the specified predicate.
+            </summary>
+            <param name="predicate">The predicate to filter workstations.</param>
+            <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1"/> of matching workstations.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Workstation.TryGet(System.Func{Exiled.API.Features.Workstation,System.Boolean},System.Collections.Generic.IEnumerable{Exiled.API.Features.Workstation}@)">
+            <summary>
+            Tries to get all <see cref="T:Exiled.API.Features.Workstation"/> instances that match the specified predicate.
+            </summary>
+            <param name="predicate">The predicate to filter workstations.</param>
+            <param name="workstations">The matching workstations, if any.</param>
+            <returns><c>true</c> if any workstations were found; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Workstation.IsInRange(Exiled.API.Features.Player)">
+            <summary>
+            Determines whether the specified player is in range of the workstation.
+            </summary>
+            <param name="player">The player to check.</param>
+            <returns><c>true</c> if the player is in range; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Workstation.Interact(Exiled.API.Features.Player)">
+            <summary>
+            Interacts with the workstation as the specified player.
+            </summary>
+            <param name="player">The player to interact as.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Workstation.ToString">
+            <summary>
+            Returns the Room in a human-readable format.
+            </summary>
+            <returns>A string containing Workstation-related data.</returns>
         </member>
         <member name="T:Exiled.API.Interfaces.IConfig">
             <summary>

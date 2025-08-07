@@ -2,6 +2,7 @@
 using LabApi.Events.Arguments.ServerEvents;
 using ObscureLabs.API.Features;
 using ObscureLabs.Modules.Gamemode_Handler.Modes;
+using RoundRestarting;
 using System.Linq;
 
 namespace ObscureLabs.Modules.Gamemode_Handler
@@ -20,6 +21,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler
             selectedGamemode = null;
 
             LabApi.Events.Handlers.ServerEvents.RoundStarted += OnRoundStarted;
+            LabApi.Events.Handlers.ServerEvents.RoundRestarted += OnRoundRestarted;
             LabApi.Events.Handlers.ServerEvents.RoundEnded += OnRoundEnded;
 
             //Selected gamemode round
@@ -37,7 +39,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler
                 }
                 this.Disable();
             }
-           
+
             //else
             //{
             //    Log.Warn($"[GamemodeManager] No gamemode was selected.");
@@ -56,6 +58,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler
         public override bool Disable()
         {
             LabApi.Events.Handlers.ServerEvents.RoundStarted -= OnRoundStarted;
+            LabApi.Events.Handlers.ServerEvents.RoundRestarted -= OnRoundRestarted;
             LabApi.Events.Handlers.ServerEvents.RoundEnded -= OnRoundEnded;
             Log.Info($"[GamemodeManager] Disabling gamemode maanger.");
             return base.Disable();
@@ -67,6 +70,11 @@ namespace ObscureLabs.Modules.Gamemode_Handler
         }
 
         private void OnRoundEnded(RoundEndedEventArgs ev)
+        {
+            selectedGamemode.Stop();
+        }
+
+        private void OnRoundRestarted()
         {
             selectedGamemode.Stop();
         }
