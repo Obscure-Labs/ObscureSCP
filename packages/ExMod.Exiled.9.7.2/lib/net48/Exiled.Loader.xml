@@ -579,7 +579,7 @@
         </member>
         <member name="M:Exiled.Loader.Loader.LoadPlugins">
             <summary>
-            Loads all plugins.
+            Loads all plugins, both globals and locals.
             </summary>
         </member>
         <member name="M:Exiled.Loader.Loader.LoadAssembly(System.String)">
@@ -631,6 +631,12 @@
             </summary>
             <param name="type">Type.</param>
             <returns><see langword="true"/> if passed type is derived from <see cref="T:Exiled.API.Features.Plugin`1"/> or <see cref="T:Exiled.API.Features.Plugin`2"/>, otherwise <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Exiled.Loader.Loader.LoadPluginsFromDirectory(System.String)">
+            <summary>
+            Load every plugin inside the given directory, if null it's default EXILED one (global).
+            </summary>
+            <param name="dir">The sub-directory of the plugin - if null the default EXILED one will be used.</param>
         </member>
         <member name="M:Exiled.Loader.Loader.ResolveAssemblyEmbeddedResources(System.Reflection.Assembly)">
             <summary>
