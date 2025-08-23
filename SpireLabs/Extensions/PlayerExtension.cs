@@ -9,9 +9,42 @@ using Exiled.API.Features;
 using Exiled.API.Features.Core.StateMachine;
 using Exiled.API.Features.Items;
 using stat = ObscureLabs.API.Enums.StatisticType.stat;
+using System.Diagnostics;
 
 namespace ObscureLabs.Extensions
 {
+    [Serializable]
+    public class NoDataException : Exception
+    {
+        public NoDataException()
+        { }
+
+        public NoDataException(string message)
+            : base(message)
+        { }
+
+        public NoDataException(string message, Exception innerException)
+            : base(message, innerException)
+        { }
+    }
+
+    [Serializable]
+    public class NoVarException : Exception
+    {
+        public NoVarException()
+        { }
+
+        public NoVarException(string message)
+            : base(message)
+        { }
+
+        public NoVarException(string message, Exception innerException)
+            : base(message, innerException)
+        { }
+    }
+
+
+
     public static class PlayerExtension
     {
         private static Dictionary<Player, Dictionary<string, object>> _playerData = new Dictionary<Player, Dictionary<string, object>>();

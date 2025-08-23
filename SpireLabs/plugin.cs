@@ -141,6 +141,8 @@ namespace ObscureLabs
             _modules.AddModule(new ItemRarityModule());
             _modules.AddModule(new HealthOverride());
             _modules.AddModule(new EffectController());
+            _modules.AddModule(new SSSStuff());
+            _modules.AddModule(new ProximityChat());
 
             //- Gameplay Utils -//
             _modules.AddModule(new Powerup());

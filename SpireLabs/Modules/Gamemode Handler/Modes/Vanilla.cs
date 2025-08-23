@@ -16,6 +16,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
 
         public override List<Module> InitModules => new List<Module>
         {
+            new SSSStuff(),
+            new ProximityChat(),
             new RemoteKeycard(),
             new EmotionRandomiser(),
             new Scp049(),

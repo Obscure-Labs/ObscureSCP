@@ -1,7 +1,9 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Extensions;
+using Exiled.API.Features.Pickups;
 using Exiled.CustomItems.API.Features;
 using InventorySystem;
+using LabApi.Features.Wrappers;
 using MEC;
 using ObscureLabs.API.Features;
 using ObscureLabs.Items;
@@ -55,6 +57,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
             new LightHandler(),
             new Lobby(),
             new HealthOverride(),
+            new SSSStuff(),
+            new ProximityChat(),
 
             //- Gameplay Utils -//
             new Powerup(),
@@ -121,7 +125,11 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
                 {
                     for (int i = 0; i < 3; i++)
                     {
-                        Pickup.CreateAndSpawn(InventoryItemLoader.AvailableItems.Values.GetRandomValue().ItemTypeId, r.Transform.position + (Vector3.one * UnityEngine.Random.Range(-2f, 2f)), Quaternion.identity);
+                        var pickup = Pickup.CreateAndSpawn(InventoryItemLoader.AvailableItems.Values.GetRandomValue().ItemTypeId, r.Transform.position + (Vector3.one * UnityEngine.Random.Range(-2f, 2f)), Quaternion.identity);
+                        if(pickup is Exiled.API.Features.Pickups.FirearmPickup gun)
+                        {
+                            gun.Ammo = gun.MaxAmmo;
+                        }
                     }
                 }
             }
@@ -148,7 +156,11 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
                     for (int i = 0; i < 3; i++)
                     {
                         yield return Timing.WaitForOneFrame;
-                        Pickup.CreateAndSpawn(InventoryItemLoader.AvailableItems.Values.GetRandomValue().ItemTypeId, p.Transform.position, p.Transform.rotation);
+                        var pickup = Pickup.CreateAndSpawn(InventoryItemLoader.AvailableItems.Values.GetRandomValue().ItemTypeId, p.Transform.position, p.Transform.rotation);
+                        if (pickup is Exiled.API.Features.Pickups.FirearmPickup gun)
+                        {
+                            gun.Ammo = gun.MaxAmmo;
+                        }
                     }
                 }
                 p.Destroy();

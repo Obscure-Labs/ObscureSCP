@@ -141,6 +141,8 @@
     <Compile Include="API\Features\ItemRarity.cs" />
     <Compile Include="API\Features\Module.cs" />
     <Compile Include="API\Features\ModulesManager.cs" />
+    <Compile Include="API\Features\OpusStuff.cs" />
+    <Compile Include="API\Features\ProximityChat.cs" />
     <Compile Include="Commands\Admins\Dummy.cs" />
     <Compile Include="Commands\Admins\ForceGamemode.cs" />
     <Compile Include="Commands\Admins\ModuleControls.cs" />
@@ -182,6 +184,7 @@
     <Compile Include="Modules\Gamemode Handler\Core\SCP1162.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\Scp914.cs" />
     <Compile Include="Modules\Gamemode Handler\Core\SCPsDropItems.cs" />
+    <Compile Include="Modules\Gamemode Handler\Core\SSSStuff.cs" />
     <Compile Include="Modules\Gamemode Handler\GamemodeManager.cs" />
     <Compile Include="Modules\Gamemode Handler\Mode Specific Modules\InsanityRandomiser.cs" />
     <Compile Include="Modules\Gamemode Handler\Modes\Insanity.cs" />
