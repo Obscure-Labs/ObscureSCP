@@ -861,6 +861,12 @@
             </summary>
             <param name="ev"><see cref="T:Exiled.Events.EventArgs.Player.HurtingEventArgs"/>.</param>
         </member>
+        <member name="M:Exiled.CustomItems.API.Features.CustomWeapon.OnChangingAttachment(Exiled.Events.EventArgs.Item.ChangingAttachmentsEventArgs)">
+            <summary>
+            Handles attachment changing for custom weapons.
+            </summary>
+            <param name="ev"><see cref="T:Exiled.Events.EventArgs.Item.ChangingAttachmentsEventArgs"/>.</param>
+        </member>
         <member name="T:Exiled.CustomItems.Commands.Give">
             <summary>
             The command to give a player an item.

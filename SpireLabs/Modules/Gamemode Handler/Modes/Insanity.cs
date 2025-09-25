@@ -7,7 +7,6 @@ using LabApi.Features.Wrappers;
 using MEC;
 using ObscureLabs.API.Features;
 using ObscureLabs.Items;
-using ObscureLabs.Modules.Default;
 using ObscureLabs.Modules.Gamemode_Handler.Core;
 using ObscureLabs.Modules.Gamemode_Handler.Core.SCP_Rebalances;
 using ObscureLabs.SpawnSystem;

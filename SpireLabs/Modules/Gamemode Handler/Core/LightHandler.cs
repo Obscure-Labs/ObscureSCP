@@ -9,7 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ObscureLabs.Modules.Default
+namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
     internal class LightHandler : Module
     {

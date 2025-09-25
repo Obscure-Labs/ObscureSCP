@@ -18,6 +18,7 @@ using System.Runtime.Remoting.Metadata;
 using CommandSystem.Commands.RemoteAdmin.Doors;
 using System.Runtime.InteropServices;
 using Exiled.API.Interfaces;
+using Exiled.API.Features.Core;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
@@ -69,12 +70,11 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             {
                 if(!Player.IsInventoryFull)
                 {
-#warning gives a grenade
-                    Player.AddItem(Keycard.List.GetRandomValue().Type);
+                    Player.AddItem(Item.List.Where(item => item is Keycard).GetRandomValue().Type);
                 }
                 else
                 {
-                    Pickup.CreateAndSpawn(Keycard.List.GetRandomValue().Type, Player.Position, Player.Rotation);
+                    Pickup.CreateAndSpawn(Item.List.Where(item => item is Keycard).GetRandomValue().Type, Player.Position, Player.Rotation);
                 }
 
                 return true;
@@ -154,7 +154,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             {
                 Vector3 oldGrav = LabApi.Features.Wrappers.Player.Get(Player.NetworkIdentity).Gravity;
                 LabApi.Features.Wrappers.Player.Get(Player.NetworkIdentity).Gravity *= -1;
-                Timing.CallDelayed(10f, () => {LabApi.Features.Wrappers.Player.Get(Player.NetworkIdentity).Gravity = oldGrav; });
+                Timing.CallDelayed(10f, () => {LabApi.Features.Wrappers.Player.Get(Player.NetworkIdentity).Gravity = Plugin.PlayerDefaultGravity; });
                 return true;
             }),
             new("Death", "You rolled <color=#767676><u>DEATH</u></color>", (Player) =>
@@ -196,9 +196,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             new("Low Gravity", "Low Gravity", (Player) =>
             {
                 Vector3 oldGrav = LabApi.Features.Wrappers.Player.Get(Player.NetworkIdentity).Gravity;
-                LabApi.Features.Wrappers.Player.Get(Player.NetworkIdentity).Gravity *= -0.5f;
-                Timing.CallDelayed(10f, () => {LabApi.Features.Wrappers.Player.Get(Player.NetworkIdentity).Gravity = oldGrav; });
-                return true;
+                LabApi.Features.Wrappers.Player.Get(Player.NetworkIdentity).Gravity = (Plugin.PlayerDefaultGravity * 0.8f);
+                Timing.CallDelayed(10f, () => {LabApi.Features.Wrappers.Player.Get(Player.NetworkIdentity).Gravity = Plugin.PlayerDefaultGravity; });
                 return true;
             }),
             new("Loud", "WAAAAAAAAAAAAAAAAAAAAAAAH", (Player) =>

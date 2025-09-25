@@ -50,6 +50,11 @@
             Text toy.
             </summary>
         </member>
+        <member name="F:Exiled.API.Enums.AdminToyType.WaypointToy">
+            <summary>
+            Waypoint toy.
+            </summary>
+        </member>
         <member name="T:Exiled.API.Enums.AmmoType">
             <summary>
             Ammo types present in the game.
@@ -1073,6 +1078,31 @@
             Represents the HCZ_127_LAB door.
             </summary>
         </member>
+        <member name="F:Exiled.API.Enums.DoorType.ServerRoomCloset">
+            <summary>
+            Represents the door in the <see cref="F:Exiled.API.Enums.RoomType.HczServerRoom"/> Closet.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.DoorType.Scp106Checkpoint">
+            <summary>
+            Represents the checkpoint that handle door for <see cref="F:Exiled.API.Enums.DoorType.Scp106Primary"/> and <see cref="F:Exiled.API.Enums.DoorType.Scp106Secondary"/>.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.DoorType.TestRoom">
+            <summary>
+            Represents the door in the <see cref="F:Exiled.API.Enums.RoomType.HczTestRoom"/>.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.DoorType.PlantsCloset">
+            <summary>
+            Represents the door in the <see cref="F:Exiled.API.Enums.RoomType.LczPlants"/> Closet.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.DoorType.Checkpoint">
+            <summary>
+            Represents the door used for Checkpoint.
+            </summary>
+        </member>
         <member name="T:Exiled.API.Enums.EffectCategory">
             <summary>
             An enum which represents the categories of an effect.
@@ -1808,6 +1838,11 @@
         <member name="F:Exiled.API.Enums.LeadingTeam.Anomalies">
             <summary>
             Represents the SCP team.
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.LeadingTeam.Flamingo">
+            <summary>
+            Represents the Flamingo team.
             </summary>
         </member>
         <member name="F:Exiled.API.Enums.LeadingTeam.Draw">
@@ -2912,6 +2947,16 @@
             Inside SCP-079's Armory
             </summary>
         </member>
+        <member name="F:Exiled.API.Enums.SpawnLocationType.Inside127Lab">
+            <summary>
+            Inside SCP-127's Lab
+            </summary>
+        </member>
+        <member name="F:Exiled.API.Enums.SpawnLocationType.InsideHidLab">
+            <summary>
+            Inside the upper door that leads into the Micro-HID Lab room.
+            </summary>
+        </member>
         <member name="T:Exiled.API.Enums.SpawnReason">
             <summary>
             Possible spawn reasons.
@@ -3506,6 +3551,14 @@
             <param name="type">The item to be checked.</param>
             <returns>Returns whether the <see cref="T:ItemType"/> is a keycard.</returns>
         </member>
+        <member name="M:Exiled.API.Extensions.ItemExtensions.IsCustomKeycard(ItemType)">
+            <summary>
+            Checks if an <see cref="T:ItemType"/> is a custom keycard.
+            </summary>
+            <param name="type">The item to be checked.</param>
+            <returns>Returns where the <see cref="T:ItemType"/> is a custom keycard.</returns>
+            <remarks>This just signifies whether the ItemType represents a keycard that has modifiable properties.</remarks>
+        </member>
         <member name="M:Exiled.API.Extensions.ItemExtensions.GetItemBase(ItemType)">
             <summary>
             Given an <see cref="T:ItemType"/>, returns the matching <see cref="T:InventorySystem.Items.ItemBase"/>.
@@ -3720,6 +3773,16 @@
             <param name="pitch">Speed of sound.</param>
             <param name="clipIndex">Index of clip.</param>
         </member>
+        <member name="M:Exiled.API.Extensions.MirrorExtensions.PlaceBlood(Exiled.API.Features.Player,UnityEngine.Vector3,UnityEngine.Vector3,PlayerRoles.RoleTypeId,System.Int32)">
+            <summary>
+            Place blood that only the <paramref name="player"/> can see.
+            </summary>
+            <param name="player">Target to play.</param>
+            <param name="position">The position of the blood decal.</param>
+            <param name="origin">The direction of the blood decal.</param>
+            <param name="roleTypeId">The RoleTypeId from who blood come from.</param>
+            <param name="gettingShotSoundIndex">The sound than player get when getting shot.</param>
+        </member>
         <member name="M:Exiled.API.Extensions.MirrorExtensions.SetIntercomDisplayTextForTargetOnly(Exiled.API.Features.Player,System.String)">
             <summary>
             Sets <see cref="P:Exiled.API.Features.Intercom.DisplayText"/> that only the <paramref name="target"/> player can see.
@@ -3776,6 +3839,60 @@
             <param name="playersToAffect">The players who should see the changed appearance.</param>
             <param name="skipJump">Whether to skip the little jump that works around an invisibility issue.</param>
             <param name="unitId">The UnitNameId to use for the player's new role, if the player's new role uses unit names. (is NTF).</param>
+        </member>
+        <member name="M:Exiled.API.Extensions.MirrorExtensions.ResyncEffectTo(Exiled.API.Features.Player,Exiled.API.Features.Player,Exiled.API.Enums.EffectType)">
+            <summary>
+            Resynchronizes a specific effect from the effect owner to the target player.
+            </summary>
+            <param name="effectOwner">The player who owns the effect to be resynchronized.</param>
+            <param name="target">The target player to whom the effect will be resynchronized.</param>
+            <param name="effect">The type of effect to be resynchronized.</param>
+        </member>
+        <member name="M:Exiled.API.Extensions.MirrorExtensions.ResyncEffectTo(Exiled.API.Features.Player,System.Collections.Generic.IEnumerable{Exiled.API.Features.Player},Exiled.API.Enums.EffectType)">
+            <summary>
+            Resynchronizes a specific effect from the effect owner to the target players.
+            </summary>
+            <param name="effectOwner">The player who owns the effect to be resynchronized.</param>
+            <param name="targets">The list of target players to whom the effect will be resynchronized.</param>
+            <param name="effect">The type of effect to be resynchronized.</param>
+        </member>
+        <member name="M:Exiled.API.Extensions.MirrorExtensions.SendFakeEffectTo(Exiled.API.Features.Player,System.Collections.Generic.IEnumerable{Exiled.API.Features.Player},Exiled.API.Enums.EffectType,System.Byte)">
+            <summary>
+            Sends a fake effect to a list of target players, simulating the effect as if it originated from the effect owner.
+            </summary>
+            <param name="effectOwner">The player who owns the effect.</param>
+            <param name="targets">The list of target players to whom the effect will be sent.</param>
+            <param name="effect">The type of effect to be sent.</param>
+            <param name="intensity">The intensity of the effect.</param>
+        </member>
+        <member name="M:Exiled.API.Extensions.MirrorExtensions.SendFakeEffectTo(Exiled.API.Features.Player,Exiled.API.Features.Player,Exiled.API.Enums.EffectType,System.Byte)">
+            <summary>
+            Sends a fake effect to a target player, simulating the effect as if it originated from the effect owner.
+            </summary>
+            <param name="effectOwner">The player who owns the effect.</param>
+            <param name="target">The target player to whom the effect will be sent.</param>
+            <param name="effect">The type of effect to be sent.</param>
+            <param name="intensity">The intensity of the effect.</param>
+        </member>
+        <member name="M:Exiled.API.Extensions.MirrorExtensions.SetFakeSpectatable(Exiled.API.Features.Player,Exiled.API.Features.Player,System.Boolean)">
+            <summary>
+            Makes a player not spectatable to another player.
+            </summary>
+            <param name="target">The player who will become not spectatable.</param>
+            <param name="viewer">The viewer who will see this change.</param>
+            <param name="value">The faked value.</param>
+        </member>
+        <member name="M:Exiled.API.Extensions.MirrorExtensions.ResyncKeycardItem(Exiled.API.Features.Items.Keycards.CustomKeycardItem)">
+            <summary>
+            Makes the server resend a message to all clients updating a keycards details to current values.
+            </summary>
+            <param name="customKeycardItem">The keycard to resync.</param>
+        </member>
+        <member name="M:Exiled.API.Extensions.MirrorExtensions.ResyncKeycardPickup(Exiled.API.Features.Pickups.Keycards.CustomKeycardPickup)">
+            <summary>
+            Makes the server resend a message to all clients updating a keycards details to current values.
+            </summary>
+            <param name="customKeycard">The keycard to resync.</param>
         </member>
         <member name="M:Exiled.API.Extensions.MirrorExtensions.PlayCassieAnnouncement(Exiled.API.Features.Player,System.String,System.Boolean,System.Boolean,System.Boolean)">
             <summary>
@@ -7792,6 +7909,11 @@
             Gets or sets a custom base.
             </summary>
         </member>
+        <member name="P:Exiled.API.Features.DamageHandlers.GenericDamageHandler.CassieDeathAnnouncement">
+            <summary>
+            Gets the <see cref="T:PlayerStatsSystem.DamageHandlerBase.CassieAnnouncement"/> the base game uses when a player dies.
+            </summary>
+        </member>
         <member name="P:Exiled.API.Features.DamageHandlers.GenericDamageHandler.Attacker">
             <summary>
             Gets or sets the current attacker.
@@ -9624,6 +9746,21 @@
             </summary>
             <param name="isStarting">Sets a value indicating whether the sound is the intercom's start speaking sound.</param>
         </member>
+        <member name="M:Exiled.API.Features.Intercom.TrySetOverride(Exiled.API.Features.Player,System.Boolean)">
+            <summary>
+            Modifies whether the player is overriding the intercom to speak globally.
+            </summary>
+            <param name="player">The <see cref="T:Exiled.API.Features.Player"/> whose intercom override state will be changed.</param>
+            <param name="newState">Indicates whether the player should be given the global intercom override.</param>
+            <returns><see langword="true"/> if the player was successfully added or removed from the override list; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Intercom.HasOverride(Exiled.API.Features.Player)">
+            <summary>
+            Checks whether the player is currently overriding the intercom to speak globally.
+            </summary>
+            <param name="player">The <see cref="T:Exiled.API.Features.Player"/> to check for a global intercom override.</param>
+            <returns><see langword="true"/> if the player has global intercom override; otherwise, <see langword="false"/>.</returns>
+        </member>
         <member name="M:Exiled.API.Features.Intercom.Reset">
             <summary>
             Reset the intercom's cooldown.
@@ -9927,6 +10064,11 @@
         <member name="P:Exiled.API.Features.Items.Firearm.HitscanHitregModule">
             <summary>
             Gets a primaty magazine for current firearm.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Firearm.AnimatorReloaderModule">
+            <summary>
+            Gets an animator reloader module for the current firearm.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Items.Firearm.MagazineAmmo">
@@ -10266,6 +10408,26 @@
             </summary>
             <remarks>
             For specific reloading logic you also can use <see cref="T:Exiled.API.Features.Items.FirearmModules.Primary.NormalMagazine"/> for avaible weapons.
+            </remarks>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Firearm.TryReload">
+            <summary>
+            Attempts to reload the firearm with server-side validation.
+            </summary>
+            <returns><see langword="true"/> if the firearm was successfully reloaded. Otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Firearm.TryUnload">
+            <summary>
+            Attempts to unload the firearm with server-side validation.
+            </summary>
+            <returns><see langword="true"/> if the firearm was successfully unload. Otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Firearm.Unload">
+            <summary>
+            Forces the firearm's client-side unload animation, bypassing server-side checks.
+            </summary>
+            <remarks>
+            This only plays the animation and is not guaranteed to result in a successful unload. For server-validated unloading, use <see cref="M:Exiled.API.Features.Items.Firearm.Unload"/>.
             </remarks>
         </member>
         <member name="M:Exiled.API.Features.Items.Firearm.Clone">
@@ -11100,11 +11262,12 @@
             </summary>
             <param name="itemBase">The base <see cref="T:InventorySystem.Items.Keycards.KeycardItem"/> class.</param>
         </member>
-        <member name="M:Exiled.API.Features.Items.Keycard.#ctor(ItemType)">
+        <member name="M:Exiled.API.Features.Items.Keycard.#ctor(ItemType,Exiled.API.Features.Player)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.API.Features.Items.Keycard"/> class.
             </summary>
             <param name="type">The <see cref="T:ItemType"/> of the keycard.</param>
+            <param name="owner">The owner of the grenade. Leave <see langword="null"/> for no owner.</param>
         </member>
         <member name="P:Exiled.API.Features.Items.Keycard.Base">
             <summary>
@@ -11121,6 +11284,457 @@
             Returns the Keycard in a human readable format.
             </summary>
             <returns>A string containing Keycard-related data.</returns>
+        </member>
+        <member name="T:Exiled.API.Features.Items.Keycards.ChaosKeycard">
+            <summary>
+            A base class for chaos keycard items.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.ChaosKeycard.#ctor(InventorySystem.Items.Keycards.ChaosKeycardItem)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Items.Keycards.ChaosKeycard"/> class.
+            </summary>
+            <param name="itemBase">The <see cref="T:InventorySystem.Items.ItemBase"/> to encapsulate.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.ChaosKeycard.#ctor(ItemType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Items.Keycards.ChaosKeycard"/> class.
+            </summary>
+            <param name="type">The <see cref="T:ItemType"/> of the item to create.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.ChaosKeycard.Base">
+            <summary>
+            Gets the <see cref="T:InventorySystem.Items.Keycards.KeycardItem"/> this encapsulates.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.ChaosKeycard.SnakeEngine">
+            <summary>
+            Gets the <see cref="T:InventorySystem.Items.Keycards.Snake.SnakeEngine"/> this encapsulates.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.ChaosKeycard.ToString">
+            <summary>
+            Returns the Keycard in a human readable format.
+            </summary>
+            <returns>A string containing Keycard-related data.</returns>
+        </member>
+        <member name="T:Exiled.API.Features.Items.Keycards.CustomKeycardItem">
+            <summary>
+            A base class for all custom keycard items.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.CustomKeycardItem.#ctor(InventorySystem.Items.Keycards.KeycardItem)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Items.Keycards.CustomKeycardItem"/> class.
+            </summary>
+            <param name="itemBase">The <see cref="T:InventorySystem.Items.ItemBase"/> to encapsulate.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.CustomKeycardItem.#ctor(ItemType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Items.Keycards.CustomKeycardItem"/> class.
+            </summary>
+            <param name="type">The <see cref="T:ItemType"/> of the item to create.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.CustomKeycardItem.Base">
+            <summary>
+            Gets the <see cref="T:InventorySystem.Items.Keycards.KeycardItem"/> this encapsulates.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.CustomKeycardItem.Permissions">
+            <summary>
+            Gets or sets the permissions this keycard has.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.CustomKeycardItem.KeycardLevels">
+            <summary>
+            Gets or sets the permissions this keycard has.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.CustomKeycardItem.PermissionsColor">
+            <summary>
+            Gets or sets the color of this keycard's permissions.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.CustomKeycardItem.ItemName">
+            <summary>
+            Gets or sets the name of this keycard within the inventory.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.CustomKeycardItem.Color">
+            <summary>
+            Gets or sets the color of this keycard.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.CustomKeycardItem.DataDict">
+            <summary>
+            Gets a dictionary of item serials to their keycards data.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.CustomKeycardItem.AllKeycards">
+            <summary>
+            Gets an array of ItemTypes of each keycard.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.CustomKeycardItem.AllSite02">
+            <summary>
+            Gets an array of ItemTypes of each Site02 keycard.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.CustomKeycardItem.AllManagement">
+            <summary>
+            Gets an array of ItemTypes of each Management keycard.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.CustomKeycardItem.AllMetalCase">
+            <summary>
+            Gets an array of ItemTypes of each MetalCase keycard.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.CustomKeycardItem.AllTaskForce">
+            <summary>
+            Gets an array of ItemTypes of each TaskForce keycard.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.CustomKeycardItem.FindMatch(System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Finds a <see cref="T:ItemType"/> for a keycard by checking if keycard properties match.
+            </summary>
+            /// <param name="matchDesign">Whether to use design to check keycards.</param>
+            <param name="matchPerms">Whether to use permissions to check keycards.</param>
+            <param name="matchColors">Whether to use colors to check keycards.</param>
+            <returns>If 1 match is found, returns the matched value. Otherwise, returns <see cref="T:ItemType"/>.<see cref="F:ItemType.None"/>.</returns>
+            <remarks>Unoptimized for now, but shouldn't be too bad.</remarks>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.CustomKeycardItem.Resync">
+            <summary>
+            Resyncs all properties of the keycard.
+            Gets called by all setters by default.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.CustomKeycardItem.ToString">
+            <summary>
+            Returns the Keycard in a human readable format.
+            </summary>
+            <returns>A string containing Keycard-related data.</returns>
+        </member>
+        <member name="T:Exiled.API.Features.Items.Keycards.KeycardData">
+            <summary>
+            A class containing all possible properties of any keycard that aren't stored by the server.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.KeycardData.PermissionsColor">
+            <summary>
+            Gets or sets the permissions color of this <see cref="T:Exiled.API.Features.Items.Keycards.KeycardData"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.KeycardData.ItemName">
+            <summary>
+            Gets or sets the item name of this <see cref="T:Exiled.API.Features.Items.Keycards.KeycardData"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.KeycardData.Color">
+            <summary>
+            Gets or sets the color of this <see cref="T:Exiled.API.Features.Items.Keycards.KeycardData"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.KeycardData.NameTag">
+            <summary>
+            Gets or sets the name tag of this <see cref="T:Exiled.API.Features.Items.Keycards.KeycardData"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.KeycardData.Label">
+            <summary>
+            Gets or sets the label of this <see cref="T:Exiled.API.Features.Items.Keycards.KeycardData"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.KeycardData.LabelColor">
+            <summary>
+            Gets or sets the label color of this <see cref="T:Exiled.API.Features.Items.Keycards.KeycardData"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.KeycardData.Wear">
+            <summary>
+            Gets or sets the wear of this <see cref="T:Exiled.API.Features.Items.Keycards.KeycardData"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.KeycardData.SerialNumber">
+            <summary>
+            Gets or sets the serial number of this <see cref="T:Exiled.API.Features.Items.Keycards.KeycardData"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.KeycardData.Rank">
+            <summary>
+            Gets or sets the rank of this <see cref="T:Exiled.API.Features.Items.Keycards.KeycardData"/>.
+            </summary>
+        </member>
+        <member name="T:Exiled.API.Features.Items.Keycards.ManagementKeycard">
+            <summary>
+            Represents the Management Custom Keycard.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.ManagementKeycard.#ctor(InventorySystem.Items.Keycards.KeycardItem)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Items.Keycards.ManagementKeycard"/> class.
+            </summary>
+            <param name="itemBase">The <see cref="T:InventorySystem.Items.ItemBase"/> to encapsulate.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.ManagementKeycard.#ctor(ItemType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Items.Keycards.ManagementKeycard"/> class.
+            </summary>
+            <param name="type">The <see cref="T:ItemType"/> of the item to create.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.ManagementKeycard.Label">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.ILabelKeycard.Label"/>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.ManagementKeycard.LabelColor">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.ILabelKeycard.LabelColor"/>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.ManagementKeycard.Create(Interactables.Interobjects.DoorUtils.KeycardLevels,UnityEngine.Color,System.String,UnityEngine.Color,System.String,UnityEngine.Color)">
+            <summary>
+            Creates a <see cref="T:Exiled.API.Features.Items.Keycards.ManagementKeycard"/>.
+            </summary>
+            <param name="keycardLevels">The permissions of the keycard.</param>
+            <param name="permissionsColor">The color of the permissions of the keycard.</param>
+            <param name="itemName">The inventory name of the keycard.</param>
+            <param name="color">The color of the keycard.</param>
+            <param name="label">The label on the keycard.</param>
+            <param name="labelColor">The color of the label on the keycard.</param>
+            <returns>The new <see cref="T:Exiled.API.Features.Items.Keycards.ManagementKeycard"/>.</returns>
+        </member>
+        <member name="T:Exiled.API.Features.Items.Keycards.MetalKeycard">
+            <summary>
+            Represents the Metal Custom Keycard.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.MetalKeycard.#ctor(InventorySystem.Items.Keycards.KeycardItem)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Items.Keycards.MetalKeycard"/> class.
+            </summary>
+            <param name="itemBase">The <see cref="T:InventorySystem.Items.ItemBase"/> to encapsulate.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.MetalKeycard.#ctor(ItemType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Items.Keycards.MetalKeycard"/> class.
+            </summary>
+            <param name="type">The <see cref="T:ItemType"/> of the item to create.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.MetalKeycard.NameTag">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.INameTagKeycard.NameTag"/>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.MetalKeycard.Label">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.ILabelKeycard.Label"/>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.MetalKeycard.LabelColor">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.ILabelKeycard.LabelColor"/>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.MetalKeycard.Wear">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.IWearKeycard.Wear"/>
+            <remarks>Capped from 0-5 for Site-02 keycards, returns 255 if no wear level is found.</remarks>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.MetalKeycard.SerialNumber">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.ISerialNumberKeycard.SerialNumber"/>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.MetalKeycard.Create(Interactables.Interobjects.DoorUtils.KeycardLevels,UnityEngine.Color,System.String,UnityEngine.Color,System.String,System.String,UnityEngine.Color,System.Byte,System.String)">
+            <summary>
+            Creates a <see cref="T:Exiled.API.Features.Items.Keycards.MetalKeycard"/>.
+            </summary>
+            <param name="keycardLevels">The permissions of the keycard.</param>
+            <param name="permissionsColor">The color of the permissions of the keycard.</param>
+            <param name="itemName">The inventory name of the keycard.</param>
+            <param name="color">The color of the keycard.</param>
+            <param name="nameTag">The name of the owner of the keycard.</param>
+            <param name="label">The label on the keycard.</param>
+            <param name="labelColor">The color of the label on the keycard.</param>
+            <param name="wear">How worn the keycard looks (capped from 0-5).</param>
+            <param name="serialNumber">The serial number of the keycard (numbers only, 12 max).</param>
+            <returns>The new <see cref="T:Exiled.API.Features.Items.Keycards.MetalKeycard"/>.</returns>
+        </member>
+        <member name="T:Exiled.API.Features.Items.Keycards.PermissionsProvider">
+            <summary>
+            A simple class for providing permissions with <see cref="T:Interactables.Interobjects.DoorUtils.DoorPermissionFlags"/>.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.PermissionsProvider.#ctor(Interactables.Interobjects.DoorUtils.DoorPermissionFlags,ItemType,System.UInt16)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Items.Keycards.PermissionsProvider"/> class.
+            </summary>
+            <param name="flags">The flags of this provider.</param>
+            <param name="type">The <see cref="T:ItemType"/> to imitate.</param>
+            <param name="serial">The serial to imitate.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.PermissionsProvider.Flags">
+            <summary>
+            Gets or sets the permissions of this provider.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.PermissionsProvider.Type">
+            <summary>
+            Gets or sets the <see cref="T:ItemType"/> this <see cref="T:Exiled.API.Features.Items.Keycards.PermissionsProvider"/> imitates.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.PermissionsProvider.Serial">
+            <summary>
+            Gets or sets the serial this <see cref="T:Exiled.API.Features.Items.Keycards.PermissionsProvider"/> imitates.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.PermissionsProvider.PermissionsUsedCallback">
+            <summary>
+            Gets the action called when this <see cref="T:Exiled.API.Features.Items.Keycards.PermissionsProvider"/> is used.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.PermissionsProvider.GetPermissions(Interactables.Interobjects.DoorUtils.IDoorPermissionRequester)">
+            <summary>
+            Gets the permissions of this <see cref="T:Exiled.API.Features.Items.Keycards.PermissionsProvider"/>.
+            </summary>
+            <param name="requester">Not used.</param>
+            <returns>The <see cref="T:Interactables.Interobjects.DoorUtils.DoorPermissionFlags"/> of this <see cref="T:Exiled.API.Features.Items.Keycards.PermissionsProvider"/>.</returns>
+        </member>
+        <member name="T:Exiled.API.Features.Items.Keycards.SingleUseKeycard">
+            <summary>
+            A base class for SingleUse keycard items.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.SingleUseKeycard.#ctor(InventorySystem.Items.Keycards.SingleUseKeycardItem)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Items.Keycards.SingleUseKeycard"/> class.
+            </summary>
+            <param name="itemBase">The <see cref="T:InventorySystem.Items.ItemBase"/> to encapsulate.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.SingleUseKeycard.#ctor(ItemType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Items.Keycards.SingleUseKeycard"/> class.
+            </summary>
+            <param name="type">The <see cref="T:ItemType"/> of the item to create.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.SingleUseKeycard.Base">
+            <summary>
+            Gets the <see cref="T:InventorySystem.Items.Keycards.KeycardItem"/> this encapsulates.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.SingleUseKeycard.Uses">
+            <summary>
+            Gets or sets the amount of uses remaining on the keycard.
+            </summary>
+            <remarks>Multiple uses can look strange for clients (they'll run the discard animation, but can reselect the keycard)
+            <br/><br/>
+            Setting this to 0 or lower will destroy the keycard.
+            </remarks>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.SingleUseKeycard.TimeToDestroy">
+            <summary>
+            Gets or sets the time delay to destroy the Keycard after being used.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.SingleUseKeycard.Permissions">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.SingleUseKeycard.AllowClosingDoors">
+            <summary>
+            Gets or sets a value indicating whether the Keycard allow the closing of Doors.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.SingleUseKeycard.IsDestroyed">
+            <summary>
+            Gets or sets a value indicating whether the Keycard is destroyed.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.SingleUseKeycard.RemainingUses">
+            <summary>
+            Gets a dictionary storing all remaining uses for every <see cref="T:Exiled.API.Features.Items.Keycards.SingleUseKeycard"/>.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.SingleUseKeycard.ToString">
+            <summary>
+            Returns the Keycard in a human readable format.
+            </summary>
+            <returns>A string containing Keycard-related data.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.SingleUseKeycard.ReadPickupInfoBefore(Exiled.API.Features.Pickups.Pickup)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Exiled.API.Features.Items.Keycards.Site02Keycard">
+            <summary>
+            Represents the Site-02 Custom Keycard.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.Site02Keycard.#ctor(InventorySystem.Items.Keycards.KeycardItem)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Items.Keycards.Site02Keycard"/> class.
+            </summary>
+            <param name="itemBase">The <see cref="T:InventorySystem.Items.ItemBase"/> to encapsulate.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.Site02Keycard.#ctor(ItemType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Items.Keycards.Site02Keycard"/> class.
+            </summary>
+            <param name="type">The <see cref="T:ItemType"/> of the item to create.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.Site02Keycard.NameTag">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.INameTagKeycard.NameTag"/>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.Site02Keycard.Label">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.ILabelKeycard.Label"/>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.Site02Keycard.LabelColor">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.ILabelKeycard.LabelColor"/>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.Site02Keycard.Wear">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.IWearKeycard.Wear"/>
+            <remarks>Capped from 0-4 for Site-02 keycards, returns 255 if no wear level is found.</remarks>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.Site02Keycard.Create(Interactables.Interobjects.DoorUtils.KeycardLevels,UnityEngine.Color,System.String,UnityEngine.Color,System.String,System.String,UnityEngine.Color,System.Byte)">
+            <summary>
+            Creates a <see cref="T:Exiled.API.Features.Items.Keycards.Site02Keycard"/>.
+            </summary>
+            <param name="keycardLevels">The permissions of the keycard.</param>
+            <param name="permissionsColor">The color of the permissions of the keycard.</param>
+            <param name="itemName">The inventory name of the keycard.</param>
+            <param name="color">The color of the keycard.</param>
+            <param name="nameTag">The name of the owner of the keycard.</param>
+            <param name="label">The label on the keycard.</param>
+            <param name="labelColor">The color of the label on the keycard.</param>
+            <param name="wear">How worn the keycard looks (capped from 0-5).</param>
+            <returns>The new <see cref="T:Exiled.API.Features.Items.Keycards.Site02Keycard"/>.</returns>
+        </member>
+        <member name="T:Exiled.API.Features.Items.Keycards.TaskForceKeycard">
+            <summary>
+            Represents the Task Force Custom Keycard.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.TaskForceKeycard.#ctor(InventorySystem.Items.Keycards.KeycardItem)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Items.Keycards.TaskForceKeycard"/> class.
+            </summary>
+            <param name="itemBase">The <see cref="T:InventorySystem.Items.ItemBase"/> to encapsulate.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.TaskForceKeycard.#ctor(ItemType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Items.Keycards.TaskForceKeycard"/> class.
+            </summary>
+            <param name="type">The <see cref="T:ItemType"/> of the item to create.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.TaskForceKeycard.NameTag">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.INameTagKeycard.NameTag"/>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.TaskForceKeycard.SerialNumber">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.ISerialNumberKeycard.SerialNumber"/>
+        </member>
+        <member name="P:Exiled.API.Features.Items.Keycards.TaskForceKeycard.Rank">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.IRankKeycard.Rank"/>
+        </member>
+        <member name="M:Exiled.API.Features.Items.Keycards.TaskForceKeycard.Create(Interactables.Interobjects.DoorUtils.KeycardLevels,UnityEngine.Color,System.String,UnityEngine.Color,System.String,System.String,System.Byte)">
+            <summary>
+            Creates a <see cref="T:Exiled.API.Features.Items.Keycards.TaskForceKeycard"/>.
+            </summary>
+            <param name="keycardLevels">The permissions of the keycard.</param>
+            <param name="permissionsColor">The color of the permissions of the keycard.</param>
+            <param name="itemName">The inventory name of the keycard.</param>
+            <param name="color">The color of the keycard.</param>
+            <param name="nameTag">The name of the owner of the keycard.</param>
+            <param name="serialNumber">The serial number of the keycard (numbers only, 12 max).</param>
+            <param name="rank">The rank of the keycard (capped from 0-3).</param>
+            <returns>The new <see cref="T:Exiled.API.Features.Items.Keycards.TaskForceKeycard"/>.</returns>
         </member>
         <member name="T:Exiled.API.Features.Items.MicroHid">
             <summary>
@@ -13768,7 +14382,7 @@
         </member>
         <member name="P:Exiled.API.Features.Pickups.KeycardPickup.Permissions">
             <summary>
-            Gets the <see cref="T:Exiled.API.Enums.KeycardPermissions"/> of the keycard.
+            Gets or sets the <see cref="T:Exiled.API.Enums.KeycardPermissions"/> of the keycard.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Pickups.KeycardPickup.Base">
@@ -13781,6 +14395,312 @@
         </member>
         <member name="M:Exiled.API.Features.Pickups.KeycardPickup.InitializeProperties(InventorySystem.Items.ItemBase)">
             <inheritdoc/>
+        </member>
+        <member name="T:Exiled.API.Features.Pickups.Keycards.ChaosKeycardPickup">
+            <summary>
+            A base class for all keycard pickups.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.ChaosKeycardPickup.#ctor(InventorySystem.Items.Keycards.KeycardPickup)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Pickups.Keycards.ChaosKeycardPickup"/> class.
+            </summary>
+            <param name="pickupBase">The <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/> to encapsulate.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.ChaosKeycardPickup.#ctor(ItemType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Pickups.Keycards.ChaosKeycardPickup"/> class.
+            </summary>
+            <param name="type">The <see cref="T:ItemType"/> of the pickup to create.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Keycards.ChaosKeycardPickup.SnakeEngine">
+            <summary>
+            Gets the <see cref="T:InventorySystem.Items.Keycards.Snake.SnakeEngine"/> this encapsulates.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.ChaosKeycardPickup.ToString">
+            <summary>
+            Returns the Keycard in a human readable format.
+            </summary>
+            <returns>A string containing Keycard-related data.</returns>
+        </member>
+        <member name="T:Exiled.API.Features.Pickups.Keycards.CustomKeycardPickup">
+            <summary>
+            A base class for all keycard pickups.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.CustomKeycardPickup.#ctor(InventorySystem.Items.Keycards.KeycardPickup)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Pickups.Keycards.CustomKeycardPickup"/> class.
+            </summary>
+            <param name="pickupBase">The <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/> to encapsulate.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.CustomKeycardPickup.#ctor(ItemType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Pickups.Keycards.CustomKeycardPickup"/> class.
+            </summary>
+            <param name="type">The <see cref="T:ItemType"/> of the pickup to create.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Keycards.CustomKeycardPickup.Permissions">
+            <summary>
+            Gets or sets the permissions this keycard has.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Keycards.CustomKeycardPickup.KeycardLevels">
+            <summary>
+            Gets or sets the permissions this keycard has.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Keycards.CustomKeycardPickup.PermissionsColor">
+            <summary>
+            Gets or sets the color of this keycard's permissions.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Keycards.CustomKeycardPickup.ItemName">
+            <summary>
+            Gets or sets the name of this keycard within the inventory.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Keycards.CustomKeycardPickup.Color">
+            <summary>
+            Gets or sets the color of this keycard.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.CustomKeycardPickup.FindMatch(System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Finds a <see cref="T:ItemType"/> for a keycard by checking if keycard properties match.
+            </summary>
+            /// <param name="matchDesign">Whether to use design to check keycards.</param>
+            <param name="matchPerms">Whether to use permissions to check keycards.</param>
+            <param name="matchColors">Whether to use colors to check keycards.</param>
+            <returns>If 1 match is found, returns the matched value. Otherwise, returns <see cref="T:ItemType"/>.<see cref="F:ItemType.None"/>.</returns>
+            <remarks>Unoptimized for now, but shouldn't be too bad.</remarks>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.CustomKeycardPickup.Resync">
+            <summary>
+            Resyncs all properties of the keycard.
+            Gets called by all setters by default.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.CustomKeycardPickup.ToString">
+            <summary>
+            Returns the Keycard in a human readable format.
+            </summary>
+            <returns>A string containing Keycard-related data.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.CustomKeycardPickup.InitializeProperties(InventorySystem.Items.ItemBase)">
+            <inheritdoc />
+        </member>
+        <member name="T:Exiled.API.Features.Pickups.Keycards.ManagementKeycardPickup">
+            <summary>
+            Represents the Management Custom Keycard.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.ManagementKeycardPickup.#ctor(InventorySystem.Items.Keycards.KeycardPickup)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Pickups.Keycards.ManagementKeycardPickup"/> class.
+            </summary>
+            <param name="pickupBase">The <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/> to encapsulate.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.ManagementKeycardPickup.#ctor(ItemType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Pickups.Keycards.ManagementKeycardPickup"/> class.
+            </summary>
+            <param name="type">The <see cref="T:ItemType"/> of the pickup to create.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Keycards.ManagementKeycardPickup.Label">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.ILabelKeycard.Label"/>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Keycards.ManagementKeycardPickup.LabelColor">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.ILabelKeycard.LabelColor"/>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.ManagementKeycardPickup.Create(Interactables.Interobjects.DoorUtils.KeycardLevels,UnityEngine.Color,System.String,UnityEngine.Color,System.String,UnityEngine.Color)">
+            <summary>
+            Creates an UnSpawned <see cref="T:Exiled.API.Features.Pickups.Keycards.ManagementKeycardPickup"/>, to spawn the pickup, call <see cref="M:Exiled.API.Features.Pickups.Pickup.Spawn(UnityEngine.Vector3,System.Nullable{UnityEngine.Quaternion},Exiled.API.Features.Player)"/> on the returned instance.
+            </summary>
+            <param name="keycardLevels">The permissions of the keycard.</param>
+            <param name="permissionsColor">The color of the permissions of the keycard.</param>
+            <param name="itemName">The inventory name of the keycard.</param>
+            <param name="color">The color of the keycard.</param>
+            <param name="label">The label on the keycard.</param>
+            <param name="labelColor">The color of the label on the keycard.</param>
+            <returns>The new <see cref="T:Exiled.API.Features.Pickups.Keycards.ManagementKeycardPickup"/>.</returns>
+        </member>
+        <member name="T:Exiled.API.Features.Pickups.Keycards.MetalKeycardPickup">
+            <summary>
+            Represents the Metal Custom Keycard.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.MetalKeycardPickup.#ctor(InventorySystem.Items.Keycards.KeycardPickup)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Pickups.Keycards.MetalKeycardPickup"/> class.
+            </summary>
+            <param name="pickupBase">The <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/> to encapsulate.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.MetalKeycardPickup.#ctor(ItemType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Pickups.Keycards.MetalKeycardPickup"/> class.
+            </summary>
+            <param name="type">The <see cref="T:ItemType"/> of the pickup to create.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Keycards.MetalKeycardPickup.NameTag">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.INameTagKeycard.NameTag"/>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Keycards.MetalKeycardPickup.Label">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.ILabelKeycard.Label"/>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Keycards.MetalKeycardPickup.LabelColor">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.ILabelKeycard.LabelColor"/>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Keycards.MetalKeycardPickup.Wear">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.IWearKeycard.Wear"/>
+            <remarks>Capped from 0-5 for Site-02 keycards, returns 255 if no wear level is found.</remarks>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Keycards.MetalKeycardPickup.SerialNumber">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.ISerialNumberKeycard.SerialNumber"/>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.MetalKeycardPickup.Create(Interactables.Interobjects.DoorUtils.KeycardLevels,UnityEngine.Color,System.String,UnityEngine.Color,System.String,System.String,UnityEngine.Color,System.Byte,System.String)">
+            <summary>
+            Creates a <see cref="T:Exiled.API.Features.Pickups.Keycards.MetalKeycardPickup"/>.
+            </summary>
+            <param name="keycardLevels">The permissions of the keycard.</param>
+            <param name="permissionsColor">The color of the permissions of the keycard.</param>
+            <param name="itemName">The inventory name of the keycard.</param>
+            <param name="color">The color of the keycard.</param>
+            <param name="nameTag">The name of the owner of the keycard.</param>
+            <param name="label">The label on the keycard.</param>
+            <param name="labelColor">The color of the label on the keycard.</param>
+            <param name="wear">How worn the keycard looks (capped from 0-5).</param>
+            <param name="serialNumber">The serial number of the keycard (numbers only, 12 max).</param>
+            <returns>The new <see cref="T:Exiled.API.Features.Pickups.Keycards.MetalKeycardPickup"/>.</returns>
+        </member>
+        <member name="T:Exiled.API.Features.Pickups.Keycards.SingleUseKeycardPickup">
+            <summary>
+            A base class for all keycard pickups.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.SingleUseKeycardPickup.#ctor(InventorySystem.Items.Keycards.KeycardPickup)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Pickups.Keycards.SingleUseKeycardPickup"/> class.
+            </summary>
+            <param name="pickupBase">The <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/> to encapsulate.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.SingleUseKeycardPickup.#ctor(ItemType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Pickups.Keycards.SingleUseKeycardPickup"/> class.
+            </summary>
+            <param name="type">The <see cref="T:ItemType"/> of the pickup to create.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Keycards.SingleUseKeycardPickup.Uses">
+            <inheritdoc cref="P:Exiled.API.Features.Items.Keycards.SingleUseKeycard.Uses"/>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Keycards.SingleUseKeycardPickup.TimeToDestroy">
+            <summary>
+            Gets or sets the time delay to destroy the Keycard after being used.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Keycards.SingleUseKeycardPickup.Permissions">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Keycards.SingleUseKeycardPickup.AllowClosingDoors">
+            <summary>
+            Gets or sets a value indicating whether the Keycard allow the closing of Doors.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.SingleUseKeycardPickup.ToString">
+            <summary>
+            Returns the Keycard in a human readable format.
+            </summary>
+            <returns>A string containing Keycard-related data.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.SingleUseKeycardPickup.ReadItemInfo(Exiled.API.Features.Items.Item)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.SingleUseKeycardPickup.InitializeProperties(InventorySystem.Items.ItemBase)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Exiled.API.Features.Pickups.Keycards.Site02KeycardPickup">
+            <summary>
+            Represents the Site-02 Custom Keycard.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.Site02KeycardPickup.#ctor(InventorySystem.Items.Keycards.KeycardPickup)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Pickups.Keycards.Site02KeycardPickup"/> class.
+            </summary>
+            <param name="pickupBase">The <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/> to encapsulate.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.Site02KeycardPickup.#ctor(ItemType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Pickups.Keycards.Site02KeycardPickup"/> class.
+            </summary>
+            <param name="type">The <see cref="T:ItemType"/> of the pickup to create.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Keycards.Site02KeycardPickup.NameTag">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.INameTagKeycard.NameTag"/>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Keycards.Site02KeycardPickup.Label">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.ILabelKeycard.Label"/>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Keycards.Site02KeycardPickup.LabelColor">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.ILabelKeycard.LabelColor"/>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Keycards.Site02KeycardPickup.Wear">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.IWearKeycard.Wear"/>
+            <remarks>Capped from 0-4 for Site-02 keycards, returns 255 if no wear level is found.</remarks>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.Site02KeycardPickup.Create(Interactables.Interobjects.DoorUtils.KeycardLevels,UnityEngine.Color,System.String,UnityEngine.Color,System.String,System.String,UnityEngine.Color,System.Byte)">
+            <summary>
+            Creates a <see cref="T:Exiled.API.Features.Pickups.Keycards.Site02KeycardPickup"/>.
+            </summary>
+            <param name="keycardLevels">The permissions of the keycard.</param>
+            <param name="permissionsColor">The color of the permissions of the keycard.</param>
+            <param name="itemName">The inventory name of the keycard.</param>
+            <param name="color">The color of the keycard.</param>
+            <param name="nameTag">The name of the owner of the keycard.</param>
+            <param name="label">The label on the keycard.</param>
+            <param name="labelColor">The color of the label on the keycard.</param>
+            <param name="wear">How worn the keycard looks (capped from 0-5).</param>
+            <returns>The new <see cref="T:Exiled.API.Features.Pickups.Keycards.Site02KeycardPickup"/>.</returns>
+        </member>
+        <member name="T:Exiled.API.Features.Pickups.Keycards.TaskForceKeycardPickup">
+            <summary>
+            Represents the Task Force Custom Keycard.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.TaskForceKeycardPickup.#ctor(InventorySystem.Items.Keycards.KeycardPickup)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Pickups.Keycards.TaskForceKeycardPickup"/> class.
+            </summary>
+            <param name="pickupBase">The <see cref="T:InventorySystem.Items.Pickups.ItemPickupBase"/> to encapsulate.</param>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.TaskForceKeycardPickup.#ctor(ItemType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Pickups.Keycards.TaskForceKeycardPickup"/> class.
+            </summary>
+            <param name="type">The <see cref="T:ItemType"/> of the pickup to create.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Keycards.TaskForceKeycardPickup.NameTag">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.INameTagKeycard.NameTag"/>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Keycards.TaskForceKeycardPickup.SerialNumber">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.ISerialNumberKeycard.SerialNumber"/>
+        </member>
+        <member name="P:Exiled.API.Features.Pickups.Keycards.TaskForceKeycardPickup.Rank">
+            <inheritdoc cref="P:Exiled.API.Interfaces.Keycards.IRankKeycard.Rank"/>
+        </member>
+        <member name="M:Exiled.API.Features.Pickups.Keycards.TaskForceKeycardPickup.Create(Interactables.Interobjects.DoorUtils.KeycardLevels,UnityEngine.Color,System.String,UnityEngine.Color,System.String,System.String,System.Byte)">
+            <summary>
+            Creates a <see cref="T:Exiled.API.Features.Pickups.Keycards.TaskForceKeycardPickup"/>.
+            </summary>
+            <param name="keycardLevels">The permissions of the keycard.</param>
+            <param name="permissionsColor">The color of the permissions of the keycard.</param>
+            <param name="itemName">The inventory name of the keycard.</param>
+            <param name="color">The color of the keycard.</param>
+            <param name="nameTag">The name of the owner of the keycard.</param>
+            <param name="serialNumber">The serial number of the keycard (numbers only, 12 max).</param>
+            <param name="rank">The rank of the keycard (capped from 0-3).</param>
+            <returns>The new <see cref="T:Exiled.API.Features.Pickups.Keycards.TaskForceKeycardPickup"/>.</returns>
         </member>
         <member name="T:Exiled.API.Features.Pickups.MicroHIDPickup">
             <summary>
@@ -14880,6 +15800,19 @@
             Gets a list of all <see cref="T:Exiled.API.Features.Player"/>'s on the server.
             </summary>
         </member>
+        <member name="P:Exiled.API.Features.Player.Enumerable">
+            <summary>
+            Gets an <see cref="T:System.Collections.Generic.IEnumerable`1"/> of all <see cref="T:Exiled.API.Features.Player"/>'s on the server.
+            This property should be used for enumeration (e.g. LINQ) as it doesn't create a new list, improving performance.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Player.Count">
+            <summary>
+            Gets the number of players currently on the server.
+            </summary>
+            <seealso cref="P:Exiled.API.Features.Player.List"/>
+            <seealso cref="P:Exiled.API.Features.Player.Enumerable"/>
+        </member>
         <member name="P:Exiled.API.Features.Player.UserIdsCache">
             <summary>
             Gets a <see cref="T:System.Collections.Generic.Dictionary`2"/> containing cached <see cref="T:Exiled.API.Features.Player"/> and their user ids.
@@ -15467,6 +16400,12 @@
             Gets the current zone the player is in.
             </summary>
         </member>
+        <member name="P:Exiled.API.Features.Player.LevelName">
+            <summary>
+            Gets the current Level the player is in.
+            </summary>
+            <remarks>Will return null if CurrentRoom is not a <see cref="T:MapGeneration.Rooms.MultiLevelRoomIdentifier"/>.</remarks>
+        </member>
         <member name="P:Exiled.API.Features.Player.Lift">
             <summary>
             Gets the current <see cref="T:Exiled.API.Features.Lift"/> the player is in. Can be <see langword="null"/>.
@@ -15550,6 +16489,11 @@
         <member name="P:Exiled.API.Features.Player.AgreedToRecording">
             <summary>
             Gets a value indicating whether the player has agreed to microphone recording.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Player.IsSpectatable">
+            <summary>
+            Gets or sets a value indicating whether the player can be spectated by a spectator.
             </summary>
         </member>
         <member name="P:Exiled.API.Features.Player.CurrentSpectatingPlayers">
@@ -15978,9 +16922,33 @@
         </member>
         <member name="M:Exiled.API.Features.Player.ReloadWeapon">
             <summary>
+            Forces the player's client to play the weapon reload animation, bypassing server-side checks.
+            </summary>
+            <returns><see langword="true"/> if the command to start reloading was sent. Otherwise, <see langword="false"/>.</returns>
+            <remarks>
+            This method does not check if the weapon can actually be reloaded. It only forces the animation and is not guaranteed to result in a successful reload.
+            </remarks>
+        </member>
+        <member name="M:Exiled.API.Features.Player.TryReloadWeapon">
+            <summary>
             Forces the player to reload their current weapon.
             </summary>
-            <returns><see langword="true"/> if firearm was successfully reloaded. Otherwise, <see langword="false"/>.</returns>
+            <returns><see langword="true"/> if the firearm was successfully reloaded. Otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Exiled.API.Features.Player.UnloadWeapon">
+            <summary>
+            Forces the player's client to play the weapon unload animation, bypassing server-side checks.
+            </summary>
+            <returns><see langword="true"/> if the command to start unloading was sent. Otherwise, <see langword="false"/>.</returns>
+            <remarks>
+            This method does not check if the weapon can actually be unloaded. It only forces the animation and is not guaranteed to result in a successful unload.
+            </remarks>
+        </member>
+        <member name="M:Exiled.API.Features.Player.TryUnloadWeapon">
+            <summary>
+            Forces the player to unload their current weapon.
+            </summary>
+            <returns><see langword="true"/> if the firearm was successfully unloaded. Otherwise, <see langword="false"/>.</returns>
         </member>
         <member name="M:Exiled.API.Features.Player.TryGetItem(System.UInt16,Exiled.API.Features.Items.Item@)">
             <summary>
@@ -20368,6 +21336,12 @@
             <remarks>This property is the internal <see cref="T:MapGeneration.RoomName"/> of the room. For the actual string of the Room's name, see <see cref="P:Exiled.API.Features.Room.Name"/>.</remarks>
             <seealso cref="P:Exiled.API.Features.Room.Name"/>
         </member>
+        <member name="P:Exiled.API.Features.Room.LevelName">
+            <summary>
+            Gets the room's <see cref="T:MapGeneration.RoomShape"/>.
+            </summary>
+            <remarks>Will return null if the Room is not a <see cref="T:MapGeneration.Rooms.MultiLevelRoomIdentifier"/>.</remarks>
+        </member>
         <member name="P:Exiled.API.Features.Room.RoomShape">
             <summary>
             Gets the room's <see cref="T:MapGeneration.RoomShape"/>.
@@ -21144,10 +22118,7 @@
             <seealso cref="P:Exiled.API.Features.Player.IsFriendlyFireEnabled"/>
         </member>
         <member name="P:Exiled.API.Features.Server.PlayerCount">
-            <summary>
-            Gets the number of players currently on the server.
-            </summary>
-            <seealso cref="P:Exiled.API.Features.Player.List"/>
+            <inheritdoc cref="P:Exiled.API.Features.Player.Count"/>
         </member>
         <member name="P:Exiled.API.Features.Server.MaxPlayerCount">
             <summary>
@@ -22377,6 +23348,42 @@
             Gets or sets the size of the Display Size of the Text.
             </summary>
         </member>
+        <member name="T:Exiled.API.Features.Toys.Waypoint">
+            <summary>
+            A wrapper class for <see cref="T:AdminToys.WaypointToy"/>.
+            </summary>
+        </member>
+        <member name="M:Exiled.API.Features.Toys.Waypoint.#ctor(AdminToys.WaypointToy)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.API.Features.Toys.Waypoint"/> class.
+            </summary>
+            <param name="speakerToy">The <see cref="T:AdminToys.WaypointToy"/> of the toy.</param>
+        </member>
+        <member name="P:Exiled.API.Features.Toys.Waypoint.Prefab">
+            <summary>
+            Gets the prefab.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Toys.Waypoint.Base">
+            <summary>
+            Gets the base <see cref="T:AdminToys.WaypointToy"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Toys.Waypoint.Priority">
+            <summary>
+            Gets or sets the Waypoint shown.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Toys.Waypoint.VisualizeBounds">
+            <summary>
+            Gets or sets a value indicating whether the Bounds are shown for Debug.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Features.Toys.Waypoint.WaypointId">
+            <summary>
+            Gets the id of the Waypoint use for <see cref="F:RelativePositioning.RelativePosition.WaypointId"/>.
+            </summary>
+        </member>
         <member name="T:Exiled.API.Features.Warhead">
             <summary>
             A set of tools to easily work with the alpha warhead.
@@ -23298,6 +24305,63 @@
         <member name="P:Exiled.API.Interfaces.IWrapper`1.Base">
             <summary>
             Gets the base <typeparamref name="T"/> that this class is wrapping.
+            </summary>
+        </member>
+        <member name="T:Exiled.API.Interfaces.Keycards.ILabelKeycard">
+            <summary>
+            An interface for <see cref="T:Exiled.API.Features.Items.Keycards.CustomKeycardItem"/>'s with the <see cref="P:Exiled.API.Interfaces.Keycards.ILabelKeycard.Label"/> property.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Interfaces.Keycards.ILabelKeycard.Label">
+            <summary>
+            Gets or sets the label of this <see cref="T:Exiled.API.Features.Items.Keycards.CustomKeycardItem"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Interfaces.Keycards.ILabelKeycard.LabelColor">
+            <summary>
+            Gets or sets the <see cref="T:UnityEngine.Color"/> of this <see cref="T:Exiled.API.Features.Items.Keycards.CustomKeycardItem"/>.
+            </summary>
+        </member>
+        <member name="T:Exiled.API.Interfaces.Keycards.INameTagKeycard">
+            <summary>
+            An interface for <see cref="T:Exiled.API.Features.Items.Keycards.CustomKeycardItem"/>'s with the <see cref="P:Exiled.API.Interfaces.Keycards.INameTagKeycard.NameTag"/> property.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Interfaces.Keycards.INameTagKeycard.NameTag">
+            <summary>
+            Gets or sets the name of the owner of this <see cref="T:Exiled.API.Features.Items.Keycards.CustomKeycardItem"/>.
+            </summary>
+        </member>
+        <member name="T:Exiled.API.Interfaces.Keycards.IRankKeycard">
+            <summary>
+            An interface for <see cref="T:Exiled.API.Features.Items.Keycards.CustomKeycardItem"/>'s with the <see cref="P:Exiled.API.Interfaces.Keycards.IRankKeycard.Rank"/> property.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Interfaces.Keycards.IRankKeycard.Rank">
+            <summary>
+            Gets or sets the rank of this <see cref="T:Exiled.API.Features.Items.Keycards.CustomKeycardItem"/>.
+            </summary>
+            <remarks>Capped from 0-3, returns 255 if no value was found.</remarks>
+        </member>
+        <member name="T:Exiled.API.Interfaces.Keycards.ISerialNumberKeycard">
+            <summary>
+            An interface for <see cref="T:Exiled.API.Features.Items.Keycards.CustomKeycardItem"/>'s with the <see cref="P:Exiled.API.Interfaces.Keycards.ISerialNumberKeycard.SerialNumber"/> property.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Interfaces.Keycards.ISerialNumberKeycard.SerialNumber">
+            <summary>
+            Gets or sets the serial number of this <see cref="T:Exiled.API.Features.Items.Keycards.CustomKeycardItem"/>.
+            </summary>
+            <remarks>Can only hold 12 numbers. Non-numerical chars will be replaced with "-".</remarks>
+        </member>
+        <member name="T:Exiled.API.Interfaces.Keycards.IWearKeycard">
+            <summary>
+            An interface for <see cref="T:Exiled.API.Features.Items.Keycards.CustomKeycardItem"/>'s with the <see cref="P:Exiled.API.Interfaces.Keycards.IWearKeycard.Wear"/> property.
+            </summary>
+        </member>
+        <member name="P:Exiled.API.Interfaces.Keycards.IWearKeycard.Wear">
+            <summary>
+            Gets or sets the wear on this <see cref="T:Exiled.API.Features.Items.Keycards.CustomKeycardItem"/>.
             </summary>
         </member>
         <member name="T:Exiled.API.Structs.ArmorAmmoLimit">

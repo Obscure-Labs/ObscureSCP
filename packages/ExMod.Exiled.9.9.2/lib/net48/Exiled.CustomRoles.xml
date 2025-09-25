@@ -262,6 +262,16 @@
             <returns>True if the ability exists.</returns>
             <exception cref="T:System.ArgumentNullException">If the name is <see langword="null"/> or an empty string.</exception>
         </member>
+        <member name="M:Exiled.CustomRoles.API.Features.CustomAbility.RegisterAbilities(System.Boolean)">
+            <summary>
+            Registers all the <see cref="T:Exiled.CustomRoles.API.Features.CustomAbility"/>'s present in the current assembly.
+            </summary>
+            <param name="byAttribute">Whether to register by attribute.</param>
+            <returns>A <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.CustomRoles.API.Features.CustomAbility"/> which contains all registered <see cref="T:Exiled.CustomRoles.API.Features.CustomAbility"/>'s.</returns>
+            <remarks>
+            This is just a dumbed down version of <see cref="M:Exiled.CustomRoles.API.Features.CustomAbility.RegisterAbilities(System.Boolean,System.Object)"/> for QoL, if you actually use <see cref="T:Exiled.API.Features.Attributes.CustomAbilityAttribute"/>, do not use this overload.
+            </remarks>
+        </member>
         <member name="M:Exiled.CustomRoles.API.Features.CustomAbility.RegisterAbilities(System.Boolean,System.Object)">
             <summary>
             Registers all the <see cref="T:Exiled.CustomRoles.API.Features.CustomAbility"/>'s present in the current assembly.
@@ -560,6 +570,16 @@
             <param name="customRoles">The custom roles the player has.</param>
             <returns>True if the player has custom roles.</returns>
             <exception cref="T:System.ArgumentNullException">If the player is <see langword="null"/>.</exception>
+        </member>
+        <member name="M:Exiled.CustomRoles.API.Features.CustomRole.RegisterRoles(System.Boolean)">
+            <summary>
+            Registers all the <see cref="T:Exiled.CustomRoles.API.Features.CustomRole"/>'s present in the current assembly.
+            </summary>
+            <param name="byAttribute">Whether to register by attribute.</param>
+            <returns>A <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Exiled.CustomRoles.API.Features.CustomRole"/> which contains all registered <see cref="T:Exiled.CustomRoles.API.Features.CustomRole"/>'s.</returns>
+            <remarks>
+            This is just a dumbed down version of <see cref="M:Exiled.CustomRoles.API.Features.CustomRole.RegisterRoles(System.Boolean,System.Object)"/> for QoL, if you actually use <see cref="T:Exiled.API.Features.Attributes.CustomRoleAttribute"/>, do not use this overload.
+            </remarks>
         </member>
         <member name="M:Exiled.CustomRoles.API.Features.CustomRole.RegisterRoles(System.Boolean,System.Object)">
             <summary>

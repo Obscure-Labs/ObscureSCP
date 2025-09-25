@@ -76,6 +76,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler
 
         private void OnRoundRestarted()
         {
+            
             selectedGamemode.Stop();
         }
     }

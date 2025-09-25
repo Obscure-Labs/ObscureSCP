@@ -14,7 +14,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         public override bool IsInitializeOnStart => true;
         public override bool Enable()
         {
-            HeaderSetting header = new HeaderSetting("ObscureLabs");
+            HeaderSetting header = new HeaderSetting(0, "ObscureLabs", "Hints for the ObscureLabs server");
             IEnumerable<SettingBase> settingBases = new SettingBase[]
             {
                     header,

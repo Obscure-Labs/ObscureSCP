@@ -773,12 +773,18 @@
             The asset of the release.
             </summary>
         </member>
-        <member name="M:Exiled.Loader.Models.NewVersion.#ctor(Exiled.Loader.GHApi.Models.Release,Exiled.Loader.GHApi.Models.ReleaseAsset)">
+        <member name="F:Exiled.Loader.Models.NewVersion.IsPrerelease">
+            <summary>
+            Indicates if the release is a prerelease.
+            </summary>
+        </member>
+        <member name="M:Exiled.Loader.Models.NewVersion.#ctor(Exiled.Loader.GHApi.Models.Release,Exiled.Loader.GHApi.Models.ReleaseAsset,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Loader.Models.NewVersion"/> struct.
             </summary>
             <param name="release"><inheritdoc cref="F:Exiled.Loader.Models.NewVersion.Release"/></param>
             <param name="asset"><inheritdoc cref="F:Exiled.Loader.Models.NewVersion.Asset"/></param>
+            <param name="isPrerelease"><inheritdoc cref="F:Exiled.Loader.Models.NewVersion.IsPrerelease"/></param>
         </member>
         <member name="T:Exiled.Loader.Models.TaggedRelease">
             <summary>

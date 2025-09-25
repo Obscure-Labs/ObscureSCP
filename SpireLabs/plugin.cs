@@ -16,7 +16,6 @@ using System.Collections.Generic;
 using System.IO;
 using ObscureLabs.Configs;
 using UnityEngine;
-using ObscureLabs.Modules.Default;
 using ObscureLabs.Modules;
 using Exiled.API.Features.Core.UserSettings;
 using TMPro;
@@ -57,6 +56,8 @@ namespace ObscureLabs
         {
             KeyCode.H
         };
+
+        public static Vector3 PlayerDefaultGravity { get; } = new Vector3(0, -19.60f, 0);
 
         //[HarmonyPatch(typeof(PlayerEffectsController), nameof(PlayerEffectsController.TryGetEffect))]
         //class Patch

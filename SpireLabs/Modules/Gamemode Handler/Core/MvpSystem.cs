@@ -125,20 +125,24 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         private void OnKillingPlayer(DiedEventArgs ev)
         {
-            if (ev.Attacker is null || ev.Attacker == ev.Player)
+            if (ev.Attacker is null || ev.Attacker == ev.Player || ev.Player is null )
             {
                 return;
             }
-
-            if (ev.Player.IsScp)
-            {
-                AddXpToPlayer(ev.Attacker, 12, $"Killing SCP Player: {ev.Player.DisplayNickname}");
-
-            }
             else
             {
-                AddXpToPlayer(ev.Attacker, 5, $"Killing Player: {ev.Player.DisplayNickname}");
+                if (ev.Player.IsScp)
+                {
+                    AddXpToPlayer(ev.Attacker, 12, $"Killing SCP Player: {ev.Player.DisplayNickname}");
+
+                }
+                else
+                {
+                    AddXpToPlayer(ev.Attacker, 5, $"Killing Player: {ev.Player.DisplayNickname}");
+                }
             }
+
+
 
         }
 

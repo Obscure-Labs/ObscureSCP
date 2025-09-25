@@ -1401,6 +1401,9 @@
             Gets a value indicating the projectile that spawned.
             </summary>
         </member>
+        <member name="P:Exiled.Events.EventArgs.Map.ChangedIntoGrenadeEventArgs.Exiled#Events#EventArgs#Interfaces#IPickupEvent#Pickup">
+            <inheritdoc/>
+        </member>
         <member name="T:Exiled.Events.EventArgs.Map.ChangingIntoGrenadeEventArgs">
             <summary>
             Contains all information for when the server is turning a pickup into a live grenade.
@@ -1539,6 +1542,9 @@
             <summary>
             Gets the player who thrown the grenade.
             </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Map.ExplodingGrenadeEventArgs.Exiled#Events#EventArgs#Interfaces#IPickupEvent#Pickup">
+            <inheritdoc/>
         </member>
         <member name="T:Exiled.Events.EventArgs.Map.FillingLockerEventArgs">
             <summary>
@@ -4693,13 +4699,12 @@
             Contains all information before a player's weapon is reloaded.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.ReloadingWeaponEventArgs.#ctor(InventorySystem.Items.Firearms.Firearm)">
+        <member name="M:Exiled.Events.EventArgs.Player.ReloadingWeaponEventArgs.#ctor(InventorySystem.Items.Firearms.Firearm,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.ReloadingWeaponEventArgs" /> class.
             </summary>
-            <param name="firearm">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.ReloadingWeaponEventArgs.Firearm" />
-            </param>
+            <param name="firearm">The firearm being reloaded.</param>
+            <param name="isAllowed">A value indicating whether the weapon can be reloaded.</param>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.ReloadingWeaponEventArgs.IsAllowed">
             <summary>
@@ -4900,6 +4905,56 @@
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.RotatingRevolverEventArgs.Player">
             <inheritdoc/>
+        </member>
+        <member name="T:Exiled.Events.EventArgs.Player.SavingByAntiScp207EventArgs">
+            <summary>
+            Contains all information before a player is saved from death by the Anti-SCP-207 effect.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Player.SavingByAntiScp207EventArgs.#ctor(ReferenceHub,System.Single,Exiled.API.Features.DamageHandlers.DamageHandlerBase,HitboxType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.SavingByAntiScp207EventArgs"/> class.
+            </summary>
+            <param name="player">The player who is being saved.</param>
+            <param name="damageAmount">The amount of damage that would have been applied.</param>
+            <param name="handler">The damage handler that describes the damage.</param>
+            <param name="hitboxType">The hitbox that was hit.</param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SavingByAntiScp207EventArgs.Player">
+            <summary>
+            Gets the player who is being saved.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SavingByAntiScp207EventArgs.DamageAmount">
+            <summary>
+            Gets the amount of damage that would have been applied.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SavingByAntiScp207EventArgs.DamageMultiplier">
+            <summary>
+            Gets or sets the multiplier for the damage that is applied when the event is allowed.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SavingByAntiScp207EventArgs.DeniedDamageMultiplier">
+            <summary>
+            Gets or sets the multiplier for the damage that if event denied.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SavingByAntiScp207EventArgs.Handler">
+            <summary>
+            Gets the damage handler that describes the incoming damage.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SavingByAntiScp207EventArgs.HitboxType">
+            <summary>
+            Gets the hitbox that was hit.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Player.SavingByAntiScp207EventArgs.IsAllowed">
+            <summary>
+            Gets or sets a value indicating whether the event is allowed.
+            If set to <c>false</c>, the event will be denied.
+            </summary>
         </member>
         <member name="T:Exiled.Events.EventArgs.Player.SearchingPickupEventArgs">
             <summary>
@@ -5871,12 +5926,15 @@
             Contains all information before a player's weapon is unloaded.
             </summary>
         </member>
-        <member name="M:Exiled.Events.EventArgs.Player.UnloadingWeaponEventArgs.#ctor(InventorySystem.Items.Firearms.Firearm)">
+        <member name="M:Exiled.Events.EventArgs.Player.UnloadingWeaponEventArgs.#ctor(InventorySystem.Items.Firearms.Firearm,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Player.UnloadingWeaponEventArgs" /> class.
             </summary>
             <param name="firearm">
-            <inheritdoc cref="P:Exiled.Events.EventArgs.Player.UnloadingWeaponEventArgs.Firearm" />
+            The firearm being unloaded.
+            </param>
+            <param name="isAllowed">
+            Indicates whether the weapon unloading is allowed.
             </param>
         </member>
         <member name="P:Exiled.Events.EventArgs.Player.UnloadingWeaponEventArgs.IsAllowed">
@@ -7793,6 +7851,37 @@
         <member name="P:Exiled.Events.EventArgs.Scp1507.UsingTapeEventArgs.IsAllowed">
             <inheritdoc/>
         </member>
+        <member name="T:Exiled.Events.EventArgs.Scp173.AddingObserverEventArgs">
+            <summary>
+            Contains all information before a player sees SCP-173.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Scp173.AddingObserverEventArgs.#ctor(Exiled.API.Features.Player,Exiled.API.Features.Player,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Scp173.AddingObserverEventArgs"/> class.
+            </summary>
+            <param name="player"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp173.AddingObserverEventArgs.Scp173" /></param>
+            <param name="observer"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp173.AddingObserverEventArgs.Player" /></param>
+            <param name="isAllowed"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp173.AddingObserverEventArgs.IsAllowed" /></param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp173.AddingObserverEventArgs.Scp173">
+            <inheritdoc />
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp173.AddingObserverEventArgs.Observer">
+            <summary>
+            Gets the target who has looked at SCP-173.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp173.AddingObserverEventArgs.Player">
+            <summary>
+            Gets the player who's controlling SCP-173.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp173.AddingObserverEventArgs.IsAllowed">
+            <summary>
+            Gets or sets a value indicating whether the player can be added as an observer.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.EventArgs.Scp173.BeingObservedEventArgs">
             <summary>
             Contains all the information before SCP-173 is observed.
@@ -7956,6 +8045,31 @@
         <member name="P:Exiled.Events.EventArgs.Scp173.PlacingTantrumEventArgs.Player">
             <summary>
             Gets the player who's placing the tantrum.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.EventArgs.Scp173.RemovedObserverEventArgs">
+            <summary>
+            Contains all information after a player stops looking at SCP-173.
+            </summary>
+        </member>
+        <member name="M:Exiled.Events.EventArgs.Scp173.RemovedObserverEventArgs.#ctor(Exiled.API.Features.Player,Exiled.API.Features.Player)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Exiled.Events.EventArgs.Scp173.RemovedObserverEventArgs"/> class.
+            </summary>
+            <param name="player"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp173.RemovedObserverEventArgs.Scp173" /></param>
+            <param name="observer"><inheritdoc cref="P:Exiled.Events.EventArgs.Scp173.RemovedObserverEventArgs.Player" /></param>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp173.RemovedObserverEventArgs.Scp173">
+            <inheritdoc />
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp173.RemovedObserverEventArgs.Player">
+            <summary>
+            Gets the player who's controlling SCP-173.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.EventArgs.Scp173.RemovedObserverEventArgs.Observer">
+            <summary>
+            Gets the target who no longer sees SCP-173.
             </summary>
         </member>
         <member name="T:Exiled.Events.EventArgs.Scp173.UsingBreakneckSpeedsEventArgs">
@@ -10790,6 +10904,11 @@
             Invoked after a <see cref="T:Exiled.API.Features.Player"/> interacted with something.
             </summary>
         </member>
+        <member name="P:Exiled.Events.Handlers.Player.SavingByAntiScp207">
+            <summary>
+            Invoked before a <see cref="T:Exiled.API.Features.Player"/> is saved from death by the Anti-SCP-207 effect.
+            </summary>
+        </member>
         <member name="P:Exiled.Events.Handlers.Player.SpawningRagdoll">
             <summary>
             Invoked before spawning a <see cref="T:Exiled.API.Features.Player"/> <see cref="T:Exiled.API.Features.Ragdoll"/>.
@@ -11551,7 +11670,7 @@
             </summary>
             <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Player.EnteringKillerCollisionEventArgs"/> instance.</param>
         </member>
-        <member name="M:Exiled.Events.Handlers.Player.OnReloadingWeapon(Exiled.Events.EventArgs.Player.ReloadingWeaponEventArgs)">
+        <member name="M:Exiled.Events.Handlers.Player.OnReloadingWeapon(LabApi.Events.Arguments.PlayerEvents.PlayerReloadingWeaponEventArgs)">
             <summary>
             Called before a <see cref="T:Exiled.API.Features.Player"/> reloads a weapon.
             </summary>
@@ -11659,7 +11778,7 @@
             </summary>
             <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Player.TogglingFlashlightEventArgs"/> instance.</param>
         </member>
-        <member name="M:Exiled.Events.Handlers.Player.OnUnloadingWeapon(Exiled.Events.EventArgs.Player.UnloadingWeaponEventArgs)">
+        <member name="M:Exiled.Events.Handlers.Player.OnUnloadingWeapon(LabApi.Events.Arguments.PlayerEvents.PlayerUnloadingWeaponEventArgs)">
             <summary>
             Called before a <see cref="T:Exiled.API.Features.Player"/> unloads a weapon.
             </summary>
@@ -11896,6 +12015,12 @@
             Called after a <see cref="T:Exiled.API.Features.Player"/> is healed.
             </summary>
             <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Player.HealedEventArgs"/> instance. </param>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Player.OnSavingByAntiScp207(Exiled.Events.EventArgs.Player.SavingByAntiScp207EventArgs)">
+            <summary>
+            Called before a <see cref="T:Exiled.API.Features.Player"/> is saved from death by the Anti-SCP-207 effect.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Player.SavingByAntiScp207EventArgs"/> instance.</param>
         </member>
         <member name="M:Exiled.Events.Handlers.Player.OnDying(Exiled.Events.EventArgs.Player.DyingEventArgs)">
             <summary>
@@ -12530,6 +12655,16 @@
             Invoked before SCP-173 is observed.
             </summary>
         </member>
+        <member name="P:Exiled.Events.Handlers.Scp173.AddingObserver">
+            <summary>
+            Invoked before a player starts looking at SCP-173.
+            </summary>
+        </member>
+        <member name="P:Exiled.Events.Handlers.Scp173.RemovedObserver">
+            <summary>
+            Invoked after a player stops looking at SCP-173.
+            </summary>
+        </member>
         <member name="M:Exiled.Events.Handlers.Scp173.OnBlinking(Exiled.Events.EventArgs.Scp173.BlinkingEventArgs)">
             <summary>
             Called before players near SCP-173 blink.
@@ -12559,6 +12694,18 @@
             Called before Scp 173 is observed.
             </summary>
             <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Scp173.BeingObservedEventArgs" /> instance.</param>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Scp173.OnAddingObserver(Exiled.Events.EventArgs.Scp173.AddingObserverEventArgs)">
+            <summary>
+            Called before player starts looking at SCP-173.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Scp173.AddingObserverEventArgs" /> instance.</param>
+        </member>
+        <member name="M:Exiled.Events.Handlers.Scp173.OnRemovedObserver(Exiled.Events.EventArgs.Scp173.RemovedObserverEventArgs)">
+            <summary>
+            Called after a player stops looking at SCP-173.
+            </summary>
+            <param name="ev">The <see cref="T:Exiled.Events.EventArgs.Scp173.AddingObserverEventArgs" /> instance.</param>
         </member>
         <member name="T:Exiled.Events.Handlers.Scp244">
             <summary>
@@ -13689,7 +13836,7 @@
         <member name="T:Exiled.Events.Patches.Events.Player.DamagingDoor">
             <summary>
             Patch the <see cref="M:Interactables.Interobjects.BreakableDoor.ServerDamage(System.Single,Interactables.Interobjects.DoorUtils.DoorDamageType,Footprinting.Footprint)" />.
-            Adds the <see cref="P:Exiled.Events.Handlers.Player.DamagingDoor" /> event.
+            Adds the <see cref="P:Exiled.Events.Handlers.Player.DamagingDoor" /> event and fix https://git.scpslgame.com/northwood-qa/scpsl-bug-reporting/-/issues/817 in the EventArgs.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Events.Player.DamagingShootingTarget">
@@ -14025,12 +14172,6 @@
             <see cref="P:Exiled.Events.Handlers.Player.UnloadedWeapon" /> and <see cref="P:Exiled.Events.Handlers.Player.ReloadedWeapon" /> .
             </summary>
         </member>
-        <member name="T:Exiled.Events.Patches.Events.Player.ReloadingWeapon">
-            <summary>
-            Patches <see cref="M:InventorySystem.Items.Firearms.Modules.AnimatorReloaderModuleBase.ServerProcessCmd(Mirror.NetworkReader)" />.
-            Adds the <see cref="P:Exiled.Events.Handlers.Player.ReloadingWeapon" /> and <see cref="P:Exiled.Events.Handlers.Player.UnloadingWeapon" />event.
-            </summary>
-        </member>
         <member name="T:Exiled.Events.Patches.Events.Player.ReservedSlotPatch">
             <summary>
             Patches <see cref="M:ReservedSlot.HasReservedSlot(System.String)" />.
@@ -14047,6 +14188,12 @@
             <summary>
             Patches <see cref="M:InventorySystem.Items.Firearms.Modules.CylinderAmmoModule.RotateCylinder(System.Int32)"/>
             to add <see cref="P:Exiled.Events.Handlers.Player.RotatingRevolver"/> event.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Events.Player.SavingByAntiScp207">
+            <summary>
+            Patches <see cref="M:CustomPlayerEffects.AntiScp207.GetDamageModifier(System.Single,PlayerStatsSystem.DamageHandlerBase,HitboxType)"/>.
+            Adds the <see cref="P:Exiled.Events.Handlers.Player.SavingByAntiScp207"/> event before the player is saved from Anti-SCP-207 damage.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Events.Player.SearchingPickupEvent">
@@ -14494,6 +14641,12 @@
             Adds the <see cref="P:Exiled.Events.Handlers.Scp173.BlinkingRequest" /> event.
             </summary>
         </member>
+        <member name="T:Exiled.Events.Patches.Events.Scp173.Observers">
+            <summary>
+            Patches <see cref="M:PlayerRoles.PlayableScps.Scp173.Scp173ObserversTracker.UpdateObserver(ReferenceHub)" />.
+            Adds the <see cref="P:Exiled.Events.Handlers.Scp173.AddingObserver" /> event.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.Patches.Events.Scp173.PlacingTantrum">
             <summary>
             Patches <see cref="M:PlayerRoles.PlayableScps.Scp173.Scp173TantrumAbility.ServerProcessCmd(Mirror.NetworkReader)"/>.
@@ -14818,6 +14971,12 @@
             Bug reported to NW (https://git.scpslgame.com/northwood-qa/scpsl-bug-reporting/-/issues/367).
             </summary>
         </member>
+        <member name="T:Exiled.Events.Patches.Fixes.FixCapturePosition">
+            <summary>
+            Patches <see cref="P:CustomPlayerEffects.PocketCorroding.CapturePosition" />'s setter.
+            Fix for those who go to pocket without effect and to get empty or null capture position and fall into the void.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.Patches.Fixes.FixElevatorChamberAwake">
             <summary>
             Patches <see cref="M:Interactables.Interobjects.ElevatorChamber.Awake" />'s setter.
@@ -14873,6 +15032,11 @@
             Fix for chamber lists weren't cleared.
             </summary>
         </member>
+        <member name="T:Exiled.Events.Patches.Fixes.NameTagDetailFix">
+            <summary>
+            Fixes NameTagDetail not using custom value if Custom Keycard was spawned as pickup.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.Patches.Fixes.NWFixDetonationTimer">
             <summary>
             Fixes the issue where the game was not selecting the scenario with the nearest <see cref="F:AlphaWarheadController.DetonationScenario.TimeToDetonate"/> value.
@@ -14894,16 +15058,6 @@
         <member name="T:Exiled.Events.Patches.Fixes.RoleChangedPatch">
             <summary>
             Patches <see cref="M:InventorySystem.InventoryItemProvider.RoleChanged(ReferenceHub,PlayerRoles.PlayerRoleBase,PlayerRoles.PlayerRoleBase)"/> to help override in <see cref="P:Exiled.Events.EventArgs.Player.ChangingRoleEventArgs.Items"/> and <see cref="T:Exiled.API.Features.Items.Ammo"/>.
-            </summary>
-        </member>
-        <member name="T:Exiled.Events.Patches.Fixes.Scp173FirstKillPatch">
-            <summary>
-            Patches <see cref="M:PlayerRoles.PlayableScps.Scp173.Scp173SnapAbility.TryHitTarget(UnityEngine.Transform,ReferenceHub@)" /> to fix https://git.scpslgame.com/northwood-qa/scpsl-bug-reporting/-/issues/143 bug.
-            </summary>
-        </member>
-        <member name="T:Exiled.Events.Patches.Fixes.Scp173SecondKillPatch">
-            <summary>
-            Patches <see cref="M:PlayerRoles.PlayableScps.Scp173.Scp173TeleportAbility.ServerProcessCmd(Mirror.NetworkReader)" /> to fix https://git.scpslgame.com/northwood-qa/scpsl-bug-reporting/-/issues/143 bug.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Fixes.Scp3114AttackAhpFix">
@@ -14932,16 +15086,15 @@
             Patches <see cref="M:InventorySystem.Items.MicroHID.Modules.CycleSyncModule.Update"/> to fix phantom <see cref="T:Exiled.API.Features.Items.MicroHid"/> for <see cref="M:Exiled.API.Features.Items.Item.Create(ItemType,Exiled.API.Features.Player)"/>.
             </summary>
         </member>
+        <member name="T:Exiled.Events.Patches.Fixes.ThrownCustomKeycardFix">
+            <summary>
+            Patches <see cref="M:InventorySystem.Items.Keycards.KeycardPickup.ProcessCollision(UnityEngine.Collision)"/> to fix custom keycards with custom permissions not working.
+            Bug reported to NW (https://git.scpslgame.com/northwood-qa/scpsl-bug-reporting/-/issues/1625).
+            </summary>
+        </member>
         <member name="T:Exiled.Events.Patches.Fixes.VoiceChatMutesClear">
             <summary>
             Fixes <see cref="M:VoiceChat.VoiceChatMutes.LoadMutes"/> method.
-            </summary>
-        </member>
-        <member name="T:Exiled.Events.Patches.Fixes.WarheadConfigLockGateFix">
-            <summary>
-            Patches <see cref="M:Interactables.Interobjects.DoorUtils.DoorEventOpenerExtension.Trigger(Interactables.Interobjects.DoorUtils.DoorEventOpenerExtension.OpenerEventType)"/> delegate.
-            Fix than NW config "lock_gates_on_countdown"
-            reported https://git.scpslgame.com/northwood-qa/scpsl-bug-reporting/-/issues/316.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Generic.AirlockListAdd">
@@ -15149,6 +15302,47 @@
             Patches <see cref="M:PlayerRoles.PlayableScps.Scp079.Scp079Recontainer.Start"/>.
             </summary>
         </member>
+        <member name="T:Exiled.Events.Patches.Generic.KeycardDetails.CustomItemNameDetailData">
+            <summary>
+            Patch for storing item name from custom keycards.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Generic.KeycardDetails.CustomLabelDetailData">
+            <summary>
+            Patch for storing label and label color from custom keycards.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Generic.KeycardDetails.CustomPermsDetailData">
+            <summary>
+            Patch for storing permission colors from custom keycards.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Generic.KeycardDetails.CustomRankDetailData">
+            <summary>
+            Patch for storing rank from custom keycards.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Generic.KeycardDetails.CustomSerialNumberDetailData">
+            <summary>
+            Patch for storing serial numbers from custom keycards.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Generic.KeycardDetails.CustomTintDetailData">
+            <summary>
+            Patch for storing colors from custom keycards.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Generic.KeycardDetails.CustomWearDetailData">
+            <summary>
+            Patch for storing wear from custom keycards.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Generic.KeycardDetails.NameTagDetailData">
+            <summary>
+            Patch for storing name tags from custom keycards.
+            </summary>
+            <remarks>There's a fix for <see cref="M:InventorySystem.Items.Keycards.NametagDetail.WriteNewPickup(InventorySystem.Items.Keycards.KeycardPickup,Mirror.NetworkWriter)"/>.</remarks>
+        </member>
         <member name="T:Exiled.Events.Patches.Generic.LiftList">
             <summary>
             Patches to control <see cref="P:Exiled.API.Features.Lift.List"/>.
@@ -15200,6 +15394,12 @@
             Patches <see cref="M:MapGeneration.RoomIdentifier.OnDestroy"/>.
             </summary>
         </member>
+        <member name="T:Exiled.Events.Patches.Generic.RoundTargetCount">
+            <summary>
+            Patches <see cref="M:RoundSummary.UpdateTargetCount" />.
+            Adds the <see cref="P:Exiled.API.Features.Round.IgnoredPlayers" /> Propperty.
+            </summary>
+        </member>
         <member name="T:Exiled.Events.Patches.Generic.Scp079Recontain">
             <summary>
             Patches <see cref="M:PlayerRoles.PlayableScps.Scp079.Scp079Recontainer.OnServerRoleChanged(ReferenceHub,PlayerRoles.RoleTypeId,PlayerRoles.RoleChangeReason)"/>.
@@ -15231,6 +15431,11 @@
         <member name="T:Exiled.Events.Patches.Generic.ServerNamePatch">
             <summary>
             Patch the <see cref="M:ServerConsole.ReloadServerName"/>.
+            </summary>
+        </member>
+        <member name="T:Exiled.Events.Patches.Generic.SingleUseKeycardRemainingUses">
+            <summary>
+            Patches <see cref="M:InventorySystem.Items.Keycards.SingleUseKeycardItem.OnUsed(Interactables.Interobjects.DoorUtils.IDoorPermissionRequester,System.Boolean)"/>.
             </summary>
         </member>
         <member name="T:Exiled.Events.Patches.Generic.SpeakerInRoom">
