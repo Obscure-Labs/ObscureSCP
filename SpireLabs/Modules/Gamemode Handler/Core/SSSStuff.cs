@@ -67,7 +67,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         private void OnSettingValueReceived(ReferenceHub hub, ServerSpecificSettingBase settingBase)
         {
-            if (!Player.TryGet(hub, out Player player) || player.Role.Team == PlayerRoles.Team.SCPs)
+            if (!Player.TryGet(hub, out Player player) || player.Role.Team != PlayerRoles.Team.SCPs)
                 return;
 
             if (settingBase is SSKeybindSetting keyindSetting && keyindSetting.SyncIsPressed)
