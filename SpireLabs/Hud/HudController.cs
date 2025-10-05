@@ -1,7 +1,9 @@
 ﻿using Exiled.Events.EventArgs.Player;
 using MEC;
 using ObscureLabs.API.Features;
+using ObscureLabs.Hud;
 using PlayerRoles;
+using System.Collections.Generic;
 
 namespace SpireLabs.GUI
 {
@@ -48,10 +50,7 @@ namespace SpireLabs.GUI
 
         private void OnRestarting()
         {
-            //HudHandler.peenNutMSG = new string[60];
-            //HudHandler.killLoop = false;
-            //HudHandler.joinLeave = string.Empty;
-            //HudHandler.hint = new string[60];
+            HudRenderer.globalHints.Clear();
         }
 
         private void OnSpawning(SpawningEventArgs ev)

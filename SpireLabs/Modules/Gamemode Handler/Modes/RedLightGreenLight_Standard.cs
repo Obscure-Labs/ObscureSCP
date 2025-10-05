@@ -62,6 +62,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
         {
             foreach (Module m in Plugin.Instance._modules.Modules)
             {
+                if (m.Name == "GamemodeManager") continue;
                 m.Disable();
             }
             Timing.KillCoroutines("RGLightStandard");
