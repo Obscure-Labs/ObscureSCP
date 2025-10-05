@@ -25,8 +25,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
 
         public override List<Module> InitModules => new List<Module>
         {
-            new SSSStuff(),
-            new ProximityChat(),
         };
 
         public override List<Module> StartModules => new List<Module>()

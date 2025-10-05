@@ -333,7 +333,7 @@ namespace ObscureLabs.Hud
                 }
                 catch (Exception ex)
                 {
-                    Log.Error($"Error rendering UI: {ex.Message}");
+                    //Log.Error($"Error rendering UI: {ex.Message}");
                     s = string.Empty; // Reset the string in case of an error
                 }
                 yield return Timing.WaitForSeconds(0.9f);
