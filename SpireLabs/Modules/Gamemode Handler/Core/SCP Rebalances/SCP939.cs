@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
 using Exiled.Events.EventArgs.Scp049;
 using Exiled.Events.Patches.Events.Scp049;
@@ -30,8 +31,11 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core.SCP_Rebalances
 
         private void Attacking(HurtingEventArgs ev)
         {
+            if (ev == null) { return; }
+            if (ev.Attacker == null) { return; }
             if (ev.Player == null) { return; }
             if (ev.Attacker.Role.Type == PlayerRoles.RoleTypeId.Scp939) { ev.Amount = 60; }
+            ev = null;
         }
     }
 }

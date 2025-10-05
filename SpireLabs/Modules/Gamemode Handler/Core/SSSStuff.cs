@@ -1,8 +1,10 @@
 ﻿using Exiled.API.Features;
 using Exiled.API.Features.Core.UserSettings;
+using HarmonyLib;
 using ObscureLabs.API.Features;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using UserSettings.ServerSpecific;
 
@@ -12,17 +14,18 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
     {
         public override string Name => "SSSStuff";
         public override bool IsInitializeOnStart => true;
-        public override bool Enable()
+        public static HeaderSetting header = new HeaderSetting(0, "ObscureLabs", "Hints for the ObscureLabs server");
+        public static List<SettingBase> settingBases = new List<SettingBase>
         {
-            HeaderSetting header = new HeaderSetting(0, "ObscureLabs", "Hints for the ObscureLabs server");
-            IEnumerable<SettingBase> settingBases = new SettingBase[]
-            {
                     header,
                     new KeybindSetting(200, "SCP Voicechat Toggle", UnityEngine.KeyCode.LeftAlt, hintDescription: "Toggles the scp voice chat"),
-            };
+        };
+        public override bool Enable()
+        {
+
+
 
             SettingBase.Register(settingBases);
-            SettingBase.SendToAll();
 
             ServerSpecificSettingsSync.ServerOnSettingValueReceived += OnSettingValueReceived;
             Exiled.Events.Handlers.Player.Verified += (ev) =>
@@ -35,10 +38,32 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         public override bool Disable()
         {
-            ServerSpecificSettingsSync.ServerOnSettingValueReceived -= OnSettingValueReceived;
-            return base.Disable();
+
+                ServerSpecificSettingsSync.ServerOnSettingValueReceived -= OnSettingValueReceived;
+                return base.Disable();
         }
 
+        private void AddSettingToAll(SettingBase b)
+        {
+            settingBases.AddItem(b);
+            foreach (Player p in Player.List)
+            {
+                SettingBase.Unregister(p);
+                SettingBase.Register(settingBases);
+                ServerSpecificSettingsSync.SendToPlayer(p.ReferenceHub);
+            }
+        }
+
+        private void RemoveSettingForAll(int id)
+        {
+            settingBases.Remove(settingBases.FirstOrDefault(x => x.Id == id));
+            foreach(Player p in Player.List)
+            {
+                SettingBase.Unregister(p);
+                SettingBase.Register(settingBases);
+                ServerSpecificSettingsSync.SendToPlayer(p.ReferenceHub);
+            }
+        }
 
         private void OnSettingValueReceived(ReferenceHub hub, ServerSpecificSettingBase settingBase)
         {

@@ -57,10 +57,11 @@ namespace ObscureLabs.Modules.Gamemode_Handler
 
         public override bool Disable()
         {
+            selectedGamemode.Stop();
             LabApi.Events.Handlers.ServerEvents.RoundStarted -= OnRoundStarted;
             LabApi.Events.Handlers.ServerEvents.RoundRestarted -= OnRoundRestarted;
             LabApi.Events.Handlers.ServerEvents.RoundEnded -= OnRoundEnded;
-            Log.Info($"[GamemodeManager] Disabling gamemode maanger.");
+            Log.Info($"[GamemodeManager] Disabling gamemode manager.");
             return base.Disable();
         }
 
@@ -76,7 +77,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler
 
         private void OnRoundRestarted()
         {
-            
             selectedGamemode.Stop();
         }
     }
