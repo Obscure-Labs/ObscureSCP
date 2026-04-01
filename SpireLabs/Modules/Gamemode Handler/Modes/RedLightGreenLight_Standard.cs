@@ -86,8 +86,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
                     d.PlaySound(Exiled.API.Enums.DoorBeepType.InteractionDenied);
                 }
             }
+            Exiled.API.Features.Cassie.Message("Red Light");
 
-            CassieAnnouncementDispatcher.PlayNewAnnouncement(new CassieAnnouncement(new CassieTtsPayload("pitch_1.10 jam_45_2 yield_10 Red Light")));
             Timing.CallDelayed(0.7f, () => { RedLight = true; });
 
             Timing.CallDelayed(10f, () =>
@@ -103,7 +103,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
                 }
 
                 RedLight = false;
-                CassieAnnouncementDispatcher.PlayNewAnnouncement(new CassieAnnouncement(new CassieTtsPayload("pitch_1.10 jam_45_2 yield_10 Green Light")));
+                Exiled.API.Features.Cassie.Message("Green Light");
+
                 Manager.setModifier(0, "<color=green>Green Light</color>");
             });
 

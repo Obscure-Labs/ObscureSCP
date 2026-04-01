@@ -22,6 +22,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         public override bool Enable()
         {
+            LabApi.Features.Wrappers.Server.FriendlyFire = false;
             Exiled.Events.Handlers.Server.RoundEnded += RoundEnd;
             return base.Enable();
         }
