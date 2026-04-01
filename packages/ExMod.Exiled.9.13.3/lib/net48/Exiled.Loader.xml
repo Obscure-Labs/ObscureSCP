@@ -155,6 +155,31 @@
             Reloads RemoteAdmin configs.
             </summary>
         </member>
+        <member name="M:Exiled.Loader.ConfigManager.ReloadLabAPIConfigs">
+            <summary>
+            Reloads all LabAPI configs.
+            </summary>
+        </member>
+        <member name="M:Exiled.Loader.ConfigManager.LoadLabAPIConfig(LabApi.Loader.Features.Plugins.Plugin)">
+            <summary>
+            Attempts to load a config for a LabAPI plugin.
+            </summary>
+            <param name="plugin">The LabAPI plugin.</param>
+            <remarks>I love it when the modding framework people call the best has all plugin loading methods private and the config loading methods don't take custom directory paths.</remarks>
+        </member>
+        <member name="M:Exiled.Loader.ConfigManager.SaveLabAPIConfig(LabApi.Loader.Features.Plugins.Plugin)">
+            <summary>
+            Saves a config for a LabAPI plugin.
+            </summary>
+            <param name="plugin">The LabAPI plugin.</param>
+        </member>
+        <member name="M:Exiled.Loader.ConfigManager.LoadLabAPIProperties(LabApi.Loader.Features.Plugins.Plugin)">
+            <summary>
+            Loads the properties of a LabAPI plugin.
+            </summary>
+            <param name="plugin">The LabAPI plugin.</param>
+            <returns>Whether the properties were successfully retrieved.</returns>
+        </member>
         <member name="T:Exiled.Loader.Features.Configs.CommentGatheringTypeInspector">
             <summary>
             Source: https://dotnetfiddle.net/8M6iIE.
@@ -266,7 +291,7 @@
         </member>
         <member name="T:Exiled.Loader.Features.Configs.CustomConverters.ColorConverter">
             <summary>
-            Converts <see cref="T:UnityEngine.Color"/> to Yaml configs and vice versa.
+            Converts <see cref="T:UnityEngine.Color"/> (including nullable) to Yaml configs and vice versa.
             </summary>
         </member>
         <member name="M:Exiled.Loader.Features.Configs.CustomConverters.ColorConverter.Accepts(System.Type)">
@@ -280,7 +305,7 @@
         </member>
         <member name="T:Exiled.Loader.Features.Configs.CustomConverters.VectorsConverter">
             <summary>
-            Converts a Vector2, Vector3 or Vector4 to Yaml configs and vice versa.
+            Converts a Vector2, Vector3 or Vector4 (including nullable) to Yaml configs and vice versa.
             </summary>
         </member>
         <member name="M:Exiled.Loader.Features.Configs.CustomConverters.VectorsConverter.Accepts(System.Type)">
@@ -547,6 +572,11 @@
             Gets the plugins list.
             </summary>
         </member>
+        <member name="P:Exiled.Loader.Loader.LabAPIPlugins">
+            <summary>
+            Gets the plugins list.
+            </summary>
+        </member>
         <member name="P:Exiled.Loader.Loader.Locations">
             <summary>
             Gets a dictionary containing the file paths of assemblies.
@@ -596,6 +626,14 @@
             <param name="assembly">The plugin assembly.</param>
             <returns>Returns the created plugin instance or <see langword="null"/>.</returns>
         </member>
+        <member name="M:Exiled.Loader.Loader.CreateLabAPIPlugin(System.Reflection.Assembly,System.String)">
+            <summary>
+            Create a plugin instance.
+            </summary>
+            <param name="assembly">The plugin assembly.</param>
+            <param name="path">The path of the assembly.</param>
+            <returns>Returns the created plugin instance or <see langword="null"/>.</returns>
+        </member>
         <member name="M:Exiled.Loader.Loader.EnablePlugins">
             <summary>
             Enables all plugins.
@@ -617,6 +655,14 @@
             </summary>
             <param name="args">The name or prefix of the plugin (Using the prefix is recommended).</param>
             <returns>The desired plugin, null if not found.</returns>
+        </member>
+        <member name="M:Exiled.Loader.Loader.GetLabAPIPlugin(System.String)">
+            <summary>
+            Gets a LabAPI plugin Exiled loaded by its name.
+            </summary>
+            <param name="args">The name of the plugin.</param>
+            <returns>The desired plugin, null if not found.</returns>
+            <remarks>This method does not check LabAPI's loaded plugins, only LabAPI plugins EXILED loaded.</remarks>
         </member>
         <member name="M:Exiled.Loader.Loader.Run(System.Reflection.Assembly[])">
             <summary>

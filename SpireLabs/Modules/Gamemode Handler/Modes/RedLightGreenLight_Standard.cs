@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Cassie;
 using Exiled.API.Features;
 using Exiled.API.Features.DamageHandlers;
 using Exiled.API.Features.Doors;
 using Exiled.API.Features.Roles;
+using Exiled.Events.Handlers;
+using LabApi.Features.Wrappers;
 using MEC;
 using ObscureLabs.API.Features;
 using ObscureLabs.Modules.Gamemode_Handler.Core;
@@ -49,7 +52,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
             Timing.RunCoroutine(PlayerKiller(), "RGLightStandard");
             Timing.RunCoroutine(LightChanger(), "RGLightStandard");
 
-            foreach (Room room in Room.List)
+            foreach (Exiled.API.Features.Room room in Exiled.API.Features.Room.List)
             {
                 room.Color = Color.green;
             }
@@ -74,33 +77,33 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
         {
             yield return Timing.WaitForOneFrame;
             Manager.setModifier(0, "<color=red>Red Light</color>");
-            foreach (Room room in Room.List)
+            foreach (Exiled.API.Features.Room room in Exiled.API.Features.Room.List)
             {
                 room.Color = Color.red;
 
-                foreach (Door d in room.Doors)
+                foreach (Exiled.API.Features.Doors.Door d in room.Doors)
                 {
                     d.PlaySound(Exiled.API.Enums.DoorBeepType.InteractionDenied);
                 }
             }
 
-            Cassie.Message("pitch_1.10 jam_45_2 yield_10 Red Light", false, false, false);
+            CassieAnnouncementDispatcher.PlayNewAnnouncement(new CassieAnnouncement(new CassieTtsPayload("pitch_1.10 jam_45_2 yield_10 Red Light")));
             Timing.CallDelayed(0.7f, () => { RedLight = true; });
 
             Timing.CallDelayed(10f, () =>
             {
 
-                foreach (Room room in Room.List)
+                foreach (Exiled.API.Features.Room room in Exiled.API.Features.Room.List)
                 {
                     room.Color = Color.green;
-                    foreach (Door d in room.Doors)
+                    foreach (Exiled.API.Features.Doors.Door d in room.Doors)
                     {
                         d.PlaySound(Exiled.API.Enums.DoorBeepType.LockBypassDenied);
                     }
                 }
 
                 RedLight = false;
-                Cassie.Message("pitch_1.10 jam_45_2 yield_10 Green Light", false, false, false);
+                CassieAnnouncementDispatcher.PlayNewAnnouncement(new CassieAnnouncement(new CassieTtsPayload("pitch_1.10 jam_45_2 yield_10 Green Light")));
                 Manager.setModifier(0, "<color=green>Green Light</color>");
             });
 
@@ -129,7 +132,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
                 yield return Timing.WaitForOneFrame;
                 if (RedLight)
                 {
-                    foreach (Player p in Player.List)
+                    foreach (Exiled.API.Features.Player p in Exiled.API.Features.Player.List)
                     {
 
                         if (p.Velocity != new Vector3(0, p.Velocity.y, 0))

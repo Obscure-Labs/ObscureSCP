@@ -440,6 +440,11 @@
             Gets or sets the possible spawn locations for this role.
             </summary>
         </member>
+        <member name="P:Exiled.CustomRoles.API.Features.CustomRole.MinPlayers">
+            <summary>
+            Gets or sets the minimum number of players connected needed in order to add the role.
+            </summary>
+        </member>
         <member name="P:Exiled.CustomRoles.API.Features.CustomRole.KeepPositionOnSpawn">
             <summary>
             Gets or sets a value indicating whether players keep their current position when gaining this role.
@@ -711,6 +716,12 @@
             <param name="overwrite"> Whether to overwrite current values if they exist. </param>
             <returns> Whether the item was able to be added. </returns>
         </member>
+        <member name="M:Exiled.CustomRoles.API.Features.CustomRole.ToString">
+            <summary>
+            Returns the CustomRole in a human-readable format.
+            </summary>
+            <returns>A string containing CustomRole-related data.</returns>
+        </member>
         <member name="M:Exiled.CustomRoles.API.Features.CustomRole.TryRegister">
             <summary>
             Tries to register this role.
@@ -923,6 +934,28 @@
             <summary>
             The base class for passive (always active) abilities.
             </summary>
+        </member>
+        <member name="T:Exiled.CustomRoles.Commands.Get">
+            <summary>
+            The command to get specified player(s) current custom roles.
+            </summary>
+        </member>
+        <member name="P:Exiled.CustomRoles.Commands.Get.Instance">
+            <summary>
+            Gets the <see cref="T:Exiled.CustomRoles.Commands.Get"/> command instance.
+            </summary>
+        </member>
+        <member name="P:Exiled.CustomRoles.Commands.Get.Command">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.CustomRoles.Commands.Get.Aliases">
+            <inheritdoc/>
+        </member>
+        <member name="P:Exiled.CustomRoles.Commands.Get.Description">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.CustomRoles.Commands.Get.Execute(System.ArraySegment{System.String},CommandSystem.ICommandSender,System.String@)">
+            <inheritdoc/>
         </member>
         <member name="T:Exiled.CustomRoles.Commands.Give">
             <summary>

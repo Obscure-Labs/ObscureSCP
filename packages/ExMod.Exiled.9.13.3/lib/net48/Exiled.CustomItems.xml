@@ -205,6 +205,60 @@
         <member name="M:Exiled.CustomItems.API.Features.CustomArmor.UnsubscribeEvents">
             <inheritdoc/>
         </member>
+        <member name="T:Exiled.CustomItems.API.Features.CustomGoggles">
+            <summary>
+            The Custom Goggles base class.
+            </summary>
+        </member>
+        <member name="P:Exiled.CustomItems.API.Features.CustomGoggles.Type">
+            <summary>
+            Gets or sets the <see cref="T:ItemType"/> to use for these goggles.
+            This is locked to <see cref="F:ItemType.SCP1344"/>.
+            </summary>
+        </member>
+        <member name="P:Exiled.CustomItems.API.Features.CustomGoggles.WearingTime">
+            <summary>
+            Gets or sets the duration, in seconds, that the item has been worn.
+            </summary>
+        </member>
+        <member name="P:Exiled.CustomItems.API.Features.CustomGoggles.RemovingTime">
+            <summary>
+            Gets or sets the time, in seconds, required to remove the item.
+            </summary>
+        </member>
+        <member name="P:Exiled.CustomItems.API.Features.CustomGoggles.Remove1344Effect">
+            <summary>
+            Gets or sets a value indicating whether the default SCP-1344 effect should be removed when wearing the goggles.
+            </summary>
+        </member>
+        <member name="P:Exiled.CustomItems.API.Features.CustomGoggles.CanBeRemoveSafely">
+            <summary>
+            Gets or sets a value indicating whether the glasses can be safely removed without bad effects.
+            </summary>
+        </member>
+        <member name="M:Exiled.CustomItems.API.Features.CustomGoggles.SubscribeEvents">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.CustomItems.API.Features.CustomGoggles.UnsubscribeEvents">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.CustomItems.API.Features.CustomGoggles.OnOwnerChangingRole(Exiled.CustomItems.API.EventArgs.OwnerChangingRoleEventArgs)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Exiled.CustomItems.API.Features.CustomGoggles.OnWornGoggles(Exiled.API.Features.Player,Exiled.API.Features.Items.Scp1344)">
+            <summary>
+            Called when the player equips the goggles.
+            </summary>
+            <param name="player">The player who equipped the goggles.</param>
+            <param name="goggles">The <see cref="T:Exiled.API.Features.Items.Scp1344"/> item being worn.</param>
+        </member>
+        <member name="M:Exiled.CustomItems.API.Features.CustomGoggles.OnRemovedGoggles(Exiled.API.Features.Player,Exiled.API.Features.Items.Scp1344)">
+            <summary>
+            Called when the player removes the goggles.
+            </summary>
+            <param name="player">The player who removed the goggles.</param>
+            <param name="goggles">The <see cref="T:Exiled.API.Features.Items.Scp1344"/> item being removed.</param>
+        </member>
         <member name="T:Exiled.CustomItems.API.Features.CustomGrenade">
             <summary>
             The Custom Grenade base class.
@@ -753,6 +807,30 @@
             <summary>
             Gets or sets a color of keycard permissions.
             </summary>
+        </member>
+        <member name="P:Exiled.CustomItems.API.Features.CustomKeycard.Wear">
+            <summary>
+            Gets or sets the wear of a keycard.
+            </summary>
+            <remarks>
+            Only works on CustomSite02 keycards with values 0-4 and CustomMetalCase keycards with values 0-5.
+            </remarks>
+        </member>
+        <member name="P:Exiled.CustomItems.API.Features.CustomKeycard.SerialNumber">
+            <summary>
+            Gets or sets the serial number of a keycard.
+            </summary>
+            <remarks>
+            Only works on CustomMetalCase and CustomTaskForce keycards. Max length is 12. Non-numerical characters will be replaced with '-'.
+            </remarks>
+        </member>
+        <member name="P:Exiled.CustomItems.API.Features.CustomKeycard.Rank">
+            <summary>
+            Gets or sets the rank of a keycard.
+            </summary>
+            <remarks>
+            Only works on CustomTaskForce keycards with values 0-3. Value runs in reverse (3 is rank 1, 2 -> 2, 1 -> 3, 0 -> 0).
+            </remarks>
         </member>
         <member name="M:Exiled.CustomItems.API.Features.CustomKeycard.Give(Exiled.API.Features.Player,Exiled.API.Features.Items.Item,System.Boolean)">
             <inheritdoc/>
