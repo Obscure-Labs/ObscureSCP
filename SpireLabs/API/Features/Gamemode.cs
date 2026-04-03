@@ -29,7 +29,8 @@ namespace ObscureLabs.API.Features
 
         public virtual bool Start()
         {
-           foreach (Module module in StartModules)
+            LabApi.Features.Wrappers.Server.FriendlyFire = false;
+            foreach (Module module in StartModules)
            {
                 try { module.Enable(); }
                 catch (Exception ex)
