@@ -65,7 +65,7 @@ namespace ObscureLabs.API.Features
                     if (target.Role is not IVoiceRole voicerole || voicerole.VoiceModule.ValidateReceive(p.ReferenceHub, VoiceChat.VoiceChatChannel.Proximity) == VoiceChat.VoiceChatChannel.None)
                         continue;
 
-                    if (target.IsScp)
+                    if (target.Role.Team == p.Role.Team)
                         continue;
 
                     target.ReferenceHub.connectionToClient.Send(a);

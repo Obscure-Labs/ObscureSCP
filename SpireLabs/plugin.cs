@@ -25,6 +25,7 @@ using SpireSCP.GUI.API.Features;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using TMPro;
 using UnityEngine;
 using UserSettings.ControlsSettings;
@@ -156,6 +157,7 @@ namespace ObscureLabs
             _modules.AddModule(new AttachmentFix());
             _modules.AddModule(new SCPsDropItems());
             _modules.AddModule(new HidFix());
+            _modules.AddModule(new RespawnRebalance());
 
             //- SCP Additions and rebalances -//
             _modules.AddModule(new Scp1162());
