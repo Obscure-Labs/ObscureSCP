@@ -38,10 +38,10 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         private void WarheadDetonated(WarheadDetonatedEventArgs ev)
         {
 
-            RespawnWaves.PrimaryMtfWave.RespawnTokens++;
-            RespawnWaves.PrimaryMtfWave.TimeLeft = 30;
-            RespawnWaves.PrimaryChaosWave.RespawnTokens++;
-            RespawnWaves.PrimaryChaosWave.TimeLeft = 30;
+            RespawnWaves.PrimaryMtfWave.RespawnTokens = 1;
+            RespawnWaves.PrimaryMtfWave.TimeLeft = 10;
+            RespawnWaves.PrimaryChaosWave.RespawnTokens = 1;
+            RespawnWaves.PrimaryChaosWave.TimeLeft = 10;
         }
     }
 }

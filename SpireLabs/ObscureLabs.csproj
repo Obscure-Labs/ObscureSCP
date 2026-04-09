@@ -198,6 +198,7 @@
     <Compile Include="Modules\Gamemode Handler\StatusEffects\Burning.cs" />
     <Compile Include="Modules\Gamemode Handler\StatusEffects\LightHeaded.cs" />
     <Compile Include="Modules\Lobby.cs" />
+    <Compile Include="Modules\Gamemode Handler\Core\RespawnRebalance.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

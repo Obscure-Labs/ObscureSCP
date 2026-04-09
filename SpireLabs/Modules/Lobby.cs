@@ -141,7 +141,8 @@ namespace ObscureLabs.Modules
                     Manager.SendHint(ev.Player, "You have been sent to the pregame lobby, Waiting for players!", 5);
                     // ev.Player.IsGodModeEnabled = true;
                     ev.Player.RoleManager.ServerSetRole(RoleTypeId.Tutorial, RoleChangeReason.RemoteAdmin, RoleSpawnFlags.None);
-                    ev.Player.Teleport(new Vector3(0, 295, -8) + (Vector3.up / 2));
+                    ev.Player.Teleport(new Vector3(123.651f, 289.5f, 27.382f) + (Vector3.up / 2));
+                    ev.Player.Rotation = new Quaternion(0, 180, 0, 0);
 
                 }
             }
@@ -173,7 +174,8 @@ namespace ObscureLabs.Modules
                     }
                 }
 
-                    yield return Timing.WaitForSeconds(1f);
+                yield return Timing.WaitForSeconds(1f);
+                Map.CleanAllRagdolls();
             }
         }
 
@@ -187,6 +189,7 @@ namespace ObscureLabs.Modules
 
                 if (p != null && p.Role.Type == RoleTypeId.Spectator)
                 {
+ 
                     p.RoleManager.ServerSetRole(RoleTypeId.ClassD, RoleChangeReason.RemoteAdmin, RoleSpawnFlags.None);
                     p.Teleport(room.Position + (Vector3.up / 2));
                     p.IsGodModeEnabled = true;

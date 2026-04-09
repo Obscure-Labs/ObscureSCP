@@ -97,7 +97,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
 
             Timing.RunCoroutine(ItemPlacer(), "insanity");
             Timing.RunCoroutine(ItemReplacer(), "insanity");
-            Timing.RunCoroutine(TeamAssignment(), "insanity");
+            Timing.RunCoroutine(TeamAssignment(), "insanity"); 
             Server.FriendlyFire = true;
             return base.Start();
         }
@@ -149,6 +149,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
 
                     _customitemlist.RandomItem().Spawn(p.Position);
 
+
                 }
                 else
                 {
@@ -162,6 +163,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
                         }
                     }
                 }
+                
+
                 p.Destroy();
 
             }
@@ -184,23 +187,18 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
             {
 
                 Player p = pList[i];
-                if (i % 2 == 0)
-                {
-                    p.RoleManager.ServerSetRole(PlayerRoles.RoleTypeId.ClassD, PlayerRoles.RoleChangeReason.RoundStart, PlayerRoles.RoleSpawnFlags.UseSpawnpoint);
-                }
-                else
-                {
-                    p.RoleManager.ServerSetRole(PlayerRoles.RoleTypeId.Scientist, PlayerRoles.RoleChangeReason.RoundStart, PlayerRoles.RoleSpawnFlags.UseSpawnpoint);
-                }
+                //if (i % 2 == 0)
+                //{
+                //    p.RoleManager.ServerSetRole(PlayerRoles.RoleTypeId.ClassD, PlayerRoles.RoleChangeReason.RoundStart, PlayerRoles.RoleSpawnFlags.UseSpawnpoint);
+                //}
+                //else
+                //{
+                //    p.RoleManager.ServerSetRole(PlayerRoles.RoleTypeId.Scientist, PlayerRoles.RoleChangeReason.RoundStart, PlayerRoles.RoleSpawnFlags.UseSpawnpoint);
+                //}
                 p.ClearItems();
                 p.Inventory.ServerAddItem(ItemType.Coin, InventorySystem.Items.ItemAddReason.StartingItem);
                 p.Inventory.ServerAddItem(ItemType.KeycardZoneManager, InventorySystem.Items.ItemAddReason.StartingItem);
                 p.Inventory.ServerAddItem(ItemType.ArmorCombat, InventorySystem.Items.ItemAddReason.StartingItem);
-                p.Inventory.ServerAddAmmo(ItemType.Ammo12gauge, 999);
-                p.Inventory.ServerAddAmmo(ItemType.Ammo44cal, 999);
-                p.Inventory.ServerAddAmmo(ItemType.Ammo556x45, 999);
-                p.Inventory.ServerAddAmmo(ItemType.Ammo762x39, 999);
-                p.Inventory.ServerAddAmmo(ItemType.Ammo9x19, 999);
                 p.EnableEffect(EffectType.DamageReduction, 10f);
                 p.ChangeEffectIntensity(EffectType.DamageReduction, 255, 10f);
                 p.Teleport(RoleTypeId.ClassD.GetRandomSpawnLocation().Position);

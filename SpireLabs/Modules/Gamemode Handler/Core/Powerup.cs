@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using AdminToys;
+using ProjectMER;
 using Mirror;
 using Room = Exiled.API.Features.Room;
 using Player = Exiled.API.Features.Player;
@@ -18,6 +19,7 @@ using PlayerRoles.Visibility;
 using LiteNetLib4Mirror.Open.Nat;
 using Exiled.API.Enums;
 using CommandSystem.Commands.RemoteAdmin;
+using ProjectMER.Events.Handlers;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Core
 {
@@ -132,41 +134,44 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             rb.drag = 0f;
             rb.angularDrag = 0f;
             rb.useGravity = false;
+
+
+            var cube = ProjectMER.Features.ObjectSpawner.SpawnSchematic("PowerupYellow", container.gameObject.transform.position, Quaternion.identity);
+            cube.Scale = Vector3.one * 0.75f;
+            //Primitive cube = Primitive.Create(PrimitiveType.Cube, container.gameObject.transform.position, Vector3.zero, Vector3.one / 2, false);
+            //cube.Flags = PrimitiveFlags.Collidable | PrimitiveFlags.Visible;
             
-            Primitive cube = Primitive.Create(PrimitiveType.Cube, container.gameObject.transform.position, Vector3.zero, Vector3.one / 2, false);
-            cube.Flags = PrimitiveFlags.Collidable | PrimitiveFlags.Visible;
+            //cube.Color = new Color(1f, 47f / 51f, 0.0156862754f, 0.75f);
+            //cube.Scale = Vector3.one / 2f;
+            //cube.Collidable = false;
+            //cube.Base.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.On;
+            //cube.Base.GetComponent<MeshRenderer>().receiveShadows = true;
             
-            cube.Color = new Color(1f, 47f / 51f, 0.0156862754f, 0.75f);
-            cube.Scale = Vector3.one / 2f;
-            cube.Collidable = false;
-            cube.Base.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.On;
-            cube.Base.GetComponent<MeshRenderer>().receiveShadows = true;
-            
-            Light light = Light.Create(new Vector3(0, 2f, 0), new Vector3(90, 0, 0), Vector3.one, false, Color.red);
-            light.Intensity = 10f;
-            light.Range = 10f;
-            light.LightType = LightType.Spot;
-            light.ShadowStrength = 100;
-            light.ShadowType = LightShadows.Hard;
-            light.Color = Color.yellow * 5;
+            //Light light = Light.Create(new Vector3(0, 2f, 0), new Vector3(90, 0, 0), Vector3.one, false, Color.red);
+            //light.Intensity = 10f;
+            //light.Range = 10f;
+            //light.LightType = LightType.Spot;
+            //light.ShadowStrength = 100;
+            //light.ShadowType = LightShadows.Hard;
+            //light.Color = Color.yellow * 5;
             
             container.gameObject.AddComponent<PowerUpScript>();
-            cube.Base.gameObject.AddComponent<PowerUpAnimate>();
-            light.Base.gameObject.AddComponent<PowerUpAnimate>();
+            cube.gameObject.AddComponent<PowerUpAnimate>();
+            //light.Base.gameObject.AddComponent<PowerUpAnimate>();
 
             
-            light.Spawn();
-            cube.Spawn();
+            //light.Spawn();
+            //cube.Spawn();
 
-            light.Base.gameObject.transform.parent = container.transform;
-            cube.Base.gameObject.transform.parent = container.transform;
-            cube.Base.gameObject.transform.localPosition = container.transform.position;
-            light.Base.gameObject.transform.transform.localPosition = container.transform.position + (Vector3.up * 2);
+            //light.Base.gameObject.transform.parent = container.transform;
+            cube.gameObject.transform.parent = container.transform;
+            cube.gameObject.transform.localPosition = container.transform.position;
+            //light.Base.gameObject.transform.transform.localPosition = container.transform.position + (Vector3.up * 2);
 
             pickups.Add(container.gameObject);
             container.gameObject.name = $"{pickups.Count - 1}_container";
-            cube.Base.gameObject.name = $"{pickups.Count - 1}_cube";
-            light.Base.gameObject.name = $"{pickups.Count - 1}_light";
+            cube.gameObject.name = $"{pickups.Count - 1}_cube";
+            //light.Base.gameObject.name = $"{pickups.Count - 1}_light";
             
             Log.Debug($"Spawned powerup of index: {pickups.Count() - 1}");
         }

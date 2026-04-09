@@ -82,7 +82,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                         // ReSharper disable once UnusedVariable
                         if (CustomItem.TryGet(i, out var item))
                         {
-                            CreateLight(i, Color.yellow);
+                            CreateLight(i, new Color(1.2f, 0.08f, 0.092f));
                             continue;
                         }
 
@@ -114,7 +114,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
                                 }
                             case Rarity.Obscure:
                                 {
-                                    CreateLight(i, Color.yellow);
+                                    CreateLight(i, new Color(1.2f, 1.2f, 0));
                                     break;
                                 }
 
