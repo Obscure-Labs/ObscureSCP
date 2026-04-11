@@ -1,4 +1,5 @@
-﻿using ObscureLabs.API.Features;
+﻿using Exiled.API.Features;
+using ObscureLabs.API.Features;
 using ObscureLabs.Modules.Gamemode_Handler.Core;
 using ObscureLabs.Modules.Gamemode_Handler.Core.SCP_Rebalances;
 using ObscureLabs.SpawnSystem;
@@ -43,9 +44,17 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
 
         public override bool Stop()
         {
-            foreach(Module m in Plugin.Instance._modules.Modules)
+            foreach (Module m in Plugin.Instance._modules.Modules)
             {
-                m.Disable();
+                if (m.Name == "GamemodeManager") continue;
+                try
+                {
+                    m.Disable();
+                }
+                catch (Exception ex)
+                {
+                    Log.Error($"Failed to disable module {m.Name} during gamemode stop. Exception: {ex}");
+                }
             }
             return base.Stop();
         }

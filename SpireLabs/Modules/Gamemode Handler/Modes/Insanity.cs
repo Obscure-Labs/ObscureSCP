@@ -39,12 +39,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
             CustomItem.Get((uint)4), // NovaGrenade
             CustomItem.Get((uint)12), // S-NAV
             CustomItem.Get((uint)0), // Essential Oils
-
-
         };
-
-
- 
 
         public override string Name => "Insanity Mode";
         public override List<Module> InitModules => new List<Module>
@@ -88,8 +83,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
         };
         public override bool PreInitialise()
         {
-
-
             return base.PreInitialise();
         }
         public override bool Start() // this runs on round start
@@ -201,7 +194,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
                 p.Inventory.ServerAddItem(ItemType.ArmorCombat, InventorySystem.Items.ItemAddReason.StartingItem);
                 p.EnableEffect(EffectType.DamageReduction, 10f);
                 p.ChangeEffectIntensity(EffectType.DamageReduction, 255, 10f);
-                p.Teleport(RoleTypeId.ClassD.GetRandomSpawnLocation().Position);
+                //p.Teleport(RoleTypeId.ClassD.GetRandomSpawnLocation().Position);
             }
         }
     }
