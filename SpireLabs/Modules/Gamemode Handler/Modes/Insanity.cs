@@ -78,7 +78,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
         };
         public override List<Module> StartModules => new List<Module>
         {
-            new ItemGlow(),
+            // new ItemGlow(),
             // Add modules that should be started when the round starts
         };
         public override bool PreInitialise()
@@ -188,7 +188,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
                 //{
                 //    p.RoleManager.ServerSetRole(PlayerRoles.RoleTypeId.Scientist, PlayerRoles.RoleChangeReason.RoundStart, PlayerRoles.RoleSpawnFlags.UseSpawnpoint);
                 //}
-                p.ClearItems();
+                //p.ClearItems();
                 p.Inventory.ServerAddItem(ItemType.Coin, InventorySystem.Items.ItemAddReason.StartingItem);
                 p.Inventory.ServerAddItem(ItemType.KeycardZoneManager, InventorySystem.Items.ItemAddReason.StartingItem);
                 p.Inventory.ServerAddItem(ItemType.ArmorCombat, InventorySystem.Items.ItemAddReason.StartingItem);

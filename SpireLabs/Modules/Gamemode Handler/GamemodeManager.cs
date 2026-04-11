@@ -18,7 +18,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler
             new Insanity(),
             new Standard(),
             new Standard(),
-            //new RedLightGreenLight_Standard(), Disable this until mode is reworked
+            new RedLightGreenLight_Standard(),
         };
 
         public override bool Enable()

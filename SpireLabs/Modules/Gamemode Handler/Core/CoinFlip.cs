@@ -159,7 +159,20 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             }),
             new("Death", "You rolled <color=#767676><u>DEATH</u></color>", (Player) =>
             {
-                Player.Vaporize();
+                float chance = (int)UnityEngine.Random.Range(1f, 3f);
+                if (chance == 1)
+                {
+                    Player.Vaporize();
+                }
+                else if (chance == 2)
+                {
+                    Player.Explode();
+                }
+                else
+                {
+                    Player.EnableEffect(EffectType.SeveredHands);
+                }
+
                 return true;
             }),
             new("GrenadeFountain", "<color=red><u>GRENADE FOUNTAIN</u></color>", (Player) =>
@@ -196,7 +209,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
             new("Low Gravity", "Low Gravity", (Player) =>
             {
                 Vector3 oldGrav = LabApi.Features.Wrappers.Player.Get(Player.NetworkIdentity).Gravity;
-                LabApi.Features.Wrappers.Player.Get(Player.NetworkIdentity).Gravity = (Plugin.PlayerDefaultGravity * 0.8f);
+                LabApi.Features.Wrappers.Player.Get(Player.NetworkIdentity).Gravity = (Plugin.PlayerDefaultGravity * 0.3f);
                 Timing.CallDelayed(10f, () => {LabApi.Features.Wrappers.Player.Get(Player.NetworkIdentity).Gravity = Plugin.PlayerDefaultGravity; });
                 return true;
             }),
