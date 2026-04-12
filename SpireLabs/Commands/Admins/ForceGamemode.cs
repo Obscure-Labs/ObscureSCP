@@ -16,7 +16,7 @@ namespace ObscureLabs.Commands.Admins
 
         public string Description => "gamemode force command";
 
-        public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
+        public unsafe bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             if (arguments.Count == 0)
             {

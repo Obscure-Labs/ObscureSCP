@@ -1,4 +1,5 @@
 ﻿using Exiled.API.Features;
+using LabApi.Features.Console;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,40 +14,32 @@ namespace ObscureLabs.API.Features
         public abstract List<Module> InitModules { get; }
         public abstract List<Module> StartModules { get; }
 
-        public virtual bool PreInitialise()
+        public virtual unsafe bool PreInitialise()
         {
-            foreach (Module module in InitModules)
+            foreach(Module module in InitModules)
             {
-                try { module.Enable(); }
-                catch (Exception ex)
-                {
-                    Log.Error($"[GAMEMODE PREINIT] Module {module.Name} failed to start: {ex}");
-                    return false;
-                }
+                Plugin.Instance._modules.AddModule(&module);
+                Plugin.Instance._modules.GetModule(module.Name).Enable();
             }
             return true;
         }
 
-        public virtual bool Start()
+        public virtual unsafe bool Start()
         {
             LabApi.Features.Wrappers.Server.FriendlyFire = false;
             foreach (Module module in StartModules)
-           {
-                try { module.Enable(); }
-                catch (Exception ex)
-                {
-                    Log.Error($"[GAMEMODE START] Module {module.Name} failed to start: {ex}");
-                    return false;
-                }
+            {
+                Plugin.Instance._modules.AddModule(&module);
+                Plugin.Instance._modules.GetModule(module.Name).Enable();
             }
-           return true;
+            return true;
         }
 
-        public virtual bool Stop()
+        public virtual unsafe bool Stop()
         {
             foreach (Module module in StartModules)
             {
-                try { module.Disable(); }
+                try { Plugin.Instance._modules.GetModule(module.Name).Disable(); }
                 catch (Exception ex)
                 {
                     Log.Error($"[GAMEMODE STOP] Module {module.Name} failed to stop: {ex}");
@@ -55,7 +48,7 @@ namespace ObscureLabs.API.Features
             }
             foreach (Module module in InitModules)
             {
-                try { module.Disable(); }
+                try { Plugin.Instance._modules.GetModule(module.Name).Disable(); }
                 catch (Exception ex)
                 {
                     Log.Error($"[GAMEMODE STOP] Module {module.Name} failed to stop: {ex}");

@@ -150,33 +150,25 @@ namespace ObscureLabs.Modules
 
         }
 
-        public IEnumerator<float> Hint()
+        public unsafe IEnumerator<float> Hint()
         {
             while (Round.IsLobby)
             {
-                if (Round.LobbyWaitingTime > -1f)
+                foreach (Player p in Player.List)
                 {
-                    foreach (Player p in Player.List)
-                    {
-                        Manager.SendHint(p, $"Next Mode: <color=#7df229>{((GamemodeManager)Plugin.Instance._modules.GetModule("GamemodeManager")).selectedGamemode.Name}</color>" +
-                            $"\n<color=#e8ed87>Current players: {Player.List.Count()}</color>" +
-                            $"\nStarting in: <color=#7df229>{Round.LobbyWaitingTime} seconds</color>", 2f);
-
-                    }
-                }
-                else
-                {
-                    foreach (Player p in Player.List)
-                    {
-                        Manager.SendHint(p, $"Next Mode: <color=#7df229>{((GamemodeManager)Plugin.Instance._modules.GetModule("GamemodeManager")).selectedGamemode.Name}</color>" +
-                            $"\n<color=#e8ed87>Current Players: {Player.List.Count()}</color>" +
-                            $"\n<color=red>Waiting Paused...</color>", 2f);
-                    }
+                    Manager.SendHint(p, GetGamemodeString(), 2f);
                 }
 
                 yield return Timing.WaitForSeconds(1f);
                 Map.CleanAllRagdolls();
             }
+        }
+
+        public unsafe string GetGamemodeString()
+        {
+            return $"Next Mode: <color=#7df229>{((GamemodeManager)Plugin.Instance._modules.GetModule("GamemodeManager")).selectedGamemode.Name}</color>" +
+                     $"\n<color=#e8ed87>Current Players: {Player.List.Count()}</color>" +
+                     (Round.LobbyWaitingTime > -1 ? $"\nStarting in: <color=#7df229>{Round.LobbyWaitingTime} seconds</color>" : $"\n<color=red>Waiting Paused...</color>");
         }
 
             public void WaitingForPlayers()

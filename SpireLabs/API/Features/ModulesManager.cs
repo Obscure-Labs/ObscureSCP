@@ -7,20 +7,24 @@ using System.Linq;
 using Mono.CompilerServices.SymbolWriter;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using LabApi.Features.Console;
 
 namespace ObscureLabs.API.Features
 {
-    public class ModulesManager
+    public unsafe class ModulesManager
     {
         private List<Module> _moduleList = new();
-
+        //public Module*[] _postStartModules = new Module*[1];
         public List<Module> Modules => _moduleList;
 
         public List<FileInfo> ModuleFiles { get; private set; } = new List<FileInfo>();
 
-        public Module GetModule(string name)
+        public void AddModule(Module* module)
         {
-            return _moduleList.FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
+            if (module != null)
+            {
+                _moduleList.Add(*module);
+            }
         }
 
         public void AddModule(Module module)
@@ -28,9 +32,46 @@ namespace ObscureLabs.API.Features
             _moduleList.Add(module);
         }
 
+        public void AddModules(Module*[] modules)
+        {
+            foreach (var module in modules)
+            {
+                AddModule(module);
+            }
+        }
+
         public void AddModules(List<Module> modules)
         {
             _moduleList.AddRange(modules);
+        }
+
+        public Module GetModule(string name)
+        {
+            if(_moduleList.FirstOrDefault(x => x.Name.ToLower() == name.ToLower()) is var module && module != null)
+            {
+                return module;
+            }
+            //else
+            //{
+            //    foreach(var mod in _moduleList)
+            //    {
+            //        Logger.Info($"Checking module: {mod.Name}");
+            //        if (mod != null && mod.Name.ToLower() == name.ToLower())
+            //        {
+            //            return &mod;
+            //        }
+            //    }
+            //    //for (int i = 0; i < _postStartModules.Length; i++)
+            //    //{
+            //    //    Logger.Info($"Checking module: {_postStartModules[i]->Name}");
+            //    //    if (_postStartModules[i] != null && _postStartModules[i]->Name.ToLower() == name.ToLower())
+            //    //    {
+            //    //        return _postStartModules[i];
+            //    //    }
+            //    //}
+            //    return null;
+            //}
+            return null;
         }
 
         public void Clear()

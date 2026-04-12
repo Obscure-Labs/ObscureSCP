@@ -48,14 +48,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
             new AttachmentFix(),
             new SCPsDropItems(),
 
-            //- SCP Additions and rebalances -//
-            new Scp1162(),
-            new Scp106(),
-            new Scp173(),
-            new Scp049(),
-            new Scp939(),
-
-
             //- Fun modules -//
             new Scp914Handler(),
             new RoundEndPVP(),

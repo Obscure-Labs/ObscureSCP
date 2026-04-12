@@ -17,6 +17,7 @@ using UnityEngine;
 using Player = Exiled.API.Features.Player;
 using System.CodeDom;
 using HarmonyLib;
+using ObscureLabs.Modules.Gamemode_Handler;
 
 namespace ObscureLabs
 {
@@ -96,6 +97,7 @@ namespace ObscureLabs
 
         public unsafe void PopulateModules()
         {
+            _modules.AddModule(new GamemodeManager());
             _modules.AddModules(*ReflctyScrip.GetStartupModules());
             RegisterEvents();
         }
@@ -123,9 +125,12 @@ namespace ObscureLabs
             Exiled.Events.Handlers.Player.Left += OnLeft;
             Exiled.Events.Handlers.Player.Verified += OnVerified;
 
+            _modules.GetModule("GamemodeManager").Enable();
+
             foreach (Module m in _modules.Modules)
             {
-                m.Enable();
+                if(m.IsInitializeOnStart == true)
+                    m.Enable();
             }
         }
 
@@ -142,13 +147,16 @@ namespace ObscureLabs
             Timing.RunCoroutine(HudRenderer.RenderUI(ev.Player.ReferenceHub), "guiRoutine");
         }
 
-        private void OnRestarting()
+        private unsafe void OnRestarting()
         {
             foreach (Module m in _modules.Modules)
             {
                 m.Disable();
             }
 
+            _modules.Clear();
+            _modules.AddModules(*ReflctyScrip.GetStartupModules());
+            _modules.GetModule("GamemodeManager").Enable();
             foreach (Module m in _modules.Modules)
             {
                 if (m.IsInitializeOnStart == true)

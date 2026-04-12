@@ -39,6 +39,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core.SCP_Rebalances
             if (ev == null) { return; }
             if (ev.Attacker == null) { return; }
             if (ev.Player == null) { return; }
+            if (ev.DamageHandler.Base is Scp939DamageHandler handler && handler.Scp939DamageType == Scp939DamageType.LungeTarget) { ev.Amount = 100; return; }
             if (ev.Attacker.Role.Type == PlayerRoles.RoleTypeId.Scp939) { ev.Amount = 60; }
             ev = null;
         }

@@ -16,7 +16,7 @@ namespace ObscureLabs.Commands.Admins
 
         public string Description => "Module controls";
 
-        public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
+        public unsafe bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             if (arguments.Count == 0)
             {
@@ -34,7 +34,7 @@ namespace ObscureLabs.Commands.Admins
                 {
                     case "enable":
                     {
-                        var module = Plugin.Instance._modules.GetModule(moduleName);
+                        API.Features.Module module = Plugin.Instance._modules.GetModule(moduleName);
                         if (module == null)
                         {
                             response = $"Module {moduleName} not found.";
@@ -54,7 +54,7 @@ namespace ObscureLabs.Commands.Admins
                     }
                     case "disable":
                     {
-                        var module = Plugin.Instance._modules.GetModule(moduleName);
+                        API.Features.Module module = Plugin.Instance._modules.GetModule(moduleName);
                         if (module == null)
                         {
                             response = $"Module {moduleName} not found.";
@@ -74,7 +74,7 @@ namespace ObscureLabs.Commands.Admins
                     }
                     case "restart":
                     {
-                        var module = Plugin.Instance._modules.GetModule(moduleName);
+                        API.Features.Module module = Plugin.Instance._modules.GetModule(moduleName);
                         if (module == null)
                         {
                             response = $"Module {moduleName} not found.";

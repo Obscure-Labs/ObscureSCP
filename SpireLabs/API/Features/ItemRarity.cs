@@ -13,7 +13,7 @@ namespace ObscureLabs.API.Features
 {
     public class ItemRarityAPI
     {
-        public static Rarity GetRarity(ItemType type)
+        public unsafe static Rarity GetRarity(ItemType type)
         {
             Rarity r;
             try

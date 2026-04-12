@@ -11,7 +11,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler
     {
         public override string Name => "GamemodeManager";
 
-        public override bool IsInitializeOnStart => true;
+        public override bool IsInitializeOnStart => false;
 
         public Gamemode selectedGamemode;
         public Gamemode[] _gamemodes = { 
@@ -32,31 +32,8 @@ namespace ObscureLabs.Modules.Gamemode_Handler
             //Selected gamemode round
             selectedGamemode = _gamemodes[UnityEngine.Random.Range(0, _gamemodes.Count())];
             Log.Warn($"[GamemodeManager] Gamemode {selectedGamemode.Name} was selected.");
-            if (!selectedGamemode.PreInitialise())
-            {
-                Log.Info("Failed to pre-initialise gamemode.");
-                foreach (var module in Plugin.Instance._modules.Modules)
-                {
-                    if (module.IsInitializeOnStart)
-                    {
-                        module.Enable();
-                    }
-                }
-                this.Disable();
-            }
+            selectedGamemode.PreInitialise();
 
-            //else
-            //{
-            //    Log.Warn($"[GamemodeManager] No gamemode was selected.");
-            //    foreach (var module in Plugin.Instance._modules.Modules)
-            //    {
-            //        if (module.IsInitializeOnStart)
-            //        {
-            //            module.Enable();
-            //        }
-            //    }
-            //    this.Disable();
-            //}
             return base.Enable();
         }
 
