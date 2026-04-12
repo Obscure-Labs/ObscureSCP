@@ -1,37 +1,22 @@
-﻿using Cassie;
-using CustomPlayerEffects;
-using Exiled.API.Enums;
-using Exiled.API.Features;
+﻿using Exiled.API.Features;
 using Exiled.API.Features.Core.UserSettings;
-using Exiled.API.Features.Doors;
 using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Player;
 using Exiled.Loader;
-using HarmonyLib;
 using MEC;
 using ObscureLabs.API.Features;
 using ObscureLabs.Configs;
 using ObscureLabs.Hud;
-using ObscureLabs.Items;
-using ObscureLabs.Items.Rebalances;
-using ObscureLabs.Modules;
-using ObscureLabs.Modules.Gamemode_Handler;
-using ObscureLabs.Modules.Gamemode_Handler.Core;
-using ObscureLabs.Modules.Gamemode_Handler.Core.SCP_Rebalances;
-using ObscureLabs.SpawnSystem;
-using PlayerRoles;
-using SpireLabs.GUI;
 using SpireSCP.GUI.API.Features;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
 using TMPro;
 using UnityEngine;
-using UserSettings.ControlsSettings;
-using UserSettings.ServerSpecific;
-using Cassie = Exiled.API.Features.Cassie;
 using Player = Exiled.API.Features.Player;
+using System.CodeDom;
+using HarmonyLib;
 
 namespace ObscureLabs
 {
@@ -132,7 +117,6 @@ namespace ObscureLabs
 
         public void PopulateModules()
         {
-
             RegisterEvents();
         }
 
@@ -151,7 +135,7 @@ namespace ObscureLabs
             }
         }
 
-        private void RegisterEvents()
+        private unsafe void RegisterEvents()
         {
             Exiled.Events.Handlers.Server.RoundStarted += OnRoundStarted;
             Exiled.Events.Handlers.Player.Joined += OnPlayerJoined;
@@ -159,17 +143,9 @@ namespace ObscureLabs
             Exiled.Events.Handlers.Player.Left += OnLeft;
             Exiled.Events.Handlers.Player.Verified += OnVerified;
 
-            foreach (Module m in _modules.Modules)
+            foreach (Module m in *ReflctyScrip.GetStartupModules())
             {
-                if (m.IsInitializeOnStart == true)
-                {
-                    m.Enable();
-                }
-                else
-                {
-                    continue;
-                }
-
+                m.Enable();
             }
         }
 
@@ -178,7 +154,6 @@ namespace ObscureLabs
             HudRenderer.fontAsset = TMP_FontAsset.CreateFontAsset(SpireConfigLocation + "scoopFont.otf", "OliversBarney-Regular", 16);
 
             Log.Info("Round has started!");
-
         }
 
         private void OnPlayerJoined(JoinedEventArgs ev)
@@ -223,8 +198,25 @@ namespace ObscureLabs
             Manager.SendJoinLeave(ev.Player, false);
             foreach (Player p in Player.List) { Log.Info($"Playername: {p.Nickname} joined with ID: {p.Id}"); }
         }
-
-
-
+    }
+    public unsafe static class ReflctyScrip
+    {
+        public static List<Module>* GetStartupModules()
+        {
+            var interfaceType = typeof(Module);
+            var types = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(ass => ass.GetTypes())
+                .Where(type => interfaceType.IsAssignableFrom(type) && !type.IsInterface && !type.IsAbstract);
+            List<Module> modules = new List<Module>();
+            foreach (Type t in types)
+            {
+                var lad = (Module)Activator.CreateInstance(t);
+                if(lad.IsInitializeOnStart)
+                {
+                    modules.Add(lad);
+                }
+            }
+            return &modules;
+        }
     }
 }
