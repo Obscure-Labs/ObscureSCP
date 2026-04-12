@@ -438,7 +438,8 @@ namespace ObscureLabs.Hud
             { "Sinkhole", "<b><color=#29362d>Sink Hole</color></b>" },
             { "Blurred", "<b><color=#a9a9a9>Blurred</color></b>" },
             { "PocketCorroding", "<b><color=#5e8c60>Pocket Corroding</color></b>" },
-            { "Traumatized", "<b><color=#ff69b4>Traumatized</color></b>" }
+            { "Traumatized", "<b><color=#ff69b4>Traumatized</color></b>" },
+            { "Blindness", "<b><color=#b4b4b4>Blindness</color></b>" }
         };
         #endregion
         #region string functions
