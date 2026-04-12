@@ -164,25 +164,21 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
             }
             pList.ShuffleList();
 
+
             for (int i = 0; i < pList.Count; i++)
             {
 
                 Player p = pList[i];
-                //if (i % 2 == 0)
-                //{
-                //    p.RoleManager.ServerSetRole(PlayerRoles.RoleTypeId.ClassD, PlayerRoles.RoleChangeReason.RoundStart, PlayerRoles.RoleSpawnFlags.UseSpawnpoint);
-                //}
-                //else
-                //{
-                //    p.RoleManager.ServerSetRole(PlayerRoles.RoleTypeId.Scientist, PlayerRoles.RoleChangeReason.RoundStart, PlayerRoles.RoleSpawnFlags.UseSpawnpoint);
-                //}
-                //p.ClearItems();
+                if (p.IsScp)
+                {
+                    p.MaxHealth += 1000;
+                    p.Heal(p.MaxHealth, false);
+                    continue;
+                }
                 p.Inventory.ServerAddItem(ItemType.Coin, InventorySystem.Items.ItemAddReason.StartingItem);
-                p.Inventory.ServerAddItem(ItemType.KeycardZoneManager, InventorySystem.Items.ItemAddReason.StartingItem);
-                p.Inventory.ServerAddItem(ItemType.ArmorCombat, InventorySystem.Items.ItemAddReason.StartingItem);
+                if (p.Role != RoleTypeId.FacilityGuard) { p.Inventory.ServerAddItem(ItemType.KeycardZoneManager, InventorySystem.Items.ItemAddReason.StartingItem); }
                 p.EnableEffect(EffectType.DamageReduction, 10f);
                 p.ChangeEffectIntensity(EffectType.DamageReduction, 255, 10f);
-                //p.Teleport(RoleTypeId.ClassD.GetRandomSpawnLocation().Position);
             }
         }
     }
