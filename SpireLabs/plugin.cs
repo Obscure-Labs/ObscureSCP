@@ -46,27 +46,6 @@ namespace ObscureLabs
 
         public static Vector3 PlayerDefaultGravity { get; } = new Vector3(0, -19.60f, 0);
 
-        //[HarmonyPatch(typeof(PlayerEffectsController), nameof(PlayerEffectsController.TryGetEffect))]
-        //class Patch
-        //{
-        //    public bool TryGetEffect<T>(out T playerEffect) where T : StatusEffectBase
-        //    {
-        //        StatusEffectBase statusEffectBase;
-        //        if (this._effectsByType.TryGetValue(typeof(T), out statusEffectBase))
-        //        {
-        //            T t = statusEffectBase as T;
-        //            if (t != null)
-        //            {
-        //                playerEffect = t;
-        //                return true;
-        //            }
-        //        }
-        //        playerEffect = default(T);
-        //        return false;
-        //    }
-        //}
-
-
         public override void OnEnabled()
         {
             Instance = this;
@@ -115,8 +94,9 @@ namespace ObscureLabs
             base.OnDisabled();
         }
 
-        public void PopulateModules()
+        public unsafe void PopulateModules()
         {
+            _modules.AddModules(*ReflctyScrip.GetStartupModules());
             RegisterEvents();
         }
 
@@ -143,7 +123,7 @@ namespace ObscureLabs
             Exiled.Events.Handlers.Player.Left += OnLeft;
             Exiled.Events.Handlers.Player.Verified += OnVerified;
 
-            foreach (Module m in *ReflctyScrip.GetStartupModules())
+            foreach (Module m in _modules.Modules)
             {
                 m.Enable();
             }

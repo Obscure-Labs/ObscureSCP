@@ -4,18 +4,8 @@ SpireLabs/bin/
 
 SpireLabs/obj/
 
-.vs/SpireLabs/v17/.suo
-
-.vs/SpireLabs/FileContentIndex/
-
-.vs/SpireLabs/v17/
+.vs
 
 *.vsidx
 
 .idea/
-
-.vs/ObscureLabs/v17/
-
-.vs/SpireLabs/DesignTimeBuild/
-
-.vs/ObscureLabs/v18/

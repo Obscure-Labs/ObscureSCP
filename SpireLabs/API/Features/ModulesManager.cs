@@ -28,6 +28,11 @@ namespace ObscureLabs.API.Features
             _moduleList.Add(module);
         }
 
+        public void AddModules(List<Module> modules)
+        {
+            _moduleList.AddRange(modules);
+        }
+
         public void Clear()
         {
             _moduleList.Clear();
