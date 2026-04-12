@@ -24,31 +24,36 @@ namespace ObscureLabs.API.Features
             return true;
         }
 
-        public virtual unsafe bool Start()
+        public virtual bool Start()
         {
             LabApi.Features.Wrappers.Server.FriendlyFire = false;
             foreach (Module module in StartModules)
             {
-                Plugin.Instance._modules.AddModule(&module);
+                Plugin.Instance._modules.AddModule(module);
                 Plugin.Instance._modules.GetModule(module.Name).Enable();
             }
             return true;
         }
 
-        public virtual unsafe bool Stop()
+        public virtual bool Stop()
         {
-            foreach (Module module in StartModules)
+            foreach (Module module in InitModules)
             {
-                try { Plugin.Instance._modules.GetModule(module.Name).Disable(); }
+                try {
+                    if (Plugin.Instance._modules.GetModule(module.Name) == null) continue;
+                    Plugin.Instance._modules.GetModule(module.Name).Disable(); 
+                }
                 catch (Exception ex)
                 {
                     Log.Error($"[GAMEMODE STOP] Module {module.Name} failed to stop: {ex}");
                     return false;
                 }
             }
-            foreach (Module module in InitModules)
+            foreach (Module module in StartModules)
             {
-                try { Plugin.Instance._modules.GetModule(module.Name).Disable(); }
+                try {
+                    if (Plugin.Instance._modules.GetModule(module.Name) == null) continue;
+                    Plugin.Instance._modules.GetModule(module.Name).Disable(); }
                 catch (Exception ex)
                 {
                     Log.Error($"[GAMEMODE STOP] Module {module.Name} failed to stop: {ex}");

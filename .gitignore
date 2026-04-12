@@ -6,6 +6,8 @@ SpireLabs/obj/
 
 .vs/
 
+.vs\
+
 *.vsidx
 
 .idea/

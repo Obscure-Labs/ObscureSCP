@@ -19,7 +19,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
 
         public override List<Module> InitModules => new List<Module>
         {
-                        //- Core Utils -//
             //- Core Utils -//
             new MvpSystem(),
             new LightHandler(),
@@ -46,33 +45,5 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
         {
             new ItemGlow()
         };
-
-        public override bool PreInitialise()
-        {
-
-            return base.PreInitialise();
-        }
-
-        public override bool Start()
-        {
-            return base.Start();
-        }
-
-        public override bool Stop()
-        {
-            foreach (Module m in Plugin.Instance._modules.Modules)
-            {
-                if (m.Name == "GamemodeManager") continue;
-                try
-                {
-                    m.Disable();
-                }
-                catch (Exception ex)
-                {
-                    Log.Error($"Failed to disable module {m.Name} during gamemode stop. Exception: {ex}");
-                }
-            }
-            return base.Stop();
-        }
     }
 }

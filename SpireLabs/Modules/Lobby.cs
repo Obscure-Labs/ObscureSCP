@@ -130,7 +130,7 @@ namespace ObscureLabs.Modules
                 p.RoleManager.ServerSetRole(RoleTypeId.Spectator, RoleChangeReason.None);
                 p.Transform.position = Vector3.zero;
             }
-            base.Disable();
+            this.Disable();
         }
         public void PlayerJoin(JoinedEventArgs ev)
         {

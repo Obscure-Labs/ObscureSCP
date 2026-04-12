@@ -16,6 +16,7 @@ namespace ObscureLabs.API.Features
 
         public virtual bool Disable()
         {
+            Plugin.Instance._modules.DelModule(Name);
             Log.Warn($"Module {Name} Disabled successfully");
             return true;
         }

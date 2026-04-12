@@ -79,6 +79,11 @@ namespace ObscureLabs.API.Features
             _moduleList.Clear();
         }
 
+        public void DelModule(string name)
+        {
+            _moduleList.Remove(_moduleList.FirstOrDefault(x => x.Name.ToLower() == name.ToLower()));
+        }
+
         public void ReloadModule(string moduleName)
         {
             var module = GetModule(moduleName);

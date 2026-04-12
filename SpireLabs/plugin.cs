@@ -149,12 +149,20 @@ namespace ObscureLabs
 
         private unsafe void OnRestarting()
         {
-            foreach (Module m in _modules.Modules)
+            string[] modNames = new string[_modules.Modules.Count];
+            for (int i = 0; i < modNames.Length; i++)
             {
-                m.Disable();
+                modNames[i] = _modules.Modules[i].Name;
             }
-
+            foreach (string s in modNames)
+            {
+                var m = _modules.GetModule(s);
+                if(m.IsInitializeOnStart == true)
+                    m.Disable();
+            }
+            _modules.GetModule("GamemodeManager").Disable();
             _modules.Clear();
+            _modules.AddModule(new GamemodeManager());
             _modules.AddModules(*ReflctyScrip.GetStartupModules());
             _modules.GetModule("GamemodeManager").Enable();
             foreach (Module m in _modules.Modules)

@@ -69,10 +69,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
         {
             // Add modules that should be started when the round starts
         };
-        public override bool PreInitialise()
-        {
-            return base.PreInitialise();
-        }
+
         public override bool Start() // this runs on round start
         {
 
