@@ -11,7 +11,7 @@ namespace ObscureLabs.Items
     {
         public override string Name => "AttachmentFix";
 
-        public override bool IsInitializeOnStart => true;
+        public override bool IsInitializeOnStart => false;
 
         public override bool Enable()
         {

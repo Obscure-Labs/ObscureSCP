@@ -62,7 +62,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
     {
         public override string Name => "Powerup";
 
-        public override bool IsInitializeOnStart => true;
+        public override bool IsInitializeOnStart => false;
 
         public int currentPickups = 0;
         public int maxPickups = 20;

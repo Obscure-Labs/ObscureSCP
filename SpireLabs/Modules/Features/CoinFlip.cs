@@ -45,7 +45,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
     {
         public override string Name => "CoinFlip";
 
-        public override bool IsInitializeOnStart => true;
+        public override bool IsInitializeOnStart => false;
 
         public List<FlipResult> _goodResults = new List<FlipResult>()
         {

@@ -13,7 +13,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
     internal class SSSStuff : Module
     {
         public override string Name => "SSSStuff";
-        public override bool IsInitializeOnStart => true;
+        public override bool IsInitializeOnStart => false;
         public static HeaderSetting header = new HeaderSetting(0, "ObscureLabs", "Hints for the ObscureLabs server");
         public static List<SettingBase> settingBases = new List<SettingBase>
         {

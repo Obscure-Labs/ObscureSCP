@@ -133,45 +133,6 @@ namespace ObscureLabs
         public void PopulateModules()
         {
 
-            //- Core Utils -//
-            _modules.AddModule(new GamemodeManager());
-            _modules.AddModule(new HudController());
-            _modules.AddModule(new MvpSystem());
-            _modules.AddModule(new CustomItemSpawner());
-            _modules.AddModule(new RemoteKeycard());
-            _modules.AddModule(new LightHandler());
-            _modules.AddModule(new Lobby());
-            _modules.AddModule(new ItemRarityModule());
-            _modules.AddModule(new HealthOverride());
-            _modules.AddModule(new EffectController());
-            _modules.AddModule(new SSSStuff());
-            _modules.AddModule(new ProximityChat());
-
-            //- Gameplay Utils -//
-            _modules.AddModule(new Powerup());
-            _modules.AddModule(new MediGunGlow());
-            //_modules.AddModule(new ItemGlow()); Start this inside the gamemodes instead
-
-            //- Mechanics and Features -//
-            _modules.AddModule(new CoinFlip());
-            _modules.AddModule(new AttachmentFix());
-            _modules.AddModule(new SCPsDropItems());
-            _modules.AddModule(new HidFix());
-            _modules.AddModule(new RespawnRebalance());
-
-            //- SCP Additions and rebalances -//
-            _modules.AddModule(new Scp1162());
-            _modules.AddModule(new Scp106());
-            _modules.AddModule(new Scp173());
-            _modules.AddModule(new Scp049());
-            _modules.AddModule(new Scp939());
-
-            _modules.AddModule(new Scp914Handler());
-
-            //- Fun modules -//
-            _modules.AddModule(new RoundEndPVP());
-            _modules.AddModule(new EmotionRandomiser());
-
             RegisterEvents();
         }
 
@@ -197,101 +158,27 @@ namespace ObscureLabs
             Exiled.Events.Handlers.Server.RestartingRound += OnRestarting;
             Exiled.Events.Handlers.Player.Left += OnLeft;
             Exiled.Events.Handlers.Player.Verified += OnVerified;
-            Exiled.Events.Handlers.Player.Dying += OnDying;
 
-            _modules.GetModule("ItemRarity").Enable();
-            _modules.GetModule("GamemodeManager").Enable();
+            foreach (Module m in _modules.Modules)
+            {
+                if (m.IsInitializeOnStart == true)
+                {
+                    m.Enable();
+                }
+                else
+                {
+                    continue;
+                }
 
-            //foreach (Module m in _modules.Modules)
-            //{
-            //    if (m.IsInitializeOnStart == true)
-            //    {
-            //        m.Enable();
-            //    }
-            //    else
-            //    {
-            //        continue;
-            //    }
-
-            //}
+            }
         }
 
         private void OnRoundStarted()
         {
             HudRenderer.fontAsset = TMP_FontAsset.CreateFontAsset(SpireConfigLocation + "scoopFont.otf", "OliversBarney-Regular", 16);
-            Timing.KillCoroutines("flockerRoutine");
-            Timing.KillCoroutines("lockRoutine");
-            Timing.KillCoroutines("chaosChecker");
 
             Log.Info("Round has started!");
-            Timing.RunCoroutine(OnLockAnnouncement(), "lockRoutine");
 
-            foreach (var door in Door.List)
-            {
-                if (door.Zone == ZoneType.Surface)
-                {
-                    door.Lock(Mathf.Infinity, DoorLockType.Regular079);
-                }
-
-                switch (door.Type)
-                {
-                    case DoorType.NukeSurface: door.Unlock(); break;
-                    case DoorType.EscapePrimary: door.Unlock(); break;
-                    case DoorType.EscapeSecondary: door.Unlock(); break;
-                    case DoorType.ElevatorGateA: door.Unlock(); break;
-                    case DoorType.ElevatorGateB: door.Unlock(); break;
-                    case DoorType.SurfaceGate: door.Unlock(); break;
-                }
-
-            }
-
-            List<Player> SCPS = new();
-            var humanPlayers = 0;
-            foreach (var p in Player.List)
-            {
-                switch (p.RoleManager.CurrentRole.RoleTypeId)
-                {
-                    case RoleTypeId.ClassD:
-                        humanPlayers++;
-                        break;
-                    case RoleTypeId.Scientist:
-                        humanPlayers++;
-                        break;
-                    case RoleTypeId.FacilityGuard:
-                        humanPlayers++;
-                        break;
-                    case RoleTypeId.Scp049: SCPS.Add(p); break;
-                    case RoleTypeId.Scp079: SCPS.Add(p); break;
-                    case RoleTypeId.Scp096: SCPS.Add(p); break;
-                    case RoleTypeId.Scp106: SCPS.Add(p); break;
-                    case RoleTypeId.Scp173: SCPS.Add(p); break;
-                    case RoleTypeId.Scp939: SCPS.Add(p); break;
-                    case RoleTypeId.NtfCaptain:
-                        p.MaxHealth = overrideConfigs.HealthOverrides[RoleTypeId.NtfCaptain].Health;
-                        p.Heal(150, false);
-                        break;
-                }
-            }
-        }
-
-        private IEnumerator<float> OnLockAnnouncement()
-        {
-            yield return Timing.WaitForSeconds(420);
-            CassieAnnouncementDispatcher.PlayNewAnnouncement(new CassieAnnouncement(new CassieTtsPayload(@"jam_043_3 Surface armory has been opened for all jam_020_3 pitch_0.8 warhead pitch_1 authorized personnel . . . enter with pitch_0.9 jam_010_1 caution")));
-            foreach (Door d in Door.List)
-            {
-                if (d.Zone == ZoneType.Surface)
-                    d.Unlock();
-                switch (d.Type)
-                {
-                    case DoorType.NukeSurface: d.Unlock(); break;
-                    case DoorType.EscapePrimary: d.Unlock(); break;
-                    case DoorType.EscapeSecondary: d.Unlock(); break;
-                    case DoorType.ElevatorGateA: d.Unlock(); break;
-                    case DoorType.ElevatorGateB: d.Unlock(); break;
-                    case DoorType.SurfaceGate: d.Unlock(); break;
-                }
-            }
         }
 
         private void OnPlayerJoined(JoinedEventArgs ev)
@@ -306,15 +193,14 @@ namespace ObscureLabs
             {
                 m.Disable();
             }
-            _modules.GetModule("ItemRarity").Enable();
-            _modules.GetModule("GamemodeManager").Enable();
-            //foreach (Module m in _modules.Modules)
-            //{
-            //    if (m.IsInitializeOnStart == true)
-            //    {
-            //        m.Enable();
-            //    }
-            //}
+
+            foreach (Module m in _modules.Modules)
+            {
+                if (m.IsInitializeOnStart == true)
+                {
+                    m.Enable();
+                }
+            }
         }
 
         private void OnLeft(LeftEventArgs ev)
@@ -338,10 +224,6 @@ namespace ObscureLabs
             foreach (Player p in Player.List) { Log.Info($"Playername: {p.Nickname} joined with ID: {p.Id}"); }
         }
 
-        private void OnDying(DyingEventArgs ev)
-        {
-            ev.Player.Scale = new Vector3(1, 1, 1);
-        }
 
 
     }

@@ -13,7 +13,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
     internal class SCPsDropItems : Module
     {
         public override string Name => "SCPsDropItems";
-        public override bool IsInitializeOnStart => true;
+        public override bool IsInitializeOnStart => false;
 
         public override bool Enable()
         {

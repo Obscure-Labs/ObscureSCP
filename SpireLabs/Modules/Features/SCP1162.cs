@@ -20,7 +20,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
     internal class Scp1162 : Module
     {
         public override string Name => "Scp1162";
-        public override bool IsInitializeOnStart => true;
+        public override bool IsInitializeOnStart => false;
 
         private List<CustomItem> _customitemlist = new()
         {

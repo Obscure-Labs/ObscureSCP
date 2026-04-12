@@ -11,7 +11,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler
     {
         public override string Name => "GamemodeManager";
 
-        public override bool IsInitializeOnStart => false;
+        public override bool IsInitializeOnStart => true;
 
         public Gamemode selectedGamemode;
         public Gamemode[] _gamemodes = { 

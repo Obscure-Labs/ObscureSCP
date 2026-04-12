@@ -53,7 +53,7 @@ namespace ObscureLabs.Items
 
         public override string Name => "itemSpawner";
 
-        public override bool IsInitializeOnStart => true;
+        public override bool IsInitializeOnStart => false;
 
         public override bool Enable()
         {

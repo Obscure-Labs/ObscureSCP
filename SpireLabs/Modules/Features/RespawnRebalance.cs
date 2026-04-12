@@ -15,7 +15,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
     {
         public override string Name => "RespawnRebalance";
 
-        public override bool IsInitializeOnStart => true;
+        public override bool IsInitializeOnStart => false;
 
         public CoroutineHandle Routine;
 

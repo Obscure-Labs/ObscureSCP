@@ -27,7 +27,7 @@ namespace ObscureLabs.Modules
         public override string Name => "Lobby";
 
         
-        public override bool IsInitializeOnStart => true;
+        public override bool IsInitializeOnStart => false;
 
         public LabApi.Features.Wrappers.Room room = LabApi.Features.Wrappers.Room.List.GetRandomValue();
         public override bool Enable()

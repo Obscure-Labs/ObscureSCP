@@ -15,7 +15,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
     internal class EffectController : Module
     {
         public override string Name => "EffectController";
-        public override bool IsInitializeOnStart => true;
+        public override bool IsInitializeOnStart => false;
 
         public override bool Enable()
         {

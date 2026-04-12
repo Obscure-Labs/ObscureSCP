@@ -19,7 +19,7 @@ namespace ObscureLabs.API.Features
     internal class ProximityChat : Module
     {
         public override string Name => "ProximityChat";
-        public override bool IsInitializeOnStart => true;
+        public override bool IsInitializeOnStart => false;
 
         public override bool Enable()
         {
@@ -67,6 +67,7 @@ namespace ObscureLabs.API.Features
 
                     if (target.Role.Team == p.Role.Team)
                         continue;
+
 
                     target.ReferenceHub.connectionToClient.Send(a);
                 }

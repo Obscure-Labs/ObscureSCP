@@ -18,7 +18,7 @@ namespace ObscureLabs.Items
     internal class MediGunGlow : Module
     {
         public override string Name => "MediGunGlow";
-        public override bool IsInitializeOnStart => true;
+        public override bool IsInitializeOnStart => false;
 
         public Dictionary<string, GameObject> MedGunGlowingPlayers = new Dictionary<string, GameObject>();
         public CoroutineHandle Coroutine;

@@ -45,12 +45,9 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
         public override List<Module> InitModules => new List<Module>
         {
             //- Core Utils -//
-            new HudController(),
             new MvpSystem(),
-            new RemoteKeycard(),
             new LightHandler(),
             new Lobby(),
-            new HealthOverride(),
             new SSSStuff(),
             new ProximityChat(),
 
@@ -78,7 +75,6 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
         };
         public override List<Module> StartModules => new List<Module>
         {
-            // new ItemGlow(),
             // Add modules that should be started when the round starts
         };
         public override bool PreInitialise()

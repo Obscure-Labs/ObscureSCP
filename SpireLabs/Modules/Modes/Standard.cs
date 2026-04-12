@@ -1,8 +1,10 @@
 ﻿using Exiled.API.Features;
 using ObscureLabs.API.Features;
+using ObscureLabs.Items;
 using ObscureLabs.Modules.Gamemode_Handler.Core;
 using ObscureLabs.Modules.Gamemode_Handler.Core.SCP_Rebalances;
 using ObscureLabs.SpawnSystem;
+using SpireLabs.GUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +19,35 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
 
         public override List<Module> InitModules => new List<Module>
         {
+                        //- Core Utils -//
+            //- Core Utils -//
+            new MvpSystem(),
+            new LightHandler(),
+            new Lobby(),
+            new SSSStuff(),
+            new ProximityChat(),
 
+            //- Gameplay Utils -//
+            new Powerup(),
+            new MediGunGlow(),
+
+            //- Mechanics and Features -//
+            new CoinFlip(),
+            new AttachmentFix(),
+            new SCPsDropItems(),
+
+            //- SCP Additions and rebalances -//
+            new Scp1162(),
+            new Scp106(),
+            new Scp173(),
+            new Scp049(),
+            new Scp939(),
+
+
+            //- Fun modules -//
+            new Scp914Handler(),
+            new RoundEndPVP(),
+            new EmotionRandomiser(),
         };
 
         public override List<Module> StartModules => new List<Module>()
@@ -27,13 +57,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
 
         public override bool PreInitialise()
         {
-            foreach(Module m in Plugin.Instance._modules.Modules)
-            {
-                if (m.IsInitializeOnStart)
-                {
-                    m.Enable();
-                }
-            }
+
             return base.PreInitialise();
         }
 

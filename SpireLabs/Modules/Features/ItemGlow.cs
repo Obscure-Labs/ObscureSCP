@@ -17,7 +17,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
 
         public List<Pickup> GlowingPickups = new List<Pickup>();
 
-        public override bool IsInitializeOnStart => true;
+        public override bool IsInitializeOnStart => false;
 
         public CoroutineHandle Routine;
 

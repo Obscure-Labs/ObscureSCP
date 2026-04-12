@@ -11,7 +11,7 @@ namespace SpireLabs.GUI
     {
         public override string Name => "GuiController";
 
-        public override bool IsInitializeOnStart => true;
+        public override bool IsInitializeOnStart => false;
 
         public override bool Enable()
         {

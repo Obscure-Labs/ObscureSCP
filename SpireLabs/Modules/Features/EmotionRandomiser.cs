@@ -20,7 +20,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
     internal class EmotionRandomiser : Module
     {
         public override string Name => "EmotionRandomiser";
-        public override bool IsInitializeOnStart => true;
+        public override bool IsInitializeOnStart => false;
         public override bool Enable()
         {
             Exiled.Events.Handlers.Player.Spawned += OnSpawned;

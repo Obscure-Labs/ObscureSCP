@@ -13,7 +13,7 @@ namespace ObscureLabs.Items.Rebalances
     internal class HidFix : Module
     {
         public override string Name => "HidFix";
-        public override bool IsInitializeOnStart => true;
+        public override bool IsInitializeOnStart => false;
 
 
         public override bool Enable()

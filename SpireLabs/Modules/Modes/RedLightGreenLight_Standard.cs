@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Cassie;
+﻿using Cassie;
 using Exiled.API.Features;
 using Exiled.API.Features.DamageHandlers;
 using Exiled.API.Features.Doors;
@@ -12,10 +7,20 @@ using Exiled.Events.Handlers;
 using LabApi.Features.Wrappers;
 using MEC;
 using ObscureLabs.API.Features;
+using ObscureLabs.Items;
 using ObscureLabs.Modules.Gamemode_Handler.Core;
+using ObscureLabs.Modules.Gamemode_Handler.Core.SCP_Rebalances;
 using PlayerRoles.FirstPersonControl;
 using SpireSCP.GUI.API.Features;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
+using Scp106 = ObscureLabs.Modules.Gamemode_Handler.Core.SCP_Rebalances.Scp106;
+using Scp173 = ObscureLabs.Modules.Gamemode_Handler.Core.SCP_Rebalances.Scp173;
+using Scp939 = ObscureLabs.Modules.Gamemode_Handler.Core.SCP_Rebalances.Scp939;
 
 namespace ObscureLabs.Modules.Gamemode_Handler.Modes
 {
@@ -28,6 +33,33 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
 
         public override List<Module> InitModules => new List<Module>
         {
+                        new MvpSystem(),
+            new LightHandler(),
+            new Lobby(),
+            new SSSStuff(),
+            new ProximityChat(),
+
+            //- Gameplay Utils -//
+            new Powerup(),
+            new MediGunGlow(),
+
+            //- Mechanics and Features -//
+            new CoinFlip(),
+            new AttachmentFix(),
+            new SCPsDropItems(),
+
+            //- SCP Additions and rebalances -//
+            new Scp1162(),
+            new Scp106(),
+            new Scp173(),
+            new Scp049(),
+            new Scp939(),
+
+
+            //- Fun modules -//
+            new Scp914Handler(),
+            new RoundEndPVP(),
+            new EmotionRandomiser(),
         };
 
         public override List<Module> StartModules => new List<Module>()
