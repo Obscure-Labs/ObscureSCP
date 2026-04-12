@@ -56,7 +56,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Core
         private void OnInteractingLocker(InteractingLockerEventArgs ev)
         {
             if (ev.Player.Items.Any(x =>
-                    x is Keycard k && k.Permissions.HasFlag(ev.InteractingChamber.RequiredPermissions.RemoveFlags(KeycardPermissions.ScpOverride))) && ev.Player.IsHuman)
+                    x is Keycard k && k.Permissions.HasFlag(ev.InteractingChamber.RequiredPermissions.RemoveFlags(KeycardPermissions.ScpOverride, KeycardPermissions.ExitGates))) && ev.Player.IsHuman)
             {
                 ev.IsAllowed = true;
             }

@@ -25,6 +25,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
             new Lobby(),
             new SSSStuff(),
             new ProximityChat(),
+            new CustomItemSpawner(),
 
             //- Gameplay Utils -//
             new Powerup(),
