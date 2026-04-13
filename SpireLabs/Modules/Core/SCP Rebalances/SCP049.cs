@@ -96,7 +96,7 @@
                         continue;
                     }
 
-                    if (Math.Sqrt(Math.Pow(playerId.Position.x - player2.Position.x, 2) + Math.Pow(playerId.Position.y - player2.Position.y, 2)) > 10)
+                    if (Vector3.Distance(player2.Transform.position, playerId.Transform.position) > 10)
                     {
                         continue;
                     }

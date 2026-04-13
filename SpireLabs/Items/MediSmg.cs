@@ -130,33 +130,32 @@ namespace ObscureLabs.Items
         {
             foreach (Player p in Player.List)
             {
-                if (ev.Player.Transform.position.x - p.Transform.position.x <= 6 && ev.Player.Transform.position.y - p.Transform.position.y <= 6 && p != ev.Player && p.IsHuman)
+                if (Vector3.Distance(p.Transform.position, ev.Player.Transform.position) <= 8 && p != ev.Player && p.IsHuman)
                 {
                     Timing.RunCoroutine(PylonLight(p));
                     switch (lvl)
                     {
                         case 1:
                             {
-                                p.Heal(lvl, false);
+                                p.Heal(3, false);
 
                                 break;
                             }
                         case 2:
                             {
-                                p.Heal(lvl, false);
-                                p.EnableEffect(EffectType.MovementBoost, 50, 1, false);
-                                ev.Player.Heal(lvl, false);
-                                ev.Player.EnableEffect(EffectType.MovementBoost, 50, 1, false);
+                                p.Heal(3, false);
+                                p.EnableEffect(EffectType.MovementBoost, 25, 2, false);
+                                ev.Player.EnableEffect(EffectType.MovementBoost, 25, 2, false);
                                 break;
                             }
                         case 3:
                             {
-                                p.Heal(lvl, false);
-                                p.EnableEffect(EffectType.MovementBoost, 50, 1, true);
-                                p.EnableEffect(EffectType.DamageReduction, 5, 1, true);
-                                ev.Player.Heal(lvl, false);
-                                ev.Player.EnableEffect(EffectType.MovementBoost, 50, 1, true);
-                                ev.Player.EnableEffect(EffectType.DamageReduction, 5, 1, true);
+                                p.Heal(3, false);
+                                p.EnableEffect(EffectType.MovementBoost, 40, 5, false);
+                                p.EnableEffect(EffectType.DamageReduction, 5, 5, false);
+                                ev.Player.Heal(1, false);
+                                ev.Player.EnableEffect(EffectType.MovementBoost, 40, 1, false);
+                                ev.Player.EnableEffect(EffectType.DamageReduction, 5, 5, false);
                                 break;
                             }
 
