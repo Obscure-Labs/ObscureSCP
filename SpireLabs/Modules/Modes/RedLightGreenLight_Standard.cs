@@ -47,6 +47,7 @@ namespace ObscureLabs.Modules.Gamemode_Handler.Modes
             new CoinFlip(),
             new AttachmentFix(),
             new SCPsDropItems(),
+            new Scp1162(),
 
             //- Fun modules -//
             new Scp914Handler(),

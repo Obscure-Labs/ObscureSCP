@@ -12,13 +12,15 @@ using SpireSCP.GUI.API.Features;
 using ObscureLabs.Modules.Gamemode_Handler.Core;
 using ObscureLabs.Extensions;
 using Exiled.API.Features.Items;
+using Exiled.API.Features.Toys;
+using Light = Exiled.API.Features.Toys.Light;
 
 namespace ObscureLabs.Items
 {
-    [CustomItem(ItemType.GunSCP127)]
+    [CustomItem(ItemType.GunCrossvec)]
     public class MediSmg : Exiled.CustomItems.API.Features.CustomWeapon
     {
-        public override float Damage { get; set; } = 0f;
+        public override float Damage { get; set; } = 20f;
 
         public override string Name { get; set; } = "MediGun (SMG)";
 
@@ -28,7 +30,7 @@ namespace ObscureLabs.Items
 
         public override string Description { get; set; } = "\t";
 
-        //public override byte ClipSize { get; set; } = 60;
+        public override byte ClipSize { get; set; } = 40;
 
         public static List<Player> MediGunGlowingPlayers = new List<Player>();
 
@@ -93,6 +95,83 @@ namespace ObscureLabs.Items
             player.CurrentItem.SetData("MediSmgData", data);
         }
 
+        public IEnumerator<float> PylonLight(Player p)
+        {
+            Light light = Light.Create(p.GameObject.transform.position, new Vector3(90, 0, 0), Vector3.one, false, Color.green);
+            light.Intensity = 0f;
+            light.Range = 0.0f;
+            light.LightType = LightType.Point;
+            light.ShadowType = LightShadows.Soft;
+
+            light.Spawn();
+            light.Base.gameObject.transform.parent = p.GameObject.transform;
+            for (var i = 0; i < 10; i++)
+            {
+                yield return Timing.WaitForOneFrame;
+                light.Range += 0.5f;
+                light.Intensity += 1f;
+            }
+
+            yield return Timing.WaitForSeconds(0.5f);
+
+            for (var i = 0; i < 10; i++)
+            {
+                yield return Timing.WaitForOneFrame;
+                light.Range -= 0.5f;
+                light.Intensity -= 1f;
+            }
+            yield break;
+        }
+
+
+ 
+
+        public IEnumerator<float> HealPylon(ShotEventArgs ev, int lvl)
+        {
+            foreach (Player p in Player.List)
+            {
+                if (ev.Player.Transform.position.x - p.Transform.position.x <= 6 && ev.Player.Transform.position.y - p.Transform.position.y <= 6 && p != ev.Player && p.IsHuman)
+                {
+                    Timing.RunCoroutine(PylonLight(p));
+                    switch (lvl)
+                    {
+                        case 1:
+                            {
+                                p.Heal(lvl, false);
+
+                                break;
+                            }
+                        case 2:
+                            {
+                                p.Heal(lvl, false);
+                                p.EnableEffect(EffectType.MovementBoost, 50, 1, false);
+                                ev.Player.Heal(lvl, false);
+                                ev.Player.EnableEffect(EffectType.MovementBoost, 50, 1, false);
+                                break;
+                            }
+                        case 3:
+                            {
+                                p.Heal(lvl, false);
+                                p.EnableEffect(EffectType.MovementBoost, 50, 1, true);
+                                p.EnableEffect(EffectType.DamageReduction, 5, 1, true);
+                                ev.Player.Heal(lvl, false);
+                                ev.Player.EnableEffect(EffectType.MovementBoost, 50, 1, true);
+                                ev.Player.EnableEffect(EffectType.DamageReduction, 5, 1, true);
+                                break;
+                            }
+
+                    }
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            yield break;
+        }
+            
+          
+
         private void Shooting(ShotEventArgs ev)
         {
             if (!Check(ev.Item)) { return; }
@@ -100,33 +179,13 @@ namespace ObscureLabs.Items
             //ev.Firearm.AmmoDrain = 0;
 
 
-            if (ev.Target != null && ev.Target.IsHuman && ev.Target.Health < ev.Target.MaxHealth)
+            if (ev.Target != null && ev.Target.Role.Team != ev.Player.Role.Team)
             {
                 AddXP(ev.Player, 3);
+               
                 ev.Player.ShowHitMarker(1500f);
-                switch (data.Level)
-                {
-                    case 1:
-                        {
-                            ev.Target.Heal(4.7f, false);
-                            break;
-                        }
-                    case 2:
-                        {
-                            ev.Target.Heal(4.8f, false);
-                            break;
-                        }
-                    case 3:
-                        {
-                            ev.Target.Heal(20, false);
-                            ev.Target.EnableEffect(EffectType.MovementBoost, 70, 1f);
-                            ev.Player.Heal(4, false);
-                            ev.Player.EnableEffect(EffectType.MovementBoost, 70, 1f);
-
-
-                            break;
-                        }
-                }
+                Timing.RunCoroutine(HealPylon(ev, data.Level));
+                PylonLight(ev.Player);
             }
         }
 

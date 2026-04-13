@@ -39,8 +39,8 @@ namespace ObscureLabs.Items
 
         public void MakeLight(Player p)
         {
-            Light light = Light.Create(p.GameObject.transform.position, new Vector3(90, 0, 0), Vector3.one, false, Color.green);
-            light.Intensity = 15f;
+            Light light = Light.Create(p.GameObject.transform.position, new Vector3(90, 0, 0), Vector3.one, false, Color.blue);
+            light.Intensity = 5f;
             light.Range = 2f;
             light.LightType = LightType.Point;
             light.ShadowType = LightShadows.Soft;
